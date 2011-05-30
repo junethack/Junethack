@@ -1,7 +1,7 @@
 class User
         include DataMapper::Resource
 
-        has n, :accounts, :lazy => false
+        has n, :accounts
         has n, :servers, :through => :accounts
 
         property :id,                   Serial
