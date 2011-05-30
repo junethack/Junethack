@@ -1,0 +1,31 @@
+#greeting
+	= "Hi " + @user.login
+%table#accountlist
+	%tr
+		%th
+			Server
+		%th	
+			Account
+	- for account in @user.accounts
+		%tr.account
+			
+			%td
+				= account.server.name
+			%td
+				= account.name
+%table#gamelist
+	%tr
+		%th
+			Name
+		%th
+			Server
+		%th
+			Death
+	- for game in @games
+		%tr.game
+			%td
+				= game.name
+			%td
+				= game.server.name
+			%td
+				= game.death

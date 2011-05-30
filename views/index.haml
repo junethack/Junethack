@@ -1,0 +1,16 @@
+!!! 5	-# HTML5 bleedin edge yo!
+
+%html
+	%head
+		%title Junethack Tournament
+	%body
+		%div#greeting Hey hackers	
+		%div Log in
+		%form#login{:method => 'POST', :action => '/login'}
+			%label{:for => 'username'} Username
+			%input#username{:type => 'text', :name => "username"}
+			%label{:for => 'password'} Password
+			%input#password{:type => 'password', :name => "password"}
+			%input#create{:type => 'submit'}
+		%div
+			%a{:href => "/register"} or register
