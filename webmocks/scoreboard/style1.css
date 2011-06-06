@@ -1,0 +1,66 @@
+/* Anything that should be centered */
+.hcenter
+{
+    text-align: center;
+}
+
+/* Body, background */
+body
+{
+    background: #DDDDDD;
+    font-family: sans-serif;
+}
+
+a
+{
+    text-decoration: none;
+    color: #993333;
+}
+
+a:hover
+{
+    text-decoration: underline;
+    color: #666666;
+}
+
+/* Navigation */
+.navigation
+{
+    text-align: center;
+}
+
+.navigation a
+{
+    margin: 40px;
+    padding: 10px;
+    font-size: 20pt;
+}
+
+.signup_text
+{
+    font-size: 40pt;
+    text-align: center;
+}
+
+.scoreitem img
+{
+    float: left;
+}
+
+.scoreitem p
+{
+
+}
+
+.scoreitem table
+{
+    float: left;
+    padding-right: 50px;
+}
+
+.scoreitem td
+{
+    border: solid 1px #000000;
+    padding: 10px;
+}
+

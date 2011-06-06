@@ -1,0 +1,95 @@
+/* Anything that should be centered */
+.hcenter
+{
+    text-align: center;
+}
+
+/* Body, background */
+body
+{
+    background: #DDDDDD;
+    font-family: sans-serif;
+}
+
+a
+{
+    text-decoration: none;
+    color: #993333;
+}
+
+a:hover
+{
+    text-decoration: underline;
+    color: #666666;
+}
+
+/* Navigation */
+.navigation
+{
+    text-align: center;
+}
+
+.navigation a
+{
+    margin: 40px;
+    padding: 10px;
+    font-size: 20pt;
+}
+
+.signup_text
+{
+    font-size: 40pt;
+    text-align: center;
+}
+
+.subtitle h1
+{
+    text-align: center;
+    font-size: 40pt;
+}
+
+.scoreitem
+{
+    padding: 30px;
+}
+
+.scoreitem img
+{
+    float: left;
+    margin-top: 80px;
+}
+
+.scoreitem p
+{
+
+}
+
+.scoreitem table
+{
+    float: left;
+    padding-right: 50px;
+    border-spacing: 0px;
+}
+
+.scoreitem th
+{
+    border-bottom: solid 3px #000000;
+    border-right: solid 3px #000000;
+    padding-right: 20px;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.scoreitem td
+{
+    border-right: solid 3px #000000;
+    padding: 5px 0.5em;
+}
+
+/* Uncomment to check that page fits into 800px view */
+/*
+.page
+{
+    width: 800px;
+}
+*/

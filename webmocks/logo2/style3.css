@@ -1,0 +1,45 @@
+/* Anything that should be centered */
+.hcenter
+{
+    text-align: center;
+}
+
+/* Body, background */
+body
+{
+    background: #FFFFFF;
+    font-family: sans-serif;
+}
+
+a
+{
+    text-decoration: none;
+    color: #DDDDDD;
+    text-shadow: #000000 2px 2px 2px;
+}
+
+a:hover
+{
+    text-decoration: underline;
+    color: #666666;
+}
+
+/* Navigation */
+.navigation
+{
+    text-align: center;
+}
+
+.navigation a
+{
+    margin: 40px;
+    padding: 10px;
+    font-size: 20pt;
+}
+
+.signup_text
+{
+    font-size: 40pt;
+    text-align: center;
+}
+
