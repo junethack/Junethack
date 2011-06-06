@@ -6,9 +6,26 @@
 # povray 3.6 doesn't render alpha channel onto the PNGs correctly for some
 # reason.
 
-.PHONY: all ascended grand_prize genders most_ascensions most_ascensions_streak pudding_award front_view
+.PHONY: all ascended grand_prize genders most_ascensions most_ascensions_streak pudding_award front_view postprocess clean
 
-all: ascended grand_prize genders most_ascensions most_ascensions_streak front_view pudding_award
+all: postprocess
+
+clean:
+	rm -f web_view.png genders.png grand_prize.png most_ascensions.png \
+	      most_ascensions_streak.png front_view.png pudding_award.png
+
+# Postprocessing normalizes the images. The parameters may need tuning...
+# Current effect is just equalization. It makes colors much more vivid
+# and adds contrast.
+postprocess: ascended grand_prize genders most_ascensions most_ascensions_streak front_view pudding_award
+	convert -equalize web_view.png web_view.png
+	convert -equalize genders.png genders.png
+	convert -equalize grand_prize.png grand_prize.png
+	convert -equalize most_ascensions.png most_ascensions.png
+	convert -equalize most_ascensions_streak.png most_ascensions_streak.png
+	convert -equalize front_view.png front_view.png
+	convert -equalize pudding_award.png pudding_award.png
+	
 
 # Ascended
 # A plain trophy without a seal
