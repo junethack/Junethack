@@ -1,0 +1,22 @@
+LICENSE STUFF
+
+Copyright holders are in authors.txt
+
+Everything is under GPLv3 (gpl.txt) except for the following:
+
+--- 1. ---
+Images or other media (but not HTML/CSS) under webmocks/
+    Creative Commons 3.0 Attribution Unported
+    http://creativecommons.org/licenses/by/3.0/
+
+--- 2. ---
+Images under povray_images/
+    Public domain
+    (or if that's not possible, permission is granted to use them
+     for any purpose, with or without modification)
+
+    The images can be generated from .pov files, which are them-
+    selves under GPLv3, but the resulting images are not considered
+    to be under our copyright.
+
+

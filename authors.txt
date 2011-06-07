@@ -1,0 +1,6 @@
+AUTHORS
+
+Junethack developers:
+    Mikko Juola <mikjuo@gmail.com> (AKA Adeon)
+
+
