@@ -3,3 +3,5 @@ povray_images/*.pov-state
 junethack.db
 test_xlog.txt
 test_xlog2.txt
+# cheryl - ignore temporary files
+webmocks/alt_design2/*.swp
