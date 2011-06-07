@@ -1,0 +1,305 @@
+/* MEYER RESET
+http://meyerweb.com/eric/tools/css/reset/ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+nav,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+body {
+    line-height: 1;
+    font-family: Arial, sans-serif;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+    /*font-family: Georgia, Times, "Times New Roman", serif;*/
+}
+
+/************************
+**                     **
+**     form styles     **
+**                     **
+************************/
+
+form {
+    width: 600px;
+    margin: 10px auto;
+}
+fieldset {
+    margin:50px;
+    border:8px solid #ccc;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+}
+legend {
+    margin-left: 155px;
+    font-weight: bold;
+    font-size: 130%;
+    padding: 0 5px;
+}
+.col1, .col2, .col3 {
+    display: inline;
+    position: relative;
+    float: left;
+    margin-left: 2%;
+    margin-top: 1em;
+}
+input, textarea {
+    width: 180px;
+}
+/* when a label follows an input */
+input+label {
+    float: left;
+    clear: right;
+    margin-left: 15px;
+}
+input[type="submit"]{
+    float: right;
+    width: 100px;
+    text-align: left;
+    margin-right: 15%;
+}
+.col1,.col2,.col3{
+    display: block;
+    position:relative;
+    float:left;
+    margin: 10px 0 15px 20px
+}
+.col1 {
+    width: 120px;
+    font-weight: bold;
+    clear: left 
+}
+.col2 {
+    width: 200px;
+    text-align: left;
+}
+.col3 {
+    width: 200px;
+    color: #000;
+    clear: right;
+    margin-bottom: 30px;
+}
+
+/**************************
+**                       **
+**     project styles    **
+**                       **
+**************************/
+
+body {
+    background-color: #eee;
+    font-size: 0.8em;
+}
+
+a {
+    text-decoration: none;
+    color: #34f;
+}
+a.active, a.active:hover,
+a:hover {
+    color: #800;
+    text-decoration: underline;
+}
+/* topnav */
+.text_content_wrapper, #topnav {
+    background-color: #ddd;
+}
+#topnav li a {
+    color: #555;
+}
+#topnav li {
+}
+#topnav a.active, #topnav a.active:hover,
+#topnav a:hover {
+    color: #a22;
+    color: #000;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 5px #aaa;
+    -moz-box-shadow: 0px 0px 5px #aaa;
+    box-shadow: 0px 0px 5px #aaa;
+}
+/* misc */
+#container {
+    width: 750px;
+    margin: 0 auto;
+}
+
+/**************************
+**                       **
+**       Navigation      **
+**                       **
+**************************/
+
+/*
+ * Using #topnav not .navigation because of possible 2ndary navigation at a later date, and don't want topnav styles to apply there as well
+ * */
+#topnav {
+    width: 100%;
+    margin: 0 auto;
+    -webkit-box-shadow: inset 0px 0px 10px #888;
+    -moz-box-shadow: inset 0px 0px 10px #888;
+    box-shadow: inset 0px 0px 10px #888;
+    margin-top: 10px;
+}
+#topnav h1 {
+    display: none;
+}
+#topnav ul {
+    width: 100%;
+}
+#topnav li {
+    float: left;
+    width: 25%;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+#topnav li a {
+    display: block;
+    text-decoration: none;
+}
+
+/**************************
+**                       **
+**      title styles     **
+**                       **
+**************************/
+
+.hcenter {
+    clear: both;
+    text-align: center;
+    margin-top: 3.0em;
+}
+
+/**************************
+**                       **
+**     signup styles     **
+**                       **
+**************************/
+
+.signup_text {
+    text-align: center;
+    width: 170px;
+    margin: 0 auto;
+    margin-bottom: 3.0em;
+}
+.signup_text p {
+    height: 60px;
+    line-height: 60px;
+}
+.signup_text a {
+    font-size: 1.4em;
+    display: block;
+    display: block;
+    text-decoration: none;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    -webkit-box-shadow: 0px 5px 50px #888;
+    -moz-box-shadow: 0px 5px 50px #888;
+    box-shadow: 0px 5px 50px #888;
+    color: #ddd;
+    border: 1px solid white;
+    background-color: #800;
+}
+.signup_text a:hover,
+.signup_text a.active,
+.signup_text a.active:hover {
+    color: #fff;
+    background-color: #b22;
+    -webkit-box-shadow: 0px 5px 50px #555;
+    -moz-box-shadow: 0px 5px 50px #555;
+    box-shadow: 0px 5px 50px #555;
+}
+
+/**************************
+**                       **
+**    body text styles   **
+**                       **
+**************************/
+
+.text_content_wrapper {
+    padding-top: 1px;
+    -webkit-box-shadow: inset 0px 0px 10px #888;
+    -moz-box-shadow: inset 0px 0px 10px #888;
+    box-shadow: inset 0px 0px 10px #888;
+}
+.text_content {
+    margin: 0 30px;
+    line-height: 1.5em;
+}
+.text_content p {
+    margin-bottom: 10px;
+}
+.text_content h2 {
+    font-size: 150%;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+}
+.text_content:first-child h2 {
+    margin-top: 40px;
+}
+.text_content:before {
+    content: url(divider.png);
+    width: 114px;
+    display: block;
+    margin: 0 auto;
+}
+.text_content:first-child:before {
+    content: none;
+}
+
+/**************************
+**                       **
+**     footer styles     **
+**                       **
+**************************/
+
+#footer {
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/**************************
+**                       **
+**     helper styles     **
+**                       **
+**************************/
+
+.clear {
+    display: block;
+    clear: both;
+}
+
+#end_of_content_spacer {
+    height: 30px;
+}
