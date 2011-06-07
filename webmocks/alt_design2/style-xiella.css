@@ -47,65 +47,6 @@ h1, h2, h3, h4, h5, h6 {
 **                     **
 ************************/
 
-form {
-    width: 600px;
-    margin: 10px auto;
-}
-fieldset {
-    margin:50px;
-    border:8px solid #ccc;
-    -moz-border-radius: 30px;
-    -webkit-border-radius: 30px;
-}
-legend {
-    margin-left: 155px;
-    font-weight: bold;
-    font-size: 130%;
-    padding: 0 5px;
-}
-.col1, .col2, .col3 {
-    display: inline;
-    position: relative;
-    float: left;
-    margin-left: 2%;
-    margin-top: 1em;
-}
-input, textarea {
-    width: 180px;
-}
-/* when a label follows an input */
-input+label {
-    float: left;
-    clear: right;
-    margin-left: 15px;
-}
-input[type="submit"]{
-    float: right;
-    width: 100px;
-    text-align: left;
-    margin-right: 15%;
-}
-.col1,.col2,.col3{
-    display: block;
-    position:relative;
-    float:left;
-    margin: 10px 0 15px 20px
-}
-.col1 {
-    width: 120px;
-    font-weight: bold;
-    clear: left 
-}
-.col2 {
-    width: 200px;
-    text-align: left;
-}
-.col3 {
-    width: 200px;
-    color: #000;
-    clear: right;
-    margin-bottom: 30px;
-}
 
 /**************************
 **                       **
@@ -167,6 +108,10 @@ a:hover {
     -moz-box-shadow: inset 0px 0px 10px #888;
     box-shadow: inset 0px 0px 10px #888;
     margin-top: 10px;
+}
+#topnav, #topnav ul {
+    /* because of ie's amazing expanding box trick */
+    overflow: hidden;
 }
 #topnav h1 {
     display: none;
@@ -272,6 +217,8 @@ a:hover {
     display: block;
     margin: 0 auto;
 }
+/* for iOS safari */
+.text_content#top_post:before,
 .text_content:first-child:before {
     content: none;
 }
@@ -299,7 +246,6 @@ a:hover {
     display: block;
     clear: both;
 }
-
 #end_of_content_spacer {
     height: 30px;
 }
