@@ -2,5 +2,5 @@ AUTHORS
 
 Junethack developers:
     Mikko Juola <mikjuo@gmail.com> (AKA Adeon)
-
+    Christian Stegen <c.stegen@jungundwillich.de> (AKA stenno)
 
