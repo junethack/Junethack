@@ -1,3 +1,5 @@
 # Ignore rendering pov images under povray/
 povray_images/*.pov-state
-
+junethack.db
+test_xlog.txt
+test_xlog2.txt
