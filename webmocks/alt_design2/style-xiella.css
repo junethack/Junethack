@@ -190,9 +190,9 @@ a:hover {
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     border-radius: 50px;
-    -webkit-box-shadow: 0px 5px 50px #888;
-    -moz-box-shadow: 0px 5px 50px #888;
-    box-shadow: 0px 5px 50px #888;
+    -webkit-box-shadow: 0px 5px 30px #888;
+    -moz-box-shadow: 0px 5px 30px #888;
+    box-shadow: 0px 5px 30px #888;
     color: #ddd;
     background-color: #800;
 }
@@ -201,9 +201,9 @@ a:hover {
 .signup_text a.active:hover {
     color: #fff;
     background-color: #b22;
-    -webkit-box-shadow: 0px 5px 50px #555;
-    -moz-box-shadow: 0px 5px 50px #555;
-    box-shadow: 0px 5px 50px #555;
+    -webkit-box-shadow: inset 0px 5px 30px #701;
+    -moz-box-shadow: inset 0px 5px 30px #701;
+    box-shadow: inset 0px 5px 30px #701;
 }
 
 /**************************
