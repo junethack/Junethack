@@ -1,0 +1,5 @@
+gem 'sinatra'
+gem 'haml'
+gem 'ruby-sqlite3'
+gem 'datamapper'
+gem 'dm-serializer'
