@@ -229,8 +229,10 @@ a:hover {
     line-height: 1.5em;
     margin-bottom: 10px;
 }
+/* for iOS safari */
+.text_content#top_post h2,
 .text_content:first-child h2 {
-    margin-top: 40px;
+    margin-top: 35px;
 }
 .text_content:before {
     content: url(divider.png);
@@ -241,7 +243,7 @@ a:hover {
 /* for iOS safari */
 .text_content#top_post:before,
 .text_content:first-child:before {
-    content: none;
+    content: '';
 }
 
 /**************************
