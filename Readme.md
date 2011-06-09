@@ -15,6 +15,7 @@
  - haml
  - ruby-sqlite3
  - datamapper
+ - dm-serializer
 
 ##Usage
 Run the sinatra server with 

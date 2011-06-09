@@ -9,6 +9,7 @@ require 'models/server'
 require 'models/user'
 require 'models/account'
 require 'models/game'
+require 'models/clan'
 
 DataMapper.finalize
 DataMapper.auto_upgrade!

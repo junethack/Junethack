@@ -2,16 +2,7 @@ require 'rubygems'
 require 'database'
 require 'fetch_games'
 require 'date'
-task :testthis do
-	bla = ["a","b","c","d"]
-	for name in bla
-		puts "executing task for #{name}"
-		Rake::Task['testexec'].invoke name
-	end
-end
-task :testexec do |t, args|
-	puts "called with #{args.inspect}"
-end
+
 namespace :bogus do
 
 	names = ["r4wrmage","ad3on","k3rio","bh44k","c4smith789", "st3nno"]	#hi #junethack
@@ -24,6 +15,9 @@ namespace :bogus do
 		end
 		Rake::Task['bogus:add_game'].invoke 20
 	end
+
+	task :add_server :name, :url, :xlogurl do |t, args|
+		Server.create(:name => args[:name], :url => args[:url], :xlogurl => args[:xlogurl]
 						
 	task :add_servers do
 		Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0)
