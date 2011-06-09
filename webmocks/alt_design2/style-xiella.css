@@ -158,8 +158,8 @@ a:hover {
 .hcenter {
     clear: both;
     text-align: center;
-    margin-top: 3.0em;
-    margin-bottom: 1.0em;
+    /* space between nav and title */
+    margin-top: 2.5em;
 }
 
 /**************************
@@ -168,11 +168,15 @@ a:hover {
 **                       **
 **************************/
 
+/* space between title and rest of content */
+.content_bulk {
+    margin-top: 0em;
+}
+
 .signup_text {
     text-align: center;
     width: 170px;
     margin: 0 auto;
-    margin-bottom: 3.0em;
 }
 .signup_text p {
     height: 60px;
@@ -209,6 +213,8 @@ a:hover {
 **************************/
 
 .text_content_wrapper {
+    /* space between the main content and the element before - eg signup button */
+    margin-top: 3.0em;
     padding-top: 1px;
     -webkit-box-shadow: inset 0px 0px 10px #888;
     -moz-box-shadow: inset 0px 0px 10px #888;
