@@ -11,14 +11,14 @@
 all: postprocess
 
 clean:
-	rm -f web_view.png genders.png grand_prize.png most_ascensions.png \
+	rm -f ascended.png genders.png grand_prize.png most_ascensions.png \
 	      most_ascensions_streak.png front_view.png pudding_award.png
 
 # Postprocessing normalizes the images. The parameters may need tuning...
 # Current effect is just equalization. It makes colors much more vivid
 # and adds contrast.
 postprocess: ascended grand_prize genders most_ascensions most_ascensions_streak front_view pudding_award
-	convert -equalize web_view.png web_view.png
+	convert -equalize ascended.png ascended.png
 	convert -equalize genders.png genders.png
 	convert -equalize grand_prize.png grand_prize.png
 	convert -equalize most_ascensions.png most_ascensions.png
@@ -30,7 +30,7 @@ postprocess: ascended grand_prize genders most_ascensions most_ascensions_streak
 # Ascended
 # A plain trophy without a seal
 ascended:
-	povray +A +AM2 +W400 +H300 +UA web_view.pov
+	povray +A +AM2 +W400 +H300 +UA ascended.pov
 
 # Grand prize
 # Like the Ascended trophy but with a seal
