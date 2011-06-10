@@ -6,7 +6,9 @@
 # povray 3.6 doesn't render alpha channel onto the PNGs correctly for some
 # reason.
 
-.PHONY: all ascended grand_prize genders most_ascensions most_ascensions_streak pudding_award front_view postprocess clean
+COMMON_POVS = trophy.pov seal.pov
+
+.PHONY: all clean postprocess
 
 all: postprocess
 
@@ -17,7 +19,9 @@ clean:
 # Postprocessing normalizes the images. The parameters may need tuning...
 # Current effect is just equalization. It makes colors much more vivid
 # and adds contrast.
-postprocess: ascended grand_prize genders most_ascensions most_ascensions_streak front_view pudding_award
+postprocess: ascended.png grand_prize.png genders.png \
+             most_ascensions.png most_ascensions_streak.png \
+             front_view.png pudding_award.png
 	convert -equalize ascended.png ascended.png
 	convert -equalize genders.png genders.png
 	convert -equalize grand_prize.png grand_prize.png
@@ -29,34 +33,34 @@ postprocess: ascended grand_prize genders most_ascensions most_ascensions_streak
 
 # Ascended
 # A plain trophy without a seal
-ascended:
+ascended.png: ascended.pov ${COMMON_POVS}
 	povray +A +AM2 +W400 +H300 +UA ascended.pov
 
 # Grand prize
 # Like the Ascended trophy but with a seal
-grand_prize:
+grand_prize.png: grand_prize.pov ${COMMON_POVS}
 	povray +A +AM2 +W400 +H300 +UA grand_prize.pov
 
 # Genders
 # Two trophies, one pink, one blue
-genders:
+genders.png: genders.pov ${COMMON_POVS}
 	povray +A +AM2 +W400 +H300 +UA genders.pov
 
 # Most Ascensions
 # Many trophies side by side without seals
-most_ascensions:
+most_ascensions.png: most_ascensions.pov ${COMMON_POVS}
 	povray +A +AM2 +W400 +H300 +UA most_ascensions.pov
 
 # Longest Ascension Streak
 # Many trophies side by side with seals
-most_ascensions_streak:
+most_ascensions_streak.png: most_ascensions_streak.pov ${COMMON_POVS}
 	povray +A +AM2 +W400 +H300 +UA most_ascensions_streak.pov
 
 # P letters. (looks a little crappy IMO --Adeon)
-pudding_award:
+pudding_award.png: pudding_award.pov ${COMMON_POVS}
 	povray +A +AM2 +W400 +H300 +P +UA pudding_award.pov
 
 # Large render for seeing details on the trophy
-front_view:
+front_view.png: front_view.pov ${COMMON_POVS}
 	povray +A +AM2 +W800 +H600 +UA front_view.pov
 
