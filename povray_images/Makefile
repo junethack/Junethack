@@ -14,7 +14,8 @@ all: postprocess
 
 clean:
 	rm -f ascended.png genders.png grand_prize.png most_ascensions.png \
-	      most_ascensions_streak.png front_view.png pudding_award.png analog_clock.png
+	      most_ascensions_streak.png front_view.png pudding_award.png \
+          analog_clock.png digital_clock.png
 
 # Postprocessing normalizes the images. The parameters may need tuning...
 # Current effect is just equalization. It makes colors much more vivid
@@ -22,7 +23,7 @@ clean:
 postprocess: ascended.png grand_prize.png genders.png \
              most_ascensions.png most_ascensions_streak.png \
              front_view.png pudding_award.png \
-			 analog_clock.png
+			 analog_clock.png digital_clock.png
 	convert -equalize ascended.png ascended.png
 	convert -equalize genders.png genders.png
 	convert -equalize grand_prize.png grand_prize.png
@@ -34,6 +35,10 @@ postprocess: ascended.png grand_prize.png genders.png \
 # Analog clock (for realtime speedruns?)
 analog_clock.png: analog_clock.pov
 	povray +A +AM2 +W400 +H300 +UA analog_clock.pov
+
+# Digital clock (for gametime speedruns?)
+digital_clock.png: digital_clock.pov
+	povray +A +AM2 +W400 +H300 +UA digital_clock.pov
 
 # Ascended
 # A plain trophy without a seal
