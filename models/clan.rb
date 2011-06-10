@@ -33,5 +33,6 @@ class Clan
 			self.save
 		end
 	end
-			
+	
+end		
 				
