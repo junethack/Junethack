@@ -118,18 +118,18 @@ cylinder
     <0, 0, 0>, <0, 0, -0.1>, 0.1
 }
 
-#declare minute_hand = 17.0;
-#declare second_hand = 43.0;
+#declare minute_hand = 33.0;
+#declare second_hand = 5.0;
 
 // Hands (also cylinders)
 // We use a kinky motion blur effect.
 // Basically, we render many hands together, but adjust
 // alpha so that it looks like it's in motion.
 
-#declare num_images = 150;
+#declare num_images = 50;
 #declare counter = 0;
-#declare minute_increment = 10.0 / num_images;
-#declare second_increment = 20.0 / num_images;
+#declare minute_increment = 2.0 / num_images;
+#declare second_increment = 3.0 / num_images;
 #declare alph = 1.0 - 1 / num_images;
 
 #while (counter < num_images)

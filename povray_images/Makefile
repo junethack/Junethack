@@ -30,7 +30,6 @@ postprocess: ascended.png grand_prize.png genders.png \
 	convert -equalize most_ascensions_streak.png most_ascensions_streak.png
 	convert -equalize front_view.png front_view.png
 	convert -equalize pudding_award.png pudding_award.png
-	convert -equalize analog_clock.png analog_clock.png
 
 # Analog clock (for realtime speedruns?)
 analog_clock.png: analog_clock.pov
