@@ -6,6 +6,8 @@
 # povray 3.6 doesn't render alpha channel onto the PNGs correctly for some
 # reason.
 
+# Final images have _f at the end of them (e.g. ascended_f.png).
+
 COMMON_POVS = trophy.pov seal.pov
 
 .PHONY: all clean postprocess
@@ -15,7 +17,10 @@ all: postprocess
 clean:
 	rm -f ascended.png genders.png grand_prize.png most_ascensions.png \
 	      most_ascensions_density.png front_view.png pudding_award.png \
-          analog_clock.png digital_clock.png
+          analog_clock.png digital_clock.png ascended_f.png genders_f.png \
+		  grand_prize_f.png most_ascensions_f.png \
+		  most_ascensions_density_f.png front_view_f.png \
+		  pudding_award_f.png lowest_score.png lowest_score_f.png
 
 # Postprocessing normalizes the images. The parameters may need tuning...
 # Current effect is just equalization. It makes colors much more vivid
@@ -23,14 +28,23 @@ clean:
 postprocess: ascended.png grand_prize.png genders.png \
              most_ascensions.png most_ascensions_density.png \
              front_view.png pudding_award.png \
-			 analog_clock.png digital_clock.png
-	convert -equalize ascended.png ascended.png
-	convert -equalize genders.png genders.png
-	convert -equalize grand_prize.png grand_prize.png
-	convert -equalize most_ascensions.png most_ascensions.png
-	convert -equalize most_ascensions_density.png most_ascensions_density.png
-	convert -equalize front_view.png front_view.png
-	convert -equalize pudding_award.png pudding_award.png
+			 analog_clock.png digital_clock.png \
+			 lowest_score.png
+	convert -equalize ascended.png ascended_f.png
+	convert -equalize genders.png genders_f.png
+	convert -equalize grand_prize.png grand_prize_f.png
+	convert -equalize most_ascensions.png most_ascensions_f.png
+	convert -equalize most_ascensions_density.png most_ascensions_density_f.png
+	convert -equalize front_view.png front_view_f.png
+	convert -equalize pudding_award.png pudding_award_f.png
+	convert -equalize lowest_score.png lowest_score_f.png
+	cp analog_clock.png analog_clock_f.png
+	cp digital_clock.png digital_clock_f.png
+
+# Lowest score (without depth)
+# It's the normal trophy without seal, with a peace symbol stamped on it
+lowest_score.png: ascended.png peace_symbol.png
+	composite -geometry 60x60+165+0 peace_symbol.png ascended.png lowest_score.png
 
 # Analog clock (for realtime speedruns?)
 analog_clock.png: analog_clock.pov
