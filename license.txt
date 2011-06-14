@@ -6,8 +6,8 @@ Everything is under GPLv3 (gpl.txt) except for the following:
 
 --- 1. ---
 Images or other media (but not HTML/CSS) under webmocks/
-    Creative Commons 3.0 Attribution Unported
-    http://creativecommons.org/licenses/by/3.0/
+    Creative Commons 3.0 Attribution-ShareAlike Unported
+    http://creativecommons.org/licenses/by-sa/3.0/
 
 --- 2. ---
 Images under povray_images/
