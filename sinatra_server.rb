@@ -6,7 +6,7 @@ require 'haml'
 enable :sessions
 
 get "/" do
-	haml :index
+	haml :splash
 end
 
 post "/login" do
