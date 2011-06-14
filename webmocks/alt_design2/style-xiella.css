@@ -229,21 +229,17 @@ a:hover {
     line-height: 1.5em;
     margin-bottom: 10px;
 }
-/* for iOS safari */
-.text_content#top_post h2,
-.text_content:first-child h2 {
+.text_content {
     margin-top: 35px;
 }
-.text_content:before {
+.text_content.non_top_post {
+    margin-top: 0;
+}
+.text_content.non_top_post:before {
     content: url(divider.png);
     width: 114px;
     display: block;
     margin: 0 auto;
-}
-/* for iOS safari */
-.text_content#top_post:before,
-.text_content:first-child:before {
-    content: '';
 }
 
 /**************************

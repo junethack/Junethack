@@ -39,9 +39,21 @@
       <div class='content_bulk'> 
         <div class='text_content_wrapper'> 
           <div class='text_content'> 
-            <p>
-              Login form goes here.
-            </p>
+            <form id='login_form'>
+              <div id='username_row'>
+                <label for='username'>Username:</label>
+                <input id='username' name='username' value='' type='textbox' />
+                <div class='form_msg'>
+                </div>
+              </div>
+              <div id='password_row'>
+                <label for='password'>Password:</label>
+                <input id='password' name='password' value='' type='password' />
+                <div class='form_msg'>
+                </div>
+              </div>
+              <input id='submit' name='submit' value='submit' type='submit' />
+            </form>
           </div> 
           <span class='clear' id='end_of_content_spacer'></span> 
         </div> 
