@@ -14,21 +14,21 @@ all: postprocess
 
 clean:
 	rm -f ascended.png genders.png grand_prize.png most_ascensions.png \
-	      most_ascensions_streak.png front_view.png pudding_award.png \
+	      most_ascensions_density.png front_view.png pudding_award.png \
           analog_clock.png digital_clock.png
 
 # Postprocessing normalizes the images. The parameters may need tuning...
 # Current effect is just equalization. It makes colors much more vivid
 # and adds contrast.
 postprocess: ascended.png grand_prize.png genders.png \
-             most_ascensions.png most_ascensions_streak.png \
+             most_ascensions.png most_ascensions_density.png \
              front_view.png pudding_award.png \
 			 analog_clock.png digital_clock.png
 	convert -equalize ascended.png ascended.png
 	convert -equalize genders.png genders.png
 	convert -equalize grand_prize.png grand_prize.png
 	convert -equalize most_ascensions.png most_ascensions.png
-	convert -equalize most_ascensions_streak.png most_ascensions_streak.png
+	convert -equalize most_ascensions_density.png most_ascensions_density.png
 	convert -equalize front_view.png front_view.png
 	convert -equalize pudding_award.png pudding_award.png
 
@@ -60,10 +60,10 @@ genders.png: genders.pov ${COMMON_POVS}
 most_ascensions.png: most_ascensions.pov ${COMMON_POVS}
 	povray +A +AM2 +W400 +H300 +UA most_ascensions.pov
 
-# Longest Ascension Streak
+# Longest Ascension Density
 # Many trophies side by side with seals
-most_ascensions_streak.png: most_ascensions_streak.pov ${COMMON_POVS}
-	povray +A +AM2 +W400 +H300 +UA most_ascensions_streak.pov
+most_ascensions_density.png: most_ascensions_density.pov ${COMMON_POVS}
+	povray +A +AM2 +W400 +H300 +UA most_ascensions_density.pov
 
 # P letters. (looks a little crappy IMO --Adeon)
 pudding_award.png: pudding_award.pov ${COMMON_POVS}
