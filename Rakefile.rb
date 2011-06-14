@@ -16,9 +16,9 @@ namespace :bogus do
 		Rake::Task['bogus:add_game'].invoke 20
 	end
 
-	task :add_server :name, :url, :xlogurl do |t, args|
-		Server.create(:name => args[:name], :url => args[:url], :xlogurl => args[:xlogurl]
-						
+	task :add_server, :name, :url, :xlogurl do |t, args|
+		Server.create(:name => args[:name], :url => args[:url], :xlogurl => args[:xlogurl])
+	end					
 	task :add_servers do
 		Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0)
 		Server.create(:name => "test server 2", :url => "localhost", :xlogurl => "file://test_xlog2.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0)
