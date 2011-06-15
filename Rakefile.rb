@@ -33,8 +33,12 @@ namespace :bogus do
 		user = User.new(:name => args[:name], :login => args[:name])
 		user.password = args[:name]
 		user.save
-		
-		acc = Account.create(:user => user, :server => Server.get(:name => args[:servername]), :name => args[:name], :verified => true)
+		if args[:servername]
+			acc = Account.create(:user => user, :server => Server.get(:name => args[:servername]), :name => args[:name], :verified => true)
+		else
+			acc = Account.create(:user => user, :server => Server.get(1), :name => args[:name], :verified => true)
+			acc2 = Account.create(:user => user, :server => Server.get(2), :name => args[:name], :verified => true)
+		end
 	end
 
 	task :add_game, :games do |t, args|
