@@ -3,7 +3,7 @@ class Account                           #join model
         include DataMapper::Resource
 
         belongs_to :user,       :key => true
-        belongs_to :server,     :key => true, :lazy => false
+        belongs_to :server,     :key => true
 	
 	belongs_to :clan,	:required => false
 	
