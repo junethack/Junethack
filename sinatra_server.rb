@@ -9,6 +9,10 @@ get "/" do
 	haml :splash
 end
 
+get "/login" do
+	haml :login
+end
+
 post "/login" do
 	puts "got params #{params.inspect}"
 	
