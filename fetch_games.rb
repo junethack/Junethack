@@ -22,9 +22,14 @@ def fetch_all
 				puts "So many games ... #{games.length}"
 				for hgame in games
 					puts hgame.inspect
-					game = server.games.create(hgame.merge({"server" => server}))
-					puts "created!"
-	
+					game = server.games.create!(hgame.merge({"server" => server}))
+					puts "Created game #{game.inspect}"
+					if game.save
+						puts "created!"
+					else	
+						puts "something went wrong, could not create games"
+					end
+		
 				end
 			else
 				puts "No games at all!"
