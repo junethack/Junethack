@@ -26,7 +26,7 @@ namespace :bogus do
 	end
 
 
-	task :add_user, :name do |t, args|
+	task :add_user, :name, :servername do |t, args|
 		
 		puts "args were: #{args.inspect}"
 		raise "No user name specified" unless args[:name]
@@ -34,11 +34,7 @@ namespace :bogus do
 		user.password = args[:name]
 		user.save
 		
-		acc = Account.create(:user => user, :server => Server.get(1), :name => args[:name], :verified => true)
-		
-		puts "Account created: #{acc.inspect}"
-
-		acc2 = Account.create(:user => user, :server => Server.get(2), :name => args[:name], :verified => true)
+		acc = Account.create(:user => user, :server => Server.get(:name => args[:servername]), :name => args[:name], :verified => true)
 	end
 
 	task :add_game, :games do |t, args|
