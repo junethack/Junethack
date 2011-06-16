@@ -1,0 +1,16 @@
+cheryl = xiella
+focus: front-end design/development
+
+----
+JAVASCRIPT
+    login: validation
+HTML
+    login: remove placeholder text
+    scoreboard: implement design in scoreboard template
+    navigation: work out which header image to go where (to take up less header space)
+CSS
+    scoreboard:
+
+----
+TO FIND OUT:
+- Separate views for navigation, content and footer? (are we doing MVC?)
