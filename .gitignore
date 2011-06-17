@@ -7,3 +7,4 @@ test_xlog2.txt
 webmocks/alt_design2/*.swp
 *.swp
 models/*.swp
+# rawrmage - ignore server output

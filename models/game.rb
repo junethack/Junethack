@@ -24,7 +24,7 @@ class Game
         property :realtime,     Integer
         property :turns,        Integer
         property :birthdate,    String
-        property :conduct,      Integer
+        property :conduct,      String
 	property :nconducts,	Integer
         property :role,         String
         property :deathdnum,    Integer
@@ -39,7 +39,7 @@ class Game
 	property :align0,	String
         property :starttime,    String
 	property :endtime,	String
-        property :achieve,      Integer
+        property :achieve,      String
 	property :nachieves,	Integer
         property :hp,           Integer
         property :maxlvl,       Integer
