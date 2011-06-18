@@ -20,7 +20,8 @@ clean:
           analog_clock.png digital_clock.png ascended_f.png genders_f.png \
 		  grand_prize_f.png most_ascensions_f.png \
 		  most_ascensions_density_f.png front_view_f.png \
-		  pudding_award_f.png lowest_score.png lowest_score_f.png
+		  pudding_award_f.png lowest_score.png lowest_score_f.png \
+          alignments.png
 
 # Postprocessing normalizes the images. The parameters may need tuning...
 # Current effect is just equalization. It makes colors much more vivid
@@ -29,9 +30,10 @@ postprocess: ascended.png grand_prize.png genders.png \
              most_ascensions.png most_ascensions_density.png \
              front_view.png pudding_award.png \
 			 analog_clock.png digital_clock.png \
-			 lowest_score.png
+			 lowest_score.png alignments.png 
 	convert -equalize ascended.png ascended_f.png
 	convert -equalize genders.png genders_f.png
+	convert -equalize alignments.png alignments_f.png
 	convert -equalize grand_prize.png grand_prize_f.png
 	convert -equalize most_ascensions.png most_ascensions_f.png
 	convert -equalize most_ascensions_density.png most_ascensions_density_f.png
@@ -68,6 +70,11 @@ grand_prize.png: grand_prize.pov ${COMMON_POVS}
 # Two trophies, one pink, one blue
 genders.png: genders.pov ${COMMON_POVS}
 	povray +A +AM2 +W400 +H300 +UA genders.pov
+
+# Alignments trophy
+# Three trophies, black, white, gray
+alignments.png: alignments.pov ${COMMON_POVS}
+	povray +A +AM2 +W400 +H300 +UA alignments.pov
 
 # Most Ascensions
 # Many trophies side by side without seals
