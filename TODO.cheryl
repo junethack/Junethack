@@ -8,6 +8,10 @@ HTML
     login: remove placeholder text
     scoreboard: implement design in scoreboard template
     navigation: work out which header image to go where (to take up less header space)
+    user home:
+    clan home:
+    user public:
+    account management: ?
 CSS
     scoreboard:
 
