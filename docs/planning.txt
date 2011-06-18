@@ -1,0 +1,89 @@
+PLANNING
+Anyone please correct as appropriate, I didn't know where else to put this so I've put this here.  Super rough guide, but we need somewhere to get organised.  Xiella
+
+----
+1. functional requirements.
+    primary requirements are high priority.
+    secondary requirements may be implemented later or not at all.
+    NB: I think player = "user" in the code
+2. pages
+3. timeline
+4. allocation/log
+
+----
+1. Functional requirements
+    Primary:
+        unauthenticated
+        VISITOR
+        - visitor can sign up to be a player
+        - visitor can look up current performance on the various trophies
+        - visitor can view a player's progress (eg profile)
+        - visitor can view a clan's progress (eg profile)
+        - visitor can get link to particular server
+        authenticated
+        PLAYER
+        - player can create a clan, with own account as clan creator
+        - player (clan creator) can remove other players to the clan
+        - ?player (clan creator) can add other players to the clan
+    Secondary functional requirements:
+        unauthenticated
+        VISITOR
+        - visitor can report a bug
+        authenticated
+        PLAYER
+        - ?player can suggest other players to be added to the clan
+        - ?player can get links directly to dumplogs on server if available
+        - player (clan creator) can edit clan profile page
+        - player can edit own profile page
+        authenticated admin
+        ADMIN
+        - ?admin can add a post on on main page
+        - ?admin can delete a post
+
+----
+2. Pages
+(and what they link to/from)
+
+    unauthenticated:
+    1   splash/index
+        > 11 navigation
+        > 3 register
+        > 12 footer
+    2   login
+        > 11 navigation
+        > 12 footer
+    3   register
+        > 11 navigation
+        > 12 footer
+    4   scoreboard
+        > 11 navigation
+        > 12 footer
+    5   help/about
+        > 11 navigation
+        > 12 footer
+    6   user profile (multiple)
+        > 11 navigation
+        > 12 footer
+    11  navigation
+        > 1 splash/index
+        > 2 login
+        > 4 scoreboard
+        > 5 help/about
+    12  footer
+        > 5 help/about
+
+    authenticated
+    7   home
+        > 11 navigation
+        > 12 footer
+    8   clan home
+        > 11 navigation
+        > 12 footer
+    9   account management
+        > 11 navigation
+        > 12 footer
+
+    authenticated admin
+    10  edit main page
+        > 11 navigation
+        > 12 footer
