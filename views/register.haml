@@ -1,13 +1,57 @@
-!!! 5
+<!doctype html>
 %html
-	%head
-		%title Register Account
-	%body
-		%form#register{:method => 'POST', :action => '/create'}
-			%label{:for => 'username'} Username
-			%input#username{:type => 'text', :name => 'username'}
-			%label{:for => 'password'} Password
-			%input#password{:type => 'password', :name => 'password'}
-			%label{:for => 'confirm'} Confirm password
-			%input#confirm{:type => 'password', :name => 'confirm'}
-			%input{:type => 'submit', :value => 'register'}
+  %head
+    %meta{:content => "application/xhtml+xml;charset=utf-8", "http-equiv" => "content-type"}/
+    %link{:href => "style-xiella.css", :rel => "stylesheet", :type => "text/css"}/
+    %title Junethack
+  %body
+    #container
+      #topnav.navigation
+        %nav
+          / use of the nav element: http://www.webteacher.ws/2009/07/09/html5-the-nav-element
+          %h1
+            Navigation
+          %ul
+            %li
+              %a{:href => "/"} Home
+            %li
+              %a{:href => "/login"} Login
+            %li
+              %a{:href => "#"} Scoreboard
+            %li
+              %a{:href => "#"} Help
+          %span.clear
+      .hcenter
+        %p
+          %img{:alt => "Logo", :src => "banner_at2.png"}/
+      .content_bulk
+        .text_content_wrapper
+          .text_content
+            %form#register_form{:action => "/create", :method => "post"}
+              %fieldset
+                #username_row
+                  %label{:for => "username"} Username:
+                  %input#username{:name => "username", :type => "textbox", :value => ""}/
+                  .form_msg
+                    Field required
+                  %span.clear
+                #password_row
+                  %label{:for => "password"} Password:
+                  %input#password{:name => "password", :type => "password", :value => ""}/
+                  .form_msg
+                    Field required
+                  %span.clear
+                #confirm_row
+                  %label{:for => "confirm"} Confirm Password:
+                  %input#confirm{:name => "confirm", :type => "password", :value => ""}/
+                  .form_msg
+                    Field required
+                  %span.clear
+                %input#submit{:name => "submit", :type => "submit", :value => "Register!"}/
+          %span#end_of_content_spacer.clear
+      #footer
+        %footer
+          %a{:href => "about"} About this Site
+          (c) 2011
+          %a{:href => "authors"} junethack developers
+    / end of container

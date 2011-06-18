@@ -81,7 +81,7 @@ most_ascensions_density.png: most_ascensions_density.pov ${COMMON_POVS}
 
 # P letters. (looks a little crappy IMO --Adeon)
 pudding_award.png: pudding_award.pov ${COMMON_POVS}
-	povray +A +AM2 +W400 +H300 +P +UA pudding_award.pov
+	povray +A +AM2 +W400 +H300 +UA pudding_award.pov
 
 # Large render for seeing details on the trophy
 front_view.png: front_view.pov ${COMMON_POVS}
