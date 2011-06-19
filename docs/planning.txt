@@ -1,7 +1,7 @@
 PLANNING
-Anyone please correct as appropriate, I didn't know where else to put this so I've put this here.  Super rough guide, but we need somewhere to get organised.  Xiella
 
 ----
+CONTENTS
 1. functional requirements.
     primary requirements are high priority.
     secondary requirements may be implemented later or not at all.
@@ -12,6 +12,8 @@ Anyone please correct as appropriate, I didn't know where else to put this so I'
 
 ----
 1. Functional requirements
+(Please modify as appropriate)
+
     Primary:
         unauthenticated
         VISITOR
@@ -41,8 +43,8 @@ Anyone please correct as appropriate, I didn't know where else to put this so I'
         - ?admin can delete a post
 
 ----
-2. Pages
-(and what they link to/from)
+2. Pages, and what they link to/from
+(Please modify as appropriate)
 
     unauthenticated:
     1   splash/index
@@ -87,3 +89,39 @@ Anyone please correct as appropriate, I didn't know where else to put this so I'
     10  edit main page
         > 11 navigation
         > 12 footer
+
+----
+3. Timeline
+(Please modify this as appropriate)
+
+Deadline summary as at 18 June 2011:
+	Target tournament date is 2-17 July
+	Live: 2 July
+	Working prototype: 25 June
+		1 week til working prototype
+		2 weeks til live
+
+----
+4. Allocation/log
+(Please modify this as appropriate)
+
+Tasks to complete before prototype date:
+	Deciding how to market?
+	Mockups of remaining pages (Cheryl)
+		Implement Adeon's images
+	Integration of views with logic
+	Figure out logic (eg xlogfiles)
+	Clans?
+	Implement at least a placeholder or basic information for all required functionality
+
+Tasks to complete after prototype date and before going live:
+	Marketing?
+		Giving various servers a text "ad" so they can advertise it accurately?
+		(Wiki page?)
+		Fleshing out a help page/FAQ?
+	Testing?
+	Debugging?
+	Usability?
+	Separating out view files if not done already
+	Clientside scripting if any
+	anything else?
