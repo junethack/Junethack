@@ -65,6 +65,7 @@ a:hover {
     color: #800;
     text-decoration: underline;
 }
+#footer,
 /* topnav */
 .text_content_wrapper, #topnav {
     background-color: #ddd;
@@ -158,7 +159,6 @@ a:hover {
     text-align: center;
     /* space between nav and title */
     margin-top: 2.5em;
-    margin-bottom: 1em;
 }
 
 /**************************
@@ -168,8 +168,9 @@ a:hover {
 **************************/
 
 /* space between title and rest of content */
+/*  locate space here to avoid future margin collapse */
 .content_bulk {
-    margin-top: 0em;
+    margin-top: 1em;
 }
 
 .signup_text {
@@ -322,7 +323,6 @@ input[type=submit].active:hover {
     line-height: 50px;
     text-align: center;
     margin: 20px 0;
-    background-color: #eee;
     -webkit-box-shadow: inset 0px 0px 10px #888;
     -moz-box-shadow: inset 0px 0px 10px #888;
     box-shadow: inset 0px 0px 10px #888;
