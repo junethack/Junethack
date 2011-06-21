@@ -51,6 +51,9 @@ h1, h2, h3, h4, h5, h6 {
 body {
     overflow-y: scroll;
     background-color: #eee;
+    background-image: url('background.png');
+    background-repeat: no-repeat;
+    background-position: top center;
     font-size: 0.8em;
 }
 a {
@@ -212,6 +215,9 @@ a:hover {
     -webkit-box-shadow: inset 0px 0px 10px #888;
     -moz-box-shadow: inset 0px 0px 10px #888;
     box-shadow: inset 0px 0px 10px #888;
+    filter:alpha(opacity=90); 
+    -moz-opacity: 0.9; 
+    opacity: 0.9; 
 }
 .text_content {
     margin: 0 30px;
@@ -316,6 +322,13 @@ input[type=submit].active:hover {
     line-height: 50px;
     text-align: center;
     margin: 20px 0;
+    background-color: #eee;
+    -webkit-box-shadow: inset 0px 0px 10px #888;
+    -moz-box-shadow: inset 0px 0px 10px #888;
+    box-shadow: inset 0px 0px 10px #888;
+    filter:alpha(opacity=90); 
+    -moz-opacity: 0.9; 
+    opacity: 0.9; 
 }
 
 /**************************

@@ -94,3 +94,7 @@ pudding_award.png: pudding_award.pov ${COMMON_POVS}
 front_view.png: front_view.pov ${COMMON_POVS}
 	povray +A +AM2 +W800 +H600 +UA front_view.pov
 
+# Background image for the website
+nethack_bg.png: nethack_bg.pov
+	povray +A +AM2 +W1280 +H800 +UA nethack_bg.pov
+
