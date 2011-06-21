@@ -5,6 +5,12 @@
     %link{:href => "style-xiella.css", :rel => "stylesheet", :type => "text/css"}/
     %title Junethack
   %body
+    #messages
+      - for message in @messages
+        %div.message= message
+    #errors
+      - for error in @errors
+        %div.error= error
     #container
       #topnav.navigation
         %nav

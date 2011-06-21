@@ -21,7 +21,7 @@ class User
     
         def self.authenticate(login, pass)
                 u = User.first(:login => login)
-                puts "user not found" and return unless u
+		return false unless u
                 User.encrypt(pass, u.salt) == u.hashed ? u : false
         end
 	def games

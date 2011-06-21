@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'data_mapper'
-
+require 'dm-serializer'
 $dbname = "junethack.db"
 
 DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{$dbname}")

@@ -5,6 +5,15 @@ require 'haml'
 
 enable :sessions
 
+before do
+	@messages = session["messages"] || []
+	@errors = session["errors"] || []
+	puts "got #{@messages.length} messages"
+	puts "and #{@errors.length} errors"
+	session["messages"] = []
+	session["errors"] = []
+end
+
 get "/" do
 	haml :splash
 end
@@ -14,13 +23,14 @@ get "/login" do
 end
 
 post "/login" do
-	puts "got params #{params.inspect}"
 	
 	if user = User.authenticate(params["username"], params["password"])
 		session['user_id'] = user.id
 		puts "Id is #{user.id}"
+		session["messages"] 
 		redirect "/home"
 	else
+		session["errors"] = ["Could not log in"]
 		redirect "/"
 	end
 end
@@ -31,7 +41,6 @@ get "/register" do
 end
 
 get "/home" do
-	puts "Id is #{session['user_id']}"	
 	redirect "/" and return unless session['user_id']
 	@user = User.get(session['user_id'])
 	@games = @user.games	
@@ -42,14 +51,16 @@ post "/create" do
 	errors = []
 	errors.push("password and confirmation do not match") if params["confirm"] != params["password"]
 	errors.push("username does already exist") if User.first(:name => params[:username])
-	puts errors.inspect
-	redirect "/register", :params => {:messages => errors} and return unless errors.empty?
-	puts params.inspect
+	session['errors'] = errors
+	puts "session errors are #{session['errors'].inspect}"
+	redirect "/register" and return unless session['errors'].empty?
 	user = User.new(:login => params["username"])
 	user.password = params["password"]
 	if user.save
-		redirect "/", :params => {:messages => ["Registration successful. Please log in."]}
+		session['messages'] = "Registration successful. Please log in."
+		redirect "/"
 	else
-		redirect "/register", :params => {:messages => ["Could not create account."]}
+		session['errors'] = "Could not register account"
+		redirect "/register"
 	end
 end	

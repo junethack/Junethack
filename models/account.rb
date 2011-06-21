@@ -17,12 +17,13 @@ class Account                           #join model
 	end
 
 	def invite invitation
+		self.invitations ||= []
 		self.invitations.push invitation
 		self.save
 	end
 
 	def respond_invite invitation, accept
-		if clan = Clan.get(invitation['clan_id'])
+		if clan = Clan.first(:name => invitation['clan_id'])
 			invitation['status'] = accept ? 'accept' : 'decline'
 			clan.get_invitation_response invitation
 		end
