@@ -43,7 +43,7 @@ namespace :bogus do
 
     task :add_game, :games do |t, args|
         
-        deaths = [        #some deaths, feel free to add more :P
+        deaths = [        #some deaths, feel free to add more :P #done -nooodl
             "killed by a newt",
             "petrified by a chickatrice corpse",
             "killed by a soldier ant",
@@ -54,7 +54,17 @@ namespace :bogus do
             "killed by brainlessness",
             "killed by Vlad the Impaler, while helpless",
             "killed by the Wizard of Yendor",
-            "ascended"
+            "killed by self-genocide",
+            "killed by overexertion",
+            "died of starvation",
+            "killed by a touch of death",
+            "poisoned by Pestilence",
+            "killed by a death ray",
+            "escaped",
+            "dissolved in molten lava",
+            "killed by an Archon",
+            "killed by Master Kaen",
+            "ascended",
         ]
         args.with_defaults(:games => 1)
         args[:games].to_i.times do

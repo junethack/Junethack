@@ -2,8 +2,14 @@ require 'rubygems'
 require 'sinatra'
 require 'database'
 require 'haml'
+require 'fetch_games'
+require 'rufus/scheduler'
 
 enable :sessions
+
+# Scheduler: fetch game data every hour (xx:00)
+scheduler = Rufus::Scheduler.start_new
+scheduler.cron('0 * * * *') { fetch_all }
 
 before do
     @messages = session["messages"] || []
@@ -63,4 +69,22 @@ post "/create" do
         session['errors'] = "Could not register account"
         redirect "/register"
     end
-end    
+end
+
+# This is just for testing, but hey, it works.
+get "/scores/:name" do |name|
+    result = "<h1>Scores for #{ name }</h1>"
+    User.first(:name => name).accounts.each do |acc|
+        result += "<h2>#{ acc.server.name }</h2>\n<ul>"
+        acc.server.games.each do |game|
+            next if game.name != acc.name
+            entry = [:name, :role, :race, :gender, :align, :points, :death] \
+                    .map{ |s| game.attributes[s] } \
+                    .join ', '
+            result += "<li>#{entry}</li>\n"
+        end
+        result += "</ul>"
+    end
+    result
+end
+

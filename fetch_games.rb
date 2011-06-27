@@ -21,9 +21,9 @@ def fetch_all
                 server.xlogcurrentoffset = header['Content-Length'].to_i
                 puts "So many games ... #{games.length}"
                 for hgame in games
-                    puts hgame.inspect
+                    #puts hgame.inspect
                     game = server.games.create!(hgame.merge({"server" => server}))
-                    puts "Created game #{game.inspect}"
+                    #puts "Created game #{game.inspect}"
                     if game.save
                         puts "created!"
                     else    
