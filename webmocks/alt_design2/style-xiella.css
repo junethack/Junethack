@@ -317,7 +317,8 @@ input {
     color: red;
     font-size: 85%;
 }
-#login_form input[type=submit] {
+/* could change this later if we get page-specific IDs. */
+form#login_form > fieldset > input[type=submit] {
     float: none;
     margin: 0 auto;
     margin-top: 20px;
