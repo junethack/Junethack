@@ -28,6 +28,10 @@ get "/login" do
     haml :login
 end
 
+get "/about" do
+    haml :about
+end
+
 post "/login" do
     
     if user = User.authenticate(params["username"], params["password"])
