@@ -25,19 +25,23 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="719"
+     inkscape:window-width="1360"
+     inkscape:window-height="721"
      id="namedview3027"
-     showgrid="false"
-     inkscape:zoom="0.90330949"
-     inkscape:cx="338.44591"
-     inkscape:cy="99.406596"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     showgrid="true"
+     inkscape:zoom="1.2774725"
+     inkscape:cx="244.26589"
+     inkscape:cy="115.64357"
+     inkscape:window-x="-2"
+     inkscape:window-y="-3"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2982"
      showguides="true"
-     inkscape:guide-bbox="true" />
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3056" />
+  </sodipodi:namedview>
   <defs
      id="defs2984">
     <linearGradient
@@ -299,13 +303,13 @@
        y="32.500011"
        x="211.66667" /></text>
   <text
-     x="271.07123"
+     x="271.07587"
      y="33.007023"
      id="text2994"
      xml:space="preserve"
      style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
      sodipodi:linespacing="125%"><tspan
-       x="271.07123"
+       x="271.07587"
        y="33.007023"
        dx="0 0 0 0"
        rotate="0 0 0 0 0 0 0 0"
@@ -369,24 +373,9 @@
          d="m 290,140 30,-20 -10,0 z" />
     </g>
   </g>
-  <text
-     x="262.64249"
-     y="148.08897"
-     id="text6349"
-     xml:space="preserve"
-     style="font-size:25.60000038px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     sodipodi:linespacing="125%"><tspan
-       x="262.64249"
-       y="148.08897"
-       id="tspan6351"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:UnGraphic;-inkscape-font-specification:UnGraphic Bold">J<tspan
-   id="tspan6353"
-   style="font-size:17.92000008px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:UnGraphic;-inkscape-font-specification:UnGraphic Bold">ULY</tspan> T<tspan
-   id="tspan6355"
-   style="font-size:17.92000008px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:UnGraphic;-inkscape-font-specification:UnGraphic Bold">OURNAMENT</tspan></tspan></text>
   <g
      id="g3097"
-     transform="translate(4.7765292,120.00001)"
+     transform="translate(4.77653,120.00001)"
      style="filter:url(#filter3104)">
     <path
        d="m 250,120 a 40,40 0 1 1 -80,0 40,40 0 1 1 80,0 z"
@@ -405,5 +394,38 @@
          y="-25.849342"
          id="tspan3076"
          style="font-size:60px">@</tspan></text>
+  </g>
+  <g
+     id="g3058"
+     transform="translate(-17.390024,0)">
+    <text
+       sodipodi:linespacing="125%"
+       style="font-size:25.60000038px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"
+       id="text6349"
+       y="148.08897"
+       x="262.64249"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:UnGraphic;-inkscape-font-specification:UnGraphic Bold"
+         id="tspan6351"
+         y="148.08897"
+         x="262.64249">S<tspan
+   id="tspan3053"
+   style="font-size:17.92000008px">UMMER</tspan> T<tspan
+   style="font-size:17.92000008px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:UnGraphic;-inkscape-font-specification:UnGraphic Bold"
+   id="tspan6355" /></tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3055"
+       y="148"
+       x="362"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:UnGraphic;-inkscape-font-specification:UnGraphic"
+       xml:space="preserve"><tspan
+         style="font-size:17.20000076px;font-weight:bold;font-family:UnGraphic;-inkscape-font-specification:UnGraphic Bold"
+         y="148"
+         x="362"
+         id="tspan3057"
+         sodipodi:role="line"><tspan
+   id="tspan3059"
+   style="font-size:17.90000153px;font-weight:bold;font-family:UnGraphic;-inkscape-font-specification:UnGraphic Bold">OURNAME</tspan>NT</tspan></text>
   </g>
 </svg>
