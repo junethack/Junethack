@@ -317,7 +317,7 @@ input {
     color: red;
     font-size: 85%;
 }
-input[type=submit] {
+#login_form input[type=submit] {
     float: none;
     margin: 0 auto;
     margin-top: 20px;
