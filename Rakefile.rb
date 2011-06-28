@@ -30,7 +30,7 @@ namespace :bogus do
         
         puts "args were: #{args.inspect}"
         raise "No user name specified" unless args[:name]
-        user = User.new(:name => args[:name], :login => args[:name])
+        user = User.new(:login => args[:name])
         user.password = args[:name]
         user.save
         if args[:servername]

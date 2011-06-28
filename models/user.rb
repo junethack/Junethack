@@ -5,7 +5,6 @@ class User
     has n, :servers, :through => :accounts
 
     property :id,     Serial
-    property :name,   String
     property :login,  String
     property :hashed, String, :length => 200
 
