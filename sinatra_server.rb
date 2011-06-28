@@ -54,8 +54,16 @@ end
 get "/home" do
     redirect "/" and return unless session['user_id']
     @user = User.get(session['user_id'])
-    @games = @user.games    
+    @games = @user.games
     haml :home
+end
+
+post "/add_server_account" do
+    redirect "/" and return unless session['user_id']
+    # TODO automatically do verification and inform user if it fails
+    account = Account.create(:user => User.get(session['user_id']), :server => Server.get(params[:server]), :name => params[:user], :verified => true)
+    session['errors'] = "Couldn't create account!" unless account
+    redirect "/home"
 end
 
 post "/create" do

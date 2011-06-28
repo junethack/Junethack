@@ -3,19 +3,31 @@
         .text_content
             #greeting
                 = "Hi " + @user.login
-            %table#accountlist
-                %tr
-                    %th
-                        Server
-                    %th	
-                        Account
-                - for account in @user.accounts
-                    %tr.account
-                        
-                        %td
-                            = account.server.name
-                        %td
-                            = account.name
+            %form{ :action => "/add_server_account", :method => "post"}
+                %table#accountlist
+                    %tr
+                        %th
+                        %th Server
+                        %th Account
+                    - for account in @user.accounts
+                        %tr.account
+                            %td
+                            %td= account.server.name
+                            %td= account.name
+
+                    - server_accounts = (Server.all - @user.servers)
+                    - if server_accounts.size > 0
+                        %tr
+                            %fieldset
+                                %td
+                                    %input{:type => "submit", :value => "+", :class => "small_button"}
+                                %td
+                                    %select{:name => "server"}
+                                        - server_accounts.each do |s|
+                                            %option{:value => s.id}= s.name
+                                %td
+                                    %input{:type => "text", :name => "user", :class => "text"}
+
             %table#gamelist
                 %tr
                     %th
@@ -26,9 +38,6 @@
                         Death
                 - for game in @games
                     %tr.game
-                        %td
-                            = game.name
-                        %td
-                            = game.server.name
-                        %td
-                            = game.death
+                        %td= game.name
+                        %td= game.server.name
+                        %td= game.death

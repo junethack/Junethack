@@ -356,6 +356,14 @@ form#login_form > fieldset > input[type=submit].active:hover {
     color: #fff;
     background-color: #c22;
 }
+
+input[type="submit"].small_button {
+    height: auto;
+    width: auto;
+    margin: 2px;
+    padding: 0;
+}
+
 /**************************
 **                       **
 **     footer styles     **

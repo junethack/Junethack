@@ -14,6 +14,7 @@ HTML
     account management: ?
 CSS
     scoreboard:
+    <form><select> on userpage when logged in
 
 ----
 TO FIND OUT:
