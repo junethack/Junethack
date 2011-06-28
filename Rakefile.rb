@@ -2,7 +2,7 @@ require 'rubygems'
 require 'database'
 require 'fetch_games'
 require 'date'
-
+require 'scrypt'
 namespace :bogus do
 
     names = %w(r4wrmage ad3on k3rio bh44k c4smith789 st3nno)    #hi #junethack
@@ -22,7 +22,7 @@ namespace :bogus do
     task :add_servers do
         Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0)
         Server.create(:name => "test server 2", :url => "localhost", :xlogurl => "file://test_xlog2.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0)
-
+	puts "added #{ Server.all.length } test servers"
     end
 
 
