@@ -37,7 +37,7 @@ post "/login" do
         redirect "/home"
     else
         session["errors"] = ["Could not log in"]
-        redirect "/"
+        redirect "/login"
     end
 end
     
