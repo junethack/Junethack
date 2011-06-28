@@ -13,10 +13,6 @@ class User
         self.hashed = SCrypt::Password.create(pw, :max_time => 0.5)
     end 
 
-    def self.encrypt(pw, salt)
-        Digest::SHA256.hexdigest(pw + salt)
-    end 
-    
     def self.authenticate(login, pass)
         u = User.first(:login => login)
         return false unless u
