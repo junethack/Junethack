@@ -1,0 +1,36 @@
+<!doctype html>
+%html
+  %head
+    %meta{:content => "application/xhtml+xml;charset=utf-8", "http-equiv" => "content-type"}/
+    %link{:href => "style-xiella.css", :rel => "stylesheet", :type => "text/css"}/
+    %title Junethack
+  %body
+    #container
+      #topnav.navigation
+        %nav
+          / use of the nav element: http://www.webteacher.ws/2009/07/09/html5-the-nav-element
+          %h1
+            Navigation
+          %ul
+            %li.current_nav_page
+              %a{:href => "#"} Home
+            %li
+              %a{:href => "/login"} Login
+            %li
+              %a{:href => "#"} Scoreboard
+            %li
+              %a{:href => "#"} Help
+          %span.clear
+      .hcenter
+        %p
+          %img{:alt => "Logo", :src => "banner_at2.png"}/
+      - if !@messages.empty? then
+        #messages
+          %div
+          - for message in @messages
+            %div.message= message
+      - if !@errors.empty? then
+        #errors
+          - for error in @errors
+            %div.error= error
+      =yield

@@ -203,6 +203,35 @@ a:hover {
     background-color: #c22;
 }
 
+/**
+ Messages and errors
+ (those that come, e.g. when you fail to log in
+ */
+#errors
+{
+    margin: 5px;
+    padding: 5px;
+    background-color: #f55;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 5px 20px #555;
+    -moz-box-shadow: 0px 5px 20px #555;
+    box-shadow: 0px 5px 20px #555;
+}
+#messages
+{
+    margin: 5px;
+    padding: 5px;
+    background-color: #5ff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 5px 20px #555;
+    -moz-box-shadow: 0px 5px 20px #555;
+    box-shadow: 0px 5px 20px #555;
+}
+
 /**************************
 **                       **
 **    body text styles   **
