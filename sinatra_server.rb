@@ -4,6 +4,7 @@ require 'database'
 require 'haml'
 require 'fetch_games'
 require 'rufus/scheduler'
+require 'scrypt'
 
 enable :sessions
 

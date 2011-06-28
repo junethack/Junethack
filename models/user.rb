@@ -7,12 +7,10 @@ class User
     property :id,     Serial
     property :name,   String
     property :login,  String
-    property :hashed, String, :length => 64
-    property :salt,   String, :length => 64
+    property :hashed, String, :length => 200
 
     def password=(pw)
-        self.salt = Digest::SHA256.hexdigest("#{rand}") #generate random hash
-        self.hashed = User.encrypt(pw, self.salt)
+        self.hashed = SCrypt::Password.create(pw, :max_time => 0.5)
     end 
 
     def self.encrypt(pw, salt)
@@ -22,7 +20,7 @@ class User
     def self.authenticate(login, pass)
         u = User.first(:login => login)
         return false unless u
-        User.encrypt(pass, u.salt) == u.hashed ? u : false
+        (SCrypt::Password.new(u.hashed) == pass) ? u : false
     end
 
     def games
