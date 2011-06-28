@@ -317,13 +317,24 @@ input {
     color: red;
     font-size: 85%;
 }
-/* could change this later if we get page-specific IDs. */
+input[type=submit] {
+    padding: 5px 10px;
+    height: auto;
+    line-height: auto;
+    width: auto;
+    background-color: #bbb;
+    border: 1px outset #eee;
+}
+/* use this class on a submit button if you would like it to be big and red. */
+input[type=submit].bigred,
 form#login_form > fieldset > input[type=submit] {
+    padding: 0;
+    height: 50px;
+    width: 120px;
     float: none;
     margin: 0 auto;
     margin-top: 20px;
     border: 0;
-    height: 50px;
     font-size: 1.4em;
     text-decoration: none;
     -webkit-border-radius: 50px;
@@ -335,9 +346,12 @@ form#login_form > fieldset > input[type=submit] {
     color: #fff;
     background-color: #a00;
 }
-input[type=submit]:hover,
-input[type=submit].active,
-input[type=submit].active:hover {
+input[type=submit].bigred:hover,
+input[type=submit].bigred.active:hover,
+input[type=submit].bigred.active:hover,
+form#login_form > fieldset > input[type=submit]:hover,
+form#login_form > fieldset > input[type=submit].active,
+form#login_form > fieldset > input[type=submit].active:hover {
     cursor: pointer;
     color: #fff;
     background-color: #c22;
