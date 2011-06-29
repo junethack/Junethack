@@ -27,5 +27,18 @@ class User
     def games
         self.accounts.map{|account| account.get_games}.flatten
     end
+
+    # Gets last 10 games for all accounts.
+    # Ordered by time.
+    def get_10_last_games
+        ordered_games = [ ]
+        num_games = 0
+        games.sort_by{|et| et.endtime}.each do |game|
+            ordered_games.push(game)
+            num_games += 1
+            break unless num_games < 10
+        end
+        ordered_games.reverse
+    end
 end
 

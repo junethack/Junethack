@@ -274,6 +274,38 @@ a:hover {
     margin: 0 auto;
 }
 
+/* TABLES */
+/* Now this one is for score listing */
+.scorelisting table
+{
+    border-width: 2px;
+    border-style: solid;
+    border-color: gray;
+    border-collapse: collapse;
+    /* Hard limit on width */
+    width: 480px;
+}
+.scorelisting th
+{
+    text-align: left;
+    padding-right: 20px;
+}
+#cell1 td
+{
+    background-color: #ccc;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    padding-right: 10px;
+}
+#cell2 td
+{
+    background-color: #bbb;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
 /**************************
 **                       **
 **      form styles      **

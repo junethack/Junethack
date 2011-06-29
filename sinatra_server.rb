@@ -34,7 +34,6 @@ get "/about" do
 end
 
 post "/login" do
-    
     if user = User.authenticate(params["username"], params["password"])
         session['user_id'] = user.id
         puts "Id is #{user.id}"
@@ -47,7 +46,6 @@ post "/login" do
 end
     
 get "/register" do
-    
     haml :register
 end
 
@@ -68,8 +66,8 @@ end
 
 post "/create" do
     errors = []
-    errors.push("password and confirmation do not match") if params["confirm"] != params["password"]
-    errors.push("username does already exist") if User.first(:login => params[:username])
+    errors.push("Password and confirmation do not match.") if params["confirm"] != params["password"]
+    errors.push("Username already exists.") if User.first(:login => params[:username])
     session['errors'] = errors
     puts "session errors are #{session['errors'].inspect}"
     redirect "/register" and return unless session['errors'].empty?
@@ -84,20 +82,30 @@ post "/create" do
     end
 end
 
-# This is just for testing, but hey, it works.
 get "/scores/:name" do |name|
-    result = "<h1>Scores for #{ name }</h1>"
-    User.first(:login => name).accounts.each do |acc|
-        result += "<h2>#{ acc.server.name }</h2>\n<ul>"
-        acc.server.games.each do |game|
-            next if game.name != acc.name
-            entry = [:name, :role, :race, :gender, :align, :points, :death] \
-                    .map{ |s| game.attributes[s] } \
-                    .join ', '
-            result += "<li>#{entry}</li>\n"
-        end
-        result += "</ul>"
+    # Is the user there? If not, just redirect to home
+    @u = User.first(:login => name)
+    if @u.nil? then
+        session['errors'] = "No such user."
+        redirect "/"
+        return
     end
-    result
+    @username = @u.login
+    @last_10_games = @u.get_10_last_games
+    haml :user_scores
+
+    #result = "<h1>Scores for #{ name }</h1>"
+    #User.first(:login => name).accounts.each do |acc|
+    #    result += "<h2>#{ acc.server.name }</h2>\n<ul>"
+    #    acc.server.games.each do |game|
+    #        next if game.name != acc.name
+    #        entry = [:name, :role, :race, :gender, :align, :points, :death] \
+    #                .map{ |s| game.attributes[s] } \
+    #                .join ', '
+    #        result += "<li>#{entry}</li>\n"
+    #    end
+    #    result += "</ul>"
+    #end
+    #result
 end
 

@@ -1,0 +1,30 @@
+.content_bulk
+  .text_content_wrapper
+    .text_content
+      %h2
+        Scores for player
+        =@username + "."
+      - if @last_10_games.empty?
+        %p
+          This player has not yet played any games the tournament is aware of.
+      - else
+        %h3 
+          Last 10 games recorded:
+        .scorelisting
+          %table
+            %tr
+              %th Name 
+              %th Points
+              %th Killer
+              %th Time
+            - count = 0
+            - @last_10_games.each do |game|
+              - style = (count % 2) == 0 ? "cell1" : "cell2"
+              - count += 1
+              %tr{:id => style}
+                %td= game.name
+                %td= game.points
+                %td= game.death
+                %td= Time.at(game.endtime.to_i).getutc.strftime("%m/%d %H:%M")
+    %span#end_of_content_spacer.clear
+/ end of container
