@@ -1,3 +1,5 @@
+require 'scrypt'
+
 class User
     include DataMapper::Resource
 

@@ -1,10 +1,10 @@
 require 'rubygems'
+require 'bundler/setup'
 require 'sinatra'
 require 'database'
 require 'haml'
 require 'fetch_games'
 require 'rufus/scheduler'
-require 'scrypt'
 
 enable :sessions
 
@@ -69,7 +69,7 @@ end
 post "/create" do
     errors = []
     errors.push("password and confirmation do not match") if params["confirm"] != params["password"]
-    errors.push("username does already exist") if User.first(:name => params[:username])
+    errors.push("username does already exist") if User.first(:login => params[:username])
     session['errors'] = errors
     puts "session errors are #{session['errors'].inspect}"
     redirect "/register" and return unless session['errors'].empty?
@@ -87,7 +87,7 @@ end
 # This is just for testing, but hey, it works.
 get "/scores/:name" do |name|
     result = "<h1>Scores for #{ name }</h1>"
-    User.first(:name => name).accounts.each do |acc|
+    User.first(:login => name).accounts.each do |acc|
         result += "<h2>#{ acc.server.name }</h2>\n<ul>"
         acc.server.games.each do |game|
             next if game.name != acc.name
