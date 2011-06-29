@@ -16,6 +16,10 @@ class User
         self.hashed = User.encrypt(pw, self.salt)
     end 
 
+    def self.encrypt(pw, salt)
+        Digest::SHA256.hexdigest(pw + salt)
+    end 
+    
     def self.authenticate(login, pass)
         u = User.first(:login => login)
         return false unless u
