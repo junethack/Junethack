@@ -1,4 +1,5 @@
 require 'rubygems'
+require "bundler/setup"
 require 'database'
 require 'fetch_games'
 require 'date'
