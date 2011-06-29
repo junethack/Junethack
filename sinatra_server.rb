@@ -93,7 +93,7 @@ get "/scores/:name" do |name|
     end
     @username = @u.login
     @last_10_games = limit_by_10(get_last_games & @u.games)
-    @most_ascended_users = limit_by_10(most_ascensions_users(&u.games))
+    @most_ascended_users = limit_by_10(most_ascensions_users(@u.games))
     haml :user_scores
 end
 
