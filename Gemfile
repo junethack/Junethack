@@ -7,6 +7,3 @@ gem "haml"
 gem "sinatra"
 gem "rufus-scheduler"
 
-git "git@github.com:bhaak/scrypt.git" do
-  gem "scrypt", "~> 1.0.2"
-end
