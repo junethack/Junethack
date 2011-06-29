@@ -41,6 +41,10 @@ namespace :bogus do
         end
     end
 
+    task :add_a_lot_of_games do
+        Rake::Task['bogus:add_game'].invoke 500
+    end
+
     task :add_game, :games do |t, args|
         
         deaths = [        #some deaths, feel free to add more :P #done -nooodl
@@ -70,7 +74,7 @@ namespace :bogus do
         args[:games].to_i.times do
             gender = ["Fem", "Mal"][rand 2]
             align = ["Law","Neu","Cha"][rand 3]
-            death = deaths[rand 11]
+            death = deaths[rand 21]
             game = {
                 :name => names[rand 6],
                 :deaths => rand(3),
