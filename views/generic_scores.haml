@@ -1,0 +1,34 @@
+.text_content.non_top_post
+  %h3 
+    Last 10 games recorded:
+  .scorelisting
+    %table
+      %tr
+        %th Name 
+        %th Points
+        %th Killer
+        %th Time
+      - count = 0
+      - @last_10_games.each do |game|
+        - style = (count % 2) == 0 ? "cell1" : "cell2"
+        - count += 1
+        %tr{:id => style}
+          %td= game.name
+          %td= game.points
+          %td= game.death
+          %td= Time.at(game.endtime.to_i).getutc.strftime("%m/%d %H:%M")
+.text_content.non_top_post
+  %h3 
+    Most ascensions
+  .scorelisting
+    %table
+      %tr
+        %th Name 
+        %th Ascensions
+      - count = 0
+      - @most_ascended_users.each do |username, ascensions|
+        - style = (count % 2) == 0 ? "cell1" : "cell2"
+        - count += 1
+        %tr{:id => style}
+          %td= username
+          %td= ascensions

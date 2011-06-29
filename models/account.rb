@@ -13,6 +13,11 @@ class Account #join model
         self.server.games.select{|game| game.name == self.name}
     end
 
+    def get_ascensions
+        self.server.games.select{|game| game.name == self.name &&
+                                        game.death == 'ascended'}
+    end
+
     def invite invitation
         self.invitations ||= []
         self.invitations.push invitation

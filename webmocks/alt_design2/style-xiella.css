@@ -256,6 +256,11 @@ a:hover {
 .text_content p {
     margin-bottom: 10px;
 }
+.text_content h1 {
+    font-size: 200%;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+}
 .text_content h2 {
     font-size: 150%;
     line-height: 1.5em;

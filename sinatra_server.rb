@@ -5,6 +5,7 @@ require 'database'
 require 'haml'
 require 'fetch_games'
 require 'rufus/scheduler'
+require 'trophy_calculations'
 
 enable :sessions
 
@@ -91,21 +92,14 @@ get "/scores/:name" do |name|
         return
     end
     @username = @u.login
-    @last_10_games = @u.get_10_last_games
+    @last_10_games = limit_by_10(get_last_games & @u.games)
+    @most_ascended_users = limit_by_10(most_ascensions_users(&u.games))
     haml :user_scores
+end
 
-    #result = "<h1>Scores for #{ name }</h1>"
-    #User.first(:login => name).accounts.each do |acc|
-    #    result += "<h2>#{ acc.server.name }</h2>\n<ul>"
-    #    acc.server.games.each do |game|
-    #        next if game.name != acc.name
-    #        entry = [:name, :role, :race, :gender, :align, :points, :death] \
-    #                .map{ |s| game.attributes[s] } \
-    #                .join ', '
-    #        result += "<li>#{entry}</li>\n"
-    #    end
-    #    result += "</ul>"
-    #end
-    #result
+get "/scoreboard" do
+    @last_10_games = limit_by_10(get_last_games)
+    @most_ascended_users = limit_by_10(most_ascensions_users)
+    haml :scoreboard
 end
 

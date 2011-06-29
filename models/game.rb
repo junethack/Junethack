@@ -50,3 +50,4 @@ class Game
         $conducts.map{|c| self.conduct & c[0] == c[0] ? c[2] : ""}.join
     end
 end
+
