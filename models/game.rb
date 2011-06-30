@@ -46,6 +46,11 @@ class Game
     property :death,     String
     property :race,      String
     property :flags,     String
+
+    #acehack-specific properties
+
+    property :carried,  String
+    property :event,    String
     def get_conducts
         $conducts.map{|c| self.conduct & c[0] == c[0] ? c[2] : ""}.join
     end

@@ -17,6 +17,7 @@ namespace :bogus do
     end
 
     task :add_server, :name, :url, :xlogurl do |t, args|
+        puts "add server got #{args.inspect}"
         Server.create(:name => args[:name], :url => args[:url], :xlogurl => args[:xlogurl])
     end                    
     task :add_servers do
