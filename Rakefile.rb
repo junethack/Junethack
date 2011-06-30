@@ -74,6 +74,8 @@ namespace :bogus do
             "ascended",
         ]
         args.with_defaults(:games => 1)
+        xlog1 = File.open "test_xlog.txt", "a"
+        xlog2 = File.open "test_xlog2.txt", "a"
         args[:games].to_i.times do
             gender = ["Fem", "Mal"][rand 2]
             align = ["Law","Neu","Cha"][rand 3]
@@ -107,7 +109,7 @@ namespace :bogus do
                 :race => %w(Dwa Hum Gno Elf)[rand 4],
                 :flags => nil        #dunno what that does
             }
-            sh "echo \"#{game.to_xlog}\" >> #{["test_xlog.txt", "test_xlog2.txt"][rand 2]}"
+            [xlog1, xlog1][rand 2].puts game.to_xlog
         end
     end
 end
