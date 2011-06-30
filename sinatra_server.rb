@@ -50,6 +50,10 @@ get "/register" do
     haml :register
 end
 
+get "/rules" do
+    haml :rules
+end
+
 get "/home" do
     redirect "/" and return unless session['user_id']
     @user = User.get(session['user_id'])
