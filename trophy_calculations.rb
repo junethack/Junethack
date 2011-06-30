@@ -46,7 +46,7 @@ end
     
 # Helper class for calculating ascension density
 class AccountCalc
-    attr_accessor :games, :score, :account
+    attr_accessor :games, :score, :account, :game1, :game2
     def initialize
         @games = [ ]
         @score = 0
@@ -79,7 +79,12 @@ class AccountCalc
         return min_score if min_score >= ascensions
 
         # The initial minimum score that the account will at least have.
-        min_score = (ascensions*ascensions)/(index_end-index_start+1.0)
+        min_score2 = (ascensions*ascensions)/(index_end-index_start+1.0)
+        if min_score < min_score2 then
+            min_score = min_score2
+            @game1 = index_start+1
+            @game2 = index_end+1
+        end
 
         # All the next iterations will have at least one ascension less.
         # If we have score that is always greater than any sequence of games
@@ -149,11 +154,16 @@ def best_sustained_ascension_rate(and_collection=nil)
     users = { }
     # Wrap the thing up to users.
     accounts_c.each do |account, account_class|
-        users[account_class.account.user.login] = account_class.score if 
-            (users[account_class.account.user.login].nil? or
-             users[account_class.account.user.login] < account_class.score)
+        users[account_class.account.user.login] = { } if
+            users[account_class.account.user.login].nil?
+        u = users[account_class.account.user.login]
+        if u[:score].nil? or u[:score] < account_class.score then
+            u[:score] = account_class.score
+            u[:game1] = account_class.game1
+            u[:game2] = account_class.game2
+        end
     end
 
-    users.sort_by{|username, score| -score}
+    users.sort_by{|username, info| -info[:score]}
 end
 
