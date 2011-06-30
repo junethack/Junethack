@@ -2,9 +2,9 @@
   .text_content_wrapper
     .text_content
       %h1
-        Rules and scoring
+	Rules and scoring
       %ul
-        %li
+	%li
 	  Only one tournament account per person; multiple game server accounts
 	  are OK (unless forbidden by a specific game server).
 	%li
@@ -25,32 +25,36 @@
 	      and the remaining players get points according to the ratio
 	      of their best evaluated game to the winner(s)' best evalued
 	      game.
-            %li
-              In case of a tie, all the players with the same evaluation get
-              the same amount of points; in the ranking, they're considered
+	    %li
+	      In case of a tie, all the players with the same evaluation get
+	      the same amount of points; in the ranking, they're considered
 	      as one player.
-            %li
-              The "fastest gametime ascension" competition has turn
-              granularity; the "fastest realtime ascension" competition
+	    %li
+	      The "fastest gametime ascension" competition has turn
+	      granularity; the "fastest realtime ascension" competition
 	      considers the elapsed time to be the delta between start time
-              and end time.   
-        %li
-          The score for trophies is fixed - one point for each trophy;
-          streak trophies are separate from their standard counterpart,
-          the requirement for those is that all the requirements for the
-          trophy are fulfilled in a sequence of ascensions on a single
-          game server account.
-          Achievement trophies yield equal fractions of a point according
+	      and end time.
+            %li
+              The "lowest scoring ascension" competition ignores the depth
+              of the dungeon - the bonus points for the depth are ignored in
+              NetHack, UnNetHack and SporkHack, while AceHack has no problems
+              with that. Games with negative scores are discarded for this
+              competition.
+	%li
+	  The score for trophies is fixed - one point for each trophy;
+	  streak trophies are separate from their standard counterpart,
+	  the requirement for those is that all the requirements for the
+	  trophy are fulfilled in a sequence of ascensions on a single
+	  game server account.
+	  Achievement trophies yield equal fractions of a point according
 	  to how many achievements were obtained in the whole tournament.
-        %li
-          Cross-variant trophies ignore NetHack 1.3d; the "Sightseeing
-          Tour" trophy requires a game from each variant to be played for at
-          least 2000 turns, or to finish with an ascension; the "Globetrotter"
-          trophy doesn't require a full trophy for each variant - a single
-          achievement out of 11 for each variant is enough.
-        %li
-          The "No membership card" and "Too good for a brain" trophies are
-          UnNetHack-specific.
-    .text_content.non_top_post
+	%li
+	  Cross-variant trophies ignore NetHack 1.3d; the "Sightseeing
+	  Tour" trophy requires a game from each variant to be played for at
+	  least 2000 turns, or to finish with an ascension; the "Globetrotter"
+	  trophy doesn't require a full trophy for each variant - a single
+	  achievement out of 11 for each variant is enough.
+	%li
+	  The "No membership card" and "Too good for a brain" trophies are
+	  UnNetHack-specific.
     %span#end_of_content_spacer.clear
-/ end of container
