@@ -52,10 +52,6 @@ class AccountCalc
         @score = 0
     end
 
-    def sort_games
-        @games = @games.sort_by{|game| game.endtime}
-    end
-
     def num_ascensions
         ascensions = 0
         @games.each do |game|
@@ -65,40 +61,15 @@ class AccountCalc
     end
 
     def calculate_score_between(games, min_score = 0.0)
-        return min_score if games.nil?
-
-        index_start = games.index{|game| game.death == 'ascended'}
-        index_end = games.rindex{|game| game.death == 'ascended'}
-        return min_score if index_start.nil?
-
-        ascensions = 0.0
-        for game in (index_start..index_end) do
-            ascensions += 1.0 if games[game].death == 'ascended'
+        final_max = 0.0
+        max_so_far = max_ending_here = 0.0
+        for asc in games do
+            a = asc.death == 'ascended' ? 1.0 : -1.0
+            max_ending_here = max_ending_here + a if max_ending_here + a > 0
+            max_so_far = max_so_far > max_ending_here ? max_so_far : max_ending_here
         end
-
-        return min_score if min_score >= ascensions
-
-        # The initial minimum score that the account will at least have.
-        min_score2 = (ascensions*ascensions)/(index_end-index_start+1.0)
-        if min_score < min_score2 then
-            min_score = min_score2
-            @game1 = index_start+1
-            @game2 = index_end+1
-        end
-
-        # All the next iterations will have at least one ascension less.
-        # If we have score that is always greater than any sequence of games
-        # where all games are ascensions, we don't need to go calculate them.
-        return min_score if min_score >= (ascensions-1)
-
-        sc1 = calculate_score_between(games[index_start+1,index_end], min_score)
-        min_score = sc1 if min_score < sc1
-        return min_score if min_score >= (ascensions-1)
-        return min_score if index_end == 0
-
-        sc1 = calculate_score_between(games[index_start,index_end-1], min_score)
-        min_score = sc1 if min_score < sc1
-        min_score
+        final_max = final_max > max_so_far ? final_max : max_so_far
+        final_max
     end
 
     def calculate_score
@@ -112,42 +83,18 @@ end
 
 
 def best_sustained_ascension_rate(and_collection=nil)
-    ascensions = Game.all
-    ascensions &= and_collection if !and_collection.nil?
-
-    # Okay, the formula is (ascensions**2 / games) for the best
-    # consecutive sequence of games per _account_.
-
-    # We collect the games in arrays per account and then
-    # calculate the score for each account.
-
-    # Then, we select the best score in account belonging to an user
-    # and pick that as the final score for the user.
-
-    # Finally, we can order the users according to their scores.
-
-
     # First step, collect the games.
+    accounts = Account.all
     accounts_c = { }
-    ascensions.each do |game|
-        if !accounts_c[game.name].nil? then
-          account = accounts_c[game.name].account
-          account_class = accounts_c[game.name]
-        else
-          account = Account.first(:name => game.name)
-          next if account.nil?
-          accounts_c[game.name] = AccountCalc.new
-          accounts_c[game.name].account = account
-          account_class = accounts_c[game.name]
-        end
-
-        next if account.user.nil?
-        account_class.games.push(game)
+    accounts.each do |account|
+        accounts_c[account.name] = AccountCalc.new
+        accounts_c[account.name].account = account
+        accounts_c[account.name].games = Game.all(:name => account.name,
+                                                  :order => [:endtime.desc])
     end
 
     # Sort the games and calculate score
     accounts_c.each do |account, account_class|
-        account_class.sort_games
         account_class.calculate_score
     end
 
