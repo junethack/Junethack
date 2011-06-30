@@ -69,11 +69,11 @@ class AccountCalc
 
         index_start = games.index{|game| game.death == 'ascended'}
         index_end = games.rindex{|game| game.death == 'ascended'}
-        return 0.0 if index_start.nil?
+        return min_score if index_start.nil?
 
         ascensions = 0.0
         for game in (index_start..index_end) do
-            ascensions += 1.0 if @games[game].death == 'ascended'
+            ascensions += 1.0 if games[game].death == 'ascended'
         end
 
         return min_score if min_score >= ascensions
@@ -97,10 +97,6 @@ class AccountCalc
     end
 
     def calculate_score
-        as = num_ascensions
-        return 0 if as == 0
-        return 1 if as == 1
-
         # Calculate the longest distance between ascensions
         # So first ascension and last ascension
 
