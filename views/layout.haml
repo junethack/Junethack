@@ -13,13 +13,17 @@
             Navigation
           %ul
             %li
-              %a{:href => "/"} Home
+              %a{:href => "/"} 
+                %img{:alt => "Logo", :src => "/divider.png"}/
             %li
-              %a{:href => "/login"} Login
+              - if !@logged_in then
+                %a{:href => "/home"} #{@user.login}
+              - if @logged_in then
+                %a{:href => "/login"} Login
             %li
               %a{:href => "/scoreboard"} Scoreboard
             %li
-              %a{:href => "#"} Help
+              %a{:href => "#"} Logout
           %span.clear
       .hcenter
         %p

@@ -11,9 +11,11 @@ enable :sessions
 
 # Scheduler: fetch game data every hour (xx:00)
 scheduler = Rufus::Scheduler.start_new
-scheduler.cron('0 * * * *') { fetch_all }
+scheduler.cron('*/15 * * * *') { fetch_all }
 
 before do
+    @user = User.get(session['user_id'])
+    @logged_in = @user.nil?
     @messages = session["messages"] || []
     @errors = session["errors"] || []
     puts "got #{@messages.length} messages"
