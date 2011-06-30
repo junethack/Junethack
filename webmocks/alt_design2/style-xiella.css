@@ -301,7 +301,7 @@ a:hover {
 {
     text-align: left;
     padding-right: 20px;
-    padding-left: 5px;
+    padding-left: 3px;
 }
 #cell1 td
 {
@@ -311,7 +311,7 @@ a:hover {
     border-style: solid;
     border-color: black;
     padding-right: 10px;
-    padding-left: 5px;
+    padding-left: 3px;
 }
 #cell2 td
 {
@@ -319,7 +319,7 @@ a:hover {
     border-width: 1px;
     border-style: solid;
     border-color: black;
-    padding-left: 5px;
+    padding-left: 3px;
 }
 
 /**************************
