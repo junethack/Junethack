@@ -7,7 +7,7 @@ end
 # This one returns last games ordered by endtime, with the latest game
 # first. Optionally give conditions.
 def get_last_games(and_collection=nil)
-    params = { :order => [ :endtime.asc ] }
+    params = { :order => [ :endtime.desc ] }
     games = Game.all(params)
     games &= and_collection if !and_collection.nil?
     games
