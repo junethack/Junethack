@@ -7,6 +7,7 @@ namespace :bogus do
 
     names = %w(r4wrmage ad3on k3rio bh44k c4smith789 st3nno)    #hi #junethack
     task :init do
+      User.transaction do
         Rake::Task['bogus:add_servers'].invoke
         for name in names
             puts "creating user and account #{name}"
@@ -14,6 +15,7 @@ namespace :bogus do
             Rake::Task['bogus:add_user'].reenable
         end
         Rake::Task['bogus:add_game'].invoke 20
+      end
     end
 
     task :add_server, :name, :url, :xlogurl do |t, args|

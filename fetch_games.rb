@@ -20,17 +20,21 @@ def fetch_all
             if games = XLog.fetch_from_xlog(server.xlogurl, server.xlogcurrentoffset, header['Content-Length'])
                 server.xlogcurrentoffset = header['Content-Length'].to_i
                 puts "So many games ... #{games.length}"
+                i = 0
+               Game.transaction do
                 for hgame in games
+                    i += 1
                     #puts hgame.inspect
                     game = server.games.create!(hgame.merge({"server" => server}))
                     #puts "Created game #{game.inspect}"
                     if game.save
-                        puts "created!"
-                    else    
+                        puts "created #{i}"
+                    else
                         puts "something went wrong, could not create games"
                     end
         
                 end
+               end
             else
                 puts "No games at all!"
             end
