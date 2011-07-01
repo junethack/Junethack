@@ -5,12 +5,10 @@ def limit_by_10(collection)
 end
 
 # This one returns last games ordered by endtime, with the latest game
-# first. Optionally give conditions.
-def get_last_games(and_collection=nil)
-    params = { :order => [ :endtime.desc ] }
-    games = Game.all(params)
-    games &= and_collection if !and_collection.nil?
-    games
+# first.
+# Optionally give conditions and limit.
+def get_last_games(condition={}, limit=10)
+    Game.all( {:order => [ :endtime.desc ], :limit => limit}.merge condition )
 end
 
 # This one returns users ordered by the number of ascensions they have
@@ -43,7 +41,11 @@ def most_ascensions_users(and_collection=nil)
 
     user_ascensions.sort_by{|username, ascensions| -ascensions}
 end
-    
+
+def most_ascensions_users(limit=10, user=nil)
+    repository.adapter.select "select count(1) as ascensions, (select name from users where id=user_id) as name from games where death='ascended' and user_id is not null group by user_id order by count(1) desc limit 10;"
+end
+
 # Helper class for calculating ascension density
 class AccountCalc
     attr_accessor :games, :score, :account, :game1, :game2

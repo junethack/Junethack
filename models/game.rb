@@ -16,6 +16,7 @@ $conducts = [
 class Game
     include DataMapper::Resource
     belongs_to :server
+    belongs_to :user,   :required => false
 
     property :id,        Serial
     property :name,      String

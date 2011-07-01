@@ -3,6 +3,7 @@ class User
 
     has n, :accounts
     has n, :servers, :through => :accounts
+    has n, :games, :through => :servers
 
     property :id,     Serial
     property :login,  String

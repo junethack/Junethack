@@ -72,8 +72,13 @@ end
 
 post "/add_server_account" do
     redirect "/" and return unless session['user_id']
+
     # TODO automatically do verification and inform user if it fails
-    account = Account.create(:user => User.get(session['user_id']), :server => Server.get(params[:server]), :name => params[:user], :verified => true)
+    server = Server.get(params[:server])
+    account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
+    # set user_id on all already played games
+    Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id'])
+
     session['errors'] = "Couldn't create account!" unless account
     redirect "/home"
 end
@@ -105,14 +110,15 @@ get "/scores/:name" do |name|
         return
     end
     @username = @u.login
-    @last_10_games = limit_by_10(get_last_games & @u.games)
+    user_id = {:user_id => @u.id}
+    @last_10_games = get_last_games(user_id)
     @most_ascended_users = limit_by_10(most_ascensions_users(@u.games))
     @highest_density_users = limit_by_10(best_sustained_ascension_rate(@u.games))
     haml :user_scores
 end
 
 get "/scoreboard" do
-    @last_10_games = limit_by_10(get_last_games)
+    @last_10_games = get_last_games
     @most_ascended_users = limit_by_10(most_ascensions_users)
     @highest_density_users = limit_by_10(best_sustained_ascension_rate)
     haml :scoreboard
