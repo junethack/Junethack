@@ -90,3 +90,14 @@ def best_sustained_ascension_rate(and_collection=nil)
     users.sort_by{|username, info| -info[:score]}
 end
 
+def best_sustained_ascension_rate(and_collection=nil)
+    games = repository.adapter.select "select endtime, (select login from users where id = user_id) as user, death, name from games where user_id is not null order by user_id, endtime asc;"
+    score = Hash.new(0)
+    games.each {|g|
+       d = g[:death]=='ascended' ? 1 : -1
+       score[g[:user]] += d
+       score[g[:user]] = 0 if score[g[:user]] < 0
+    }
+    score = score.delete_if {|key, value| value == 0 }
+    score.sort_by{|user, score| -score}
+end
