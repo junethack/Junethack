@@ -12,38 +12,12 @@ def get_last_games(condition={}, limit=10)
 end
 
 # This one returns users ordered by the number of ascensions they have
-def most_ascensions_users(and_collection=nil)
-    # Now, I couldn't find an effective way to do this in a single SQL
-    # query, I'll just collect all ascensions and then work on that. 
-    # Should be a manageable amount.
-    ascensions = Game.all(:death => 'ascended')
-    ascensions &= and_collection if !and_collection.nil?
-
-    # Count the ascensions per user to this hash
-    user_ascensions = { }
-    accounts_c = { }
-    ascensions.each do |game|
-        if !accounts_c[game.name].nil? then
-          account = accounts_c[game.name]
-        else
-          account = Account.first(:name => game.name)
-          next if account.nil?
-          accounts_c[game.name] = account
-        end
-
-        next if account.user.nil?
-
-        user = account.user
-
-        user_ascensions[user.login] = 0 if user_ascensions[user.login].nil?
-        user_ascensions[user.login] += 1
+def most_ascensions_users(user=nil, limit=10)
+    if user then
+      repository.adapter.select "select count(1) as ascensions, (select name from users where id=user_id) as name from games where death='ascended' and user_id = ? group by user_id order by count(1) desc limit ?;", user, limit
+    else
+      repository.adapter.select "select count(1) as ascensions, (select name from users where id=user_id) as name from games where death='ascended' and user_id is not null group by user_id order by count(1) desc limit ?;", limit
     end
-
-    user_ascensions.sort_by{|username, ascensions| -ascensions}
-end
-
-def most_ascensions_users(limit=10, user=nil)
-    repository.adapter.select "select count(1) as ascensions, (select name from users where id=user_id) as name from games where death='ascended' and user_id is not null group by user_id order by count(1) desc limit 10;"
 end
 
 # Helper class for calculating ascension density

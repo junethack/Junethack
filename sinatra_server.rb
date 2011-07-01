@@ -112,14 +112,14 @@ get "/scores/:name" do |name|
     @username = @u.login
     user_id = {:user_id => @u.id}
     @last_10_games = get_last_games(user_id)
-    @most_ascended_users = limit_by_10(most_ascensions_users(@u.games))
+    @most_ascended_users = most_ascensions_users(@u.id)
     @highest_density_users = limit_by_10(best_sustained_ascension_rate(@u.games))
     haml :user_scores
 end
 
 get "/scoreboard" do
     @last_10_games = get_last_games
-    @most_ascended_users = limit_by_10(most_ascensions_users)
+    @most_ascended_users = most_ascensions_users
     @highest_density_users = limit_by_10(best_sustained_ascension_rate)
     haml :scoreboard
 end
