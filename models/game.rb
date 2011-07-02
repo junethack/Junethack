@@ -38,8 +38,8 @@ class Game
     property :version,   String
     property :align,     String
     property :align0,    String
-    property :starttime, String
-    property :endtime,   String
+    property :starttime, Integer
+    property :endtime,   Integer
     property :achieve,   String
     property :nachieves, Integer
     property :hp,        Integer
