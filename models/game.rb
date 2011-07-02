@@ -64,10 +64,12 @@ DataMapper::MigrationRunner.migration( 1, :create_indexes ) do
   up do
     execute 'CREATE INDEX "index_games_endtime_user_id" ON "games" ("endtime" desc, "user_id");'
     execute 'CREATE INDEX "index_games_highscore" ON "games" ("user_id", "death", "server_id", "points","endtime");'
+    execute 'CREATE INDEX "index_games_user_id_version" ON "games" ("user_id", "version");'
   end
   down do
     execute 'DROP INDEX "index_games_endtime_user_id"';
     execute 'DROP INDEX "index_games_highscore"';
+    execute 'DROP INDEX "index_games_user_id_version"';
   end
 end
 
