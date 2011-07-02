@@ -1,3 +1,5 @@
+require 'dm-migrations'
+require 'dm-migrations/migration_runner'
 
 $conducts = [
     [0x001, "Foodless", "Foo"],
@@ -57,3 +59,16 @@ class Game
     end
 end
 
+
+DataMapper::MigrationRunner.migration( 1, :create_indexes ) do
+  up do
+    execute 'CREATE INDEX "index_games_endtime_user_id" ON "games" ("endtime" desc, "user_id");'
+    execute 'CREATE INDEX "index_games_highscore" ON "games" ("user_id", "death", "server_id", "points","endtime");'
+  end
+  down do
+    execute 'DROP INDEX "index_games_endtime_user_id"';
+    execute 'DROP INDEX "index_games_highscore"';
+  end
+end
+
+DataMapper::MigrationRunner.migrate_up!

@@ -6,6 +6,7 @@ require 'haml'
 require 'fetch_games'
 require 'rufus/scheduler'
 require 'trophy_calculations'
+require 'userscore'
 
 enable :sessions
 
@@ -65,8 +66,11 @@ end
 
 get "/home" do
     redirect "/" and return unless session['user_id']
+
+    @userscore = UserScore.new session['user_id']
+
     @user = User.get(session['user_id'])
-    @games = @user.games
+    @games = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
     haml :home
 end
 

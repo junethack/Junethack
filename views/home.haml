@@ -28,16 +28,4 @@
                                 %td
                                     %input{:type => "text", :name => "user", :class => "text"}
 
-            %table#gamelist
-                %tr
-                    %th
-                        Name
-                    %th
-                        Server
-                    %th
-                        Death
-                - for game in @games
-                    %tr.game
-                        %td= game.name
-                        %td= game.server.name
-                        %td= game.death
+            =haml :_user_games 

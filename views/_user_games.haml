@@ -1,0 +1,34 @@
+.text_content.non_top_post
+  %h3
+    Competition
+  - variants = @userscore.variants
+  - @userscore.variants.each_key do |variant|
+    %h4= variant
+    - server_ids = variants[variant]
+    %p= "Most ascensions: #{@userscore.most_ascensions server_ids}"
+    %p= "Longest ascension streak: #{@userscore.longest_ascension_streak server_ids}"
+    %p= "Fastest ascension (gametime): #{(@userscore.fastest_ascension_gametime server_ids)}"
+    %p= "Fastest ascension (realtime): #{(@userscore.fastest_ascension_realtime server_ids)}"
+    %p= "Highest scoring ascension: #{@userscore.highest_scoring_ascension server_ids}"
+    %p= "Lowest scoring ascension: #{@userscore.lowest_scoring_ascension server_ids}"
+    %p= "Most conducts in a single ascension: #{@userscore.most_conducts_ascension server_ids}"
+
+.text_content.non_top_post
+  %h3
+    Games played
+  .scorelisting
+    %table
+      %tr
+        %th Name
+        %th Points
+        %th Killer
+        %th Time
+      - count = 0
+      - @games.each do |game|
+        - style = (count % 2) == 0 ? "cell1" : "cell2"
+        - count += 1
+        %tr{:id => style}
+          %td= game.name
+          %td= game.points
+          %td= game.death
+          %td= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d %H:%M")
