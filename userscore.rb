@@ -22,7 +22,7 @@ def initialize(id)
 end
 
 def most_ascensions(variant=nil)
-    return repository.adapter.select "select count(1) from games where version = ? and user_id = ? ", variant, @id
+    return (repository.adapter.select "select count(1) from games where version = ? and user_id = ?  and death='ascended'", variant, @id)[0]
 end
 
 def highest_scoring_ascension(variant=nil)

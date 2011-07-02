@@ -1,0 +1,22 @@
+- require 'trophy_calculations' # TODO REMOVE ME
+
+.text_content
+  %h2
+    Competition
+  - $variants_mapping.each do |variant, variant_name|
+    %h3= variant_name
+    .scorelisting
+      %table
+        %tr
+          %th Competition
+          %th Player
+          %th
+        - count = 0
+        - for i in 0..$trophies.size do
+          - helper_get_score($trophies[i], variant).each do |e|
+            - style = (count % 2) == 0 ? "cell1" : "cell2"
+            - count += 1
+            %tr{:id => style}
+              %td= $trophies_name[i]
+              %td= e.user
+              %td= e.value

@@ -1,5 +1,6 @@
 require 'dm-migrations'
 require 'dm-migrations/migration_runner'
+require 'trophy_calculations'
 
 $conducts = [
     [0x001, "Foodless", "Foo"],
@@ -56,6 +57,14 @@ class Game
     property :event,    String
     def get_conducts
         $conducts.map{|c| self.conduct & c[0] == c[0] ? c[2] : ""}.join
+    end
+
+    def ascended?
+        death == 'ascended'
+    end
+
+    after :update do
+        update_scores(self)
     end
 end
 
