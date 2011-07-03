@@ -3,6 +3,6 @@ rake bogus:add_server[nao,nethack.alt.org,http://alt.org/nethack/xlogfile.full.t
 rake bogus:add_server[arc,acehack.rawrnix.com,http://acehack.rawrnix.com/xlogfile]
 rake bogus:add_server[asi,acehack.sovrappensiero.info,http://acehack.sovrappensiero.info/xlogfile.txt]
 rake bogus:add_server[eun,un.nethack.nu,http://un.nethack.nu/logs/xlogfile]
-rake bogus:add_server[neu,nethack.eu,file:///home/ec2-user/junethack2011/xlogfile]
+rake bogus:add_server[neu,nethack.eu,file:///home/junethack/junethack2011/xlogfile]
 rake bogus:add_server[nfi,nethack.fi,http://nethack.fi/xlogfile]
 
