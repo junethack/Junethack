@@ -10,7 +10,7 @@ require 'userscore'
 
 enable :sessions
 
-# Scheduler: fetch game data every hour (xx:00)
+# Scheduler: fetch game data every 15 minutes
 scheduler = Rufus::Scheduler.start_new
 scheduler.cron('*/15 * * * *') { fetch_all }
 
