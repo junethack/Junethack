@@ -37,7 +37,7 @@
                         %span= account.clan.name
                         %a{:href => "/leaveclan/#{account.server.id}"} Leave
                     - else
-                        - unless account.invitations and !account.invitations.nil?
+                        - unless account.invitations and account.invitations.empty?
                             %table
                                 %tr
                                     %th Clan
