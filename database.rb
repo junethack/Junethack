@@ -20,3 +20,4 @@ require 'models/scoreentry'
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
+DataMapper::MigrationRunner.migrate_up!
