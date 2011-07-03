@@ -35,7 +35,7 @@ def helper_get_variants_for_user(id)
 end
 
 def helper_get_score(key, variant)
-    return repository.adapter.select "select (select login from users where user_id = id) as user, user_id, value from scoreentries where trophy = ? and variant = ? order by user;", key, variant
+    return repository.adapter.select "select (select login from users where user_id = id) as user, user_id, value, value_display from scoreentries where trophy = ? and variant = ? order by user;", key, variant
 end
 
 def parse_milliseconds(duration=nil)

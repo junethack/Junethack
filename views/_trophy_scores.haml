@@ -1,5 +1,3 @@
-- require 'trophy_calculations' # TODO REMOVE ME
-
 .text_content
   %h2
     Competition
@@ -19,4 +17,4 @@
             %tr{:id => style}
               %td= h $trophies_name[i]
               %td= h e.user
-              %td= h e.value
+              %td.table_number= e.value_display ? e.value_display : e.value
