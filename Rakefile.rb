@@ -3,6 +3,8 @@ require "bundler/setup"
 require 'database'
 require 'fetch_games'
 require 'date'
+require 'trophyscore'
+
 namespace :bogus do
 
     names = %w(r4wrmage ad3on k3rio bh44k c4smith789 st3nno)    #hi #junethack
