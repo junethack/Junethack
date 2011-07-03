@@ -17,6 +17,6 @@
             - style = (count % 2) == 0 ? "cell1" : "cell2"
             - count += 1
             %tr{:id => style}
-              %td= $trophies_name[i]
-              %td= e.user
-              %td= e.value
+              %td= h $trophies_name[i]
+              %td= h e.user
+              %td= h e.value
