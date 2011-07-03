@@ -8,6 +8,9 @@ class Account #join model
     property :name,        String
     property :verified,    Boolean, :default => false
     property :invitations, Json
+    before :save do
+        self.invitations ||= []
+    end
 
     def get_games
         self.server.games.select{|game| game.name == self.name}

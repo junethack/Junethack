@@ -32,10 +32,10 @@
             #clanmanager
             - for account in @user.accounts
                 .account-clan
-                    %div= account.name
+                    %div= account.name + " on " + account.server.name
                     - if account.clan
                         %span= account.clan.name
-                        %a{:href => "/leaveclan/#{account.server}"} Leave
+                        %a{:href => "/leaveclan/#{account.server.id}"} Leave
                     - else
                         - unless account.invitations.empty?
                             %table
@@ -43,13 +43,18 @@
                                     %th Clan
                                     %th
                                     %th
-                                - for invitation in account.invitations
-                                    %tr
-                                        %td= invitation['clan_id']
-                                    %tr
-                                        %td
-                                            %a{:href => "/respond/#{invitation['token']}?accept=true"}
-                                        %td
-                                            %a{:href => "/respond/#{invitation['token']}?accept=false"}
-                                        
-            
+                                    - for invitation in account.invitations
+                                        %tr
+                                            %td= invitation['clan_id']
+                                        %tr
+                                            %td
+                                                %a{:href => "/respond/#{account.server.id}/#{invitation['token']}?accept=true"}
+                                            %td
+                                                %a{:href => "/respond/#{invitation['token']}?accept=false"}
+                        - else
+                            %div 
+                                No clan invitations for this account
+                                %form{:method => "POST", :action => "/create_clan/#{account.server.id}"}
+                                    %label{:for => "clanname"} Clan name
+                                    %input#clanname{:type => "text"}
+                                    %input{:type => "submit", :value => "Create clan"} 

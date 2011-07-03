@@ -109,14 +109,28 @@ post "/create" do
         redirect "/register"
     end
 end
-get "/leaveclan/:server" do
+# for account stuff, we need to have the id of the server ... :/
+get "/respond/:server/:token" do #respond to invitation
+    if acc = @user.accounts.first(@user.id, params[:server])
+        invitation = account.invitations.find{|inv| inv['token'] == params[:token]}
+        if invitation
+            acc.respond_invite invitation, params[:accept]
+        end
+    end
+end
+
+
+get "/leaveclan/:server" do  #leave a clan
     redirect "/" and return unless @user
-    if account = Account.get(:user => @user.id, :server => server)
+    if account = Account.get(@user.id, params[:server])
+        
         puts "found account #{account.name}"
+        account.clan = nil
+        account.save
     else
         puts "no such account"
     end
-    "GReat!"
+    redirect "/home"
 end
         
 
