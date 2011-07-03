@@ -1,5 +1,6 @@
 require 'dm-migrations'
 require 'dm-migrations/migration_runner'
+require 'trophy_calculations'
 
 $conducts = [
     [0x001, "Foodless", "Foo"],
@@ -57,6 +58,14 @@ class Game
     def get_conducts
         $conducts.map{|c| self.conduct & c[0] == c[0] ? c[2] : ""}.join
     end
+
+    def ascended?
+        death == 'ascended'
+    end
+
+    after :update do
+        update_scores(self)
+    end
 end
 
 
@@ -64,10 +73,12 @@ DataMapper::MigrationRunner.migration( 1, :create_indexes ) do
   up do
     execute 'CREATE INDEX "index_games_endtime_user_id" ON "games" ("endtime" desc, "user_id");'
     execute 'CREATE INDEX "index_games_highscore" ON "games" ("user_id", "death", "server_id", "points","endtime");'
+    execute 'CREATE INDEX "index_games_user_id_version" ON "games" ("user_id", "version");'
   end
   down do
     execute 'DROP INDEX "index_games_endtime_user_id"';
     execute 'DROP INDEX "index_games_highscore"';
+    execute 'DROP INDEX "index_games_user_id_version"';
   end
 end
 

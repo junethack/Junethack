@@ -1,7 +1,8 @@
 .content_bulk
-  .signup_text
-    %p
-      %a{:href => "register"} Sign up now!
+  - if @logged_in
+    .signup_text
+      %p
+        %a{:href => "register"} Sign up now!
   .text_content_wrapper
     .text_content
       %h2

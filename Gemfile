@@ -7,4 +7,4 @@ gem "json"
 gem "haml"
 gem "sinatra"
 gem "rufus-scheduler"
-
+gem "orderedhash", "~> 0.0.6"

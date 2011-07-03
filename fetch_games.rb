@@ -26,7 +26,7 @@ def fetch_all
                     i += 1
                     #puts hgame.inspect
                     acc = Account.first(:name => hgame["name"], :server_id => server.id)
-                    game = server.games.create!(hgame.merge({"server" => server}))
+                    game = Game.create!(hgame.merge({"server" => server}))
                     game.user_id = acc.user_id if acc
                     #puts "Created game #{game.inspect}"
                     if game.save

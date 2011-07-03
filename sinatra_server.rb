@@ -26,10 +26,12 @@ before do
 end
 
 get "/" do
+    @show_banner = true
     haml :splash
 end
 
 get "/login" do
+    @show_banner = true
     haml :login
 end
 
@@ -41,6 +43,7 @@ get "/logout" do
 end
 
 get "/about" do
+    @show_banner = true
     haml :about
 end
 
@@ -57,10 +60,12 @@ post "/login" do
 end
     
 get "/register" do
+    @show_banner = true
     haml :register
 end
 
 get "/rules" do
+    @show_banner = true
     haml :rules
 end
 
