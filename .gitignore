@@ -10,5 +10,6 @@ webmocks/alt_design2/*.swp
 *.swp
 models/*.swp
 # rawrmage - ignore server output and stuff
+junethack2.db
 nohup.out
 xlogfile
