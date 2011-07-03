@@ -35,3 +35,18 @@ end
 def helper_get_score(key, variant)
     return repository.adapter.select "select (select login from users where user_id = id) as user, user_id, value from scoreentries where trophy = ? and variant = ? order by user;", key, variant
 end
+
+def parse_milliseconds(duration=nil)
+    return "" if not duration
+    s = duration / 1000;
+    m = s / 60;
+    h = m / 60;
+    d = h / 24;
+    str = []
+    str << "#{d} d" if d>0
+    str << "#{h % 24} h" if h>0
+    str << "#{m % 60} m" if m>0
+    str << "#{s % 60} s" if s>0
+    return str.join " "
+end
+

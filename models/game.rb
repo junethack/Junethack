@@ -50,18 +50,20 @@ class Game
     property :death,     String
     property :race,      String
     property :flags,     String
+    property :ascended,  Boolean,
+     :default => lambda { |r, p| r.death.start_with? "ascended" or r.death == "escaped (with amulet)" }
 
-    #acehack-specific properties
-
+    #acehack/unnethack-specific properties
     property :carried,  String
     property :event,    String
     def get_conducts
         $conducts.map{|c| self.conduct & c[0] == c[0] ? c[2] : ""}.join
     end
 
-    def ascended?
-        death == 'ascended'
-    end
+    #acehack/unnethack-specific properties
+    property :deathdname, String
+    property :dlev_name,  String
+    property :elbereths,  Integer, :default => -1
 
     after :update do
         update_scores(self)

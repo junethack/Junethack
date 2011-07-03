@@ -105,25 +105,5 @@ def best_sustained_ascension_rate(and_collection=nil)
 end
 
 def update_scores(game)
-    return true if not game.user_id
-
-    userscore = UserScore.new game.user_id
-    if game.ascended?
-        # Most ascensions
-        se = Scoreentry.all(:variant => game.version,
-                            :trophy  => "most_ascensions")
-        i = userscore.most_ascensions game.version
-
-        if (not se[0]) or (i > se[0].value.to_i) then
-          # delete old scoreentries
-          se.each { |s| s.destroy }
-          # create new scoreentry
-          Scoreentry.create(:user_id => game.user_id,
-                            :variant => game.version,
-                            :value   => i.to_s,
-                            :endtime => game.endtime,
-                            :trophy  => "most_ascensions").save
-        end
-    end
     return true
 end

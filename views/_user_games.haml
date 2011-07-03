@@ -28,6 +28,6 @@
         - count += 1
         %tr{:id => style}
           %td= game.name
-          %td= game.points
+          %td.table_number= game.points
           %td= game.death
-          %td= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d %H:%M")
+          %td.table_date= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
