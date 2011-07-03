@@ -26,8 +26,9 @@
               %a{:href => "/logout"} Logout
           %span.clear
       .hcenter
-        %p
-          %img{:alt => "Logo", :src => "/banner_at2.png"}/
+        - if @show_banner
+          %p
+            %img{:alt => "Logo", :src => "/banner_at2.png"}/
       - if !@messages.empty? then
         #messages
           %div
