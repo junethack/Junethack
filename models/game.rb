@@ -82,4 +82,3 @@ DataMapper::MigrationRunner.migration( 1, :create_indexes ) do
   end
 end
 
-DataMapper::MigrationRunner.migrate_up!
