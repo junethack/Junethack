@@ -22,29 +22,29 @@ def initialize(id)
 end
 
 def most_ascensions(variant=nil)
-    return (repository.adapter.select "select count(1) from games where version = ? and user_id = ?  and death='ascended'", variant, @id)[0]
+    return (repository.adapter.select "select count(1) from games where version = ? and user_id = ?  and ascended='t'", variant, @id)[0]
 end
 
 def highest_scoring_ascension(variant=nil)
-    return repository.adapter.select "select max(points) from games where version = ? and user_id = ? and death='ascended'", variant, @id
+    return repository.adapter.select "select max(points) from games where version = ? and user_id = ? and ascended='t'", variant, @id
 end
 
 def lowest_scoring_ascension(variant=nil)
-    return repository.adapter.select "select min(points) from games where version = ? and user_id = ? and death='ascended'", variant, @id
+    return repository.adapter.select "select min(points) from games where version = ? and user_id = ? and ascended='t'", variant, @id
 end
 
 def most_conducts_ascension(variant=nil)
-    return repository.adapter.select "select max(nconducts) from games where version = ? and user_id = ? and death='ascended'", variant, @id
+    return repository.adapter.select "select max(nconducts) from games where version = ? and user_id = ? and ascended='t'", variant, @id
 end
 
 # returns the max realtime duration of an ascension in milliseconds
 def fastest_ascension_realtime(variant=nil)
-    return parse_milliseconds((repository.adapter.select "select max(endtime-starttime) from games where version = ? and user_id = ? and death='ascended'", variant, @id)[0])
+    return parse_milliseconds((repository.adapter.select "select max(endtime-starttime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
 end
 
 # returns the max in-game duration of an ascension in milliseconds
 def fastest_ascension_gametime(variant=nil)
-    return parse_milliseconds((repository.adapter.select "select max(realtime) from games where version = ? and user_id = ? and death='ascended'", variant, @id)[0])
+    return parse_milliseconds((repository.adapter.select "select max(realtime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
 end
 
 def longest_ascension_streak(variant=nil)
