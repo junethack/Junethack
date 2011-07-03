@@ -47,20 +47,6 @@ def fastest_ascension_gametime(variant=nil)
     return parse_milliseconds((repository.adapter.select "select max(realtime) from games where version = ? and user_id = ? and death='ascended'", variant, @id)[0])
 end
 
-def parse_milliseconds(duration=nil)
-    return "" if not duration
-    s = duration / 1000;
-    m = s / 60;
-    h = m / 60;
-    d = h / 24;
-    str = []
-    str << "#{d} d" if d>0
-    str << "#{h % 24} h" if h>0
-    str << "#{m % 60} m" if m>0
-    str << "#{s % 60} s" if s>0
-    return str.join " "
-end
-
 def longest_ascension_streak(variant=nil)
     games_deaths = (repository.adapter.select "select death from games where version = ? and user_id = ? order by endtime desc", variant, @id)
 
