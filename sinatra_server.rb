@@ -104,6 +104,16 @@ post "/create" do
         redirect "/register"
     end
 end
+get "/leaveclan/:server" do
+    redirect "/" and return unless @user
+    if account = Account.get(:user => @user.id, :server => server)
+        puts "found account #{account.name}"
+    else
+        puts "no such account"
+    end
+    "GReat!"
+end
+        
 
 get "/scores/:name" do |name|
     # Is the user there? If not, just redirect to home

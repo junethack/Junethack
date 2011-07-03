@@ -28,4 +28,28 @@
                                 %td
                                     %input{:type => "text", :name => "user", :class => "text"}
 
-            =haml :_user_games 
+            =haml :_user_games
+            #clanmanager
+            - for account in @user.accounts
+                .account-clan
+                    %div= account.name
+                    - if account.clan
+                        %span= account.clan.name
+                        %a{:href => "/leaveclan/#{account.server}"} Leave
+                    - else
+                        - unless account.invitations.empty?
+                            %table
+                                %tr
+                                    %th Clan
+                                    %th
+                                    %th
+                                - for invitation in account.invitations
+                                    %tr
+                                        %td= invitation['clan_id']
+                                    %tr
+                                        %td
+                                            %a{:href => "/respond/#{invitation['token']}?accept=true"}
+                                        %td
+                                            %a{:href => "/respond/#{invitation['token']}?accept=false"}
+                                        
+            

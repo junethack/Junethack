@@ -9,7 +9,7 @@ class Clan
         if acc = Account.first(:name => user)
             chars = ('a'..'z').to_a
             invitation = {'clan_id' => self.name, 'status' => 'open', 'user' => user, 'token' => (0..30).map{ chars[rand 26] }.join}
-            acc.invite invitation
+            acc.invite_me invitation
             self.invitations ||= []
             self.invitations.push invitation
             self.save

@@ -18,7 +18,7 @@ class Account #join model
                                         game.death == 'ascended'}
     end
 
-    def invite invitation
+    def invite_me invitation
         self.invitations ||= []
         self.invitations.push invitation
         self.save

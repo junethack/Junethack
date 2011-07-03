@@ -111,6 +111,8 @@ namespace :bogus do
             }
             [xlog1, xlog1][rand 2].puts game.to_xlog
         end
+        xlog1.close
+        xlog2.close
     end
 end
 
