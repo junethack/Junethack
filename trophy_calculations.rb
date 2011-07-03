@@ -105,5 +105,74 @@ def best_sustained_ascension_rate(and_collection=nil)
 end
 
 def update_scores(game)
+    return true if not game.user_id
+
+    Scoreentry.transaction do
+        t = TrophyScore.new
+        if game.ascended
+            Scoreentry.all(:variant => game.version,
+                           :trophy  => "most_ascensions").destroy
+            t.most_ascensions(game.version).each do |e|
+                Scoreentry.create(:user_id => e.user_id,
+                                  :variant => game.version,
+                                  :value   => e.ascension.to_s,
+                                  :endtime => e.endtime,
+                                  :trophy  => "most_ascensions").save
+            end
+
+            Scoreentry.all(:variant => game.version,
+                           :trophy  => "highest_scoring_ascension").destroy
+            t.highest_scoring_ascension(game.version).each do |e|
+                Scoreentry.create(:user_id => e.user_id,
+                                  :variant => game.version,
+                                  :value   => e.points.to_s,
+                                  :endtime => e.endtime,
+                                  :trophy  => "highest_scoring_ascension").save
+            end
+
+            Scoreentry.all(:variant => game.version,
+                           :trophy  => "lowest_scoring_ascension").destroy
+            t.lowest_scoring_ascension(game.version).each do |e|
+                Scoreentry.create(:user_id => e.user_id,
+                                  :variant => game.version,
+                                  :value   => e.points.to_s,
+                                  :endtime => e.endtime,
+                                  :trophy  => "lowest_scoring_ascension").save
+            end
+
+            Scoreentry.all(:variant => game.version,
+                           :trophy  => "most_conducts_ascension").destroy
+            t.most_conducts_ascension(game.version).each do |e|
+                Scoreentry.create(:user_id => e.user_id,
+                                  :variant => game.version,
+                                  :value   => e.nconducts.to_s,
+                                  :endtime => e.endtime,
+                                  :trophy  => "most_conducts_ascension").save
+            end
+
+            Scoreentry.all(:variant => game.version,
+                           :trophy  => "fastest_ascension_realtime").destroy
+            t.fastest_ascension_realtime(game.version).each do |e|
+                Scoreentry.create(:user_id => e.user_id,
+                                  :variant => game.version,
+                                  :value   => e.duration.to_s,
+                                  :endtime => e.endtime,
+                                  :trophy  => "fastest_ascension_realtime").save
+            end
+
+            Scoreentry.all(:variant => game.version,
+                           :trophy  => "fastest_ascension_gametime").destroy
+            t.fastest_ascension_gametime(game.version).each do |e|
+                Scoreentry.create(:user_id => e.user_id,
+                                  :variant => game.version,
+                                  :value   => e.duration.to_s,
+                                  :endtime => e.endtime,
+                                  :trophy  => "fastest_ascension_gametime").save
+            end
+        end
+    end
+
     return true
 end
+
+
