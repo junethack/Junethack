@@ -84,3 +84,12 @@ DataMapper::MigrationRunner.migration( 1, :create_indexes ) do
   end
 end
 
+DataMapper::MigrationRunner.migration( 2, :create_trophy_indexes ) do
+  up do
+    execute 'CREATE INDEX "index_trophy_ascensions" ON "games" ("ascended" desc, "user_id", "version");'
+  end
+  down do
+    execute 'DROP INDEX "index_trophy_ascensions"';
+  end
+end
+

@@ -740,7 +740,8 @@ global_settings
         ttf "font.ttf" monster_symbols[mid]
         0.1, 0
         pigment { monster_colors[mid] }
-        rotate <0, 180, 0>
+        // rotate <0, 180, 0>
+        rotate <90, 0, 0>
         translate <x_pos + invoke_rng()*0.5, 0.2, y_pos + invoke_rng()*0.5>
     }
     #end
@@ -770,13 +771,13 @@ text
 camera 
 {
  right x*1920/1080
- location <0, 5, 0>
- look_at <0, 5, -5>
+ location <0, 20, -60>
+ look_at <0, 0, -60>
 }
 
 light_source
 {
- <0, 5, 5>, rgb <3, 3, 3>
+ <0, 10, -60>, rgb <3, 3, 3>
  fade_power 1
  fade_distance 10
 }

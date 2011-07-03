@@ -7,7 +7,8 @@ $trophies = [
  'fastest_ascension_realtime',
  'highest_scoring_ascension',
  'lowest_scoring_ascension',
- 'most_conducts'
+ 'most_conducts',
+ 'longest_ascension_streaks'
 ]
 
 $trophies_name = [
@@ -17,7 +18,8 @@ $trophies_name = [
  "Fastest ascension (realtime)",
  "Highest scoring ascension",
  "Lowest scoring ascension",
- "Most conducts in a single ascension"
+ "Most conducts in a single ascension",
+ "Longest ascension streak"
 ]
 
 $variants_mapping = OrderedHash.new
@@ -33,7 +35,7 @@ def helper_get_variants_for_user(id)
 end
 
 def helper_get_score(key, variant)
-    return repository.adapter.select "select (select login from users where user_id = id) as user, user_id, value from scoreentries where trophy = ? and variant = ? order by user;", key, variant
+    return repository.adapter.select "select (select login from users where user_id = id) as user, user_id, value, value_display from scoreentries where trophy = ? and variant = ? order by user;", key, variant
 end
 
 def parse_milliseconds(duration=nil)
