@@ -52,7 +52,7 @@ body {
     overflow-y: scroll;
     background-color: #eee;
     background-image: url('background.jpg');
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-position: top center;
     font-size: 0.8em;
 }
