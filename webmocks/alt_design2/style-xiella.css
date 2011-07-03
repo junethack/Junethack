@@ -286,6 +286,7 @@ a:hover {
     text-align: center;
 }
 
+
 .scorelisting table
 {
     font-size: 85%;
@@ -305,7 +306,6 @@ a:hover {
 }
 #cell1 td
 {
-    text-align: left;
     background-color: #ccc;
     border-width: 1px;
     border-style: solid;
@@ -319,8 +319,23 @@ a:hover {
     border-width: 1px;
     border-style: solid;
     border-color: black;
+    padding-right: 10px;
     padding-left: 3px;
 }
+
+#cell1 td.table_number,
+#cell2 td.table_number
+{
+    text-align: right;
+}
+#cell1 td.table_date,
+#cell2 td.table_date
+{
+    text-align: center;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
 
 /**************************
 **                       **
