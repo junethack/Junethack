@@ -327,13 +327,15 @@ a:hover {
 #cell2 td.table_number
 {
     text-align: right;
+    padding-right: 3px;
+    padding-left: 3px;
 }
 #cell1 td.table_date,
 #cell2 td.table_date
 {
     text-align: center;
-    padding-right: 0px;
-    padding-left: 0px;
+    padding-right: 3px;
+    padding-left: 3px;
 }
 
 
