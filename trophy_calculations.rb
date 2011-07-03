@@ -169,6 +169,16 @@ def update_scores(game)
                                   :endtime => e.endtime,
                                   :trophy  => "fastest_ascension_gametime").save
             end
+
+            Scoreentry.all(:variant => game.version,
+                           :trophy  => "longest_ascension_streaks").destroy
+            t.longest_ascension_streaks(game.version).each do |e|
+                Scoreentry.create(:user_id => e.user_id,
+                                  :variant => game.version,
+                                  :value   => e.streaks.to_s,
+                                  :endtime => e.endtime,
+                                  :trophy  => "longest_ascension_streaks").save
+            end
         end
     end
 

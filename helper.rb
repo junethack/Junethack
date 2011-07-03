@@ -7,7 +7,8 @@ $trophies = [
  'fastest_ascension_realtime',
  'highest_scoring_ascension',
  'lowest_scoring_ascension',
- 'most_conducts'
+ 'most_conducts',
+ 'longest_ascension_streaks'
 ]
 
 $trophies_name = [
@@ -17,7 +18,8 @@ $trophies_name = [
  "Fastest ascension (realtime)",
  "Highest scoring ascension",
  "Lowest scoring ascension",
- "Most conducts in a single ascension"
+ "Most conducts in a single ascension",
+ "Longest ascension streak"
 ]
 
 $variants_mapping = OrderedHash.new
