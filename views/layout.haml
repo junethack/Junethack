@@ -23,7 +23,10 @@
             %li
               %a{:href => "/scoreboard"} Scoreboard
             %li
-              %a{:href => "/logout"} Logout
+              - if !@logged_in then
+                %a{:href => "/logout"} Logout
+              - if @logged_in then
+                %a{:href => "/about"} Help
           %span.clear
       .hcenter
         - if @show_banner
