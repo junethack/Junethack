@@ -25,7 +25,7 @@ end
 
 # returns the fastest in-game duration of an ascension in milliseconds
 def fastest_ascension_gametime(variant=nil)
-    return repository.adapter.select "select distinct realtime as duration, user_id, (select name from users where user_id = id) as user, endtime from games where version = ? and user_id is not null and ascended='t' and duration = (select min(realtime) from games where version = ? and user_id is not null and ascended='t') order by endtime", variant, variant
+    return repository.adapter.select "select distinct turns as duration, user_id, (select name from users where user_id = id) as user, endtime from games where version = ? and user_id is not null and ascended='t' and duration = (select min(turns) from games where version = ? and user_id is not null and ascended='t') order by endtime", variant, variant
 end
 
 # returns a list of all ascension streaks per variant
