@@ -20,13 +20,13 @@ namespace :bogus do
       end
     end
 
-    task :add_server, :name, :url, :xlogurl do |t, args|
+    task :add_server, :name, :url, :xlogurl, :configfileurl do |t, args|
         puts "add server got #{args.inspect}"
-        Server.create(:name => args[:name], :url => args[:url], :xlogurl => args[:xlogurl])
-    end                    
+        Server.create(:name => args[:name], :url => args[:url], :xlogurl => args[:xlogurl], :configfileurl => args[:configfileurl])
+    end
     task :add_servers do
-        Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0)
-        Server.create(:name => "test server 2", :url => "localhost", :xlogurl => "file://test_xlog2.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0)
+        Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0, :configfileurl => "text_xlog_%s.rc")
+        Server.create(:name => "test server 2", :url => "localhost", :xlogurl => "file://test_xlog2.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0, :configfileurl => "text_xlog2_%s.rc")
 	puts "added #{ Server.all.length } test servers"
     end
 
@@ -115,6 +115,11 @@ namespace :bogus do
         end
         xlog1.close
         xlog2.close
+    end
+
+    task :test_account_verification, :server_id, :user do |t, args|
+        server = Server.get(args[:server_id])
+        raise "verification failed for #{args[:user]} on server #{server.name}" unless server.verify_user(args[:user], Regexp.new("junethack2011 testuser"))
     end
 end
 
