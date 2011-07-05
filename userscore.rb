@@ -37,14 +37,14 @@ def most_conducts_ascension(variant=nil)
     return repository.adapter.select "select max(nconducts) from games where version = ? and user_id = ? and ascended='t'", variant, @id
 end
 
-# returns the max realtime duration of an ascension in milliseconds
+# returns the min realtime duration of an ascension in milliseconds
 def fastest_ascension_realtime(variant=nil)
-    return parse_milliseconds((repository.adapter.select "select max(endtime-starttime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
+    return parse_milliseconds((repository.adapter.select "select min(endtime-starttime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
 end
 
-# returns the max in-game duration of an ascension in milliseconds
+# returns the min in-game duration of an ascension in milliseconds
 def fastest_ascension_gametime(variant=nil)
-    return parse_milliseconds((repository.adapter.select "select max(realtime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
+    return parse_milliseconds((repository.adapter.select "select min(turns) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
 end
 
 def longest_ascension_streak(variant=nil)

@@ -8,8 +8,8 @@ require 'rufus/scheduler'
 require 'trophy_calculations'
 require 'userscore'
 
-enable :sessions
-
+#enable :sessions
+use Rack::Session::Pool #fix 4kb session dropping
 # Scheduler: fetch game data every 15 minutes
 scheduler = Rufus::Scheduler.start_new
 scheduler.cron('*/15 * * * *') { fetch_all }
@@ -82,11 +82,26 @@ end
 post "/add_server_account" do
     redirect "/" and return unless session['user_id']
 
-    # TODO automatically do verification and inform user if it fails
     server = Server.get(params[:server])
+
+    # verify that this user wants to connect this account to this user
+    begin
+        tournament_identifier = "junethack2011 #{User.get(session['user_id']).login}"
+        if server.verify_user(params[:user], Regexp.new(Regexp.quote(tournament_identifier)))
+            session['messages'] = 'Account verified and added.'
+        else
+            session['errors'] = 'Could not find "# %s" in your config file on %s!' % [h(tournament_identifier), h(server.name)]
+            redirect "/home" and return
+        end
+    rescue Exception => e
+        puts e
+        session['errors'] = "Could not verify account!<br>" + (h e.message)
+        redirect "/home" and return
+    end
+
     account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
     # set user_id on all already played games
-    Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id'])
+    Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
 
     session['errors'] = "Couldn't create account!" unless account
     redirect "/home"
