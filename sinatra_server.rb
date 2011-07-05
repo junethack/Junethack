@@ -8,8 +8,8 @@ require 'rufus/scheduler'
 require 'trophy_calculations'
 require 'userscore'
 
-enable :sessions
-
+#enable :sessions
+use Rack::Session::Pool #fix 4kb session dropping
 # Scheduler: fetch game data every 15 minutes
 scheduler = Rufus::Scheduler.start_new
 scheduler.cron('*/15 * * * *') { fetch_all }
