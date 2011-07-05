@@ -25,8 +25,8 @@ namespace :bogus do
         Server.create(:name => args[:name], :url => args[:url], :xlogurl => args[:xlogurl], :configfileurl => args[:configfileurl])
     end
     task :add_servers do
-        Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0, :configfileurl => "text_xlog_%s.rc")
-        Server.create(:name => "test server 2", :url => "localhost", :xlogurl => "file://test_xlog2.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0, :configfileurl => "text_xlog2_%s.rc")
+        Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0, :configfileurl => "text_xlog_random_user.rc")
+        Server.create(:name => "test server 2", :url => "localhost", :xlogurl => "file://test_xlog2.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0, :configfileurl => "text_xlog2_random_user.rc")
 	puts "added #{ Server.all.length } test servers"
     end
 
