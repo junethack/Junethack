@@ -16,6 +16,7 @@ scheduler.cron('*/15 * * * *') { fetch_all }
 
 before do
     @user = User.get(session['user_id'])
+    @tournament_identifier = "junethack2011 #{@user.login}" if @user
     @logged_in = @user.nil?
     @messages = session["messages"] || []
     @errors = session["errors"] || []
@@ -84,13 +85,14 @@ post "/add_server_account" do
 
     server = Server.get(params[:server])
 
+    session['errors'] = "Add account name!" and redirect "/home" and return if params[:user].strip.empty?
+
     # verify that this user wants to connect this account to this user
     begin
-        tournament_identifier = "junethack2011 #{User.get(session['user_id']).login}"
-        if server.verify_user(params[:user], Regexp.new(Regexp.quote(tournament_identifier)))
+        if server.verify_user(params[:user], Regexp.new(Regexp.quote(@tournament_identifier)))
             session['messages'] = 'Account verified and added.'
         else
-            session['errors'] = 'Could not find "# %s" in your config file on %s!' % [h(tournament_identifier), h(server.name)]
+            session['errors'] = 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.name)]
             redirect "/home" and return
         end
     rescue Exception => e

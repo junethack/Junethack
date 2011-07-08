@@ -426,7 +426,12 @@ input[type="submit"].small_button {
     height: auto;
     width: auto;
     margin: 2px;
-    padding: 0;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+td  {
+    vertical-align: middle;
 }
 
 /**************************
