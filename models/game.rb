@@ -16,6 +16,32 @@ $conducts = [
     [0x400, "Artiwishless", "Art"],
     [0x800, "Genocideless", "Gen"]
 ]
+$achievements = [
+    [:obtained_bell_of_opening,
+     "obtained the Bell of Opening"],
+    [:entered_gehennom,
+     "entered Gehennom"],
+    [:obtained_the_candelabrum_of_invocation,
+     "obtained the Candelabrum of Invocation"],
+    [:obtained_the_book_of_the_dead,
+     "obtained the Book of the Dead"],
+    [:performed_the_invocation_ritual,
+     "performed the Invocation Ritual"],
+    [:obtained_the_amulet_of_yendor,
+     "obtained the Amulet of Yendor"],
+    [:entered_elemental_planes,
+     "entered Elemental Planes"],
+    [:entered_astral_plane,
+     "entered Astral Plane"],
+    [:ascended, "ascended"],
+    [:obtained_the_luckstone_from_the_mines,
+     "obtained the luckstone from the Mines"],
+    [:obtained_the_sokoban_prize,
+     "obtained the Sokoban Prize"],
+    [:killed_medusa,
+     "killed Medusa"],
+]
+
 class Game
     include DataMapper::Resource
     belongs_to :server

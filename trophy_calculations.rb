@@ -181,6 +181,23 @@ def update_scores(game)
                                   :trophy  => "longest_ascension_streaks").save
             end
         end
+        # achievements
+        achievements = game.achieve.hex
+        for i in 0..$achievements.size do
+            if achievements & 2**i > 0 then
+                entry = Scoreentry.first(:user_id => game.user_id,
+                                         :variant => game.version,
+                                         :trophy => $achievements[i][0])
+                if not entry then
+                    Scoreentry.create(:user_id => game.user_id,
+                                      :variant => game.version,
+                                      :value   => "1",
+                                      :endtime => game.endtime,
+                                      :trophy  => $achievements[i][0]).save
+                end
+            end
+        end
+
     end
 
     return true
