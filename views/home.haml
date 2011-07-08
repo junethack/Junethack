@@ -1,32 +1,36 @@
 .content_bulk
     .text_content_wrapper
         .text_content
-            #greeting
-                = "Hi " + @user.login
+            - server_accounts = (Server.all - @user.servers)
+            - if server_accounts.size > 0
+                #greeting
+                    = "Hi #{h @user.login}, to have your games on one of the <a href='public_servers_TODO'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># #{@tournament_identifier}</tt><br/> to your options file on the public server and enter your public server account name (case-sensitive) into the form below."
             %form{ :action => "/add_server_account", :method => "post"}
                 %table#accountlist
                     %tr
-                        %th
                         %th Server
                         %th Account
+                        %th
+                    - count = 0
                     - for account in @user.accounts
-                        %tr.account
-                            %td
-                            %td= account.server.name
+                        - style = (count % 2) == 0 ? "cell1" : "cell2"
+                        - count += 1
+                        %tr.account{:id => style}
+                            %td= account.server.display_name
                             %td= account.name
+                            %td.noborder
 
-                    - server_accounts = (Server.all - @user.servers)
                     - if server_accounts.size > 0
-                        %tr
+                        %tr.norow
                             %fieldset
-                                %td
-                                    %input{:type => "submit", :value => "+", :class => "small_button"}
                                 %td
                                     %select{:name => "server"}
                                         - server_accounts.each do |s|
-                                            %option{:value => s.id}= s.name
+                                            %option{:value => s.id}= s.display_name
                                 %td
                                     %input{:type => "text", :name => "user", :class => "text"}
+                                %td.noborder
+                                    %input{:type => "submit", :value => "add account", :class => "small_button"}
 
             =haml :_user_games
             #clanmanager
