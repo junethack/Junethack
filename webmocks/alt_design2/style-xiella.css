@@ -287,6 +287,7 @@ a:hover {
 }
 
 
+#accountlist,
 .scorelisting table
 {
     font-size: 85%;
@@ -297,30 +298,31 @@ a:hover {
     /* Hard limit on width */
     width: 600px;
     text-align: left;
+    vertical-align: middle;
+    border: 1px solid #DDD;
 }
+#accountlist th,
 .scorelisting th
 {
     text-align: left;
     padding-right: 20px;
     padding-left: 3px;
 }
+#cell1 td,
+#cell2 td
+{
+    border: 1px solid black;
+    padding-right: 10px;
+    padding-left: 3px;
+    vertical-align: middle;
+}
 #cell1 td
 {
     background-color: #ccc;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    padding-right: 10px;
-    padding-left: 3px;
 }
 #cell2 td
 {
     background-color: #bbb;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    padding-right: 10px;
-    padding-left: 3px;
 }
 
 #cell1 td.table_number,
@@ -337,6 +339,32 @@ a:hover {
     padding-right: 3px;
     padding-left: 3px;
 }
+
+#accountlist,
+#accountlist tr,
+#accountlist td
+{
+    width: inherit;
+}
+#accountlist tr.norow,
+#accountlist tr.norow td,
+#accountlist td.noborder
+{
+    border-width: 0px;
+    background-color: inherit;
+    vertical-align: middle;
+}
+#accountlist input[type="text"]
+{
+    width: 6em;
+    margin: 3px 3px 3px 3px;
+    padding: 0;
+}
+#accountlist select
+{
+    font-size: 100%;
+}
+
 
 
 /**************************
@@ -428,10 +456,6 @@ input[type="submit"].small_button {
     margin: 2px;
     padding-top: 0px;
     padding-bottom: 0px;
-}
-
-td  {
-    vertical-align: middle;
 }
 
 /**************************

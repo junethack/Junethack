@@ -11,22 +11,25 @@
                         %th Server
                         %th Account
                         %th
+                    - count = 0
                     - for account in @user.accounts
-                        %tr.account
-                            %td= account.server.name
+                        - style = (count % 2) == 0 ? "cell1" : "cell2"
+                        - count += 1
+                        %tr.account{:id => style}
+                            %td= account.server.display_name
                             %td= account.name
-                            %td
+                            %td.noborder
 
                     - if server_accounts.size > 0
-                        %tr
+                        %tr.norow
                             %fieldset
                                 %td
                                     %select{:name => "server"}
                                         - server_accounts.each do |s|
-                                            %option{:value => s.id}= s.name
+                                            %option{:value => s.id}= s.display_name
                                 %td
                                     %input{:type => "text", :name => "user", :class => "text"}
-                                %td
+                                %td.noborder
                                     %input{:type => "submit", :value => "add account", :class => "small_button"}
 
             =haml :_user_games

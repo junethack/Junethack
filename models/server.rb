@@ -25,5 +25,9 @@ class Server
         end
         return false;
     end
+
+    def display_name
+        url+" ("+name+")"
+    end
 end
 

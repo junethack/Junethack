@@ -92,7 +92,7 @@ post "/add_server_account" do
         if server.verify_user(params[:user], Regexp.new(Regexp.quote(@tournament_identifier)))
             session['messages'] = 'Account verified and added.'
         else
-            session['errors'] = 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.name)]
+            session['errors'] = 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.display_name)]
             redirect "/home" and return
         end
     rescue Exception => e
