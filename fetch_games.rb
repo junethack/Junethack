@@ -1,7 +1,12 @@
 require 'rubygems'
 require 'date'
+require 'time'
 require 'database'
 require 'parse'
+
+$tournament_starttime = Time.parse("2011-07-01 00:00:00Z").to_i
+$tournament_endtime   = Time.parse("2011-08-01 00:00:00Z").to_i
+
 def fetch_all
     for server in Server.all
         puts "server #{server.name} start!"
@@ -25,16 +30,20 @@ def fetch_all
                 for hgame in games
                     i += 1
                     #puts hgame.inspect
-                    acc = Account.first(:name => hgame["name"], :server_id => server.id)
-                    game = Game.create!(hgame.merge({"server" => server}))
-                    game.user_id = acc.user_id if acc
-                    #puts "Created game #{game.inspect}"
-                    if game.save
-                        puts "created #{i}"
+                    if hgame['starttime'].to_i >= $tournament_starttime and
+                       hgame['endtime'].to_i   <= $tournament_endtime
+                        acc = Account.first(:name => hgame["name"], :server_id => server.id)
+                        game = Game.create!(hgame.merge({"server" => server}))
+                        game.user_id = acc.user_id if acc
+                        #puts "Created game #{game.inspect}"
+                        if game.save
+                            puts "created #{i}"
+                        else
+                            puts "something went wrong, could not create games"
+                        end
                     else
-                        puts "something went wrong, could not create games"
+                        puts "not part of tournament #{i}"
                     end
-        
                 end
                end
             else
