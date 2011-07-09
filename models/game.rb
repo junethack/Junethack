@@ -38,8 +38,8 @@ $achievements = [
      "obtained the luckstone from the Mines"],
     [:obtained_the_sokoban_prize,
      "obtained the Sokoban Prize"],
-    [:killed_medusa,
-     "killed Medusa"],
+    [:defeated_medusa,
+     "defeated Medusa"],
 ]
 
 class Game
@@ -90,6 +90,50 @@ class Game
     property :deathdname, String
     property :dlev_name,  String
     property :elbereths,  Integer, :default => -1
+
+    ## AcheHand and UnNetHack specific
+    # Assault on Fort Knox
+    def defeated_croesus?
+        event and event.to_i & 0x00800 > 0
+    end
+    # No membership card
+    def defeated_one_eyed_sam?
+        event and event.to_i & 0x10000 > 0
+    end
+    # Too good for quests
+    def ascended_without_defeating_nemesis?
+        ascended and event and not event.to_i & 0x00400 > 0
+    end
+    # Too good for Vladbanes
+    def ascended_without_defeating_vlad?
+        ascended and event and not event.to_i & 0x02000 > 0
+    end
+    # Too good for... wait, what? How?
+    def ascended_without_defeating_rodney?
+        ascended and event and not event.to_i & 0x04000 > 0
+    end
+    # Too good for a brain
+    def ascended_without_defeating_cthulhu?
+        ascended and event and not event.to_i & 0x20000 > 0
+    end
+    # Hoarder (ascended carrying all the invocation items)
+    def ascended_with_all_invocation_items?
+        ascended and carried and carried.to_i & 14 > 0
+    end
+
+    ## NetHack 1.3d specific
+    # got crowned
+    def got_crowned?
+        event and event.to_i & 0x00200 > 0
+    end
+    # entered Hell
+    def entered_hell?
+        event and event.to_i & 0x00020 > 0
+    end
+    # defeated Rodney
+    def defeated_rodney?
+        event and event.to_i & 0x00040 > 0
+    end
 
     after :update do
         update_scores(self)

@@ -1,4 +1,5 @@
 require 'userscore'
+require 'trophyscore'
 
 # Limits by 10 any collection
 def limit_by_10(collection)
@@ -180,23 +181,75 @@ def update_scores(game)
                                   :endtime => e.endtime,
                                   :trophy  => "longest_ascension_streaks").save
             end
+            ## AceHack and UnNetHack-specific ascension trophies
+            if game.version == 'NH-1.3d' then
+                # ascended
+                Scoreentry.first_or_create(:user_id => game.user_id,
+                    :variant => game.version,
+                    :trophy => :ascended).save if game.ascended
+                # got crowned
+                Scoreentry.first_or_create(:user_id => game.user_id,
+                    :variant => game.version,
+                    :trophy => :crowned).save if game.got_crowned?
+                # entered hell
+                Scoreentry.first_or_create(:user_id => game.user_id,
+                    :variant => game.version,
+                    :trophy => :entered_hell).save if game.entered_hell?
+                # defeated rodney
+                Scoreentry.first_or_create(:user_id => game.user_id,
+                    :variant => game.version,
+                    :trophy => :defeated_rodney).save if game.defeated_rodney?
+            else
+                # Too good for quests
+                Scoreentry.first_or_create(:user_id => game.user_id,
+                    :variant => game.version,
+                    :trophy => :ascended_without_defeating_nemesis).save if game.ascended_without_defeating_nemesis?
+                # Too good for Vladbanes
+                Scoreentry.first_or_create(:user_id => game.user_id,
+                    :variant => game.version,
+                    :trophy => :ascended_without_defeating_vlad).save if game.ascended_without_defeating_vlad?
+                # Too good for... wait, what? How?
+                Scoreentry.first_or_create(:user_id => game.user_id,
+                    :variant => game.version,
+                    :trophy => :ascended_without_defeating_rodney).save if game.ascended_without_defeating_rodney?
+                # Too good for a brain
+                Scoreentry.first_or_create(:user_id => game.user_id,
+                    :variant => game.version,
+                    :trophy => :ascended_without_defeating_cthulhu).save if game.ascended_without_defeating_cthulhu?
+                # Hoarder
+                Scoreentry.first_or_create(:user_id => game.user_id,
+                    :variant => game.version,
+                    :trophy => :ascended_with_all_invocation_items).save if game.ascended_with_all_invocation_items?
+
+            end
         end
         # achievements
-        achievements = game.achieve.hex
-        for i in 0..$achievements.size do
-            if achievements & 2**i > 0 then
-                entry = Scoreentry.first(:user_id => game.user_id,
-                                         :variant => game.version,
-                                         :trophy => $achievements[i][0])
-                if not entry then
-                    Scoreentry.create(:user_id => game.user_id,
-                                      :variant => game.version,
-                                      :value   => "1",
-                                      :endtime => game.endtime,
-                                      :trophy  => $achievements[i][0]).save
+        achievements = game.achieve.hex if game.achieve
+        if achievements and achievements > 0 then
+            for i in 0..$achievements.size do
+                if achievements & 2**i > 0 then
+                    entry = Scoreentry.first(:user_id => game.user_id,
+                                             :variant => game.version,
+                                             :trophy => $achievements[i][0])
+                    if not entry then
+                        Scoreentry.create(:user_id => game.user_id,
+                                          :variant => game.version,
+                                          :value   => "1",
+                                          :endtime => game.endtime,
+                                          :trophy  => $achievements[i][0]).save
+                    end
                 end
             end
         end
+        ## AceHack and UnNetHack-specific trophies
+        # Assault on Fort Knox
+        Scoreentry.first_or_create(:user_id => game.user_id,
+            :variant => game.version,
+            :trophy => :defeated_croesus).save if game.defeated_croesus?
+        # No membership card
+        Scoreentry.first_or_create(:user_id => game.user_id,
+            :variant => game.version,
+            :trophy => :defeated_one_eyed_sam).save if game.defeated_one_eyed_sam?
 
     end
 
