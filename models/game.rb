@@ -42,6 +42,47 @@ $achievements = [
      "defeated Medusa"],
 ]
 
+$trophy_names = {
+    "ascended" => "ascended",
+
+    "crowned" => "got crowned",
+    "entered_hell" => "entered Hell",
+    "defeated_rodney" => "defeated Rodney",
+
+    "obtained_bell_of_opening" => "obtained the Bell of Opening",
+    "entered_gehennom" => "entered Gehennom",
+    "obtained_the_candelabrum_of_invocation" => "obtained the Candelabrum of Invocation",
+    "obtained_the_book_of_the_dead" => "obtained the Book of the Dead",
+    "performed_the_invocation_ritual" => "performed the Invocation Ritual",
+    "obtained_the_amulet_of_yendor" => "obtained the Amulet of Yendor",
+    "entered_elemental_planes" => "entered Elemental Planes",
+    "entered_astral_plane" => "entered Astral Plane",
+    "ascended" => "ascended",
+    "obtained_the_luckstone_from_the_mines" => "obtained the luckstone from the Mines",
+    "obtained_the_sokoban_prize" => "obtained the Sokoban Prize",
+    "defeated_medusa" => "defeated Medusa",
+
+    "bought_oracle_consultation" => "bought an Oracle consultation",
+    "accepted_for_quest" => "reached the Quest portal level",
+    "defeated_quest_nemesis" => "defeated the Quest Nemesis",
+    "defeated_medusa" => "defeated Medusa",
+    "event_entered_gehennom_front_way" => "entered Gehennom the front way",
+    "defeated_vlad" => "defeated Vlad",
+    "defeated_rodney" => "defeated Rodney at least once",
+    "did_invocation" => "did the Invocation Ritual",
+    "defeated_a_high_priest" => "defeated a High Priest",
+    "entered_planes" => "entered the Elemental Planes",
+    "entered_astral" => "entered the Astral Plane",
+
+    "ascended_without_defeating_nemesis" => "Too good for quests (ascended without defeating the quest nemesis)",
+    "ascended_without_defeating_vlad" => "Too good for Vladbanes (ascended without defeating Vlad)",
+    "ascended_without_defeating_rodney" => "Too good for... wait, what? How? (ascended without defeating Rodney)",
+    "ascended_without_defeating_cthulhu" => "Too good for a brain (ascended without defeating Cthulhu)",
+    "ascended_with_all_invocation_items" => "Hoarder (ascended carrying all the invocation items)",
+    "defeated_croesus" => "Assault on Fort Knox (defeated Croesus)",
+    "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)"
+}
+
 class Game
     include DataMapper::Resource
     belongs_to :server

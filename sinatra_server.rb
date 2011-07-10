@@ -77,6 +77,7 @@ get "/home" do
 
     @user = User.get(session['user_id'])
     @games = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
+    @scoreentries = Scoreentry.all(:user_id => @user.id)
     haml :home
 end
 
