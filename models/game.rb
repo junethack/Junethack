@@ -135,6 +135,41 @@ class Game
         event and event.to_i & 0x00040 > 0
     end
 
+    # UnNetHack and AceHack specific
+    def event_bought_oracle_consultation?
+        event and event.to_i & 0x00001 > 0
+    end
+    def event_accepted_for_quest?
+        event and event.to_i & 0x00004 > 0
+    end
+    def event_defeated_quest_nemesis?
+        event and event.to_i & 0x00400 > 0
+    end
+    def event_defeated_medusa?
+        event and event.to_i & 0x01000 > 0
+    end
+    def event_entered_gehennom_front_way?
+        event and event.to_i & 0x00020 > 0
+    end
+    def event_defeated_vlad?
+        event and event.to_i & 0x02000 > 0
+    end
+    def event_defeated_rodney?
+        event and event.to_i & 0x04000 > 0
+    end
+    def event_did_invocation?
+        event and event.to_i & 0x00080 > 0
+    end
+    def event_defeated_a_high_priest?
+        event and event.to_i & 0x08000 > 0
+    end
+    def entered_planes?
+        deathlev < 0
+    end
+    def entered_astral?
+        maxlvl == -5
+    end
+
     after :update do
         update_scores(self)
     end
