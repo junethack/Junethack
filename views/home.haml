@@ -28,33 +28,46 @@
                                 %td
                                     %input{:type => "text", :name => "user", :class => "text"}
 
-            =haml :_user_games
-            #clanmanager
+        =haml :_user_games
+        #clanmanager.text_content.non_top_post
             - for account in @user.accounts
                 .account-clan
-                    %div= account.name + " on " + account.server.name
+                    %h3= account.name + " on " + account.server.name
                     - if account.clan
-                        %span= account.clan.name
+                        %a{:href => "/clan/#{account.clan.name}"}= account.clan.name
                         %a{:href => "/leaveclan/#{account.server.id}"} Leave
                     - else
                         - unless account.invitations and account.invitations.empty?
-                            %table
-                                %tr
-                                    %th Clan
-                                    %th
-                                    %th
-                                    - for invitation in account.invitations
-                                        %tr
-                                            %td= invitation['clan_id']
-                                        %tr
-                                            %td
-                                                %a{:href => "/respond/#{account.server.id}/#{invitation['token']}?accept=true"}
-                                            %td
-                                                %a{:href => "/respond/#{invitation['token']}?accept=false"}
+                            %h4
+                                You got
+                                = account.invitations.length
+                                invitation(s)
+                            .scorelisting
+                                %table
+                                    %tr
+                                        %th Clan
+                                        %th Accept 
+                                        %th Decline
+                                        - for invitation in account.invitations
+                                            %tr
+                                                %td= invitation['clan_id']
+                                                %td
+                                                    %a{:href => "/respond/#{account.server.id}/#{invitation['token']}?accept=true"} Accept
+                                                %td
+                                                    %a{:href => "/respond/#{account.server.id}/#{invitation['token']}?accept=false"} Decline
                         - else
-                            %div 
-                                No clan invitations for this account
-                                %form{:method => "POST", :action => "/create_clan/#{account.server.id}"}
-                                    %label{:for => "clanname"} Clan name
-                                    %input#clanname{:type => "text"}
-                                    %input{:type => "submit", :value => "Create clan"} 
+                            %h4
+                                No invitations for this account
+        - clanless_accs = @user.accounts.select{|a| a.clan.nil?}
+        - unless clanless_accs.empty?
+            %div.text_content.non_top_post
+                %h4 Create a new clan
+                %form{:method => "POST", :action => "/clan"}
+                    %label{:for => "server"}  Creator account
+                    %select{:name => "server"}
+                        - for acc in clanless_accs
+                            %option{:value => acc.server.id}= "#{acc.name} on #{acc.server.name}"
+
+                    %label{:for => "clanname"} Clan name
+                    %input#clanname{:name => "clanname", :type => "text"}
+                    %input{:type => "submit", :value => "Create clan"}

@@ -1,0 +1,31 @@
+#clan
+    #clanname 
+        Clan:
+        = @clan.name
+    #admin
+        Admin:
+        = @admin.name
+    %ul#members
+        - for account in @clan.accounts
+            %li.member
+                = "#{account.name} on #{account.server.name}" #link to user page
+    - if @user and @user.accounts.find{|acc| acc == @admin}
+        %div Invite Account
+        %form#invite_account{:method => "POST", :action => "/clan/invite"}
+            
+            %label{:for => 'accountname'} Account name
+            %input#accountname{:name => 'accountname', :type => 'text'}
+            %label{:for => 'server'} Server
+            %select{:name => 'server'}
+                - for server in Server.all
+                    %option{:name => server.id, :value => server.id}= server.name
+            %input{:type => 'hidden', :name => :clan, :value => @clan.name}
+            %input{:type => 'submit', :value => "Invite"}
+        - if @clan.invitations.empty?
+            %div No open invitations
+        - else
+            %div Open invitations
+            %ul#invitations
+                - for invitation in @clan.invitations
+                    %li.invitation
+                        = Account.get(invitation['user'], invitation['server']).name
