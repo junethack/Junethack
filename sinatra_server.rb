@@ -205,7 +205,25 @@ get "/respond/:server_id/:token" do #respond to invitation
     end
     redirect "/home"
 end
-
+get "/clan/disband/:name" do
+    clan = Clan.get(params[:name])
+    if clan
+        admin = clan.get_admin
+        if @user.accounts.include? admin
+            if clan.destroy
+                session['messages'] << "Successfully disbanded #{params[:name]}"
+            else
+                session['errors'] << "Could not destroy clan"
+            end
+        else
+            session['errors'] << "You are not the clan admin"
+        end
+    else
+        session['errors'] << "Could not find clan #{params[:name]}"
+    end
+    redirect "/home"
+end
+            
 get "/leaveclan/:server" do  #leave a clan
     redirect "/" and return unless @user
     if account = Account.get(@user.id, params[:server])

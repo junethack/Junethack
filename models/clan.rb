@@ -1,7 +1,7 @@
 class Clan
     include DataMapper::Resource
     property :admin,    Json
-    has n, :accounts
+    has n, :accounts,   :constraint => :set_nil
     property :name,     String, :key => true
     property :invitations,     Json, :default => "[]"
 

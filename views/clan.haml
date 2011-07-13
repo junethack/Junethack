@@ -29,3 +29,6 @@
                 - for invitation in @clan.invitations
                     %li.invitation
                         = Account.get(invitation['user'], invitation['server']).name
+        %div
+            Disband clan
+            %a{:href => "/clan/disband/#{@clan.name}"} Disband
