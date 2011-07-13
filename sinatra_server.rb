@@ -17,6 +17,7 @@ scheduler.cron('*/15 * * * *') { fetch_all }
 
 before do
     @user = User.get(session['user_id'])
+    @tournament_identifier = "junethack2011 #{@user.login}" if @user
     @logged_in = @user.nil?
     @messages = session["messages"] || []
     @errors = session["errors"] || []
@@ -78,17 +79,34 @@ get "/home" do
 
     @user = User.get(session['user_id'])
     @games = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
+    @scoreentries = Scoreentry.all(:user_id => @user.id)
     haml :home
 end
 
 post "/add_server_account" do
     redirect "/" and return unless session['user_id']
 
-    # TODO automatically do verification and inform user if it fails
     server = Server.get(params[:server])
+
+    session['errors'] = "Add account name!" and redirect "/home" and return if params[:user].strip.empty?
+
+    # verify that this user wants to connect this account to this user
+    begin
+        if server.verify_user(params[:user], Regexp.new(Regexp.quote(@tournament_identifier)))
+            session['messages'] = 'Account verified and added.'
+        else
+            session['errors'] = 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.display_name)]
+            redirect "/home" and return
+        end
+    rescue Exception => e
+        puts e
+        session['errors'] = "Could not verify account!<br>" + (h e.message)
+        redirect "/home" and return
+    end
+
     account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
     # set user_id on all already played games
-    Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id'])
+    Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
 
     session['errors'] = "Couldn't create account!" unless account
     redirect "/home"

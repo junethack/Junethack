@@ -1,8 +1,8 @@
 #!/bin/sh
-rake bogus:add_server[nao,nethack.alt.org,http://alt.org/nethack/xlogfile.full.txt]
-rake bogus:add_server[arc,acehack.rawrnix.com,http://acehack.rawrnix.com/xlogfile]
-rake bogus:add_server[asi,acehack.sovrappensiero.info,http://acehack.sovrappensiero.info/xlogfile.txt]
-rake bogus:add_server[eun,un.nethack.nu,http://un.nethack.nu/logs/xlogfile]
-rake bogus:add_server[neu,nethack.eu,file:///home/ec2-user/junethack2011/xlogfile]
-rake bogus:add_server[nfi,nethack.fi,http://nethack.fi/xlogfile]
+rake bogus:add_server[nao,nethack.alt.org,http://alt.org/nethack/xlogfile.full.txt,http://alt.org/nethack/userdata/random_user/random_user.nh343rc]
+rake bogus:add_server[arc,acehack.rawrnix.com,http://acehack.rawrnix.com/xlogfile,http://acehack.rawrnix.com/userdata/random_user/random_user.nh343rc]
+rake bogus:add_server[asi,acehack.sovrappensiero.info,http://acehack.sovrappensiero.info/xlogfile.txt,http://acehack.sovrappensiero.info/userdata/random_user/random_user.ace360rc]
+rake bogus:add_server[eun,un.nethack.nu,http://un.nethack.nu/logs/xlogfile,http://un.nethack.nu/rcfiles/random_user.nethackrc]
+rake bogus:add_server[neu,nethack.eu,file:///home/ec2-user/junethack2011/xlogfile,http://nethack.eu:8000/junethack2011/raw-file/tip/rcfiles/random_user.nh343rc]
+rake bogus:add_server[nfi,nethack.fi,http://nethack.fi/xlogfile,http://nethack.fi/userdata/random_user/random_user.nh343rc]
 
