@@ -45,6 +45,11 @@ get "/logout" do
     redirect "/" and return
 end
 
+get "/trophies" do
+    @show_banner = true
+    haml :trophies
+end
+
 get "/about" do
     @show_banner = true
     haml :about
