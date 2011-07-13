@@ -4,4 +4,4 @@ rake bogus:add_server[arc,acehack.rawrnix.com,http://acehack.rawrnix.com/xlogfil
 rake bogus:add_server[asi,acehack.sovrappensiero.info,http://acehack.sovrappensiero.info/xlogfile.txt,http://acehack.sovrappensiero.info/userdata/random_user/random_user.ace360rc]
 rake bogus:add_server[eun,un.nethack.nu,http://un.nethack.nu/logs/xlogfile,http://un.nethack.nu/rcfiles/random_user.nethackrc]
 rake bogus:add_server[nfi,nethack.fi,http://nethack.fi/xlogfile,http://nethack.fi/userdata/random_user/random_user.nh343rc]
-
+rake bogus:add_server[shc,sporkhack.com,http://sporkhack.com/xlogfile,http://sporkhack.com/rcfiles/random_user.nethackrc]
