@@ -502,11 +502,18 @@ input[type="submit"].small_button {
 #tiny_content_spacer {
     height: 5px;
 }
-li > img {
+ul.trophypage {
+    list-style: disc;
+}
+ul.trophypage > li {
+    margin-top: 5px;
+}
+li.multiline > img {
     vertical-align: middle;
     height: 5%;
+    width: 5%;
 }
-li > span {
+li.multiline > span {
     display: inline-block;
     vertical-align: middle;
     width: 500px;
