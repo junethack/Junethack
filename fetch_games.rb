@@ -18,7 +18,7 @@ def fetch_all
             server.xlogcurrentoffset = header['Content-Length'].to_i
             server.xloglastmodified = header['Last-Modified']
             server.save
-            next
+            return
         end
         if DateTime.parse(server.xloglastmodified) < DateTime.parse(header['Last-Modified'])
             puts "fetching games ...."
@@ -26,25 +26,26 @@ def fetch_all
                 server.xlogcurrentoffset = header['Content-Length'].to_i
                 puts "So many games ... #{games.length}"
                 i = 0
-                Game.transaction do
-                    for hgame in games
-                        i += 1
-                        #puts hgame.inspect
-                        if hgame['starttime'].to_i >= $tournament_starttime and
-                            hgame['endtime'].to_i   <= $tournament_endtime
-                            acc = Account.first(:name => hgame["name"], :server_id => server.id)
-                            game = Game.create(hgame.merge({"server" => server}))
-                            game.user_id = acc.user_id if acc
-                            if game.save
-                                puts "created #{i}"
-                            else
-                                puts "something went wrong, could not create games"
-                            end
+               Game.transaction do
+                for hgame in games
+                    i += 1
+                    #puts hgame.inspect
+                    if hgame['starttime'].to_i >= $tournament_starttime and
+                       hgame['endtime'].to_i   <= $tournament_endtime
+                        acc = Account.first(:name => hgame["name"], :server_id => server.id)
+                        game = Game.create!(hgame.merge({"server" => server}))
+                        game.user_id = acc.user_id if acc
+                        #puts "Created game #{game.inspect}"
+                        if game.save
+                            puts "created #{i}"
                         else
-                            puts "not part of tournament #{i}"
+                            puts "something went wrong, could not create games"
                         end
+                    else
+                        puts "not part of tournament #{i}"
                     end
                 end
+               end
             else
                 puts "No games at all!"
             end

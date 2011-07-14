@@ -21,10 +21,16 @@ class Account #join model
                                         game.death == 'ascended'}
     end
 
+    def invite_me invitation
+        self.invitations ||= []
+        self.invitations.push invitation
+        self.save
+    end
+
     def respond_invite invitation, accept
         if clan = Clan.first(:name => invitation['clan_id'])
             invitation['status'] = accept ? 'accept' : 'decline'
-            return clan.get_invitation_response invitation 
+            clan.get_invitation_response invitation
         end
     end    
 end

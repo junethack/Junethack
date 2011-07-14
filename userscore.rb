@@ -44,7 +44,7 @@ end
 
 # returns the min in-game duration of an ascension in milliseconds
 def fastest_ascension_gametime(variant=nil)
-    return (repository.adapter.select "select min(turns) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0]
+    return parse_milliseconds((repository.adapter.select "select min(turns) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
 end
 
 def longest_ascension_streak(variant=nil)

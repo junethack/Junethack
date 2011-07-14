@@ -2,7 +2,6 @@
   %h3
     Competition
   - @userscore.variants.each do |variant, variant_name|
-    - @variant = variant
     %h4= variant_name
     .scorelisting
       %table
@@ -30,7 +29,6 @@
         %tr#cell1
           %td Longest ascension streak
           %td.table_number= h @userscore.longest_ascension_streak variant
-    =haml :_user_trophies
 
 .text_content.non_top_post
   %h3
