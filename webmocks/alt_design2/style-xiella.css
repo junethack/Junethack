@@ -502,11 +502,31 @@ input[type="submit"].small_button {
 #tiny_content_spacer {
     height: 5px;
 }
-li > img {
-    vertical-align: middle;
-    height: 5%;
+ 
+
+/**************************
+**                       **
+**      trophy page      **
+**                       **
+**************************/
+
+/* give dots to trophy lists */
+ul.trophypage {
+    list-style: disc;
 }
-li > span {
+ul.trophypage > li {
+    margin-top: 5px;
+}
+/* prevent chromium from resizing trophy images */
+ul.trophypage > li > img {
+    height: 35px;
+    width: 35px;
+}
+/* vertically align text and images */
+li.multiline > img {
+    vertical-align: middle;
+}
+li.multiline > span {
     display: inline-block;
     vertical-align: middle;
     width: 500px;

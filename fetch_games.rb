@@ -26,7 +26,6 @@ def fetch_all
                 server.xlogcurrentoffset = header['Content-Length'].to_i
                 puts "So many games ... #{games.length}"
                 i = 0
-                Game.transaction do
                     for hgame in games
                         i += 1
                         #puts hgame.inspect
@@ -44,7 +43,6 @@ def fetch_all
                             puts "not part of tournament #{i}"
                         end
                     end
-                end
             else
                 puts "No games at all!"
             end
