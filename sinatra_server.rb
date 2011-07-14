@@ -20,6 +20,7 @@ before do
     @tournament_identifier = "junethack2011 #{@user.login}" if @user
     @messages = session["messages"] || []
     @errors = session["errors"] || []
+    @logged_in = @user.nil?
     puts "got #{@messages.length} messages"
     puts "and #{@errors.length} errors"
     puts "#{@errors.inspect}"
