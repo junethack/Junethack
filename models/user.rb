@@ -1,6 +1,7 @@
 class User
     include DataMapper::Resource
 
+    has n, :scoreentries
     has n, :accounts
     has n, :servers, :through => :accounts
     has n, :games, :through => :servers

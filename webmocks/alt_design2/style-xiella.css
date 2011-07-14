@@ -69,6 +69,9 @@ a:hover {
 /* topnav */
 .text_content_wrapper, #topnav {
     background-color: #ddd;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }
 #topnav li a {
     color: #555;
@@ -245,6 +248,9 @@ a:hover {
     -webkit-box-shadow: inset 0px 0px 10px #888;
     -moz-box-shadow: inset 0px 0px 10px #888;
     box-shadow: inset 0px 0px 10px #888;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
     filter:alpha(opacity=90); 
     -moz-opacity: 0.9; 
     opacity: 0.9; 
@@ -489,4 +495,39 @@ input[type="submit"].small_button {
 }
 #end_of_content_spacer {
     height: 30px;
+}
+#small_content_spacer {
+    height: 15px;
+}
+#tiny_content_spacer {
+    height: 5px;
+}
+ 
+
+/**************************
+**                       **
+**      trophy page      **
+**                       **
+**************************/
+
+/* give dots to trophy lists */
+ul.trophypage {
+    list-style: disc;
+}
+ul.trophypage > li {
+    margin-top: 5px;
+}
+/* prevent chromium from resizing trophy images */
+ul.trophypage > li > img {
+    height: 35px;
+    width: 35px;
+}
+/* vertically align text and images */
+li.multiline > img {
+    vertical-align: middle;
+}
+li.multiline > span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 500px;
 }
