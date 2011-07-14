@@ -508,10 +508,12 @@ ul.trophypage {
 ul.trophypage > li {
     margin-top: 5px;
 }
+ul.trophypage > li > img {
+    height: 35px;
+    width: 35px;
+}
 li.multiline > img {
     vertical-align: middle;
-    height: 5%;
-    width: 5%;
 }
 li.multiline > span {
     display: inline-block;
