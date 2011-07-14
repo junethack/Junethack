@@ -135,7 +135,7 @@ post "/create" do
 end
 
 get "/user/:name" do
-    @player = Player.first(:login => params[:name])
+    @player = User.first(:login => params[:name])
     if @player
         haml :user
     else
@@ -251,8 +251,7 @@ get "/leaveclan/:server" do  #leave a clan
         session['errors'] << "No account on this server"
     end
     redirect "/home"
-end
-        
+end        
 
 get "/scores/:name" do |name|
     # Is the user there? If not, just redirect to home
@@ -276,7 +275,6 @@ get "/scoreboard" do
     @highest_density_users = best_sustained_ascension_rate
     haml :scoreboard
 end
-
 
 helpers do
   include Rack::Utils
