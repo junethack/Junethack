@@ -31,7 +31,49 @@
                                     %input{:type => "text", :name => "user", :class => "text"}
                                 %td.noborder
                                     %input{:type => "submit", :value => "add account", :class => "small_button"}
-
+        .text_content.non_top_post
+            %h3
+                Trophies
+            - unless @user.scoreentries.select{|entry| entry.variant == "3.6.0"}.empty?
+                %li
+                    AceHack
+                %p
+                    - for scoreentry in @user.scoreentries
+                        - if scoreentry.variant == "3.6.0"
+                            %a{:href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
+            - unless @user.scoreentries.select{|entry| entry.variant == "3.4.3"}.empty?
+                %li
+                    NetHack 3.4.3
+                %p
+                    - for scoreentry in @user.scoreentries
+                        - if scoreentry.variant == "3.4.3"
+                            %a{:href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
+            - unless @user.scoreentries.select{|entry| entry.variant == "UNH-3.5.4"}.empty?
+                %li
+                    UnNetHack
+                %p
+                    - for scoreentry in @user.scoreentries
+                        - if scoreentry.variant == "UNH-3.5.4"
+                            %a{:href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
+            - unless @user.scoreentries.select{|entry| entry.variant == "0.6.3"}.empty?
+                %li
+                    SporkHack
+                %p
+                    - for scoreentry in @user.scoreentries
+                        - if scoreentry.variant == "0.6.3"
+                            %a{:href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
+            - unless @user.scoreentries.select{|entry| entry.variant == "NH-1.3d"}.empty?
+                %li
+                    NetHack 1.3d
+                %p
+                    - for scoreentry in @user.scoreentries
+                        - if scoreentry.variant == "NH-1.3d"
+                            %a{:href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
         =haml :_user_games
         #clanmanager.text_content.non_top_post
             - for account in @user.accounts

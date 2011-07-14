@@ -114,7 +114,8 @@ def update_scores(game)
             # ascended
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :ascended).save
+                :trophy => :ascended,
+                :icon => "ascension.png").save
 
             Scoreentry.all(:variant => game.version,
                            :trophy  => "most_ascensions").destroy
@@ -123,7 +124,8 @@ def update_scores(game)
                                   :variant => game.version,
                                   :value   => e.ascension.to_s,
                                   :endtime => e.endtime,
-                                  :trophy  => "most_ascensions").save
+                                  :trophy  => "most_ascensions",
+                                  :icon    => "c-most-ascensions.png").save
             end
 
             Scoreentry.all(:variant => game.version,
@@ -133,7 +135,8 @@ def update_scores(game)
                                   :variant => game.version,
                                   :value   => e.points.to_s,
                                   :endtime => e.endtime,
-                                  :trophy  => "highest_scoring_ascension").save
+                                  :trophy  => "highest_scoring_ascension",
+                                  :icon    => "c-highest-score.png").save
             end
 
             Scoreentry.all(:variant => game.version,
@@ -143,7 +146,8 @@ def update_scores(game)
                                   :variant => game.version,
                                   :value   => e.points.to_s,
                                   :endtime => e.endtime,
-                                  :trophy  => "lowest_scoring_ascension").save
+                                  :trophy  => "lowest_scoring_ascension",
+                                  :icon    => "c-lowest-score.png").save
             end
 
             Scoreentry.all(:variant => game.version,
@@ -153,7 +157,8 @@ def update_scores(game)
                                   :variant => game.version,
                                   :value   => e.nconducts.to_s,
                                   :endtime => e.endtime,
-                                  :trophy  => "most_conducts_ascension").save
+                                  :trophy  => "most_conducts_ascension",
+                                  :icon    => "c-most-conducts.png").save
             end
 
             Scoreentry.all(:variant => game.version,
@@ -164,7 +169,8 @@ def update_scores(game)
                                   :value   => e.duration.to_s,
                                   :value_display => parse_milliseconds(e.duration),
                                   :endtime => e.endtime,
-                                  :trophy  => "fastest_ascension_realtime").save
+                                  :trophy  => "fastest_ascension_realtime",
+                                  :icon    => "c-fastest-realtime.png").save
             end
 
             Scoreentry.all(:variant => game.version,
@@ -174,7 +180,8 @@ def update_scores(game)
                                   :variant => game.version,
                                   :value   => e.duration.to_s,
                                   :endtime => e.endtime,
-                                  :trophy  => "fastest_ascension_gametime").save
+                                  :trophy  => "fastest_ascension_gametime",
+                                  :icon    => "c-fastest-ascension-gametime.png").save
             end
 
             Scoreentry.all(:variant => game.version,
@@ -184,7 +191,8 @@ def update_scores(game)
                                   :variant => game.version,
                                   :value   => e.streaks.to_s,
                                   :endtime => e.endtime,
-                                  :trophy  => "longest_ascension_streaks").save
+                                  :trophy  => "longest_ascension_streaks",
+                                  :icon    => "c-longest-streak.png").save
             end
         end
         # achievements
@@ -194,13 +202,15 @@ def update_scores(game)
                 if achievements & 2**i > 0 then
                     entry = Scoreentry.first(:user_id => game.user_id,
                                              :variant => game.version,
-                                             :trophy => $achievements[i][0])
+                                             :trophy => $achievements[i][0],
+                                             :icon => $achievements[i][2])
                     if not entry then
                         Scoreentry.create(:user_id => game.user_id,
                                           :variant => game.version,
                                           :value   => "1",
                                           :endtime => game.endtime,
-                                          :trophy  => $achievements[i][0]).save
+                                          :trophy  => $achievements[i][0],
+                                          :icon    => $achievements[i][2]).save
                     end
                 end
             end
@@ -211,81 +221,102 @@ def update_scores(game)
             # got crowned
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :crowned).save if game.got_crowned?
+                :trophy => :crowned,
+                :icon => "old-crowned.png").save if game.got_crowned?
             # entered hell
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :entered_hell).save if game.entered_hell?
+                :trophy => :entered_hell,
+                :icon => "old-hell.png").save if game.entered_hell?
             # defeated rodney
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :defeated_rodney).save if game.defeated_rodney?
+                :trophy => :defeated_rodney,
+                :icon => "old-wizard.png").save if game.defeated_rodney?
         else
             ## AceHack and UnNetHack-specific trophies
             # Too good for quests
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :ascended_without_defeating_nemesis).save if game.ascended_without_defeating_nemesis?
+                :trophy => :ascended_without_defeating_nemesis,
+                :icon => "m-no-nemesis.png").save if game.ascended_without_defeating_nemesis?
             # Too good for Vladbanes
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :ascended_without_defeating_vlad).save if game.ascended_without_defeating_vlad?
+                :trophy => :ascended_without_defeating_vlad,
+                :icon => "m-no-vlad.png").save if game.ascended_without_defeating_vlad?
             # Too good for... wait, what? How?
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :ascended_without_defeating_rodney).save if game.ascended_without_defeating_rodney?
+                :trophy => :ascended_without_defeating_rodney,
+                :icon => "m-no-wizard.png").save if game.ascended_without_defeating_rodney?
             # Too good for a brain
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :ascended_without_defeating_cthulhu).save if game.ascended_without_defeating_cthulhu?
+                :trophy => :ascended_without_defeating_cthulhu,
+                :icon => "m-no-cthulhu.png").save if game.ascended_without_defeating_cthulhu?
             # Hoarder
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :ascended_with_all_invocation_items).save if game.ascended_with_all_invocation_items?
+                :trophy => :ascended_with_all_invocation_items,
+                :icon => "m-hoarder.png").save if game.ascended_with_all_invocation_items?
             # Assault on Fort Knox
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :defeated_croesus).save if game.defeated_croesus?
+                :trophy => :defeated_croesus,
+                :icon => "m-croesus.png").save if game.defeated_croesus?
             # No membership card
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :defeated_one_eyed_sam).save if game.defeated_one_eyed_sam?
+                :trophy => :defeated_one_eyed_sam,
+                :icon => "m-sam.png").save if game.defeated_one_eyed_sam?
         end
         if game.version == '3.6.0' then
             ## AceHack specific trophies as it doesn't track xlogfile achievements
             # bought an Oracle consultation
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :bought_oracle_consultation).save if game.event_bought_oracle_consultation?
+                :trophy => :bought_oracle_consultation,
+                :icon => "m-soko.png").save if game.event_bought_oracle_consultation?
             # reached the quest portal level
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :accepted_for_quest).save if game.event_accepted_for_quest?
+                :trophy => :accepted_for_quest,
+                :icon => "m-luckstone.png").save if game.event_accepted_for_quest?
             # defeated the quest nemesis
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :defeated_quest_nemesis).save if game.event_defeated_quest_nemesis?
+                :trophy => :defeated_quest_nemesis,
+                :icon => "m-bell.png").save if game.event_defeated_quest_nemesis?
             # defeated Medusa
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :defeated_medusa).save if game.event_defeated_medusa?
+                :trophy => :defeated_medusa,
+                :icon => "m-medusa.png").save if game.event_defeated_medusa?
             # entered Gehennom the front way
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :event_entered_gehennom_front_way).save if game.event_entered_gehennom_front_way?
+                :trophy => :event_entered_gehennom_front_way,
+                :icon => "m-gehennom.png").save if game.event_entered_gehennom_front_way?
             # defeated Vlad
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :defeated_vlad).save if game.event_defeated_vlad?
+                :trophy => :defeated_vlad,
+                :icon => "m-candelabrum.png").save if game.event_defeated_vlad?
             # defeated Rodney at least once
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :defeated_rodney).save if game.event_defeated_rodney?
+                :trophy => :defeated_rodney,
+                :icon => "m-book.png").save if game.event_defeated_rodney?
             # did the invocation
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :did_invocation).save if game.event_did_invocation?
+                :trophy => :did_invocation,
+                :icon => "m-invocation.png").save if game.event_did_invocation?
             # defeated a high priest
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :defeated_a_high_priest).save if game.event_defeated_a_high_priest?
+                :trophy => :defeated_a_high_priest,
+                :icon => "m-amulet.png").save if game.event_defeated_a_high_priest?
             # entered the planes
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :entered_planes).save if game.entered_planes?
+                :trophy => :entered_planes,
+                :icon => "m-planes.png").save if game.entered_planes?
             # entered astral
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :entered_astral).save if game.entered_astral?
+                :trophy => :entered_astral,
+                :icon => "m-astral.png").save if game.entered_astral?
         end
     end
 

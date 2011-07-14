@@ -10,6 +10,7 @@ class Scoreentry
     property :trophy_display, String
     property :value,     String
     property :value_display,  String
+    property :icon,      String
     property :endtime,   Integer # endtime of game with which this trophy was achieved
 end
 
