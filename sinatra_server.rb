@@ -21,6 +21,7 @@ before do
     @tournament_identifier = "junethack2011 #{@user.login}" if @user
     @messages = session["messages"] || []
     @errors = session["errors"] || []
+    @logged_in = @user.nil?
     puts "got #{@messages.length} messages"
     puts "and #{@errors.length} errors"
     puts "#{@errors.inspect}"
@@ -255,8 +256,7 @@ get "/leaveclan/:server" do  #leave a clan
         session['errors'] << "No account on this server"
     end
     redirect "/home"
-end
-        
+end        
 
 get "/scores/:name" do |name|
     # Is the user there? If not, just redirect to home
@@ -281,6 +281,20 @@ get "/scoreboard" do
     haml :scoreboard
 end
 
+get "/servers" do
+    @servers = Server.all
+    haml :servers
+end
+
+get "/server/:name" do
+    @server = Server.first(:name => params[:name])
+    if @server
+        haml :server
+    else
+        session['errors'] << "Could not find server #{ name }"
+        redirect "/"
+    end
+end
 
 helpers do
   include Rack::Utils
