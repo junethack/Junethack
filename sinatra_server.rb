@@ -18,7 +18,6 @@ scheduler.cron('*/15 * * * *') { fetch_all }
 before do
     @user = User.get(session['user_id'])
     @tournament_identifier = "junethack2011 #{@user.login}" if @user
-    @logged_in = @user.nil?
     @messages = session["messages"] || []
     @errors = session["errors"] || []
     puts "got #{@messages.length} messages"
@@ -135,6 +134,15 @@ post "/create" do
     end
 end
 
+get "/user/:name" do
+    @player = Player.first(:login => params[:name])
+    if @player
+        haml :user
+    else
+        session['errors'] << "Could not find user #{params[:name]}"
+    end
+        
+end
 
 get "/clan/:name" do
     @clan = Clan.get(params[:name])   
