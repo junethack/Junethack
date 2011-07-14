@@ -502,3 +502,12 @@ input[type="submit"].small_button {
 #tiny_content_spacer {
     height: 5px;
 }
+li > img {
+    vertical-align: middle;
+    height: 5%;
+}
+li > span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 500px;
+}
