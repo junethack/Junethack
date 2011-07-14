@@ -1,0 +1,53 @@
+.text_content.non_top_post
+  %h3
+    Competition
+  - @userscore.variants.each do |variant, variant_name|
+    - @variant = variant
+    %h4= variant_name
+    .scorelisting
+      %table
+        %tr
+          %th Competition
+          %th
+        %tr#cell1
+          %td Most ascensions
+          %td.table_number= h @userscore.most_ascensions variant
+        %tr#cell2
+          %td Fastest ascension (gametime)
+          %td.table_number= h @userscore.fastest_ascension_gametime variant
+        %tr#cell1
+          %td Fastest ascension (realtime)
+          %td.table_number= h @userscore.fastest_ascension_realtime variant
+        %tr#cell2
+          %td Highest scoring ascension
+          %td.table_number= h @userscore.highest_scoring_ascension variant
+        %tr#cell1
+          %td Lowest scoring ascension
+          %td.table_number= h @userscore.lowest_scoring_ascension variant
+        %tr#cell2
+          %td Most conducts in a single ascension
+          %td.table_number= h @userscore.most_ascensions variant
+        %tr#cell1
+          %td Longest ascension streak
+          %td.table_number= h @userscore.longest_ascension_streak variant
+    =haml :_player_trophies
+
+.text_content.non_top_post
+  %h3
+    Games played
+  .scorelisting
+    %table
+      %tr
+        %th Name
+        %th Points
+        %th Killer
+        %th Time
+      - count = 0
+      - @games.each do |game|
+        - style = (count % 2) == 0 ? "cell1" : "cell2"
+        - count += 1
+        %tr{:id => style}
+          %td= h game.name
+          %td.table_number= game.points
+          %td= h game.death
+          %td.table_date= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")

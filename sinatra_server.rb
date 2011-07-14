@@ -17,6 +17,7 @@ scheduler.cron('*/15 * * * *') { fetch_all }
 
 before do
     @user = User.get(session['user_id'])
+    @logged_in = @user.nil?
     @tournament_identifier = "junethack2011 #{@user.login}" if @user
     @messages = session["messages"] || []
     @errors = session["errors"] || []
@@ -137,6 +138,9 @@ end
 
 get "/user/:name" do
     @player = User.first(:login => params[:name])
+    @userscore = UserScore.new @player.id
+    @games = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
+    @scoreentries = Scoreentry.all(:user_id => @player.id)
     if @player
         haml :user
     else
@@ -275,6 +279,21 @@ get "/scoreboard" do
     @most_ascended_users = most_ascensions_users
     @highest_density_users = best_sustained_ascension_rate
     haml :scoreboard
+end
+
+get "/servers" do
+    @servers = Server.all
+    haml :servers
+end
+
+get "/server/:name" do
+    @server = Server.first(:name => params[:name])
+    if @server
+        haml :server
+    else
+        session['errors'] << "Could not find server #{ name }"
+        redirect "/"
+    end
 end
 
 helpers do
