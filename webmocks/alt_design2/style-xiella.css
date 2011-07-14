@@ -499,4 +499,6 @@ input[type="submit"].small_button {
 #small_content_spacer {
     height: 15px;
 }
-
+#tiny_content_spacer {
+    height: 5px;
+}
