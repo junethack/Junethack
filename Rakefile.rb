@@ -111,7 +111,7 @@ namespace :bogus do
                 :race => %w(Dwa Hum Gno Elf)[rand 4],
                 :flags => nil        #dunno what that does
             }
-            [xlog1, xlog1][rand 2].puts game.to_xlog
+            [xlog1, xlog2][rand 2].puts game.to_xlog
         end
         xlog1.close
         xlog2.close

@@ -1,4 +1,5 @@
 require 'userscore'
+require 'trophyscore'
 
 # Limits by 10 any collection
 def limit_by_10(collection)
@@ -110,6 +111,11 @@ def update_scores(game)
     Scoreentry.transaction do
         t = TrophyScore.new
         if game.ascended
+            # ascended
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :ascended).save
+
             Scoreentry.all(:variant => game.version,
                            :trophy  => "most_ascensions").destroy
             t.most_ascensions(game.version).each do |e|
@@ -180,6 +186,106 @@ def update_scores(game)
                                   :endtime => e.endtime,
                                   :trophy  => "longest_ascension_streaks").save
             end
+        end
+        # achievements
+        achievements = game.achieve.hex if game.achieve
+        if achievements and achievements > 0 then
+            for i in 0..$achievements.size do
+                if achievements & 2**i > 0 then
+                    entry = Scoreentry.first(:user_id => game.user_id,
+                                             :variant => game.version,
+                                             :trophy => $achievements[i][0])
+                    if not entry then
+                        Scoreentry.create(:user_id => game.user_id,
+                                          :variant => game.version,
+                                          :value   => "1",
+                                          :endtime => game.endtime,
+                                          :trophy  => $achievements[i][0]).save
+                    end
+                end
+            end
+        end
+
+        if game.version == 'NH-1.3d' then
+            ## NetHack 1.3d specific trophies
+            # got crowned
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :crowned).save if game.got_crowned?
+            # entered hell
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :entered_hell).save if game.entered_hell?
+            # defeated rodney
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :defeated_rodney).save if game.defeated_rodney?
+        else
+            ## AceHack and UnNetHack-specific trophies
+            # Too good for quests
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :ascended_without_defeating_nemesis).save if game.ascended_without_defeating_nemesis?
+            # Too good for Vladbanes
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :ascended_without_defeating_vlad).save if game.ascended_without_defeating_vlad?
+            # Too good for... wait, what? How?
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :ascended_without_defeating_rodney).save if game.ascended_without_defeating_rodney?
+            # Too good for a brain
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :ascended_without_defeating_cthulhu).save if game.ascended_without_defeating_cthulhu?
+            # Hoarder
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :ascended_with_all_invocation_items).save if game.ascended_with_all_invocation_items?
+            # Assault on Fort Knox
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :defeated_croesus).save if game.defeated_croesus?
+            # No membership card
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :defeated_one_eyed_sam).save if game.defeated_one_eyed_sam?
+        end
+        if game.version == '3.6.0' then
+            ## AceHack specific trophies as it doesn't track xlogfile achievements
+            # bought an Oracle consultation
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :bought_oracle_consultation).save if game.event_bought_oracle_consultation?
+            # reached the quest portal level
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :accepted_for_quest).save if game.event_accepted_for_quest?
+            # defeated the quest nemesis
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :defeated_quest_nemesis).save if game.event_defeated_quest_nemesis?
+            # defeated Medusa
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :defeated_medusa).save if game.event_defeated_medusa?
+            # entered Gehennom the front way
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :event_entered_gehennom_front_way).save if game.event_entered_gehennom_front_way?
+            # defeated Vlad
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :defeated_vlad).save if game.event_defeated_vlad?
+            # defeated Rodney at least once
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :defeated_rodney).save if game.event_defeated_rodney?
+            # did the invocation
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :did_invocation).save if game.event_did_invocation?
+            # defeated a high priest
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :defeated_a_high_priest).save if game.event_defeated_a_high_priest?
+            # entered the planes
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :entered_planes).save if game.entered_planes?
+            # entered astral
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :entered_astral).save if game.entered_astral?
         end
     end
 
