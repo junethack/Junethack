@@ -17,6 +17,7 @@ scheduler.cron('*/15 * * * *') { fetch_all }
 
 before do
     @user = User.get(session['user_id'])
+    @logged_in = @user.nil?
     @tournament_identifier = "junethack2011 #{@user.login}" if @user
     @messages = session["messages"] || []
     @errors = session["errors"] || []
@@ -135,7 +136,10 @@ post "/create" do
 end
 
 get "/user/:name" do
-    @player = Player.first(:login => params[:name])
+    @player = User.first(:login => params[:name])
+    @userscore = UserScore.new @player.id
+    @games = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
+    @scoreentries = Scoreentry.all(:user_id => @player.id)
     if @player
         haml :user
     else
