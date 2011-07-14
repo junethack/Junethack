@@ -277,6 +277,21 @@ get "/scoreboard" do
     haml :scoreboard
 end
 
+get "/servers" do
+    @servers = Server.all
+    haml :servers
+end
+
+get "/server/:name" do
+    @server = Server.first(:name => params[:name])
+    if @server
+        haml :server
+    else
+        session['errors'] << "Could not find server #{ name }"
+        redirect "/"
+    end
+end
+
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
