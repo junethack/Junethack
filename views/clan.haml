@@ -1,6 +1,5 @@
 #clan
-    #clanname 
-        Clan:
+    %h1#clanname 
         = @clan.name
     #admin
         Admin:
@@ -13,14 +12,14 @@
         %div Invite Account
         %form#invite_account{:method => "POST", :action => "/clan/invite"}
             
-            %label{:for => 'accountname'} Account name
             %input#accountname{:name => 'accountname', :type => 'text'}
-            %label{:for => 'server'} Server
             %select{:name => 'server'}
                 - for server in Server.all
                     %option{:name => server.id, :value => server.id}= server.name
             %input{:type => 'hidden', :name => :clan, :value => @clan.name}
-            %input{:type => 'submit', :value => "Invite"}
+            %input{:type => 'submit', :value => "Invite Account"}
+            
+            %span.clear
         - if @clan.invitations.empty?
             %div No open invitations
         - else
