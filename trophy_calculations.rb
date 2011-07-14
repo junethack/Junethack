@@ -108,7 +108,6 @@ end
 def update_scores(game)
     return true if not game.user_id
 
-    Scoreentry.transaction do
         t = TrophyScore.new
         if game.ascended
             # ascended
@@ -318,7 +317,6 @@ def update_scores(game)
                 :trophy => :entered_astral,
                 :icon => "m-astral.png").save if game.entered_astral?
         end
-    end
 
     return true
 end
