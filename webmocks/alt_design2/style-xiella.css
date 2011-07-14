@@ -502,16 +502,27 @@ input[type="submit"].small_button {
 #tiny_content_spacer {
     height: 5px;
 }
+ 
+
+/**************************
+**                       **
+**      trophy page      **
+**                       **
+**************************/
+
+/* give dots to trophy lists */
 ul.trophypage {
     list-style: disc;
 }
 ul.trophypage > li {
     margin-top: 5px;
 }
+/* prevent chromium from resizing trophy images */
 ul.trophypage > li > img {
     height: 35px;
     width: 35px;
 }
+/* vertically align text and images */
 li.multiline > img {
     vertical-align: middle;
 }
