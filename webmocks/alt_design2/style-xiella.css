@@ -531,3 +531,31 @@ li.multiline > span {
     vertical-align: middle;
     width: 500px;
 }
+
+
+/**************************
+**                       **
+**      server page      **
+**                       **
+**************************/
+
+#servers {
+    font-size: .9em;
+}
+/* specificity override for padding */
+table#servers th {
+    text-align: left;
+    border-bottom: 4px double #aaa;
+    padding: 8px;
+}
+#servers th,
+#servers td {
+    padding: 5px 8px;
+    width: 100px;
+}
+#servers tr {
+    border-bottom: 1px solid #ccc;
+}
+#servers .server_name {
+    width: 150px;
+}
