@@ -426,6 +426,7 @@ input[type=submit] {
 }
 /* use this class on a submit button if you would like it to be big and red. */
 input[type=submit].bigred,
+a.bigred,
 form#login_form > fieldset > input[type=submit] {
     padding: 0;
     height: 50px;
