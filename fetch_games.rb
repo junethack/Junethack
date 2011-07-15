@@ -23,7 +23,6 @@ def fetch_all
         if DateTime.parse(server.xloglastmodified) < DateTime.parse(header['Last-Modified'])
             puts "fetching games ...."
             if games = XLog.fetch_from_xlog(server.xlogurl, server.xlogcurrentoffset, header['Content-Length'])
-                server.xlogcurrentoffset = header['Content-Length'].to_i
                 puts "So many games ... #{games.length}"
                 i = 0
                     for hgame in games
@@ -43,6 +42,7 @@ def fetch_all
                             puts "not part of tournament #{i}"
                         end
                     end
+                server.xlogcurrentoffset = header['Content-Length'].to_i
             else
                 puts "No games at all!"
             end

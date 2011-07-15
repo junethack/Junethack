@@ -7,3 +7,7 @@ JAVASCRIPT
 HTML/CSS
     08:21 < stenno> xiella, if you want to do something, you could make the server page, where statistics about the server like, played games, ascension rate and so on are displayed
 
+----
+ISSUES
+    user home page tr#cell1 and tr#cell2 should be tr.cell1 and tr.cell2
+    (id's should be unique per page)

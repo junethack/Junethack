@@ -108,7 +108,8 @@ end
 def update_scores(game)
     return true if not game.user_id
 
-        t = TrophyScore.new
+    t = TrophyScore.new
+    if game.version != 'NH-1.3d' then
         if game.ascended
             # ascended
             Scoreentry.first_or_create(:user_id => game.user_id,
@@ -180,7 +181,7 @@ def update_scores(game)
                                   :value   => e.duration.to_s,
                                   :endtime => e.endtime,
                                   :trophy  => "fastest_ascension_gametime",
-                                  :icon    => "c-fastest-ascension-gametime.png").save
+                                  :icon    => "c-fastest-gametime.png").save
             end
 
             Scoreentry.all(:variant => game.version,
@@ -197,7 +198,7 @@ def update_scores(game)
         # achievements
         achievements = game.achieve.hex if game.achieve
         if achievements and achievements > 0 then
-            for i in 0..$achievements.size do
+            for i in 0..$achievements.size-1 do
                 if achievements & 2**i > 0 then
                     entry = Scoreentry.first(:user_id => game.user_id,
                                              :variant => game.version,
@@ -214,9 +215,15 @@ def update_scores(game)
                 end
             end
         end
+    end
 
         if game.version == 'NH-1.3d' then
             ## NetHack 1.3d specific trophies
+            # escaped (with the amulet)
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :ascended_old,
+                :icon => "old-ascension.png").save if game.event_ascended?
             # got crowned
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
@@ -230,7 +237,7 @@ def update_scores(game)
             # defeated rodney
             Scoreentry.first_or_create(:user_id => game.user_id,
                 :variant => game.version,
-                :trophy => :defeated_rodney,
+                :trophy => :defeated_old_rodney,
                 :icon => "old-wizard.png").save if game.defeated_rodney?
         else
             ## AceHack and UnNetHack-specific trophies
@@ -270,6 +277,8 @@ def update_scores(game)
                 :trophy => :defeated_one_eyed_sam,
                 :icon => "m-sam.png").save if game.defeated_one_eyed_sam?
         end
+
+        # AceHack
         if game.version == '3.6.0' then
             ## AceHack specific trophies as it doesn't track xlogfile achievements
             # bought an Oracle consultation

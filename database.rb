@@ -9,6 +9,10 @@ $dbname = "junethack.db"
 # raise exception on error when saving
 DataMapper::Model.raise_on_save_failure = true # globally
 
+# set all String properties to have a default length of 255
+DataMapper::Property::String.length(255)
+
+
 DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{$dbname}")
 
 require 'models/server'

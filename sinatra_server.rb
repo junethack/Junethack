@@ -289,9 +289,10 @@ end
 get "/server/:name" do
     @server = Server.first(:name => params[:name])
     if @server
+        @games = @server.games
         haml :server
     else
-        session['errors'] << "Could not find server #{ name }"
+        session['errors'] << "Could not find server #{ params[:name] }"
         redirect "/"
     end
 end
