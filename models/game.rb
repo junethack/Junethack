@@ -133,6 +133,12 @@ class Game
     property :ascended,  Boolean,
      :default => lambda { |r, p| r.death.start_with? "ascended" or r.death == "escaped (with amulet)" }
 
+    before :valid?, :trim_death
+    # we need to limit the size of deaths
+    def trim_death(context = :default)
+       self.death = death[0,255]
+    end
+
     #acehack/unnethack-specific properties
     property :carried,  String
     property :event,    String
