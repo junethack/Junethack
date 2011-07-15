@@ -20,9 +20,9 @@ namespace :bogus do
       end
     end
 
-    task :add_server, :name, :url, :xlogurl, :configfileurl do |t, args|
+    task :add_server, :name, :variant, :url, :xlogurl, :configfileurl do |t, args|
         puts "add server got #{args.inspect}"
-        Server.create(:name => args[:name], :url => args[:url], :xlogurl => args[:xlogurl], :configfileurl => args[:configfileurl])
+        Server.create(:name => args[:name], :variant => args[:variant], :url => args[:url], :xlogurl => args[:xlogurl], :configfileurl => args[:configfileurl])
     end
     task :add_servers do
         Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0, :configfileurl => "text_xlog_random_user.rc")
