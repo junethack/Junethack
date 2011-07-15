@@ -4,8 +4,8 @@ require 'time'
 require 'database'
 require 'parse'
 
-$tournament_starttime = Time.parse("2011-07-01 00:00:00Z").to_i
-$tournament_endtime   = Time.parse("2011-08-01 00:00:00Z").to_i
+$tournament_starttime = Time.parse("2011-07-17 00:00:00Z").to_i
+$tournament_endtime   = Time.parse("2011-08-15 00:00:00Z").to_i
 
 def fetch_all
     for server in Server.all
