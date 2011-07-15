@@ -1,6 +1,10 @@
 .content_bulk
   .text_content_wrapper
     .text_content
+      %p.center
+        If you haven't signed up yet,
+        %a{:href => "/register"} register here!
+    .text_content
       %form#login_form{:action => "", :method => "post"}
         %fieldset
           #username_row
