@@ -7,6 +7,7 @@ require 'haml'
 require 'fetch_games'
 require 'rufus/scheduler'
 require 'trophy_calculations'
+require 'helper'
 require 'userscore'
 
 #enable :sessions
