@@ -7,7 +7,17 @@ login: validation
 
 # HTML/CSS
 
-* 10:55 < rawrmage> xiella: /clan/*name
+* 10:55 < rawrmage> xiella: /clan/*name.
+    Needs:
+        * clanname
+        * admin
+        * members
+        * clan trophies
+        * link to clan members
+    Maybe:
+        * personal trophies
+        * join this clan
+        * invite someone else to this clan
 
 ## completed
 
