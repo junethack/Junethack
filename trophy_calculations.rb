@@ -180,7 +180,7 @@ def update_scores(game)
                                   :value   => e.duration.to_s,
                                   :endtime => e.endtime,
                                   :trophy  => "fastest_ascension_gametime",
-                                  :icon    => "c-fastest-ascension-gametime.png").save
+                                  :icon    => "c-fastest-gametime.png").save
             end
 
             Scoreentry.all(:variant => game.version,
