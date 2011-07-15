@@ -58,9 +58,10 @@ $achievements = [
 $trophy_names = {
     "ascended" => "ascended",
 
+    "ascended_old" => "ascended",
     "crowned" => "got crowned",
     "entered_hell" => "entered Hell",
-    "defeated_rodney" => "defeated Rodney",
+    "defeated_old_rodney" => "defeated Rodney",
 
     "obtained_bell_of_opening" => "obtained the Bell of Opening",
     "entered_gehennom" => "entered Gehennom",
@@ -131,7 +132,7 @@ class Game
     property :race,      String
     property :flags,     String
     property :ascended,  Boolean,
-     :default => lambda { |r, p| r.death.start_with? "ascended" or r.death == "escaped (with amulet)" }
+     :default => lambda { |r, p| r.death.start_with? "ascended" or r.death.start_with? "defied" }
 
     before :valid?, :trim_death
     # we need to limit the size of deaths
@@ -182,6 +183,10 @@ class Game
     end
 
     ## NetHack 1.3d specific
+    # ascension / escaped (with the amulet)
+    def event_ascended?
+        event and event.to_i & 0x00100 > 0
+    end
     # got crowned
     def got_crowned?
         event and event.to_i & 0x00200 > 0
