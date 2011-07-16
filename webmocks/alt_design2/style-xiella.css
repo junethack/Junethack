@@ -547,7 +547,7 @@ li.multiline > span {
     width:100%;
     font-size: .9em;
 }
-table.prettytable tr,
+table.prettytable th,
 /* specificity override for padding */
 #clan_page table tr/*<--extraspecific*/ th,
 table#clans th,
