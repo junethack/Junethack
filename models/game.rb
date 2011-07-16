@@ -132,7 +132,7 @@ class Game
     property :race,      String
     property :flags,     String
     property :ascended,  Boolean,
-     :default => lambda { |r, p| r.death.start_with? "ascended" or r.death.start_with? "defied" }
+     :default => lambda { |r, p| r.death.start_with? "ascended" or r.death == "escaped (with amulet)" or r.death.start_with? "defied" }
 
     before :valid?, :trim_death
     # we need to limit the size of deaths
@@ -175,7 +175,7 @@ class Game
     end
     # Too good for a brain
     def ascended_without_defeating_cthulhu?
-        ascended and event and not event.to_i & 0x20000 > 0
+        version.start_with? "UNH" and ascended and event and not event.to_i & 0x20000 > 0
     end
     # Hoarder (ascended carrying all the invocation items)
     def ascended_with_all_invocation_items?
