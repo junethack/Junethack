@@ -17,8 +17,8 @@
               %a{:href => "/clan/" + clan.name}
                 #{h clan.name}
             %td
-              %a{:href => "/user/" + User.first(:id => clan.admin).login}
-                #{h User.first(:id => clan.admin).login}
+              %a{:href => "/user/" + clan.get_admin.user.login}
+                #{h clan.get_admin.user.login}
             %td
-              #{h clan.accounts.length}
+              #{h clan.accounts.users.uniq.length}
     %span#end_of_content_spacer.clear

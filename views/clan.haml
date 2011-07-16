@@ -1,33 +1,63 @@
-#clan
-    %h1#clanname 
-        = @clan.name
-    #admin
-        Admin:
-        = @admin.name
-    %ul#members
-        - for account in @clan.accounts
-            %li.member
-                = "#{account.name} on #{account.server.name}" #link to user page
-    - if @user and @user.accounts.find{|acc| acc == @admin}
-        %div Invite Account
-        %form#invite_account{:method => "POST", :action => "/clan/invite"}
-            
-            %input#accountname{:name => 'accountname', :type => 'text'}
-            %select{:name => 'server'}
-                - for server in Server.all
-                    %option{:name => server.id, :value => server.id}= server.name
-            %input{:type => 'hidden', :name => :clan, :value => @clan.name}
-            %input{:type => 'submit', :value => "Invite Account"}
-            
-            %span.clear
-        - if @clan.invitations.empty?
-            %div No open invitations
-        - else
-            %div Open invitations
-            %ul#invitations
-                - for invitation in @clan.invitations
-                    %li.invitation
-                        = Account.get(invitation['user'], invitation['server']).name
+.content_bulk#clan_page
+  .text_content_wrapper
+    .text_content#clan_about
+      #clan_header
+        %h1
+          #{ h @clan.name }
+        - if !@logged_in
+          -if @user.login == @clan.get_admin.name
+            #clan_invite
+              %a{:href => "#invite_account"} Invite
+        #clan_placing
+          %a{:href => "#"} Placing
+        #clan_points
+          %a{:href => "#"} Points
+        %span.clear
+      #clan_trophies
         %div
-            Disband clan
-            %a{:href => "/clan/disband/#{@clan.name}"} Disband
+          %h2
+            Trophies 
+    .text_content#clan_members
+      %div
+        %h2
+          Members
+        %table
+          %tr
+            %th
+              Player
+            %th
+              Role
+            %th
+              Last game played (EST)
+            %th
+              Clan accounts 
+            %th
+              User trophies 
+          - @clan.accounts.users.each do |user|
+            %tr
+              %td
+                %a{:href => "/users/" + user.login}
+                  #{ h user.login }
+              %td
+                - if @clan.get_admin.name == user.login
+                  admin
+              %td
+                #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
+              %td
+                #{h user.accounts.all(:clan => @clan).length}
+              %td
+                #{h user.scoreentries.length}
+    - if !@logged_in
+      - if @user.login == @clan.get_admin.name
+        .text_content#clan_members
+          %div
+            %h2
+              Invite
+            %form#invite_account{:method => "POST", :action => "/clan/invite"}
+              %input#accountname{:name => 'accountname', :type => 'text'}
+              %select{:name => 'server'}
+                - for server in Server.all
+                  %option{:name => server.id, :value => server.id}= server.name
+              %input{:type => 'hidden', :name => :clan, :value => @clan.name}
+              %input{:type => 'submit', :value => "Invite Account"}
+    %span#end_of_content_spacer.clear
