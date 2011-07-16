@@ -1,6 +1,7 @@
 # Bugs
 
 * /clans displays all server accounts, not just people, under "members". *Pd0x*
+* /clans: clan admin is not displaying the right person. *rawrmage*
 
 # Improvements
 
