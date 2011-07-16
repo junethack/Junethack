@@ -29,6 +29,7 @@ class ClanScoreEntry
     property :trophy,    String, :key => true
     property :value,     Integer
     property :icon,      String
+    property :rank,      Integer, :default => -1
 end
 
 

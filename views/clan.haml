@@ -9,14 +9,27 @@
             #clan_invite
               %a{:href => "#invite_account"} Invite
         #clan_placing
-          %a{:href => "#"} Placing
+          %a{:href => "#"} Placing:
+          - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
+            #{h ClanScoreEntry.all(:clan_name => @clan.name).first.rank}
+          - else
+            No Games
         #clan_points
-          %a{:href => "#"} Points
+          %a{:href => "#"} Points:
+          - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
+            #{h ClanScoreEntry.all(:clan_name => @clan.name).sum(:value)}
+          - else
+            No Games
         %span.clear
       #clan_trophies
         %div
           %h2
-            Trophies 
+            Trophies
+          - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
+            - ClanScoreEntry.all(:clan_name => @clan.name, :rank => 1).each do |trophy|
+              %a.imagelink{:href => "/trophies#" + trophy.icon[0 .. (trophy.icon.length - 5)], :title => trophy.trophy} 
+                %span.trophyicon
+                  %img{:src => "/icons/" + trophy.icon}
     .text_content#clan_members
       %div
         %h2
@@ -41,6 +54,8 @@
               %td
                 - if @clan.get_admin.name == user.login
                   admin
+                - else
+                  member
               %td
                 - if user.games.length != 0
                   #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}

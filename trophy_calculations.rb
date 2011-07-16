@@ -362,6 +362,12 @@ def update_scores(game)
         :trophy => :globetrotter,
         :icon => "globetrotter.png").save if globetrotter? game.user_id
 
+    return update_clan_scores(game)
+end
+
+def update_clan_scores(game)
+    return true if not game.user_id
+
     # Clan competition
     clan_name = (User.get game.user_id).accounts.collect{|a| a.clan_name}.compact[0]
     if clan_name then
@@ -375,7 +381,15 @@ def update_scores(game)
         end
     end
 
+    # ranking
+    value = -1
+    rank = 0
+    ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]).each {|c|
+        rank += 1 unless value == c.value
+        value = c.value
+        c.rank = rank
+        c.save
+    }
+
     return true
 end
-
-
