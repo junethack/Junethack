@@ -118,12 +118,14 @@ post "/add_server_account" do
         session['errors'] = "Could not verify account!<br>" + (h e.message)
         redirect "/home" and return
     end
-
-    account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
+    begin
+        account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
+    rescue
+        session['errors'].push(*account.errors)
+    end
     # set user_id on all already played games
     Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
 
-    session['errors'] = "Couldn't create account!" unless account
     redirect "/home"
 end
 
@@ -136,11 +138,16 @@ post "/create" do
     redirect "/register" and return unless session['errors'].empty?
     user = User.new(:login => params["username"])
     user.password = params["password"]
-    if user.save
-        session['messages'] = "Registration successful. Please log in."
-        redirect "/"
-    else
-        session['errors'] = "Could not register account"
+    begin
+        if user.save
+            session['messages'] = "Registration successful. Please log in."
+            redirect "/"
+        else
+            session['errors'] = "Could not register account"
+            redirect "/register"
+        end
+    rescue
+        session['errors'].push(*user.errors)
         redirect "/register"
     end
 end
@@ -189,14 +196,19 @@ end
 post "/clan" do
     acc = Account.first(:user_id => @user.id, :server_id => params[:server].to_i)
     if acc
-        clan = Clan.create(:name => params[:clanname], :admin => [acc.user.id, acc.server.id])
+        begin
+            clan = Clan.create(:name => params[:clanname], :admin => [acc.user.id, acc.server.id])
+        rescue
+            session['errors'].push(*clan.errors)
+            redirect "/home" and return
+        end
         acc.clan = clan
         acc.save
-        @messages << "Successfully created clan #{params[:clanname]}"
+        session['messages'] << "Successfully created clan #{params[:clanname]}"
         puts CGI.escape(acc.clan.name)
         redirect "/clan/" + CGI.escape(acc.clan.name)
     else 
-        @errors << "Could not find your account on this server"
+        session['errors'] << "Could not find your account on this server"
         redirect "/home"
     end
 end
