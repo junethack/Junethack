@@ -22,6 +22,16 @@ class Individualtrophy
     property :icon,      String
 end
 
+class ClanScoreEntry
+    include DataMapper::Resource
+    belongs_to :clan,   :key => true
+
+    property :trophy,    String, :key => true
+    property :value,     Integer
+    property :icon,      String
+    property :rank,      Integer, :default => -1
+end
+
 
 #DataMapper::MigrationRunner.migration( 1, :create_scoreboard_indexes ) do
 #  up do

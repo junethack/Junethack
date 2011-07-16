@@ -537,6 +537,7 @@ li.multiline > span {
 **   and table#servers)  **
 **                       **
 **************************/
+.prettytable,
 /* /clan/*name */
 #clan_page table,
 /* /clans */
@@ -546,6 +547,7 @@ li.multiline > span {
     width:100%;
     font-size: .9em;
 }
+table.prettytable th,
 /* specificity override for padding */
 #clan_page table tr/*<--extraspecific*/ th,
 table#clans th,
@@ -554,6 +556,8 @@ table#servers th {
     border-bottom: 4px double #aaa;
     padding: 8px;
 }
+.prettytable th,
+.prettytable td,
 #clan_page table th,
 #clan_page table td,
 #clans th,
@@ -562,6 +566,7 @@ table#servers th {
 #servers td {
     padding: 5px 8px;
 }
+.prettytable tr,
 #clan_page table tr,
 #clans tr,
 #servers tr {
@@ -580,10 +585,15 @@ table#servers th {
     height: 60px;
     line-height: 60px;
 }
+
 #clan_header > h1 {
-    width: 30%;
+    width: auto;
     text-align: center;
     float: left;
+}
+#clan_header > h1 > span {
+    width: 100%;
+    display: block;
 }
 /* small icons */
 #clan_header > div {

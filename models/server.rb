@@ -18,7 +18,7 @@ class Server
 
     # open the rc file for the user and return true if the regexp is found
     def verify_user(user, regexp)
-        open(configfileurl.gsub("random_user", user)) do |f|
+        open(configfileurl.gsub("random_user", CGI::escape(user))) do |f|
             f.each do |line|
               return true if line.strip.match regexp
             end

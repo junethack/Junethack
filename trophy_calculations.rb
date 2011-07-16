@@ -362,7 +362,34 @@ def update_scores(game)
         :trophy => :globetrotter,
         :icon => "globetrotter.png").save if globetrotter? game.user_id
 
-    return true
+    return update_clan_scores(game)
 end
 
+def update_clan_scores(game)
+    return true if not game.user_id
 
+    # Clan competition
+    clan_name = (User.get game.user_id).accounts.collect{|a| a.clan_name}.compact[0]
+    if clan_name then
+        points = (repository.adapter.select "SELECT SUM(points) FROM games WHERE user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?));", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_points",
+                                        :icon => "clan-points.png")
+        if c.value.nil? or c.value < points then
+            c.value = points
+            c.save
+        end
+    end
+
+    # ranking
+    value = -1
+    rank = 0
+    ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]).each {|c|
+        rank += 1 unless value == c.value
+        value = c.value
+        c.rank = rank
+        c.save
+    }
+
+    return true
+end
