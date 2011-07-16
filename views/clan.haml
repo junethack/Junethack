@@ -42,7 +42,10 @@
                 - if @clan.get_admin.name == user.login
                   admin
               %td
-                #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
+                - if user.games.length != 0
+                  #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
+                - else
+                  no games played
               %td
                 #{h user.accounts.all(:clan => @clan).length}
               %td
