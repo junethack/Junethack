@@ -70,6 +70,7 @@
                             %a{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                 %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
         =haml :_player_games
+        =haml :games_played
         #clanmanager.text_content.non_top_post
             - for account in @player.accounts
                 .account-clan

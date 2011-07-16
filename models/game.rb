@@ -239,6 +239,10 @@ class Game
         maxlvl == -5
     end
 
+    def variant_name
+        return $variants_mapping[version]
+    end
+
     after :update do
         update_scores(self)
     end
