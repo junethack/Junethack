@@ -3,6 +3,10 @@
         .text_content
             %h2
                 #{h @player.login} @ junethack2011
+                - if @player.games.length == 1
+                    | #{h @player.games.length} Game Played
+                - else
+                    | #{h @player.games.length} Games Played
             - server_accounts = (Server.all - @player.servers)
             %form{ :action => "/add_server_account", :method => "post"}
                 %table#accountlist

@@ -21,7 +21,7 @@
       %div
         %h2
           Members
-        %table
+        %table.prettytable
           %tr
             %th
               Player
@@ -36,7 +36,7 @@
           - @clan.accounts.users.each do |user|
             %tr
               %td
-                %a{:href => "/users/" + user.login}
+                %a{:href => "/user/" + user.login}
                   #{ h user.login }
               %td
                 - if @clan.get_admin.name == user.login

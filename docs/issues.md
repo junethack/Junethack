@@ -1,8 +1,5 @@
 # Bugs
 
-* navigating from /clan/anything or /user/anything to another level directory such as /about or /rules gives us /clan/rules or /user/rules etc. *cheryl*
-* developers link should display authors.txt *PaRaD0xx*
-
 # Improvements
 
 * Improve selectbox of list of clans on /home. *rawrmage*

@@ -54,6 +54,7 @@ end
 
 get "/users" do 
     @users = User.all
+    haml :users
 end
 
 get "/about" do
