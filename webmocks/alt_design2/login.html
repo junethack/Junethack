@@ -38,13 +38,18 @@
       <div class='content_bulk'> 
         <div class='text_content_wrapper'> 
           <div class='text_content'>
+            <p class="center">
+                If you haven't signed up yet, <a href="/register">register here</a>!
+            </p>
+          </div> 
+          <div class='text_content'>
             <form action='' id='login_form' method='post'> 
               <fieldset> 
                 <div id='username_row'> 
                   <label for='username'>Username:</label> 
                   <input id='username' name='username' type='textbox' value='' /> 
-                  <div class='form_msg'> 
-                    Field required
+                  <div class='form_msg'>
+                    &nbsp;
                   </div> 
                   <span class='clear'></span> 
                 </div> 
@@ -60,11 +65,6 @@
               </fieldset> 
             </form>
           </div> 
-          <div class='text_content'>
-            <p class="center">
-                If you haven't signed up yet, <a href="/register">register here</a>!
-            </p>
-          </div> 
           <span class='clear' id='end_of_content_spacer'></span> 
         </div> 
       </div> 
@@ -77,5 +77,15 @@
       </div> 
     </div> 
     <!-- end of container --> 
+    <!-- Javascript and all scripts go here, at the end of the page. --> 
+    <!-- jquery --> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <!-- we don't have this yet
+    <script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.5min.js"%3E%3C/script%3E'))</script> -->
+    <!-- jquery-ui
+    (we don't have this yet either :)
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script> 
+    <script>!window.jQueryui && document.write(unescape('%3Cscript src="js/jquery-ui-1.8.9.custom.min.js"%3E%3C/script%3E'))</script>  --> 
+    <script src="scripts.js"></script>
   </body> 
-</html> 
+</html>
