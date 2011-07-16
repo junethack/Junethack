@@ -84,6 +84,75 @@ a:hover {
     color: #000;
     background-color: #eee;
 }
+
+/* typical inset rounding and shadowing */
+#topnav,
+#footer,
+.text_content_wrapper {
+    -webkit-box-shadow: inset 0px 0px 10px #888;
+    -moz-box-shadow: inset 0px 0px 10px #888;
+    box-shadow: inset 0px 0px 10px #888;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    filter:alpha(opacity=90); 
+    -moz-opacity: 0.9; 
+    opacity: 0.9; 
+}
+
+/* elements on the page that need rounding/shadowing */
+/* these don't
+#clan_trophies,
+#clan_header > div */
+{
+    
+    -webkit-box-shadow: 0px 0px 10px #888;
+    -moz-box-shadow: 0px 0px 10px #888;
+    box-shadow: 0px 0px 10px #888;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    filter:alpha(opacity=90); 
+    -moz-opacity: 0.9; 
+    opacity: 0.9; 
+}
+/* small 'tab-style' rounding/shadowing, eg topnav */
+#topnav .current_nav_page a,
+#topnav a.active, #topnav a.active:hover,
+#topnav a:hover {
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-topright: 4px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    -webkit-box-shadow: 0px 0px 10px #aaa;
+    -moz-box-shadow: 0px 0px 10px #aaa;
+    box-shadow: 0px 0px 10px #aaa;
+}
+
+/* slightly larger and darker rounding/shadowing, eg error messages...? */
+#errors,
+#messages {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 5px 20px #555;
+    -moz-box-shadow: 0px 5px 20px #555;
+    box-shadow: 0px 5px 20px #555;
+}
+/* massive bigred rounding */
+input[type=submit].bigred,
+form#login_form > fieldset > input[type=submit],
+.signup_text a {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    -webkit-box-shadow: 0px 5px 20px #555;
+    -moz-box-shadow: 0px 5px 20px #555;
+    box-shadow: 0px 5px 20px #555;
+}
+
 /* misc */
 #container {
     width: 750px;
@@ -102,14 +171,7 @@ a:hover {
 #topnav {
     width: 100%;
     margin: 0 auto;
-    -webkit-box-shadow: inset 0px 0px 10px #888;
-    -moz-box-shadow: inset 0px 0px 10px #888;
-    box-shadow: inset 0px 0px 10px #888;
-    /*
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-    */
+    padding: 0;
     height: 50px;
     margin-top: 10px;
 }
@@ -138,15 +200,6 @@ a:hover {
 #topnav .current_nav_page a,
 #topnav a.active, #topnav a.active:hover,
 #topnav a:hover {
-    -webkit-border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 4px;
-    -moz-border-radius-topleft: 4px;
-    -moz-border-radius-topright: 4px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    -webkit-box-shadow: 0px 0px 10px #aaa;
-    -moz-box-shadow: 0px 0px 10px #aaa;
-    box-shadow: 0px 0px 10px #aaa;
     margin-top: 5px;
     line-height: 45px;
 }
@@ -190,12 +243,6 @@ a:hover {
     display: block;
     display: block;
     text-decoration: none;
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
-    -webkit-box-shadow: 0px 5px 20px #555;
-    -moz-box-shadow: 0px 5px 20px #555;
-    box-shadow: 0px 5px 20px #555;
     color: #fff;
     background-color: #a00;
 }
@@ -210,29 +257,18 @@ a:hover {
  Messages and errors
  (those that come, e.g. when you fail to log in
  */
+
 #errors
 {
     margin: 5px;
     padding: 5px;
     background-color: #f55;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    -webkit-box-shadow: 0px 5px 20px #555;
-    -moz-box-shadow: 0px 5px 20px #555;
-    box-shadow: 0px 5px 20px #555;
 }
 #messages
 {
     margin: 5px;
     padding: 5px;
     background-color: #5ff;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    -webkit-box-shadow: 0px 5px 20px #555;
-    -moz-box-shadow: 0px 5px 20px #555;
-    box-shadow: 0px 5px 20px #555;
 }
 
 /**************************
@@ -245,18 +281,10 @@ a:hover {
     /* space between the main content and the element before - eg signup button */
     margin-top: 3.0em;
     padding-top: 1px;
-    -webkit-box-shadow: inset 0px 0px 10px #888;
-    -moz-box-shadow: inset 0px 0px 10px #888;
-    box-shadow: inset 0px 0px 10px #888;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    filter:alpha(opacity=90); 
-    -moz-opacity: 0.9; 
-    opacity: 0.9; 
 }
 .text_content {
     margin: 0 30px;
+    margin-top: 35px;
     line-height: 1.5em;
 }
 .text_content p {
@@ -271,9 +299,6 @@ a:hover {
     font-size: 150%;
     line-height: 1.5em;
     margin-bottom: 10px;
-}
-.text_content {
-    margin-top: 35px;
 }
 .text_content.non_top_post {
     margin-top: 0;
@@ -436,12 +461,6 @@ form#login_form > fieldset > input[type=submit] {
     border: 0;
     font-size: 1.4em;
     text-decoration: none;
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
-    -webkit-box-shadow: 0px 5px 20px #555;
-    -moz-box-shadow: 0px 5px 20px #555;
-    box-shadow: 0px 5px 20px #555;
     color: #fff;
     background-color: #a00;
 }
@@ -475,34 +494,7 @@ input[type="submit"].small_button {
     line-height: 50px;
     text-align: center;
     margin: 20px 0;
-    -webkit-box-shadow: inset 0px 0px 10px #888;
-    -moz-box-shadow: inset 0px 0px 10px #888;
-    box-shadow: inset 0px 0px 10px #888;
-    filter:alpha(opacity=90); 
-    -moz-opacity: 0.9; 
-    opacity: 0.9; 
 }
-
-/**************************
-**                       **
-**     helper styles     **
-**                       **
-**************************/
-
-.clear {
-    display: block;
-    clear: both;
-}
-#end_of_content_spacer {
-    height: 30px;
-}
-#small_content_spacer {
-    height: 15px;
-}
-#tiny_content_spacer {
-    height: 5px;
-}
- 
 
 /**************************
 **                       **
@@ -541,27 +533,85 @@ li.multiline > span {
 **   and table#servers)  **
 **                       **
 **************************/
+/* /clan/*name */
+#clan_page table,
+/* /clans */
 #clans,
+/* /servers */
 #servers {
     width:100%;
     font-size: .9em;
 }
 /* specificity override for padding */
+#clan_page table tr/*<--extraspecific*/ th,
 table#clans th,
 table#servers th {
     text-align: left;
     border-bottom: 4px double #aaa;
     padding: 8px;
 }
+#clan_page table th,
+#clan_page table td,
 #clans th,
 #clans td,
 #servers th,
 #servers td {
     padding: 5px 8px;
 }
+#clan_page table tr,
 #clans tr,
 #servers tr {
     border-bottom: 1px solid #ccc;
+}
+
+/**************************
+**                       **
+**   clan page display   **
+**                       **
+**************************/
+
+#clan_header > div,
+#clan_header > h1 {
+    margin-bottom: 0;
+    height: 60px;
+    line-height: 60px;
+}
+#clan_header > h1 {
+    width: 30%;
+    text-align: center;
+    float: left;
+}
+/* small icons */
+#clan_header > div {
+    float: right;
+    width: 16%;
+    text-align: center;
+    border-left: 1px solid #ccc;
+}
+#clan_header > div a {
+    display: block;
+}
+#clan_header > div a:hover {
+    background-color: #dadada;
+    text-decoration: none;
+}
+#clan_members,
+#clan_trophies {
+    clear: both;
+    border-top: 1px solid #ccc;
+}
+/* internal wrapper */
+#clan_members > div,
+#clan_trophies > div {
+    margin: 15px;
+}
+#clan_trophies .trophyicon {
+    margin-left: 5px;
+    margin-top: 5px;
+    background: #eee;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
 }
 
 /**************************
@@ -570,6 +620,20 @@ table#servers th {
 **                       **
 **************************/
 
+.clear {
+    display: block;
+    clear: both;
+}
+#end_of_content_spacer {
+    height: 30px;
+}
+#small_content_spacer {
+    height: 15px;
+}
+#tiny_content_spacer {
+    height: 5px;
+}
 .center {
     text-align: center;
 }
+ 
