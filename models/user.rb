@@ -2,6 +2,7 @@ class User
     include DataMapper::Resource
 
     has n, :scoreentries
+    has n, :individualtrophies
     has n, :accounts
     has n, :servers, :through => :accounts
     has n, :games, :through => :servers
@@ -10,6 +11,8 @@ class User
     property :login,  String
     property :hashed, String, :length => 64
     property :salt,   String, :length => 64
+    
+    validates_format_of :login, :with => /^\w*$/, :message => "login name may only contain a-z, A-Z, 0-9 and _"
 
     def password=(pw)
         self.salt = Digest::SHA256.hexdigest("#{rand}") #generate random hash
@@ -26,8 +29,14 @@ class User
         User.encrypt(pass, u.salt) == u.hashed ? u : false
     end
 
+    # get all played games by this user
     def games
-        self.accounts.map{|account| account.get_games}.flatten
+        Game.all(:user_id => self.id)
+    end
+
+    # count of played games by this user
+    def games_count
+        Game.count(:user_id => self.id)
     end
 
     def ascensions

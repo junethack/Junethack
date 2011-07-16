@@ -3,7 +3,7 @@
   %head
     %meta{:content => "application/xhtml+xml;charset=utf-8", "http-equiv" => "content-type"}/
     %link{:href => "/style-xiella.css", :rel => "stylesheet", :type => "text/css"}/
-    %title Junethack
+    %title= "Junethack - #{User.count} players registered - #{Game.count} games played!"
   %body
     #container
       #topnav.navigation
@@ -21,7 +21,7 @@
               - if @logged_in then
                 %a{:href => "/login"} Login
             %li
-              %a{:href => "/trophies"} Trophies
+              %a{:href => "/scoreboard"} Scoreboard
             %li
               - if !@logged_in then
                 %a{:href => "/logout"} Logout

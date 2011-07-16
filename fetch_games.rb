@@ -4,11 +4,12 @@ require 'time'
 require 'database'
 require 'parse'
 
-$tournament_starttime = Time.parse("2011-07-01 00:00:00Z").to_i
-$tournament_endtime   = Time.parse("2011-08-01 00:00:00Z").to_i
+$tournament_starttime = Time.parse("2011-07-17 00:00:00Z").to_i
+$tournament_endtime   = Time.parse("2011-08-15 00:00:00Z").to_i
 
 def fetch_all
     for server in Server.all
+      begin
         puts "server #{server.name} start!"
         puts "url #{server.xlogurl}"
         header = XLog.parse_header XLog.fetch_header(server.xlogurl)
@@ -51,5 +52,9 @@ def fetch_all
         else    
             puts "no new games, try again later"
         end
-    end    
+      rescue Exception => e  
+          $stderr.puts e
+          $stderr.puts e.backtrace.inspect
+      end
+    end
 end

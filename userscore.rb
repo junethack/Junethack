@@ -18,7 +18,6 @@ attr_reader :variants
 
 def initialize(id)
     @id = id
-    @variants = helper_get_variants_for_user(@id)
 end
 
 def most_ascensions(variant=nil)

@@ -105,6 +105,25 @@ def best_sustained_ascension_rate(and_collection=nil)
     score.sort_by{|user, score| -score}
 end
 
+## Individual trophies
+# King of the world: ascend in all variants
+def king_of_the_world?(user)
+    anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and ascended='t';", user
+    return anz[0] == 4
+end
+
+# Sightseeing tour: finish a game in all variants (die after at least 1000 turns or ascend)
+def sightseeing_tour?(user)
+    anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and turns >= 1000;", user
+    return anz[0] == 4
+end
+#  Globetrotter: get a trophy for each variant
+def globetrotter?(user)
+    anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d';", user
+    return anz[0] == 4
+end
+
+
 def update_scores(game)
     return true if not game.user_id
 
@@ -194,6 +213,12 @@ def update_scores(game)
                                   :trophy  => "longest_ascension_streaks",
                                   :icon    => "c-longest-streak.png").save
             end
+
+            ## Non-Ascension Individual trophies
+            # King of the world: ascend in all variants
+            Individualtrophy.first_or_create(:user_id => game.user_id,
+                :trophy => :king_of_the_world,
+                :icon => "king.png").save if king_of_the_world? game.user_id
         end
         # achievements
         achievements = game.achieve.hex if game.achieve
@@ -327,7 +352,44 @@ def update_scores(game)
                 :icon => "m-astral.png").save if game.entered_astral?
         end
 
-    return true
+    ## Non-Ascension Individual trophies
+    # Sightseeing tour: finish a game in all variants
+    Individualtrophy.first_or_create(:user_id => game.user_id,
+        :trophy => :sightseeing_tour,
+        :icon => "sightseeing.png").save if sightseeing_tour? game.user_id
+    # Globetrotter: get a trophy for each variant
+    Individualtrophy.first_or_create(:user_id => game.user_id,
+        :trophy => :globetrotter,
+        :icon => "globetrotter.png").save if globetrotter? game.user_id
+
+    return update_clan_scores(game)
 end
 
+def update_clan_scores(game)
+    return true if not game.user_id
 
+    # Clan competition
+    clan_name = (User.get game.user_id).accounts.collect{|a| a.clan_name}.compact[0]
+    if clan_name then
+        points = (repository.adapter.select "SELECT SUM(points) FROM games WHERE user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?));", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_points",
+                                        :icon => "clan-points.png")
+        if c.value.nil? or c.value < points then
+            c.value = points
+            c.save
+        end
+    end
+
+    # ranking
+    value = -1
+    rank = 0
+    ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]).each {|c|
+        rank += 1 unless value == c.value
+        value = c.value
+        c.rank = rank
+        c.save
+    }
+
+    return true
+end

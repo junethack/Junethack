@@ -4,13 +4,13 @@
             - server_accounts = (Server.all - @user.servers)
             - if server_accounts.size > 0
                 #greeting
-                    = "Hi #{h @user.login}, to have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># #{@tournament_identifier}</tt><br/> to your options file on the public server and enter your public server account name (case-sensitive) into the form below."
+                    = "Hi #{h @user.login}, to have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># #{h @tournament_identifier}</tt><br/> to your options file on the public server and enter your public server account name (case-sensitive) into the form below."
             %form{ :action => "/add_server_account", :method => "post"}
                 %table#accountlist
                     %tr
                         %th Server
                         %th Account
-                        %th
+                        %th Variant
                     - count = 0
                     - for account in @user.accounts
                         - style = (count % 2) == 0 ? "cell1" : "cell2"
@@ -18,6 +18,7 @@
                         %tr.account{:id => style}
                             %td= account.server.display_name
                             %td= account.name
+                            %td= account.server.variant
                             %td.noborder
 
                     - if server_accounts.size > 0
@@ -34,6 +35,13 @@
         .text_content.non_top_post
             %h3
                 Trophies
+            - if @user.individualtrophies.count > 0
+                %li
+                    Individual
+                %p
+                    - for individualtrophy in @user.individualtrophies
+                        %a{:title => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
+                            %img{:style => "width:5%;height:5%;", :src => "/icons/" + individualtrophy.icon}
             - unless @user.scoreentries.select{|entry| entry.variant == "3.6.0"}.empty?
                 %li
                     AceHack
@@ -75,6 +83,8 @@
                             %a{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                 %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
         =haml :_user_games
+        .text_content.non_top_post
+            =haml :games_played
         #clanmanager.text_content.non_top_post
             - for account in @user.accounts
                 .account-clan

@@ -1,0 +1,24 @@
+.content_bulk
+  .text_content_wrapper
+    .text_content
+      %h3
+        Clans
+      %table.prettytable
+        %tr
+          %th
+            Clan name
+          %th
+            Clan admin
+          %th
+            Members
+        - @clans.each do |clan|
+          %tr
+            %td
+              %a{:href => "/clan/" + clan.name}
+                #{h clan.name}
+            %td
+              %a{:href => "/user/" + clan.get_admin.user.login}
+                #{h clan.get_admin.user.login}
+            %td
+              #{h clan.accounts.users.uniq.length}
+    %span#end_of_content_spacer.clear

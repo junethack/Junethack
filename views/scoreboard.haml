@@ -4,7 +4,11 @@
       %h1
         Scoreboard
       %h2
-      =haml :_trophy_scores
+      =haml :_clan_trophies
+      .text_content.non_top_post
+        =haml :_trophy_scores
+      .text_content.non_top_post
+        =haml :games_played
       =haml :generic_scores
     %span#end_of_content_spacer.clear
 / end of container

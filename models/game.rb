@@ -94,7 +94,11 @@ $trophy_names = {
     "ascended_without_defeating_cthulhu" => "Too good for a brain (ascended without defeating Cthulhu)",
     "ascended_with_all_invocation_items" => "Hoarder (ascended carrying all the invocation items)",
     "defeated_croesus" => "Assault on Fort Knox (defeated Croesus)",
-    "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)"
+    "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)",
+
+    "sightseeing_tour"  => "Sightseeing Tour: finish a game in all variants",
+    "globetrotter"      => "Globetrotter: get a trophy for each variant",
+    "king_of_the_world" => "King of the world: ascend in all variants"
 }
 
 class Game
@@ -132,7 +136,7 @@ class Game
     property :race,      String
     property :flags,     String
     property :ascended,  Boolean,
-     :default => lambda { |r, p| r.death.start_with? "ascended" or r.death.start_with? "defied" }
+     :default => lambda { |r, p| r.death.start_with? "ascended" or r.death == "escaped (with amulet)" or r.death.start_with? "defied" }
 
     before :valid?, :trim_death
     # we need to limit the size of deaths
@@ -175,7 +179,7 @@ class Game
     end
     # Too good for a brain
     def ascended_without_defeating_cthulhu?
-        ascended and event and not event.to_i & 0x20000 > 0
+        version.start_with? "UNH" and ascended and event and not event.to_i & 0x20000 > 0
     end
     # Hoarder (ascended carrying all the invocation items)
     def ascended_with_all_invocation_items?
@@ -233,6 +237,10 @@ class Game
     end
     def entered_astral?
         maxlvl == -5
+    end
+
+    def variant_name
+        return $variants_mapping[version]
     end
 
     after :update do

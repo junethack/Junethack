@@ -1,0 +1,25 @@
+%h3= @games_played_title
+.scorelisting
+  %table{:style => "width: 100%;"}
+    %tr
+      %th Name
+      %th Variant
+      %th Server
+      %th Points
+      %th Killer
+      %th Time
+    - count = 0
+    - @games_played.each do |game|
+      - style = (count % 2) == 0 ? "cell1" : "cell2"
+      - count += 1
+      %tr{:id => style}
+        %td
+          - if @games_played_user_links
+            %a{:href => "/user_id/#{game.user_id}"}= h game.name
+          - else
+            = h game.name
+        %td= h game.variant_name
+        %td= h game.server.url
+        %td.table_number= game.points
+        %td= h game.death
+        %td.table_date= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
