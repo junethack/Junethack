@@ -52,6 +52,10 @@ get "/trophies" do
     haml :trophies
 end
 
+get "/users" do 
+    @users = User.all
+end
+
 get "/about" do
     @show_banner = true
     haml :about
