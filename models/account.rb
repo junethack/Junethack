@@ -8,6 +8,7 @@ class Account #join model
     property :name,        String
     property :verified,    Boolean, :default => false
     property :invitations, Json
+    validates_format_of :name, :with => /^\w*$/, :message => "Account name may only contain a-z, A-Z and 0-9"
     before :save do
         self.invitations ||= []
     end

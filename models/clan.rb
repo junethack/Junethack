@@ -5,6 +5,8 @@ class Clan
     property :name,     String, :key => true
     property :invitations,     Json, :default => "[]"
 
+    validates_format_of :name, :with => /^\w*$/, :message => "Clan name may only contain a-z, A-Z and 0-9"
+
     def get_invitation_response invitation
         if index = self.invitations.index{|i| i['token'] == invitation['token'] and i['account'] == invitation['account']}
             if acc = Account.get(invitation['user'], invitation['server'])
