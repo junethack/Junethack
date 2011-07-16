@@ -177,7 +177,7 @@ get "/clan/:name" do
         haml :clan
     else
         session['errors'] << "Could not find clan with id #{params[:name].inspect}"
-        redirect "/home"
+        redirect "/clans"
     end
 end
 

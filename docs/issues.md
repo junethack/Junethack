@@ -1,7 +1,5 @@
 # Bugs
 
-* /clans displays all server accounts, not just people, under "members". *Pd0x*
-* /clans: clan admin is not displaying the right person. *rawrmage*
 * navigating from /clan/anything or /user/anything to another level directory such as /about or /rules gives us /clan/rules or /user/rules etc. *cheryl*
 
 # Improvements
