@@ -1,23 +1,45 @@
 // Cheryl Chong
 var validationMessage="Thank you";
 
+function trimAll(strValue) {
+/************************************************
+DESCRIPTION: Removes leading and trailing spaces.
+PARAMETERS: Source string from which spaces will
+    be removed;
+RETURNS: Source string with whitespaces removed.
+*************************************************/
+    var objRegExp = /^(\s*)$/;
+    //check for all spaces
+    if(objRegExp.test(strValue)) {
+       strValue = strValue.replace(objRegExp, '');
+       if( strValue.length == 0)
+          return strValue;
+    }
+    //check for leading & trailing spaces
+    objRegExp = /^(\s*)([\W\w]*)(\b\s*$)/;
+    if(objRegExp.test(strValue)) {
+        //remove leading and trailing whitespace characters
+        strValue = strValue.replace(objRegExp, '$2');
+        }
+    return strValue;
+}
+
 function isNonempty(anInputValue){
-    // if it contains an invalid character
-    if (anInputValue.length < 1){
+    var trimmed = trimAll(anInputValue);
+    validationMessage="Thank you.";
+    if (trimmed.length < 1){
         validationMessage="This field is required.";
         return false;
     } else {
-        validationMessage="Thank you.";
         return true;
     }
 }
 
 function checkValid(anInput){
-/************************************
-determines the priority of messages.
-the last changed error message is the
-one that will be displayed.
-************************************/
+/*****************************************************************
+Determines the priority of messages. The last changed error 
+message is the one that will be displayed.
+******************************************************************/
     var bValid = true;
     if(!isNonempty(anInput.value)){
         bValid = false;
