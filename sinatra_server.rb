@@ -85,8 +85,11 @@ get "/home" do
     @userscore = UserScore.new session['user_id']
 
     @user = User.get(session['user_id'])
-    @games = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
     @scoreentries = Scoreentry.all(:user_id => @user.id)
+
+    @games_played = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
+    @games_played_title = "Games played"
+
     haml :home
 end
 
@@ -139,17 +142,28 @@ end
 
 get "/user/:name" do
     @player = User.first(:login => params[:name])
-    @userscore = UserScore.new @player.id
-    @games = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
-    @scoreentries = Scoreentry.all(:user_id => @player.id)
+
     if @player
+        @userscore = UserScore.new @player.id
+        @scoreentries = Scoreentry.all(:user_id => @player.id)
+
+        @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
+        @games_played_title = "Games played"
+
         haml :user
     else
         session['errors'] << "Could not find user #{params[:name]}"
     end
-        
 end
 
+get "/user_id/:id" do
+    @player = User.first(:id => params[:id])
+    if @player
+        redirect "/user/"+CGI::escape(@player.login)
+    else
+        session['errors'] << "Could not find user_id #{params[:id]}"
+    end
+end
 
 get "/clans" do
     @clans = Clan.all
@@ -193,7 +207,7 @@ post "/clan/invite" do
             acc.update(:invitations => (acc.invitations.push(invitation)).to_json)
             session['messages'] << "Successfully invited #{acc.name} to #{clan.name}"
         else
-            session['errors'] << "Could not find #{params[:accountname]} on #{Server.first(:id => params[:server].to_i).url}"
+            session['errors'] << "Could not find #{params[:accountname]} on #{params[:server]}"
         end
     else
         sessions['errors'] << "You are not the clan admin"
@@ -301,6 +315,13 @@ get "/server/:name" do
         session['errors'] << "Could not find server #{ params[:name] }"
         redirect "/"
     end
+end
+
+get "/last_games_played" do
+    @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
+    @games_played_user_links = true
+    @games_played_title = "Last #{@games_played.size} games played"
+    haml :games_played
 end
 
 helpers do

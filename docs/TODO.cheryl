@@ -1,13 +1,34 @@
 cheryl = xiella
 focus: front-end design/development
 
-----
-JAVASCRIPT
-    login: validation
-HTML/CSS
-    08:21 < stenno> xiella, if you want to do something, you could make the server page, where statistics about the server like, played games, ascension rate and so on are displayed
+# JAVASCRIPT
 
-----
-ISSUES
-    user home page tr#cell1 and tr#cell2 should be tr.cell1 and tr.cell2
-    (id's should be unique per page)
+* login: validation
+    * prevent form submission if invalid
+    * check password matches confirm
+    * prevent certain characters
+    Completed:
+        * show messages
+        * check nonempty
+
+# HTML/CSS
+
+* 10:55 < rawrmage> xiella: /clan/*name.
+    Needs:
+        * clanname
+        * admin
+        * members
+        * clan trophies
+        * link to clan members
+    Maybe:
+        * personal trophies
+        * join this clan
+        * invite someone else to this clan
+
+## completed
+
+* 08:21 < stenno> xiella, if you want to do something, you could make the server page, where statistics about the server like, played games, ascension rate and so on are displayed
+
+# ISSUES
+
+* user home page tr#cell1 and tr#cell2 should be tr.cell1 and tr.cell2 (id's should be unique per page)
