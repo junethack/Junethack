@@ -560,3 +560,13 @@ table#servers th {
     width: 150px;
 }
 
+
+/**************************
+**                       **
+**     helper styles     **
+**                       **
+**************************/
+
+.center {
+    text-align: center;
+}
