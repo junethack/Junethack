@@ -24,10 +24,18 @@ RETURNS: Source string with whitespaces removed.
     return strValue;
 }
 
-function isNonempty(anInputValue){
-    var trimmed = trimAll(anInputValue);
+function isNonempty(anInput,sType){
     validationMessage="Thank you.";
-    if (trimmed.length < 1){
+    // trim it if it's text, not a password
+    if(sType=="text"){
+        var testString = trimAll(anInput.value);
+        anInput.value=testString;
+    } else {
+        // untrimmed
+        var testString = anInput.value;
+    }
+    // check length of string and set the message.
+    if (testString.length < 1){
         validationMessage="This field is required.";
         return false;
     } else {
@@ -35,13 +43,13 @@ function isNonempty(anInputValue){
     }
 }
 
-function checkValid(anInput){
+function checkValid(anInput,sType){
 /*****************************************************************
 Determines the priority of messages. The last changed error 
 message is the one that will be displayed.
 ******************************************************************/
     var bValid = true;
-    if(!isNonempty(anInput.value)){
+    if(!isNonempty(anInput,sType)){
         bValid = false;
     }
     //$(anInput).next().html(validationMessage); //let's do this with js.
@@ -51,13 +59,13 @@ message is the one that will be displayed.
 
 $(document).ready(function(){
     $("input#username").blur(function(){
-        checkValid(this);
+        checkValid(this,"text");
     });
     $("input#password").blur(function(){
-        checkValid(this);
+        checkValid(this,"password");
     });
     $("input#confirm").blur(function(){
-        checkValid(this);
+        checkValid(this,"password");
     });
     // still need to preventdefault form submission
     // need a more elegant way of checking form children.. and both register and login forms.
