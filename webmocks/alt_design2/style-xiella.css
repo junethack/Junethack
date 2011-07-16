@@ -65,6 +65,10 @@ a:hover {
     color: #800;
     text-decoration: underline;
 }
+a.active.imagelink, a.active.imagelink:hover,
+a.imagelink:hover {
+    text-decoration: none;
+}
 #footer,
 /* topnav */
 .text_content_wrapper, #topnav {
