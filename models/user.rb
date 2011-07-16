@@ -11,6 +11,8 @@ class User
     property :login,  String
     property :hashed, String, :length => 64
     property :salt,   String, :length => 64
+    
+    validates_format_of :login, :with => /^\w*$/, :message => "login name may only contain a-z, A-Z, 0-9 and _"
 
     def password=(pw)
         self.salt = Digest::SHA256.hexdigest("#{rand}") #generate random hash
