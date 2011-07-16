@@ -54,6 +54,8 @@
               %td
                 - if @clan.get_admin.name == user.login
                   admin
+                - else
+                  member
               %td
                 - if user.games.length != 0
                   #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
