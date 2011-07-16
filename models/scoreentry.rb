@@ -14,6 +14,14 @@ class Scoreentry
     property :endtime,   Integer # endtime of game with which this trophy was achieved
 end
 
+class Individualtrophy
+    include DataMapper::Resource
+    belongs_to :user,   :key => true
+
+    property :trophy,    String, :key => true
+    property :icon,      String
+end
+
 
 #DataMapper::MigrationRunner.migration( 1, :create_scoreboard_indexes ) do
 #  up do

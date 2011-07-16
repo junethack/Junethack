@@ -94,7 +94,11 @@ $trophy_names = {
     "ascended_without_defeating_cthulhu" => "Too good for a brain (ascended without defeating Cthulhu)",
     "ascended_with_all_invocation_items" => "Hoarder (ascended carrying all the invocation items)",
     "defeated_croesus" => "Assault on Fort Knox (defeated Croesus)",
-    "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)"
+    "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)",
+
+    "sightseeing_tour"  => "Sightseeing Tour: finish a game in all variants",
+    "globetrotter"      => "Globetrotter: get a trophy for each variant",
+    "king_of_the_world" => "King of the world: ascend in all variants"
 }
 
 class Game

@@ -34,6 +34,13 @@
         .text_content.non_top_post
             %h3
                 Trophies
+            - if @user.individualtrophies.count > 0
+                %li
+                    Individual
+                %p
+                    - for individualtrophy in @user.individualtrophies
+                        %a{:title => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
+                            %img{:style => "width:5%;height:5%;", :src => "/icons/" + individualtrophy.icon}
             - unless @user.scoreentries.select{|entry| entry.variant == "3.6.0"}.empty?
                 %li
                     AceHack
