@@ -150,6 +150,11 @@ get "/user/:name" do
         
 end
 
+
+get "/clans" do
+    @clans = Clan.all
+    haml :clans
+end
 get "/clan/:name" do
     @clan = Clan.get(params[:name])   
     if @clan
