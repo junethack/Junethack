@@ -196,10 +196,20 @@ end
 post "/clan" do
     acc = Account.first(:user_id => @user.id, :server_id => params[:server].to_i)
     if acc
+        clan = nil
         begin
+
             clan = Clan.create(:name => params[:clanname], :admin => [acc.user.id, acc.server.id])
+            unless clan.id
+                session['errors'].push(*clan.errors)
+                redirect "/home" and return
+            end
         rescue
-            session['errors'].push(*clan.errors)
+            if clan
+                session['errors'].push(*clan.errors)
+            else 
+                session['errors'].push("Could not save clan. Clan name may only contain a-z, A-Z and 0-9")
+            end
             redirect "/home" and return
         end
         acc.clan = clan
