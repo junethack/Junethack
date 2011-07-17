@@ -323,9 +323,13 @@ get "/scores/:name" do |name|
 end
 
 get "/scoreboard" do
-    @last_10_games = get_last_games
     @most_ascended_users = most_ascensions_users
     @highest_density_users = best_sustained_ascension_rate
+
+    @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
+    @games_played_user_links = true
+    @games_played_title = "Last #{@games_played.size} games played"
+
     haml :scoreboard
 end
 
@@ -349,7 +353,7 @@ get "/last_games_played" do
     @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
     @games_played_user_links = true
     @games_played_title = "Last #{@games_played.size} games played"
-    haml :games_played
+    haml :last_games_played
 end
 
 helpers do
