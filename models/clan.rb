@@ -23,7 +23,7 @@ class Clan
         return false
     end
     def get_admin
-        return self.accounts.get(*(self.admin))
+        return User.get(self.admin[0])
     end
 end        
                 
