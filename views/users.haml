@@ -1,0 +1,27 @@
+.content_bulk
+  .text_content_wrapper
+    .text_content
+      %h3
+        All Players
+      %table.prettytable
+        %tr
+          %th
+            Username
+          %th
+            Accounts
+          %th
+            Games Played
+          %th
+            Trophies Earned
+        - @users.each do |user|
+          %tr
+            %td
+              %a{:href => "/user/" + user.login}
+                #{h user.login}
+            %td
+              #{h user.accounts.length}
+            %td
+              #{h user.games.length}
+            %td
+              #{h user.scoreentries.length}
+    %span#end_of_content_spacer.clear

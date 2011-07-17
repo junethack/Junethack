@@ -54,6 +54,7 @@ end
 
 get "/users" do 
     @users = User.all
+    haml :users
 end
 
 get "/about" do
@@ -176,7 +177,6 @@ get "/user_id/:id" do
     end
 end
 
-
 get "/clans" do
     @clans = Clan.all
     haml :clans
@@ -189,27 +189,17 @@ get "/clan/:name" do
         haml :clan
     else
         session['errors'] << "Could not find clan with id #{params[:name].inspect}"
-        redirect "/home"
+        redirect "/clans"
     end
 end
 
 post "/clan" do
     acc = Account.first(:user_id => @user.id, :server_id => params[:server].to_i)
     if acc
-        clan = nil
         begin
-
             clan = Clan.create(:name => params[:clanname], :admin => [acc.user.id, acc.server.id])
-            unless clan.id
-                session['errors'].push(*clan.errors)
-                redirect "/home" and return
-            end
         rescue
-            if clan
-                session['errors'].push(*clan.errors)
-            else 
-                session['errors'].push("Could not save clan. Clan name may only contain a-z, A-Z and 0-9")
-            end
+            session['errors'].push(*clan.errors)
             redirect "/home" and return
         end
         acc.clan = clan

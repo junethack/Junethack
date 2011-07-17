@@ -18,6 +18,7 @@
 #### Implemented
 
 * Add a link to the signup form into the login form. *TjrWiz*
+* Improve selectbox of list of clans on /home *rawrmage*
 
 # New features
 
