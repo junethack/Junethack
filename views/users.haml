@@ -19,9 +19,9 @@
               %a{:href => "/user/" + user.login}
                 #{h user.login}
             %td
-              #{h user.accounts.length}
+              #{h user.accounts.count}
             %td
-              #{h user.games.length}
+              #{h user.games_count}
             %td
-              #{h user.scoreentries.length}
+              #{h user.scoreentries.count}
     %span#end_of_content_spacer.clear

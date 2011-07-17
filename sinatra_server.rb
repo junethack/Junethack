@@ -53,7 +53,7 @@ get "/trophies" do
 end
 
 get "/users" do 
-    @users = User.all
+    @users = User.all :order => [ :login.asc ]
     haml :users
 end
 
