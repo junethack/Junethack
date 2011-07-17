@@ -9,6 +9,7 @@ require 'rufus/scheduler'
 require 'trophy_calculations'
 require 'helper'
 require 'userscore'
+require 'time'
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
@@ -16,13 +17,15 @@ use Rack::Session::Pool #fix 4kb session dropping
 scheduler = Rufus::Scheduler.start_new
 scheduler.cron('*/15 * * * *') { fetch_all }
 
+$application_start = Time.new
+
 before do
     @user = User.get(session['user_id'])
     @logged_in = @user.nil?
     @tournament_identifier = "junethack2011 #{@user.login}" if @user
     @messages = session["messages"] || []
     @errors = session["errors"] || []
-    @logged_in = @user.nil?
+
     puts "got #{@messages.length} messages"
     puts "and #{@errors.length} errors"
     puts "#{@errors.inspect}"
@@ -30,12 +33,28 @@ before do
     session["errors"] = []
 end
 
+def caching_check_last_played_game
+    last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id is not null;")[0]
+
+    etag last_played_game_time if last_played_game_time
+    last_modified Time.at(last_played_game_time.to_i).httpdate if last_played_game_time
+end
+
+def caching_check_application_start_time
+    etag $application_start if $application_start
+    last_modified Time.at($application_start.to_i).httpdate if $application_start
+end
+
 get "/" do
+    caching_check_application_start_time if not @user
+
     @show_banner = true
     haml :splash
 end
 
 get "/login" do
+    caching_check_application_start_time
+
     @show_banner = true
     haml :login
 end
@@ -48,16 +67,22 @@ get "/logout" do
 end
 
 get "/trophies" do
+    caching_check_application_start_time
+
     @show_banner = true
     haml :trophies
 end
 
 get "/users" do 
+    caching_check_last_played_game
+
     @users = User.all :order => [ :login.asc ]
     haml :users
 end
 
 get "/about" do
+    caching_check_application_start_time
+
     @show_banner = true
     haml :about
 end
@@ -80,12 +105,16 @@ get "/register" do
 end
 
 get "/rules" do
+    caching_check_application_start_time
+
     @show_banner = true
     haml :rules
 end
 
 get "/home" do
     redirect "/" and return unless session['user_id']
+
+    caching_check_last_played_game
 
     @userscore = UserScore.new session['user_id']
 
@@ -153,6 +182,8 @@ post "/create" do
 end
 
 get "/user/:name" do
+    caching_check_last_played_game
+
     @player = User.first(:login => params[:name])
 
     if @player
@@ -178,6 +209,8 @@ get "/user_id/:id" do
 end
 
 get "/clans" do
+    caching_check_last_played_game
+
     @clans = Clan.all
     haml :clans
 end
@@ -338,6 +371,8 @@ get "/server/:name" do
 end
 
 get "/last_games_played" do
+    caching_check_last_played_game
+
     @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
     @games_played_user_links = true
     @games_played_title = "Last #{@games_played.size} games played"
