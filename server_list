@@ -2,7 +2,7 @@
 rake bogus:add_server[nao,vanilla,nethack.alt.org,http://alt.org/nethack/xlogfile.full.txt,http://alt.org/nethack/userdata/random_user/random_user.nh343rc]
 rake bogus:add_server[arc,acehack,acehack.rawrnix.com,http://acehack.rawrnix.com/xlogfile,http://acehack.rawrnix.com/userdata/random_user/random_user.nh343rc]
 rake bogus:add_server[asi,acehack,acehack.sovrappensiero.info,http://acehack.sovrappensiero.info/xlogfile.txt,http://acehack.sovrappensiero.info/userdata/random_user/random_user.ace360rc]
-rake bogus:add_server[eun,vanilla,un.nethack.nu,http://un.nethack.nu/logs/xlogfile,http://un.nethack.nu/rcfiles/random_user.nethackrc]
+rake bogus:add_server[eun,unnethack,un.nethack.nu,http://un.nethack.nu/logs/xlogfile,http://un.nethack.nu/rcfiles/random_user.nethackrc]
 rake bogus:add_server[nfi,vanilla,nethack.fi,http://nethack.fi/xlogfile,http://nethack.fi/userdata/random_user/random_user.nh343rc]
 rake bogus:add_server[shc,sporkhack,sporkhack.com,http://sporkhack.com/xlogfile,http://sporkhack.com/rcfiles/random_user.nethackrc]
 rake bogus:add_server[uun,unnethack,us.un.nethack.nu,http://us.un.nethack.nu/logs/xlogfile,http://us.un.nethack.nu/rcfiles/random_user.nethackrc]
