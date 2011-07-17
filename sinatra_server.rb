@@ -114,8 +114,6 @@ end
 get "/home" do
     redirect "/" and return unless session['user_id']
 
-    caching_check_last_played_game
-
     @userscore = UserScore.new session['user_id']
 
     @user = User.get(session['user_id'])
