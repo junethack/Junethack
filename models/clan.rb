@@ -2,11 +2,11 @@ class Clan
     include DataMapper::Resource
     property :admin,    Json
     has n, :accounts,   :constraint => :set_nil
-    property :name,     String, :key => true
+    property :name,     String, :key => true, :length => 3...30
     property :invitations,     Json, :default => "[]"
 
     validates_format_of :name, :with => /^\w*$/, :message => "Clan name may only contain a-z, A-Z and 0-9"
-
+    validates_
     def get_invitation_response invitation
         if index = self.invitations.index{|i| i['token'] == invitation['token'] and i['account'] == invitation['account']}
             if acc = Account.get(invitation['user'], invitation['server'])
