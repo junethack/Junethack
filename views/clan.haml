@@ -5,7 +5,7 @@
         %h1
           #{ h @clan.name }
         - if !@logged_in
-          -if @user.login == @clan.get_admin.name
+          -if @user.login == @clan.get_admin.login
             #clan_invite
               %a{:href => "#invite_account"} Invite
         #clan_placing
@@ -52,7 +52,7 @@
                 %a{:href => "/user/" + user.login}
                   #{ h user.login }
               %td
-                - if @clan.get_admin.name == user.login
+                - if @clan.get_admin.login == user.login
                   admin
                 - else
                   member
@@ -66,7 +66,7 @@
               %td
                 #{h user.scoreentries.length}
     - if !@logged_in
-      - if @user.login == @clan.get_admin.name
+      - if @user.login == @clan.get_admin.login
         .text_content#clan_members
           %div
             %h2
@@ -75,7 +75,7 @@
               %input#accountname{:name => 'accountname', :type => 'text'}
               %select{:name => 'server'}
                 - for server in Server.all
-                  %option{:name => server.id, :value => server.id}= server.name
+                  %option{:name => server.id, :value => server.id}= server.display_name
               %input{:type => 'hidden', :name => :clan, :value => @clan.name}
               %input{:type => 'submit', :value => "Invite Account"}
     %span#end_of_content_spacer.clear
