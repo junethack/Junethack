@@ -637,16 +637,29 @@ ul.trophypage > li > img,
     width: 35px;
 }
 /* vertically align text and images */
-.trophycabinet img {
+.trophycabinet .trophyleft {
     vertical-align: middle;
 }
-.trophycabinet .trophyplaque {
+.trophycabinet .trophyright {
+    width: 90%;
+}
+/* exception for /user/name..bleh */
+/* text cabinet, as in the text is the fixed info and the images are expandable */
+.text_cabinet.trophycabinet .trophyleft {
+    width: 20%;
+}
+.text_cabinet.trophycabinet .trophyright {
+    /* quick fix to allow for strange things happening with the a */
+    margin-bottom: 5px;
+    width: 75%;
+}
+.trophycabinet .trophyleft,
+.trophycabinet .trophyright {
     display: inline-block;
     vertical-align: middle;
-    width: 550px;
 }
 /* finer-grained display styles */
-.trophycabinet .trophyplaque, .trophycabinet img {
+.trophycabinet .trophyright, .trophycabinet .trophyleft {
     margin: 10px 0px 10px 10px;
 }
 .trophycabinet h3 {
