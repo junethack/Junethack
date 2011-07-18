@@ -165,6 +165,11 @@ form#login_form > fieldset > input[type=submit],
     width: 750px;
     margin: 0 auto;
 }
+::-moz-selection{ background: #aaa; color:#fff; text-shadow: none; }
+::-webkit-selection{ background: #aaa; color:#fff; text-shadow: none; }
+::selection { background:#aaa; color:#fff; text-shadow: none; }
+
+
 
 /**************************
 **                       **
