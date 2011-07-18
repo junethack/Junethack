@@ -16,6 +16,8 @@ input, label {
     border: 0;
     outline: 0;
     font-size: 100%;
+    color: #222;
+    color: inherit;
     vertical-align: baseline;
     background: transparent;
 }
@@ -49,6 +51,7 @@ h1, h2, h3, h4, h5, h6 {
 **************************/
 
 body {
+    color: #222;
     overflow-y: scroll;
     background-color: #eee;
     background-image: url('background.jpg');
@@ -162,6 +165,11 @@ form#login_form > fieldset > input[type=submit],
     width: 750px;
     margin: 0 auto;
 }
+::-moz-selection{ background: #aaa; color:#fff; text-shadow: none; }
+::-webkit-selection{ background: #aaa; color:#fff; text-shadow: none; }
+::selection { background:#aaa; color:#fff; text-shadow: none; }
+
+
 
 /**************************
 **                       **
@@ -500,34 +508,6 @@ input[type="submit"].small_button {
     margin: 20px 0;
 }
 
-/**************************
-**                       **
-**      trophy page      **
-**                       **
-**************************/
-
-/* give dots to trophy lists */
-ul.trophypage {
-    list-style: disc;
-}
-ul.trophypage > li {
-    margin-top: 5px;
-}
-/* prevent chromium from resizing trophy images */
-ul.trophypage > li > img {
-    height: 35px;
-    width: 35px;
-}
-/* vertically align text and images */
-li.multiline > img {
-    vertical-align: middle;
-}
-li.multiline > span {
-    display: inline-block;
-    vertical-align: middle;
-    width: 500px;
-}
-
 
 /**************************
 **                       **
@@ -626,6 +606,84 @@ table#servers th {
     display: inline-block;
     width: 50px;
     height: 50px;
+}
+
+/**************************
+**                       **
+** Display trophy images **
+** (everywhere, not just **
+**    on trophy page)    **
+**                       **
+**************************/
+
+/* 
+structure for a trophy cabinet:
+
+.trophy_cabinet
+    h3
+    ul
+        li
+            .trophyplaque
+            img, .imagelink
+*/
+.trophycabinet {
+    padding-top: 1px;/* for margin collapse */
+    margin-bottom: 30px;
+}
+
+ul.trophypage > li > img,
+.trophycabinet img {
+    height: 35px;
+    width: 35px;
+}
+/* vertically align text and images */
+.trophycabinet img {
+    vertical-align: middle;
+}
+.trophycabinet .trophyplaque {
+    display: inline-block;
+    vertical-align: middle;
+    width: 550px;
+}
+/* finer-grained display styles */
+.trophycabinet .trophyplaque, .trophycabinet img {
+    margin: 10px 0px 10px 10px;
+}
+.trophycabinet h3 {
+    line-height: 2.5em;
+}
+.trophycabinet h3 {
+    border-bottom: 3px double #bbb;
+}
+.trophycabinet > ul li {
+    border-bottom: 1px solid #ccc;
+}
+
+/**************************
+**                       **
+**      trophy page      **
+** (partially obsolete   **
+**     - please use      **
+** .trophy_cabinet where **
+**        possible)      **
+**                       **
+**************************/
+
+/* give dots to trophy lists */
+ul.trophypage {
+    list-style: disc;
+}
+ul.trophypage > li {
+    margin-top: 5px;
+}
+/* vertically align text and images */
+li.multiline > img {
+    vertical-align: middle;
+}
+li.multiline > span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 500px;
 }
 
 /**************************
