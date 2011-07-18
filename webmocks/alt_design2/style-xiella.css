@@ -16,7 +16,7 @@ input, label {
     border: 0;
     outline: 0;
     font-size: 100%;
-    color: #333;
+    color: #222;
     color: inherit;
     vertical-align: baseline;
     background: transparent;
@@ -51,7 +51,7 @@ h1, h2, h3, h4, h5, h6 {
 **************************/
 
 body {
-    color: #333;
+    color: #222;
     overflow-y: scroll;
     background-color: #eee;
     background-image: url('background.jpg');
