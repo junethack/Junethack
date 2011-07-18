@@ -23,7 +23,6 @@ input, label {
 }
 body {
     line-height: 1;
-    color: #333;
     font-family: Arial, sans-serif;
 }
 ol, ul {
@@ -52,6 +51,7 @@ h1, h2, h3, h4, h5, h6 {
 **************************/
 
 body {
+    color: #333;
     overflow-y: scroll;
     background-color: #eee;
     background-image: url('background.jpg');
