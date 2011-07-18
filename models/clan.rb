@@ -2,7 +2,7 @@ class Clan
     include DataMapper::Resource
     property :admin,    Json
     has n, :accounts,   :constraint => :set_nil
-    property :name,     String, :key => true, :length => 3...30
+    property :name,     String, :key => true, :length => 1...30
     property :invitations,     Json, :default => "[]"
 
     validates_format_of :name, :with => /^\w*$/, :message => "Clan name may only contain a-z, A-Z and 0-9"
