@@ -1,27 +1,26 @@
-.text_content
-  %h2
-    Clan Competition
-  %h3
-    Highest Score
-  .scorelisting
-    %table
-      %tr
-        %th 
-          Clan
-        %th 
-          Score
-        %th 
-          Rank
-      - count = 0
-      - ClanScoreEntry.all(:order => [:rank.asc]).each do |entry| 
-        - if count >= 3
-          - break
-        %tr#cell1
-          %td
-            %a{:href => "/clan/" + entry.clan.name}
-              #{h entry.clan.name}
-          %td
-            #{h entry.value}
-          %td.table_number
-            #{h entry.rank}
-        - count += 1
+%h2
+  Clan Competition
+%h3
+  Highest Score
+.scorelisting
+  %table
+    %tr
+      %th 
+        Clan
+      %th 
+        Score
+      %th 
+        Rank
+    - count = 0
+    - ClanScoreEntry.all(:order => [:rank.asc]).each do |entry| 
+      - if count >= 3
+        - break
+      %tr#cell1
+        %td
+          %a{:href => "/clan/" + entry.clan.name}
+            #{h entry.clan.name}
+        %td
+          #{h entry.value}
+        %td.table_number
+          #{h entry.rank}
+      - count += 1
