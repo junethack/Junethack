@@ -12,7 +12,8 @@
                             %img.trophyleft{:style => "width:5%;height:5%;", :src => "/icons/" + users[0].icon}
                         - users.each do |u|
                             %div.trophyright
-                                %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
+                                %span
+                                    %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
 
     - $variants_mapping.each do |variant, variant_name|
         .trophycabinet
@@ -21,9 +22,9 @@
                 - scoreentries = repository.adapter.select "select (select login from users where user_id = id) as user, user_id, trophy, icon from scoreentries where variant = ? order by trophy,upper(user);", variant
                 - last_trophy = nil
                 - scoreentries.each do |s|
-                    %li
-                        - if $trophy_names[s.trophy]
-                            - if s.trophy != last_trophy
+                    - if $trophy_names[s.trophy]
+                        - if s.trophy != last_trophy
+                            %li
                                 - if last_trophy
                                     %br
                                 %a.imagelink{:title => $trophy_names[s.trophy], :href => "/trophies#" + s.icon[0 .. (s.icon.length - 5)]}
