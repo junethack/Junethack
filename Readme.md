@@ -42,7 +42,3 @@ Create some new bogus games
 
 - Adds 10 games of random players to random xlogfiles.
 
-##Thats it so far
-
-Clans are not implemented yet. Apart from that, the rest is boring frontend stuff.
-
