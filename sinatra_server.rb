@@ -10,6 +10,7 @@ require 'trophy_calculations'
 require 'helper'
 require 'userscore'
 require 'time'
+require 'logger'
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
@@ -18,6 +19,18 @@ scheduler = Rufus::Scheduler.start_new
 scheduler.cron('*/15 * * * *') { fetch_all }
 
 $application_start = Time.new
+
+
+# http://groups.google.com/group/rack-devel/browse_frm/thread/ffec93533180e98a
+class WorkaroundLogger < Logger
+  alias write <<
+end
+# log http requests
+configure do
+    Dir.mkdir('logs') unless File.exists?('logs')
+    use Rack::CommonLogger, WorkaroundLogger.new('logs/access.log', 'daily')
+end
+
 
 before do
     @user = User.get(session['user_id'])
