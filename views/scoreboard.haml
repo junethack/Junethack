@@ -3,12 +3,13 @@
     .text_content
       %h1
         Scoreboard
-      %h2
+    .text_content.non_top_post
       =haml :_clan_trophies
-      .text_content.non_top_post
-        =haml :_trophy_scores
-      .text_content.non_top_post
-        =haml :games_played
+    .text_content.non_top_post
+      =haml :_trophy_scores
+    .text_content.non_top_post
+      =haml :games_played
+    .text_content.non_top_post
       =haml :generic_scores
     %span#end_of_content_spacer.clear
 / end of container
