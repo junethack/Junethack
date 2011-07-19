@@ -8,7 +8,7 @@ class XLog
 
     def self.parse_xlog xlog
         puts "#{xlog}"
-        Hash[xlog.chop.split(":").map{|e| e.split("=")}]
+        Hash[xlog.chomp.split(":").map{|e| e.split("=")}]
     end
 
     def self.fetch_header xlog_url
