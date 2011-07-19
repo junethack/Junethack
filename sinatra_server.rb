@@ -360,7 +360,7 @@ end
 get "/server/:name" do
     @server = Server.first(:name => params[:name])
     if @server
-        @games = @server.games
+        @games = @server.games :conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50
         haml :server
     else
         session['errors'] << "Could not find server #{ params[:name] }"

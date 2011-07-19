@@ -8,10 +8,9 @@
       %h3
         Variant: #{h @server.variant}
     .text_content.non_top_post
-      %h3
-        Last 50 Games played
+      %h3= "Last #{@games.size} Games played"
       .scorelisting
-        %table
+        %table{:style => "width: 100%;"}
           %tr
             %th Name
             %th Points
@@ -19,12 +18,11 @@
             %th Time
           - count = 0
           - @games.each do |game|
-            - if count == 50
-              - break
             - style = (count % 2) == 0 ? "cell1" : "cell2"
             - count += 1
             %tr{:id => style}
-              %td= h game.name
+              %td
+                %a{:href => "/user_id/#{game.user_id}"}= h game.name
               %td.table_number= game.points
               %td= h game.death
               %td.table_date= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
