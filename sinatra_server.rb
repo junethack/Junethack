@@ -248,6 +248,8 @@ post "/clan" do
         end
         acc.clan = clan
         acc.save
+        @user.clan = clan.name
+        @user.save
         session['messages'] << "Successfully created clan #{params[:clanname]}"
         puts CGI.escape(acc.clan.name)
         redirect "/clan/" + CGI.escape(acc.clan.name)
@@ -287,6 +289,8 @@ get "/respond/:server_id/:token" do #respond to invitation
                 acc.invitations.reject!{|inv| inv['token'] == params[:token]}
                 if accept
                     acc.clan = Clan.first(:name => invitation['clan_id'])
+                    @user.clan = acc.clan.name
+                    @user.save
                 end
                 acc.invitations = acc.invitations.to_json
                 acc.save
@@ -307,6 +311,8 @@ get "/clan/disband/:name" do
             ClanScoreEntry.all(:clan_name => clan.name).destroy
             if clan.destroy
                 session['messages'] << "Successfully disbanded #{params[:name]}"
+                @user.clan = nil
+                @user.save
             else
                 session['errors'] << "Could not destroy clan"
             end
@@ -332,6 +338,8 @@ get "/leaveclan/:server" do  #leave a clan
             clanname = account.clan.name
             account.clan = nil
             account.save
+            @user.clan = nil
+            @user.save
             session['messages'] << "Successfully left clan #{clanname}"
         end
     else
