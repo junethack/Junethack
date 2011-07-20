@@ -54,7 +54,7 @@ def caching_check_last_played_game
 end
 
 def caching_check_application_start_time
-    return if session["messages"].size > 0 or session["errors"] > 0
+    return if session["messages"].size > 0 or session["errors"].size > 0
 
     etag "#{$application_start.to_i}_#{@user.to_i}".hash if $application_start
     last_modified $application_start.httpdate if $application_start
