@@ -49,7 +49,14 @@ end
 def caching_check_last_played_game
     last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id is not null;")[0]
 
-    etag "#{last_played_game_time}_#{@user.to_i}" if last_played_game_time
+    etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
+    last_modified Time.at(last_played_game_time.to_i).httpdate if last_played_game_time
+end
+
+def caching_check_last_played_game_by(user)
+    last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id = (select user_id from users where login = ?);", user)[0]
+
+    etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
     last_modified Time.at(last_played_game_time.to_i).httpdate if last_played_game_time
 end
 
@@ -197,7 +204,7 @@ post "/create" do
 end
 
 get "/user/:name" do
-    caching_check_last_played_game
+    caching_check_last_played_game_by(params[:name])
 
     @player = User.first(:login => params[:name])
 
