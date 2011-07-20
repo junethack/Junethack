@@ -1,5 +1,3 @@
-require 'orderedhash'
-
 $trophies = [
  'most_ascensions',
  'longest_ascension_streak',
@@ -22,7 +20,7 @@ $trophies_name = [
  "Longest ascension streak"
 ]
 
-$variants_mapping = OrderedHash.new
+$variants_mapping = {}
 $variants_mapping["3.4.3"]     = "NetHack 3.4.3"
 $variants_mapping["UNH-3.5.4"] = "UnNetHack"
 $variants_mapping["3.6.0"]     = "AceHack"
