@@ -14,7 +14,7 @@
         - @clans.each do |clan|
           %tr
             %td
-              %a{:href => "/clan/" + clan.name}
+              %a{:href => "/clan/#{CGI::escape clan.name}"}
                 #{h clan.name}
             %td
               %a{:href => "/user/" + clan.get_admin.login}

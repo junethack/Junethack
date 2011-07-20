@@ -90,7 +90,7 @@
                 .account-clan
                     %h3= account.name + " on " + account.server.name
                     - if account.clan
-                        %a{:href => "/clan/#{account.clan.name}"}= account.clan.name
+                        %a{:href => "/clan/#{CGI::escape account.clan.name}"}= account.clan.name
                         %a{:href => "/leaveclan/#{account.server.id}"} Leave
                         - if account != @user.accounts.last
                             %span#small_content_spacer.clear
