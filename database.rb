@@ -4,7 +4,7 @@ require 'dm-serializer'
 $dbname = "junethack.db"
 
 # for debugging: print all generated SQL statemtens
-#DataMapper::Logger.new(STDOUT, :debug)
+#DataMapper::Logger.new("logs/db.log", :debug)
 
 # raise exception on error when saving
 DataMapper::Model.raise_on_save_failure = true # globally

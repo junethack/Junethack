@@ -34,7 +34,7 @@
                                 Individual
                             .trophyright
                                 - for individualtrophy in @player.individualtrophies
-                                    %a.imagelink{:title => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
+                                    %a.imagelink{:title => $trophy_names[individualtrophy.trophy], :alt => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
                                         %img{:src => "/icons/" + individualtrophy.icon}
                     - unless @player.scoreentries.select{|entry| entry.variant == "3.6.0"}.empty?
                         %li
@@ -43,7 +43,7 @@
                             .trophyright
                                 - for scoreentry in @player.scoreentries
                                     - if scoreentry.variant == "3.6.0"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                             %img{:src => "/icons/" + scoreentry.icon}
                     - unless @player.scoreentries.select{|entry| entry.variant == "3.4.3"}.empty?
                         %li
@@ -52,7 +52,7 @@
                             .trophyright
                                 - for scoreentry in @player.scoreentries
                                     - if scoreentry.variant == "3.4.3"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                             %img{:src => "/icons/" + scoreentry.icon}
                     - unless @player.scoreentries.select{|entry| entry.variant == "UNH-3.5.4"}.empty?
                         %li
@@ -61,7 +61,7 @@
                             .trophyright
                                 - for scoreentry in @player.scoreentries
                                     - if scoreentry.variant == "UNH-3.5.4"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                             %img{:src => "/icons/" + scoreentry.icon}
                     - unless @player.scoreentries.select{|entry| entry.variant == "0.6.3"}.empty?
                         %li
@@ -70,7 +70,7 @@
                             .trophyright
                                 - for scoreentry in @player.scoreentries
                                     - if scoreentry.variant == "0.6.3"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                             %img{:src => "/icons/" + scoreentry.icon}
                     - unless @player.scoreentries.select{|entry| entry.variant == "NH-1.3d"}.empty?
                         %li
@@ -79,7 +79,7 @@
                             .trophyright
                                 - for scoreentry in @player.scoreentries
                                     - if scoreentry.variant == "NH-1.3d"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                             %img{:src => "/icons/" + scoreentry.icon}
         =haml :_player_games
         .text_content.non_top_post

@@ -1,3 +1,4 @@
+require 'dm-migrations/migration_runner'
 class User
     include DataMapper::Resource
 
@@ -7,11 +8,13 @@ class User
     has n, :servers, :through => :accounts
     has n, :games, :through => :servers
 
-    property :id,     Serial
-    property :login,  String
-    property :hashed, String, :length => 64
-    property :salt,   String, :length => 64
-    
+    property :id,       Serial
+    property :login,    String
+    property :hashed,   String, :length => 64
+    property :salt,     String, :length => 64
+   
+    property :clan,     String
+ 
     validates_format_of :login, :with => /^\w*$/, :message => "login name may only contain a-z, A-Z, 0-9 and _"
 
     def password=(pw)
@@ -43,4 +46,13 @@ class User
         self.accounts.map{|account| account.get_ascensions}.flatten
     end
 end
-
+DataMapper::MigrationRunner.migration(1, :add_clan_to_users) do
+    up do
+        execute 'ALTER TABLE users ADD clan string;'
+    end
+end
+DataMapper::MigrationRunner.migration(2, :update_users_clan) do
+    up do
+        execute 'UPDATE USERS SET clan = (SELECT clan_name FROM accounts WHERE clan_name IS NOT NULL AND user_id = id);'
+    end
+end

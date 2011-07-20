@@ -40,7 +40,7 @@
                     Individual
                 %p
                     - for individualtrophy in @user.individualtrophies
-                        %a{:title => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
+                        %a{:title => $trophy_names[individualtrophy.trophy], :alt => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
                             %img{:style => "width:5%;height:5%;", :src => "/icons/" + individualtrophy.icon}
             - unless @user.scoreentries.select{|entry| entry.variant == "3.6.0"}.empty?
                 %li
@@ -56,7 +56,7 @@
                 %p
                     - for scoreentry in @user.scoreentries
                         - if scoreentry.variant == "3.4.3"
-                            %a{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                            %a{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                 %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
             - unless @user.scoreentries.select{|entry| entry.variant == "UNH-3.5.4"}.empty?
                 %li
@@ -64,7 +64,7 @@
                 %p
                     - for scoreentry in @user.scoreentries
                         - if scoreentry.variant == "UNH-3.5.4"
-                            %a{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                            %a{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                 %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
             - unless @user.scoreentries.select{|entry| entry.variant == "0.6.3"}.empty?
                 %li
@@ -72,7 +72,7 @@
                 %p
                     - for scoreentry in @user.scoreentries
                         - if scoreentry.variant == "0.6.3"
-                            %a{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                            %a{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                 %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
             - unless @user.scoreentries.select{|entry| entry.variant == "NH-1.3d"}.empty?
                 %li
@@ -80,7 +80,7 @@
                 %p
                     - for scoreentry in @user.scoreentries
                         - if scoreentry.variant == "NH-1.3d"
-                            %a{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                            %a{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                 %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
         =haml :_user_games
         .text_content.non_top_post
