@@ -7,8 +7,8 @@
             %li
                 - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id, icon from individualtrophies where trophy = ? order by upper(user);", individualtrophy
                 - if users.size > 0
-                    %a.imagelink{:title => $trophy_names[individualtrophy], :alt => $trophy_names[individualtrophy], :href => "/trophies#" + users[0].icon[0 .. (users[0].icon.length - 5)]}
-                        %img.trophyleft{:src => "/icons/" + users[0].icon}
+                    %a.imagelink{:title => $trophy_names[individualtrophy], :href => "/trophies#" + users[0].icon[0 .. (users[0].icon.length - 5)]}
+                        %img.trophyleft{:src => "/icons/" + users[0].icon, :alt => $trophy_names[individualtrophy]}
                     .trophyright
                         - users.each do |u|
                             %span
@@ -22,8 +22,8 @@
             - scoreentries.each do |s|
                 - if $trophy_names[s.trophy]
                     %li
-                        %a.imagelink{:title => $trophy_names[s.trophy], :alt => $trophy_names[s.trophy], :href => "/trophies#" + s.icon[0 .. (s.icon.length - 5)]}
-                            %img.trophyleft{:src => "/icons/" + s.icon}
+                        %a.imagelink{:title => $trophy_names[s.trophy], :href => "/trophies#" + s.icon[0 .. (s.icon.length - 5)]}
+                            %img.trophyleft{:src => "/icons/" + s.icon, :alt => $trophy_names[s.trophy]}
                         - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id from scoreentries where variant = ? and trophy = ? order by upper(user);", variant, s.trophy
                         .trophyright
                             - users.each do |u|
