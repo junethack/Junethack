@@ -49,7 +49,7 @@ end
 def caching_check_last_played_game
     last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id is not null;")[0]
 
-    etag "#{last_played_game_time}_#{@user.id.to_i}" if last_played_game_time
+    etag "#{last_played_game_time}_#{@user.to_i}" if last_played_game_time
     last_modified Time.at(last_played_game_time.to_i).httpdate if last_played_game_time
 end
 
