@@ -54,8 +54,8 @@ def caching_check_last_played_game
 end
 
 def caching_check_application_start_time
-    etag $application_start if $application_start
-    last_modified Time.at($application_start.to_i).httpdate if $application_start
+    etag $application_start.to_i if $application_start
+    last_modified $application_start.httpdate if $application_start
 end
 
 get "/" do
