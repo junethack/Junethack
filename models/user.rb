@@ -46,11 +46,11 @@ class User
         self.accounts.map{|account| account.get_ascensions}.flatten
     end
 end
-DataMapper::MigrationRunner.migration(1, :add_clan_to_users) do
-    up do
-        execute 'ALTER TABLE users ADD clan string;'
-    end
-end
+#DataMapper::MigrationRunner.migration(1, :add_clan_to_users) do
+#    up do
+#        execute 'ALTER TABLE users ADD clan string;'
+#    end
+#end
 DataMapper::MigrationRunner.migration(2, :update_users_clan) do
     up do
         execute 'UPDATE USERS SET clan = (SELECT clan_name FROM accounts WHERE clan_name IS NOT NULL AND user_id = id);'
