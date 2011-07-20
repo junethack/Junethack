@@ -186,7 +186,7 @@ def update_scores(game)
                 Scoreentry.create(:user_id => e.user_id,
                                   :variant => game.version,
                                   :value   => e.duration.to_s,
-                                  :value_display => parse_milliseconds(e.duration),
+                                  :value_display => parse_seconds(e.duration),
                                   :endtime => e.endtime,
                                   :trophy  => "fastest_ascension_realtime",
                                   :icon    => "c-fastest-realtime.png").save

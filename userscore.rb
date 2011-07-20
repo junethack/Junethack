@@ -39,7 +39,7 @@ end
 
 # returns the min realtime duration of an ascension in milliseconds
 def fastest_ascension_realtime(variant=nil)
-    return parse_milliseconds((repository.adapter.select "select min(endtime-starttime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
+    return parse_seconds((repository.adapter.select "select min(endtime-starttime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
 end
 
 # returns the min in-game duration of an ascension in milliseconds
