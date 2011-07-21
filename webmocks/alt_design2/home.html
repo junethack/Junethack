@@ -89,18 +89,31 @@
             </form>
           </div>
           <div class='text_content non_top_post'>
-            <div class="trophycabinet">
+            <h2>
+              Trophies
+            </h2>
+            <div class="trophycabinet text_cabinet">
               <h3>
-                Trophies
+                <span class="flat"></span>
               </h3>
               <ul>
+                <li>
+                  <div class="trophyleft">
+                    Here is a variant name
+                  </div>
+                  <div class="trophyright">
+                    <a href="" class="imagelink" title="here is a trophy">
+                      <img src="" alt="a trophy" />
+                    </a>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
           <div class='text_content non_top_post'>
-            <h3>
-              Competition
-            </h3>
+            <h2>
+              Your tournament stats
+            </h2>
             <h4>NetHack 3.4.3</h4>
             <div class='scorelisting'>
               <table>
@@ -147,7 +160,7 @@
             </div>
           </div>
           <div class='text_content non_top_post'>
-            <h3>Games played</h3>
+            <h2>Games you've played</h2>
             <div class='scorelisting'>
               <table style='width: 100%;'>
                 <tr>
@@ -3071,7 +3084,23 @@
               </table>
             </div>
           </div>
+          <div class='text_content non_top_post'>
+            <h2>Create a new clan</h2>
+            <form action='/clan' method='POST'>
+              <label for='server'>Creator account</label>
+              <select name='server'>
+                <option value='1'>xaiph on nao</option>
+              </select>
+              <label for='clanname'>Clan name</label>
+              <input id='clanname' name='clanname' type='text' />
+              <input type='submit' value='Create clan' />
+              <span class='clear' id='end_of_content_spacer'></span>
+            </form>
+          </div>
           <div class='text_content non_top_post' id='clanmanager'>
+            <h2>
+              Manage your clans
+            </h2>
             <div class='account-clan'>
               <h3>xaiph on nao</h3>
               <p>
@@ -3118,19 +3147,6 @@
               <a href='/clan/rival_botclan'>rival_botclan</a>
               <a href='/leaveclan/5'>Leave</a>
             </div>
-          </div>
-          <div class='text_content non_top_post'>
-            <h4>Create a new clan</h4>
-            <form action='/clan' method='POST'>
-              <label for='server'>Creator account</label>
-              <select name='server'>
-                <option value='1'>xaiph on nao</option>
-              </select>
-              <label for='clanname'>Clan name</label>
-              <input id='clanname' name='clanname' type='text' />
-              <input type='submit' value='Create clan' />
-              <span class='clear' id='end_of_content_spacer'></span>
-            </form>
           </div>
         </div>
       </div>
