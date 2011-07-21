@@ -14,7 +14,7 @@ end
 end
 
 class Game
-def Game.count
+def Game.count(ignore)
     "infinite"
 end
 end
