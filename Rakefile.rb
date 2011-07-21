@@ -130,9 +130,11 @@ namespace :fetch do
 end
 
 namespace :update do
+    i = 0
     task :scores do
         (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
-            puts "#{game.id} #{game.version}"
+            i += 1
+            puts "#{i} #{game.version}"
             update_scores(Game.get(game.id))
         }
     end
