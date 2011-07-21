@@ -136,4 +136,15 @@ namespace :update do
             update_scores(Game.get(game.id))
         }
     end
+
+    # only update nconducts field
+    task :nconducts do
+        i = 0
+        Game.all.each do |game|
+            game.nconducts = (Integer game.conduct).to_s(2).count("1")
+            i += 1
+            puts i
+            game.save! # only change field and don't call hooks
+        end
+    end
 end
