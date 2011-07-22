@@ -405,10 +405,10 @@ get "/server/:name" do
     end
 end
 
-get "/last_games_played" do
+get "/games" do
     caching_check_last_played_game
 
-    @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
+    @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 100)
     @games_played_user_links = true
     @games_played_title = "Last #{@games_played.size} games played"
     haml :last_games_played
