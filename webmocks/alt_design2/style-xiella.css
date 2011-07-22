@@ -655,6 +655,8 @@ ul.trophypage > li > img,
     width: 20%;
 }
 .text_cabinet.trophycabinet .trophyright {
+  /* quick fix for i dunno what's happening with that a height */
+    margin-bottom: 0px;
     width: 75%;
 }
 .trophycabinet .trophyleft,
