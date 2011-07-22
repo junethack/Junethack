@@ -655,8 +655,6 @@ ul.trophypage > li > img,
     width: 20%;
 }
 .text_cabinet.trophycabinet .trophyright {
-    /* quick fix to allow for strange things happening with the a */
-    margin-bottom: 5px;
     width: 75%;
 }
 .trophycabinet .trophyleft,
