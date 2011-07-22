@@ -328,52 +328,50 @@ form#login_form > fieldset > input[type=submit],
 **                       **
 **************************/
 
-.greytable {
+.greytable { /* replaces .scorelisting table and #accountlist */
     font-size: 85%;
     border-collapse: collapse;
     width: 100%; /* there's an inline style here.. */
     text-align: left;
     vertical-align: middle;
 }
-#accountlist th,
-.scorelisting th
-{
+.greytable th {
     text-align: left;
     padding-right: 20px;
     padding-left: 3px;
 }
-#cell1 td,
-#cell2 td
+.greytable #cell1 td,
+.greytable #cell2 td
 {
     border: 1px solid black;
     padding-right: 10px;
     padding-left: 3px;
     vertical-align: middle;
 }
-#cell1 td
+.greytable #cell1 td
 {
     background-color: #ccc;
 }
-#cell2 td
+.greytable #cell2 td
 {
     background-color: #bbb;
 }
 
-#cell1 td.table_number,
-#cell2 td.table_number
+.greytable #cell1 td.table_number,
+.greytable #cell2 td.table_number
 {
     text-align: right;
     padding-right: 3px;
     padding-left: 3px;
 }
-#cell1 td.table_date,
-#cell2 td.table_date
+.greytable #cell1 td.table_date,
+.greytable #cell2 td.table_date
 {
     text-align: center;
     padding-right: 3px;
     padding-left: 3px;
 }
-
+.greytable 
 #accountlist,
 #accountlist tr,
 #accountlist td
