@@ -328,8 +328,7 @@ form#login_form > fieldset > input[type=submit],
 **                       **
 **************************/
 
-#accountlist,
-.scorelisting table {
+.greytable {
     font-size: 85%;
     border-collapse: collapse;
     width: 100%; /* there's an inline style here.. */
