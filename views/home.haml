@@ -93,6 +93,8 @@
         .text_content.non_top_post
             =haml :games_played
         #clanmanager.text_content.non_top_post
+            %h2
+                Manage your clans
             - for account in @user.accounts
                 .account-clan
                     %h3= account.name + " on " + account.server.name
@@ -126,7 +128,7 @@
         - clanless_accs = @user.accounts.select{|a| a.clan.nil?}
         - unless clanless_accs.empty?
             %div.text_content.non_top_post
-                %h4 Create a new clan
+                %h2 Create a new clan
                 %form#create_clan_form.smallform{:method => "POST", :action => "/clan"}
                     %label{:for => "server"}  Creator account
                     %select{:name => "server"}
