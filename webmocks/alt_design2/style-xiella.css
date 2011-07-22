@@ -322,20 +322,17 @@ form#login_form > fieldset > input[type=submit],
     margin: 0 auto;
 }
 
-/* TABLES */
-/* Now this one is for score listing */
-.scorelisting
-{
-    text-align: center;
-}
-
+/**************************
+**                       **
+**      scoreboard       **
+**                       **
+**************************/
 
 #accountlist,
 .scorelisting table {
     font-size: 85%;
     border-collapse: collapse;
-    /* Hard limit on width */
-    width: 600px;
+    width: 100%; /* there's an inline style here.. */
     text-align: left;
     vertical-align: middle;
 }
