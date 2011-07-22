@@ -9,7 +9,7 @@
                     | #{h @player.games.length} Games Played
             - server_accounts = (Server.all - @player.servers)
             %form{ :action => "/add_server_account", :method => "post"}
-                %table#accountlist
+                %table#accountlist.greytable
                     %tr
                         %th Server
                         %th Account
