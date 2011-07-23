@@ -130,10 +130,23 @@ namespace :fetch do
 end
 
 namespace :update do
+    i = 0
     task :scores do
         (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
-            puts "#{game.id} #{game.version}"
+            i += 1
+            puts "#{i} #{game.version}"
             update_scores(Game.get(game.id))
         }
+    end
+
+    # only update nconducts field
+    task :nconducts do
+        i = 0
+        Game.all.each do |game|
+            game.nconducts = (Integer game.conduct).to_s(2).count("1")
+            i += 1
+            puts i
+            game.save! # only change field and don't call hooks
+        end
     end
 end

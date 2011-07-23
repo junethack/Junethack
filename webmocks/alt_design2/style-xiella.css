@@ -293,10 +293,10 @@ form#login_form > fieldset > input[type=submit],
     /* space between the main content and the element before - eg signup button */
     margin-top: 3.0em;
     padding-top: 1px;
+    padding-bottom: 30px;
 }
 .text_content {
-    margin: 0 30px;
-    margin-top: 35px;
+    margin: 35px 30px 0 30px;
     line-height: 1.5em;
 }
 .text_content p {
@@ -331,18 +331,13 @@ form#login_form > fieldset > input[type=submit],
 
 
 #accountlist,
-.scorelisting table
-{
+.scorelisting table {
     font-size: 85%;
-    border-width: 2px;
-    border-style: solid;
-    border-color: gray;
     border-collapse: collapse;
     /* Hard limit on width */
     width: 600px;
     text-align: left;
     vertical-align: middle;
-    border: 1px solid #DDD;
 }
 #accountlist th,
 .scorelisting th
@@ -408,6 +403,15 @@ form#login_form > fieldset > input[type=submit],
     font-size: 100%;
 }
 
+/**************************
+**                       **
+**      /home styles     **
+**                       **
+**************************/
+
+.account-clan {
+  margin-top: 10px;
+}
 
 
 /**************************
@@ -620,11 +624,13 @@ table#servers th {
 structure for a trophy cabinet:
 
 .trophy_cabinet
-    h3
-    ul
-        li
-            .trophyplaque
-            img, .imagelink
+  h3
+  ul
+    li
+      .trophyleft
+      .trophyright
+- all a's to have .imagelink
+- all img's to have no inline styles
 */
 .trophycabinet {
     padding-top: 1px;/* for margin collapse */
@@ -720,4 +726,7 @@ li.multiline > span {
 }
 .center {
     text-align: center;
+}
+.flat {
+    height: 0;
 }

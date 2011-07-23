@@ -33,56 +33,65 @@
                                 %td.noborder
                                     %input{:type => "submit", :value => "add account", :class => "small_button"}
         .text_content.non_top_post
-            %h3
-                Trophies
-            - if @user.individualtrophies.count > 0
-                %li
-                    Individual
-                %p
-                    - for individualtrophy in @user.individualtrophies
-                        %a{:title => $trophy_names[individualtrophy.trophy], :alt => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
-                            %img{:style => "width:5%;height:5%;", :src => "/icons/" + individualtrophy.icon}
-            - unless @user.scoreentries.select{|entry| entry.variant == "3.6.0"}.empty?
-                %li
-                    AceHack
-                %p
-                    - for scoreentry in @user.scoreentries
-                        - if scoreentry.variant == "3.6.0"
-                            %a{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
-            - unless @user.scoreentries.select{|entry| entry.variant == "3.4.3"}.empty?
-                %li
-                    NetHack 3.4.3
-                %p
-                    - for scoreentry in @user.scoreentries
-                        - if scoreentry.variant == "3.4.3"
-                            %a{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
-            - unless @user.scoreentries.select{|entry| entry.variant == "UNH-3.5.4"}.empty?
-                %li
-                    UnNetHack
-                %p
-                    - for scoreentry in @user.scoreentries
-                        - if scoreentry.variant == "UNH-3.5.4"
-                            %a{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
-            - unless @user.scoreentries.select{|entry| entry.variant == "0.6.3"}.empty?
-                %li
-                    SporkHack
-                %p
-                    - for scoreentry in @user.scoreentries
-                        - if scoreentry.variant == "0.6.3"
-                            %a{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
-            - unless @user.scoreentries.select{|entry| entry.variant == "NH-1.3d"}.empty?
-                %li
-                    NetHack 1.3d
-                %p
-                    - for scoreentry in @user.scoreentries
-                        - if scoreentry.variant == "NH-1.3d"
-                            %a{:title => $trophy_names[scoreentry.trophy], :alt => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                %img{:style => "width:5%;height:5%;", :src => "/icons/" + scoreentry.icon}
-        =haml :_user_games
+            .trophycabinet.text_cabinet
+                %h3
+                    Trophies
+                %ul
+                    - if @user.individualtrophies.count > 0
+                        %li
+                            .trophyleft
+                                Individual
+                            .trophyright
+                                - for individualtrophy in @user.individualtrophies
+                                    %a.imagelink{:title => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
+                                        %img{:src => "/icons/" + individualtrophy.icon, :alt => $trophy_names[individualtrophy.trophy]}
+                    - unless @user.scoreentries.select{|entry| entry.variant == "3.6.0"}.empty?
+                        %li
+                            .trophyleft
+                                AceHack
+                            .trophyright
+                                - for scoreentry in @user.scoreentries
+                                    - if scoreentry.variant == "3.6.0"
+                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                            %img{:src => "/icons/" + scoreentry.icon}
+                        - unless @user.scoreentries.select{|entry| entry.variant == "3.4.3"}.empty?
+                            %li
+                                .trophyleft
+                                    NetHack 3.4.3
+                                .trophyright
+                                    - for scoreentry in @user.scoreentries
+                                        - if scoreentry.variant == "3.4.3"
+                                            %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                                %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
+                        - unless @user.scoreentries.select{|entry| entry.variant == "UNH-3.5.4"}.empty?
+                            %li
+                                .trophyleft
+                                    UnNetHack
+                                .trophyright
+                                    - for scoreentry in @user.scoreentries
+                                        - if scoreentry.variant == "UNH-3.5.4"
+                                            %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                                %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
+                        - unless @user.scoreentries.select{|entry| entry.variant == "0.6.3"}.empty?
+                            %li
+                                .trophyleft
+                                    SporkHack
+                                .trophyright
+                                    - for scoreentry in @user.scoreentries
+                                        - if scoreentry.variant == "0.6.3"
+                                            %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                                %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
+                        - unless @user.scoreentries.select{|entry| entry.variant == "NH-1.3d"}.empty?
+                            %li
+                                .trophyleft
+                                    NetHack 1.3d
+                                .trophyright
+                                    - for scoreentry in @user.scoreentries
+                                        - if scoreentry.variant == "NH-1.3d"
+                                            %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
+                                                %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
+        .text_content.non_top_post
+            =haml :_user_games
         .text_content.non_top_post
             =haml :games_played
         #clanmanager.text_content.non_top_post
@@ -90,14 +99,14 @@
                 .account-clan
                     %h3= account.name + " on " + account.server.name
                     - if account.clan
-                        %a{:href => "/clan/#{account.clan.name}"}= account.clan.name
+                        %a{:href => "/clan/#{CGI::escape account.clan.name}"}= account.clan.name
                         %a{:href => "/leaveclan/#{account.server.id}"} Leave
                         - if account != @user.accounts.last
                             %span#small_content_spacer.clear
                     - else
                         - unless account.invitations and account.invitations.empty?
-                            %h4
-                                You got
+                            %p
+                                You have
                                 = account.invitations.length
                                 invitation(s)
                             .scorelisting
@@ -114,7 +123,7 @@
                                                 %td
                                                     %a{:href => "/respond/#{account.server.id}/#{invitation['token']}?accept=false"} Decline
                         - else
-                            %h4
+                            %p
                                 No invitations for this account
         - clanless_accs = @user.accounts.select{|a| a.clan.nil?}
         - unless clanless_accs.empty?

@@ -105,7 +105,7 @@ def best_sustained_ascension_rate(and_collection=nil)
     score.sort_by{|user, score| -score}
 end
 
-## Individual trophies
+## Cross-variant trophies
 # King of the world: ascend in all variants
 def king_of_the_world?(user)
     anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and ascended='t';", user
@@ -170,23 +170,12 @@ def update_scores(game)
             end
 
             Scoreentry.all(:variant => game.version,
-                           :trophy  => "most_conducts_ascension").destroy
-            t.most_conducts_ascension(game.version).each do |e|
-                Scoreentry.create(:user_id => e.user_id,
-                                  :variant => game.version,
-                                  :value   => e.nconducts.to_s,
-                                  :endtime => e.endtime,
-                                  :trophy  => "most_conducts_ascension",
-                                  :icon    => "c-most-conducts.png").save
-            end
-
-            Scoreentry.all(:variant => game.version,
                            :trophy  => "fastest_ascension_realtime").destroy
             t.fastest_ascension_realtime(game.version).each do |e|
                 Scoreentry.create(:user_id => e.user_id,
                                   :variant => game.version,
                                   :value   => e.duration.to_s,
-                                  :value_display => parse_milliseconds(e.duration),
+                                  :value_display => parse_seconds(e.duration),
                                   :endtime => e.endtime,
                                   :trophy  => "fastest_ascension_realtime",
                                   :icon    => "c-fastest-realtime.png").save
@@ -219,6 +208,8 @@ def update_scores(game)
             Individualtrophy.first_or_create(:user_id => game.user_id,
                 :trophy => :king_of_the_world,
                 :icon => "king.png").save if king_of_the_world? game.user_id
+
+            return false if not update_competition_scores_ascended(game)
         end
         # achievements
         achievements = game.achieve.hex if game.achieve
@@ -352,7 +343,7 @@ def update_scores(game)
                 :icon => "m-astral.png").save if game.entered_astral?
         end
 
-    ## Non-Ascension Individual trophies
+    ## Non-Ascension cross-variant trophies
     # Sightseeing tour: finish a game in all variants
     Individualtrophy.first_or_create(:user_id => game.user_id,
         :trophy => :sightseeing_tour,
@@ -362,7 +353,7 @@ def update_scores(game)
         :trophy => :globetrotter,
         :icon => "globetrotter.png").save if globetrotter? game.user_id
 
-    return update_clan_scores(game)
+    return false if not update_clan_scores(game)
 end
 
 def update_clan_scores(game)
@@ -381,15 +372,45 @@ def update_clan_scores(game)
         end
     end
 
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
+
+    return true
+end
+
+# Update competition trophies for an ascended game,
+# Currently there are no competition trophies for games that are not
+# ascended.
+def update_competition_scores_ascended(game)
+    return true if not game.user_id
+
+    u = UserScore.new(game.user_id)
+
+    # Clan competitions
+    nconducts = u.most_conducts_ascension(game.version)[0]
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "most_conducts_ascension",
+                                        :icon => "c-most-conducts.png")
+    if c.value.nil? or c.value < nconducts then
+        c.value = nconducts
+        c.save
+    end
+
+    $variants_mapping.keys.each do |v|
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "most_conducts_ascension", :order => [ :value.desc ]))
+    end
+
+    return true
+end
+
+def rank_collection(collection)
     # ranking
     value = -1
     rank = 0
-    ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]).each {|c|
+    collection.each {|c|
         rank += 1 unless value == c.value
         value = c.value
         c.rank = rank
         c.save
     }
-
-    return true
 end

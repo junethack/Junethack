@@ -45,6 +45,11 @@ class User
     def ascensions
         self.accounts.map{|account| account.get_ascensions}.flatten
     end
+
+    # user.to_i will return user.id or 0 if user == nil
+    def to_i
+        self.id
+    end
 end
 #DataMapper::MigrationRunner.migration(1, :add_clan_to_users) do
 #    up do

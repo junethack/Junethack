@@ -1,5 +1,3 @@
-require 'orderedhash'
-
 $trophies = [
  'most_ascensions',
  'longest_ascension_streak',
@@ -22,7 +20,7 @@ $trophies_name = [
  "Longest ascension streak"
 ]
 
-$variants_mapping = OrderedHash.new
+$variants_mapping = {}
 $variants_mapping["3.4.3"]     = "NetHack 3.4.3"
 $variants_mapping["UNH-3.5.4"] = "UnNetHack"
 $variants_mapping["3.6.0"]     = "AceHack"
@@ -38,9 +36,9 @@ def helper_get_score(key, variant)
     return repository.adapter.select "select (select login from users where user_id = id) as user, user_id, value, value_display from scoreentries where trophy = ? and variant = ? order by user;", key, variant
 end
 
-def parse_milliseconds(duration=nil)
+def parse_seconds(duration=nil)
     return "" if not duration
-    s = duration / 1000;
+    s = duration;
     m = s / 60;
     h = m / 60;
     d = h / 24;

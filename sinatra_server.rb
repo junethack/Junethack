@@ -49,17 +49,26 @@ end
 def caching_check_last_played_game
     last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id is not null;")[0]
 
-    etag last_played_game_time if last_played_game_time
+    etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
+    last_modified Time.at(last_played_game_time.to_i).httpdate if last_played_game_time
+end
+
+def caching_check_last_played_game_by(user)
+    last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id = (select user_id from users where login = ?);", user)[0]
+
+    etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
     last_modified Time.at(last_played_game_time.to_i).httpdate if last_played_game_time
 end
 
 def caching_check_application_start_time
-    etag $application_start if $application_start
-    last_modified Time.at($application_start.to_i).httpdate if $application_start
+    return if session["messages"].size > 0 or session["errors"].size > 0
+
+    etag "#{$application_start.to_i}_#{@user.to_i}".hash if $application_start
+    last_modified $application_start.httpdate if $application_start
 end
 
 get "/" do
-    caching_check_application_start_time if not @user
+    caching_check_application_start_time
 
     @show_banner = true
     haml :splash
@@ -111,8 +120,10 @@ post "/login" do
         redirect "/login"
     end
 end
-    
+
 get "/register" do
+    caching_check_application_start_time
+
     @show_banner = true
     haml :register
 end
@@ -193,7 +204,7 @@ post "/create" do
 end
 
 get "/user/:name" do
-    caching_check_last_played_game
+    caching_check_last_played_game_by(params[:name])
 
     @player = User.first(:login => params[:name])
 
@@ -346,7 +357,7 @@ get "/leaveclan/:server" do  #leave a clan
         session['errors'] << "No account on this server"
     end
     redirect "/home"
-end        
+end
 
 get "/scores/:name" do |name|
     # Is the user there? If not, just redirect to home
@@ -364,6 +375,8 @@ get "/scores/:name" do |name|
 end
 
 get "/scoreboard" do
+    caching_check_last_played_game
+
     @most_ascended_users = most_ascensions_users
 
     @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
@@ -374,11 +387,14 @@ get "/scoreboard" do
 end
 
 get "/servers" do
+    caching_check_application_start_time
+
     @servers = Server.all
     haml :servers
 end
 
 get "/server/:name" do
+    caching_check_last_played_game
     @server = Server.first(:name => params[:name])
     if @server
         @games = @server.games :conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50
@@ -389,10 +405,10 @@ get "/server/:name" do
     end
 end
 
-get "/last_games_played" do
+get "/games" do
     caching_check_last_played_game
 
-    @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
+    @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 100)
     @games_played_user_links = true
     @games_played_title = "Last #{@games_played.size} games played"
     haml :last_games_played
