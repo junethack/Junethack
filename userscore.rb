@@ -56,9 +56,9 @@ def longest_ascension_streak(variant=nil)
         if ascended == 't'
             asc += 1
         else
-            max_asc = asc if asc > max_asc 
             asc = 0
         end
+        max_asc = asc if asc > max_asc 
     }
     return max_asc
 end
