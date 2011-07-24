@@ -39,7 +39,7 @@ end
 
 # returns the min realtime duration of an ascension in milliseconds
 def fastest_ascension_realtime(variant=nil)
-    return parse_seconds((repository.adapter.select "select min(endtime-starttime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0])
+    return (repository.adapter.select "select min(endtime-starttime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0]
 end
 
 # returns the min in-game duration of an ascension in milliseconds
@@ -48,12 +48,12 @@ def fastest_ascension_gametime(variant=nil)
 end
 
 def longest_ascension_streak(variant=nil)
-    games_deaths = (repository.adapter.select "select death from games where version = ? and user_id = ? order by endtime desc", variant, @id)
+    games_ascended = (repository.adapter.select "select ascended from games where version = ? and user_id = ? order by endtime desc", variant, @id)
 
     max_asc = 0;
     asc = 0;
-    games_deaths.each {|death|
-        if death == 'ascended'
+    games_ascended.each {|ascended|
+        if ascended == 't'
             asc += 1
         else
             max_asc = asc if asc > max_asc 
