@@ -12,8 +12,8 @@ $trophies = [
 $trophies_name = [
  "Most ascensions",
  "Longest ascension streak",
- "Fastest ascension (gametime)",
- "Fastest ascension (realtime)",
+ "Fastest ascension (by turns)",
+ "Fastest ascension (by wall-clock time)",
  "Highest scoring ascension",
  "Lowest scoring ascension",
  "Most conducts in a single ascension",
