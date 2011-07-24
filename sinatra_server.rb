@@ -414,6 +414,15 @@ get "/games" do
     haml :last_games_played
 end
 
+get "/ascensions" do
+    caching_check_last_played_game
+
+    @games_played = Game.all(:conditions => [ "user_id is not null and ascended='t'" ], :order => [ :endtime.desc ])
+    @games_played_user_links = true
+    @games_played_title = "#{@games_played.size} ascended games"
+    haml :last_games_played
+end
+
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
