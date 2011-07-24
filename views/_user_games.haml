@@ -1,32 +1,3 @@
 %h2
   Your tournament stats
-- @userscore.variants.each do |variant, variant_name|
-  - @variant = variant
-  %h3= variant_name
-  .scorelisting
-    %table.greytable
-      %tr
-        %th Competition
-        %th
-      %tr#cell1
-        %td Most ascensions
-        %td.table_number= h @userscore.most_ascensions variant
-      %tr#cell2
-        %td Fastest ascension (by turns)
-        %td.table_number= h @userscore.fastest_ascension_gametime variant
-      %tr#cell1
-        %td Fastest ascension (by wall-clock time)
-        %td.table_number= h @userscore.fastest_ascension_realtime variant
-      %tr#cell2
-        %td Highest scoring ascension
-        %td.table_number= h @userscore.highest_scoring_ascension variant
-      %tr#cell1
-        %td Lowest scoring ascension
-        %td.table_number= h @userscore.lowest_scoring_ascension variant
-      %tr#cell2
-        %td Most conducts in a single ascension
-        %td.table_number= h @userscore.most_ascensions variant
-      %tr#cell1
-        %td Longest ascension streak
-        %td.table_number= h @userscore.longest_ascension_streak variant
-  =haml :_user_trophies
+=haml :_player_games

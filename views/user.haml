@@ -78,7 +78,8 @@
                                     - if scoreentry.variant == "NH-1.3d"
                                         %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
                                             %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
-        =haml :_player_games
+        .text_content.non_top_post
+            =haml :_player_games
         .text_content.non_top_post
             =haml :games_played
         #clanmanager.text_content.non_top_post

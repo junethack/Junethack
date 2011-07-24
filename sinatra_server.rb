@@ -141,6 +141,8 @@ get "/home" do
     @userscore = UserScore.new session['user_id']
 
     @user = User.get(session['user_id'])
+    @user_id = @user.id
+
     @scoreentries = Scoreentry.all(:user_id => @user.id)
 
     @games_played = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
@@ -214,6 +216,7 @@ get "/user/:name" do
 
         @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
         @games_played_title = "Games played"
+        @user_id = @player.id
 
         haml :user
     else
