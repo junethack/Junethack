@@ -1,12 +1,6 @@
 require 'userscore'
 require 'trophyscore'
 
-# Limits by 10 any collection
-def limit_by_10(collection)
-    return collection.take(10) if collection.instance_of?(Array)
-    collection.all(:limit => 10)
-end
-
 # This one returns last games ordered by endtime, with the latest game
 # first.
 # Optionally give conditions and limit.
