@@ -320,88 +320,128 @@ form#login_form > fieldset > input[type=submit],
     width: 114px;
     display: block;
     margin: 0 auto;
+    margin-top: 20px;
 }
 
-/* TABLES */
-/* Now this one is for score listing */
-.scorelisting
-{
-    text-align: center;
-}
+/**************************
+**                       **
+**      scoreboard       **
+**                       **
+**************************/
 
-
-#accountlist,
-.scorelisting table {
+.greytable { /* replaces .scorelisting table and #accountlist */
     font-size: 85%;
     border-collapse: collapse;
-    /* Hard limit on width */
-    width: 600px;
+    width: 100%; /* there's an inline style here.. */
     text-align: left;
     vertical-align: middle;
+    margin: 10px 0;
 }
-#accountlist th,
-.scorelisting th
-{
+.greytable th {
     text-align: left;
     padding-right: 20px;
     padding-left: 3px;
 }
-#cell1 td,
-#cell2 td
+.greytable #cell1 td,
+.greytable #cell2 td
 {
     border: 1px solid black;
     padding-right: 10px;
     padding-left: 3px;
     vertical-align: middle;
 }
-#cell1 td
+.greytable #cell1 td
 {
     background-color: #ccc;
 }
-#cell2 td
+.greytable #cell2 td
 {
     background-color: #bbb;
 }
 
-#cell1 td.table_number,
-#cell2 td.table_number
+.greytable #cell1 td.table_number,
+.greytable #cell2 td.table_number
 {
     text-align: right;
     padding-right: 3px;
     padding-left: 3px;
 }
-#cell1 td.table_date,
-#cell2 td.table_date
+.greytable #cell1 td.table_date,
+.greytable #cell2 td.table_date
 {
     text-align: center;
     padding-right: 3px;
     padding-left: 3px;
 }
-
-#accountlist,
-#accountlist tr,
-#accountlist td
+#accountlist.greytable,
+#accountlist.greytable tr,
+#accountlist.greytable td
 {
-    width: inherit;
+    /* not supported by ie
+    width: inherit; */
 }
-#accountlist tr.norow,
-#accountlist tr.norow td,
-#accountlist td.noborder
+#accountlist.greytable tr.norow,
+#accountlist.greytable tr.norow td,
+#accountlist.greytable td.noborder
 {
     border-width: 0px;
     background-color: inherit;
     vertical-align: middle;
 }
-#accountlist input[type="text"]
+#accountlist.greytable input[type="text"]
 {
     width: 6em;
     margin: 3px 3px 3px 3px;
     padding: 0;
 }
-#accountlist select
+#accountlist.greytable select
 {
     font-size: 100%;
 }
+
+/**************************
+**                       **
+**      small forms      **
+**                       **
+**************************/
+
+.smallform {
+  margin-bottom: 10px;
+}
+.smallform label,
+.smallform input,
+.smallform select {
+    margin-right: 10px;
+    float:left;
+}
+.smallform input,
+.smallform select,
+.smallform label,
+.smallform input[type=submit] {
+  margin-top: 10px;
+  height: 30px;
+}
+.smallform select {
+  padding: 0;
+}
+
+.smallform input {
+  padding: 5px 5px 5px 5px;
+  height: 20px;
+}
+
+.smallform input[type=submit] {
+  padding: 5px 10px;
+  margin-left: 0;
+}
+/* cascading from label...maybe? or maybe i should make label into #login label and #register label */
+.smallform label {
+  margin-left: 0;
+  width: auto;
+  line-height: 30px;
+  clear: none;
+}
+
 
 /**************************
 **                       **
@@ -491,14 +531,6 @@ form#login_form > fieldset > input[type=submit].active:hover {
     background-color: #c22;
 }
 
-input[type="submit"].small_button {
-    height: auto;
-    width: auto;
-    margin: 2px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
 /**************************
 **                       **
 **     footer styles     **
@@ -563,45 +595,38 @@ table#servers th {
 **                       **
 **************************/
 
+#clan_header {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
 #clan_header > div,
 #clan_header > h1 {
     margin-bottom: 0;
-    height: 60px;
-    line-height: 60px;
+    height: 50px;
+    line-height: 50px;
 }
 
 #clan_header > h1 {
+    line-height: 50px;
     width: auto;
     text-align: center;
     float: left;
 }
-#clan_header > h1 > span {
-    width: 100%;
-    display: block;
-}
-/* small icons */
+/* the group of right hand things */
 #clan_header > div {
-    float: right;
-    width: 16%;
-    text-align: center;
     border-left: 1px solid #ccc;
+    float: right;
+    padding: 0 20px;
+    text-align: center;
 }
+/* links only - no spans here please */
 #clan_header > div a {
     display: block;
 }
 #clan_header > div a:hover {
     background-color: #dadada;
     text-decoration: none;
-}
-#clan_members,
-#clan_trophies {
-    clear: both;
-    border-top: 1px solid #ccc;
-}
-/* internal wrapper */
-#clan_members > div,
-#clan_trophies > div {
-    margin: 15px;
 }
 #clan_trophies .trophyicon {
     margin-left: 5px;
@@ -655,8 +680,8 @@ ul.trophypage > li > img,
     width: 20%;
 }
 .text_cabinet.trophycabinet .trophyright {
-    /* quick fix to allow for strange things happening with the a */
-    margin-bottom: 5px;
+  /* quick fix for i dunno what's happening with that a height */
+    margin-bottom: 0px;
     width: 75%;
 }
 .trophycabinet .trophyleft,
@@ -666,7 +691,7 @@ ul.trophypage > li > img,
 }
 /* finer-grained display styles */
 .trophycabinet .trophyright, .trophycabinet .trophyleft {
-    margin: 10px 0px 10px 10px;
+    margin: 5px 0px 5px 5px;
 }
 .trophycabinet h3 {
     line-height: 2.5em;

@@ -1,33 +1,52 @@
-.text_content.non_top_post
-  %h3
-    Competition
-  - @userscore.variants.each do |variant, variant_name|
-    - @variant = variant
-    %h4= variant_name
+%h3
+  Competition
+- $variants.each do |variant|
+  - @variant = variant
+  - entries = repository.adapter.select "select * from competition_score_entries where variant = ? and user_id = ?", variant, @user_id
+  %h4= $variants_mapping[variant]
+  - if (CompetitionScoreEntry.count :user_id => @user_id, :variant => @variant) == 0
+    %div
+      No ascensions yet
+  - else
     .scorelisting
-      %table
+      %table.greytable
         %tr
           %th Competition
           %th
+          %th{:style => "padding-right: 0; width: 3em;" }  Placing
         %tr#cell1
+          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "most_ascensions"
           %td Most ascensions
-          %td.table_number= h @userscore.most_ascensions variant
+          %td.table_number= h c.value
+          %td.table_number= h c.rank
         %tr#cell2
-          %td Fastest ascension (gametime)
-          %td.table_number= h @userscore.fastest_ascension_gametime variant
+          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "fastest_ascension_gametime"
+          %td Fastest ascension (by turns)
+          %td.table_number= h c.value
+          %td.table_number= h c.rank
         %tr#cell1
-          %td Fastest ascension (realtime)
-          %td.table_number= h @userscore.fastest_ascension_realtime variant
+          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "fastest_ascension_realtime"
+          %td Fastest ascension (by wall-clock time)
+          %td.table_number= h parse_seconds c.value
+          %td.table_number= h c.rank
         %tr#cell2
+          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "fastest_ascension_realtime"
           %td Highest scoring ascension
-          %td.table_number= h @userscore.highest_scoring_ascension variant
+          %td.table_number= h c.value
+          %td.table_number= h c.rank
         %tr#cell1
+          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "lowest_scoring_ascension"
           %td Lowest scoring ascension
-          %td.table_number= h @userscore.lowest_scoring_ascension variant
+          %td.table_number= h c.value
+          %td.table_number= h c.rank
         %tr#cell2
+          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "most_ascensions"
           %td Most conducts in a single ascension
-          %td.table_number= h @userscore.most_ascensions variant
+          %td.table_number= h c.value
+          %td.table_number= h c.rank
         %tr#cell1
+          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "longest_ascension_streaks"
           %td Longest ascension streak
-          %td.table_number= h @userscore.longest_ascension_streak variant
-    =haml :_player_trophies
+          %td.table_number= h c.value
+          %td.table_number= h c.rank
+  =haml :_player_trophies

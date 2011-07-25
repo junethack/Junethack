@@ -141,6 +141,8 @@ get "/home" do
     @userscore = UserScore.new session['user_id']
 
     @user = User.get(session['user_id'])
+    @user_id = @user.id
+
     @scoreentries = Scoreentry.all(:user_id => @user.id)
 
     @games_played = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
@@ -214,6 +216,7 @@ get "/user/:name" do
 
         @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
         @games_played_title = "Games played"
+        @user_id = @player.id
 
         haml :user
     else
@@ -411,6 +414,15 @@ get "/games" do
     @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 100)
     @games_played_user_links = true
     @games_played_title = "Last #{@games_played.size} games played"
+    haml :last_games_played
+end
+
+get "/ascensions" do
+    caching_check_last_played_game
+
+    @games_played = Game.all(:conditions => [ "user_id is not null and ascended='t'" ], :order => [ :endtime.desc ])
+    @games_played_user_links = true
+    @games_played_title = "#{@games_played.size} ascended games"
     haml :last_games_played
 end
 

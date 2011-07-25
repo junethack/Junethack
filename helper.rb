@@ -12,8 +12,8 @@ $trophies = [
 $trophies_name = [
  "Most ascensions",
  "Longest ascension streak",
- "Fastest ascension (gametime)",
- "Fastest ascension (realtime)",
+ "Fastest ascension (by turns)",
+ "Fastest ascension (by wall-clock time)",
  "Highest scoring ascension",
  "Lowest scoring ascension",
  "Most conducts in a single ascension",
@@ -26,6 +26,14 @@ $variants_mapping["UNH-3.5.4"] = "UnNetHack"
 $variants_mapping["3.6.0"]     = "AceHack"
 $variants_mapping["0.6.3"]     = "SporkHack"
 $variants_mapping["NH-1.3d"]   = "NetHack 1.3d"
+
+# hard coded ordering of variants with competition score entries
+# order by release date
+$variants = []
+$variants << "3.4.3"
+$variants << "0.6.3"
+$variants << "UNH-3.5.4"
+$variants << "3.6.0"
 
 def helper_get_variants_for_user(id)
     variants = repository.adapter.select "select distinct version from games where user_id = ?;", @id

@@ -1,12 +1,6 @@
 require 'userscore'
 require 'trophyscore'
 
-# Limits by 10 any collection
-def limit_by_10(collection)
-    return collection.take(10) if collection.instance_of?(Array)
-    collection.all(:limit => 10)
-end
-
 # This one returns last games ordered by endtime, with the latest game
 # first.
 # Optionally give conditions and limit.
@@ -396,8 +390,76 @@ def update_competition_scores_ascended(game)
         c.save
     end
 
+    points = u.highest_scoring_ascension(game.version)[0]
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "highest_scoring_ascension",
+                                        :icon => "c-highest-score.png")
+    if c.value.nil? or c.value < points then
+        c.value = points
+        c.save
+    end
+
+    points = u.lowest_scoring_ascension(game.version)[0]
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "lowest_scoring_ascension",
+                                        :icon => "c-lowest-score.png")
+    if c.value.nil? or c.value > points then
+        c.value = points
+        c.save
+    end
+
+    realtime = u.fastest_ascension_realtime(game.version)
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "fastest_ascension_realtime",
+                                        :icon => "c-fastest-realtime.png")
+    if c.value.nil? or c.value > realtime then
+        c.value = realtime
+        c.save
+    end
+
+    gametime = u.fastest_ascension_gametime(game.version)
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "fastest_ascension_gametime",
+                                        :icon => "c-fastest-gametime.png")
+    if c.value.nil? or c.value > gametime then
+        c.value = gametime
+        c.save
+    end
+
+    ascensions = u.most_ascensions(game.version)
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "most_ascensions",
+                                        :icon => "c-most-ascensions.png")
+    if c.value.nil? or c.value > ascensions then
+        c.value = ascensions
+        c.save
+    end
+
+    longest_ascension_streak = u.longest_ascension_streak(game.version)
+    if longest_ascension_streak > 0 then
+        c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                            :variant => game.version,
+                                            :trophy  => "longest_ascension_streaks",
+                                            :icon => "c-longest-streak.png")
+        if c.value.nil? or c.value > longest_ascension_streak then
+            c.value = longest_ascension_streak
+            c.save
+        end
+    end
+
     $variants_mapping.keys.each do |v|
         rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "most_conducts_ascension", :order => [ :value.desc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "highest_scoring_ascension", :order => [ :value.desc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "lowest_scoring_ascension", :order => [ :value.asc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "fastest_ascension_realtime", :order => [ :value.asc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "fastest_ascension_gametime", :order => [ :value.asc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "most_ascensions", :order => [ :value.desc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "longest_ascension_streaks", :order => [ :value.desc ]))
     end
 
     return true

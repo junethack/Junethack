@@ -9,73 +9,73 @@
             #clan_invite
               %a{:href => "#invite_account"} Invite
         #clan_placing
-          %a{:href => "#"} Placing:
+          Placing:
           - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
             #{h ClanScoreEntry.all(:clan_name => @clan.name).first.rank}
           - else
-            No Games
+            no games
         #clan_points
-          %a{:href => "#"} Points:
+          Points:
           - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
             #{h ClanScoreEntry.all(:clan_name => @clan.name).sum(:value)}
           - else
-            No Games
+            no games
         %span.clear
       #clan_trophies
-        %div
-          %h2
-            Trophies
-          - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
-            - ClanScoreEntry.all(:clan_name => @clan.name, :rank => 1).each do |trophy|
-              %a.imagelink{:href => "/trophies#" + trophy.icon[0 .. (trophy.icon.length - 5)], :title => trophy.trophy} 
-                %span.trophyicon
-                  %img{:src => "/icons/" + trophy.icon}
-    .text_content#clan_members
-      %div
         %h2
-          Members
-        %table.prettytable
+          Clan trophies
+        - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
+          - ClanScoreEntry.all(:clan_name => @clan.name, :rank => 1).each do |trophy|
+            %a.imagelink{:href => "/trophies#" + trophy.icon[0 .. (trophy.icon.length - 5)], :title => trophy.trophy} 
+              %span.trophyicon
+                %img{:src => "/icons/" + trophy.icon}
+    .text_content.non_top_post#clan_members
+      %h2
+        Clan members
+      %table.prettytable
+        %tr
+          %th
+            Player
+          %th
+            Role
+          %th
+            Last game played (UTC)
+          %th
+            Clan accounts 
+          %th
+            User trophies 
+        - @clan.accounts.users.each do |user|
           %tr
-            %th
-              Player
-            %th
-              Role
-            %th
-              Last game played (UTC)
-            %th
-              Clan accounts 
-            %th
-              User trophies 
-          - @clan.accounts.users.each do |user|
-            %tr
-              %td
-                %a{:href => "/user/" + user.login}
-                  #{ h user.login }
-              %td
-                - if @clan.get_admin.login == user.login
-                  admin
-                - else
-                  member
-              %td
-                - if user.games.length != 0
-                  #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
-                - else
-                  no games played
-              %td
-                #{h user.accounts.all(:clan => @clan).length}
-              %td
-                #{h user.scoreentries.length}
+            %td
+              %a{:href => "/user/" + user.login}
+                #{ h user.login }
+            %td
+              - if @clan.get_admin.login == user.login
+                admin
+              - else
+                member
+            %td
+              - if user.games.length != 0
+                #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
+              - else
+                no games played
+            %td
+              #{h user.accounts.all(:clan => @clan).length}
+            %td
+              #{h user.scoreentries.length}
     - if !@logged_in
       - if @user.login == @clan.get_admin.login
-        .text_content#clan_members
-          %div
-            %h2
-              Invite
-            %form#invite_account{:method => "POST", :action => "/clan/invite"}
-              %input#accountname{:name => 'accountname', :type => 'text'}
-              %select{:name => 'server'}
-                - for server in Server.all
-                  %option{:name => server.id, :value => server.id}= server.display_name
-              %input{:type => 'hidden', :name => :clan, :value => @clan.name}
-              %input{:type => 'submit', :value => "Invite Account"}
+        .text_content.non_top_post#clan_invite
+          %h2
+            Invite
+          %form#invite_account.smallform{:method => "POST", :action => "/clan/invite"}
+            %input#accountname{:name => 'accountname', :type => 'text'}
+            %label{:for => 'invite_server'}
+              on
+            %select#invite_server{:name => 'server'}
+              - for server in Server.all
+                %option{:name => server.id, :value => server.id}= server.display_name
+            %input{:type => 'hidden', :name => :clan, :value => @clan.name}
+            %input{:type => 'submit', :value => "Invite Account"}
+            %span.clear
     %span#end_of_content_spacer.clear
