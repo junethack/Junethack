@@ -30,7 +30,7 @@
           %td.table_number= h parse_seconds c.value
           %td.table_number= h c.rank
         %tr#cell2
-          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "fastest_ascension_realtime"
+          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "highest_scoring_ascension"
           %td Highest scoring ascension
           %td.table_number= h c.value
           %td.table_number= h c.rank
