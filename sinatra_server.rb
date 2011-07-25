@@ -284,7 +284,7 @@ post "/clan/invite" do
             acc.update(:invitations => (acc.invitations.push(invitation)).to_json)
             session['messages'] << "Successfully invited #{acc.name} to #{clan.name}"
         else
-            session['errors'] << "Could not find #{params[:accountname]} on #{params[:server]}"
+            session['errors'] << "Could not invite #{params[:accountname]} on #{Server.get(params[:server]).display_name}"
         end
     else
         sessions['errors'] << "You are not the clan admin"
