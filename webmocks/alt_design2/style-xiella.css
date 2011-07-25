@@ -543,8 +543,8 @@ form#login_form > fieldset > input[type=submit].active:hover {
     text-align: center;
     margin: 20px 0;
 }
-#footer img,
-#footer a {
+#flattr img,
+a#flattr {
     vertical-align: baseline;
     margin-bottom: -5px;
 }
