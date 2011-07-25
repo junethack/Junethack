@@ -14,6 +14,9 @@ class User
     property :salt,     String, :length => 64
    
     property :clan,     String
+
+    property :created_at, DateTime
+    property :updated_at, DateTime
  
     validates_format_of :login, :with => /^\w*$/, :message => "login name may only contain a-z, A-Z, 0-9 and _"
 
