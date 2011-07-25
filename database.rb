@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'data_mapper'
 require 'dm-serializer'
+require 'dm-timestamps'
+
 $dbname = "junethack.db"
 
 # for debugging: print all generated SQL statemtens
