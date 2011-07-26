@@ -38,7 +38,7 @@
                     - if @user.individualtrophies.count > 0
                         %li
                             .trophyleft
-                                Individual
+                                Cross-Variant
                             .trophyright
                                 - for individualtrophy in @user.individualtrophies
                                     %a.imagelink{:title => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
