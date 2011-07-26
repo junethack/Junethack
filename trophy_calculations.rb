@@ -435,7 +435,7 @@ def update_competition_scores_ascended(game)
                                         :variant => game.version,
                                         :trophy  => "most_ascensions",
                                         :icon => "c-most-ascensions.png")
-    if c.value.nil? or c.value > ascensions then
+    if c.value.nil? or c.value < ascensions then
         c.value = ascensions
         c.save
     end
@@ -446,7 +446,7 @@ def update_competition_scores_ascended(game)
                                             :variant => game.version,
                                             :trophy  => "longest_ascension_streaks",
                                             :icon => "c-longest-streak.png")
-        if c.value.nil? or c.value > longest_ascension_streak then
+        if c.value.nil? or c.value < longest_ascension_streak then
             c.value = longest_ascension_streak
             c.save
         end
