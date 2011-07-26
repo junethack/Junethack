@@ -1,12 +1,11 @@
 $trophies = [
  'most_ascensions',
- 'longest_ascension_streak',
+ 'longest_ascension_streaks',
  'fastest_ascension_gametime',
  'fastest_ascension_realtime',
  'highest_scoring_ascension',
  'lowest_scoring_ascension',
- 'most_conducts',
- 'longest_ascension_streaks'
+ 'most_conducts_ascension',
 ]
 
 $trophies_name = [
@@ -17,7 +16,6 @@ $trophies_name = [
  "Highest scoring ascension",
  "Lowest scoring ascension",
  "Most conducts in a single ascension",
- "Longest ascension streak"
 ]
 
 $variants_mapping = {}
