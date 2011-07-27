@@ -7,7 +7,7 @@
             - if server_accounts.size > 0
                 #greeting
                     = "Hi #{h @user.login}!  To have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># #{h @tournament_identifier}</tt><br/> to your options file on the public server and enter your public server account name (case-sensitive) into the form below."
-            %table#accountlist.greytable
+            %table.greytable
                 %tr
                     %th Server
                     %th Account

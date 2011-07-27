@@ -12,8 +12,8 @@
         %table.greytable
           %tr
             %th= $trophies_name[i]
-            %th
-            %th{:style => "padding-right: 0; width: 3em;" }  Placing
+            %th.competition_value
+            %th.competition_placing Placing
           / only show the first 3 places
           - c = CompetitionScoreEntry.all :variant => @variant, :trophy => $trophies[i], :order => [ :rank.asc ], :conditions => [ 'rank <= 3' ]
           - for j in 0..c.size-1 do
