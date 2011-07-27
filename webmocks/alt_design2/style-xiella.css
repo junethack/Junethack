@@ -337,6 +337,10 @@ form#login_form > fieldset > input[type=submit],
     vertical-align: middle;
     margin: 10px 0;
 }
+table.misc,
+.greytable.misc { /* override width:100% */
+    width: auto;
+}
 .greytable th {
     text-align: left;
     padding-right: 20px;
