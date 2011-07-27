@@ -14,6 +14,7 @@
             %tr{:id => style}
               %td.tabe_date= h game.datum
               %td.table_number= game.count
+
     .text_content.non_top_post
       %h2 Games per day
       .scorelisting
@@ -27,4 +28,19 @@
             - count += 1
             %tr{:id => style}
               %td.tabe_date= h game.datum
+              %td.table_number= game.count
+
+    .text_content.non_top_post
+      %h2 New users per day
+      .scorelisting
+        %table.greytable
+          %tr
+            %th Date (UTC)
+            %th
+          - count = 0
+          - @new_users_per_day.each do |game|
+            - style = (count % 2) == 0 ? "cell1" : "cell2"
+            - count += 1
+            %tr{:id => style}
+              %td.tabe_date= h game.date
               %td.table_number= game.count

@@ -433,6 +433,8 @@ get "/activity" do
 
     @ascensions_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum order by datum asc;"
 
+    @new_users_per_day = repository.adapter.select "select date, count(1) as count from (select date(created_at) as date from users where created_at is not null) group by date order by date asc;"
+
     haml :activity
 end
 
