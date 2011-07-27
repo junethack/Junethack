@@ -426,6 +426,14 @@ get "/ascensions" do
     haml :last_games_played
 end
 
+get "/activity" do
+    caching_check_last_played_game
+
+    @ascensions_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null) group by datum order by datum asc;"
+
+    haml :activity
+end
+
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
