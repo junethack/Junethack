@@ -605,6 +605,16 @@ table#servers th {
     border-bottom: 1px solid #ccc;
 }
 
+/* tables for competition score entries */
+th.competition_value {
+    width: 10em;
+}
+th.competition_placing {
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 3em;
+}
+
 /**************************
 **                       **
 **   clan page display   **
