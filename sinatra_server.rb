@@ -284,7 +284,7 @@ post "/clan/invite" do
             acc.update(:invitations => (acc.invitations.push(invitation)).to_json)
             session['messages'] << "Successfully invited #{acc.name} to #{clan.name}"
         else
-            session['errors'] << "Could not find #{params[:accountname]} on #{params[:server]}"
+            session['errors'] << "Could not invite #{params[:accountname]} on #{Server.get(params[:server]).display_name}"
         end
     else
         sessions['errors'] << "You are not the clan admin"
@@ -424,6 +424,18 @@ get "/ascensions" do
     @games_played_user_links = true
     @games_played_title = "#{@games_played.size} ascended games"
     haml :last_games_played
+end
+
+get "/activity" do
+    caching_check_last_played_game
+
+    @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and turns > 10 and death != 'quit') group by datum order by datum asc;"
+
+    @ascensions_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum order by datum asc;"
+
+    @new_users_per_day = repository.adapter.select "select date, count(1) as count from (select date(created_at) as date from users where created_at is not null) group by date order by date asc;"
+
+    haml :activity
 end
 
 helpers do
