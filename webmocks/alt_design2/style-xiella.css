@@ -91,6 +91,21 @@ a.imagelink:hover {
     color: #000;
     background-color: #eee;
 }
+#topnav .full_height a.active,
+#topnav .full_height a.active:hover,
+#topnav .full_height a:hover {
+/* if we don't want the home to have a highlight * /
+    background-color: #ddd;
+    background-color: transparent;
+    */
+}
+
+/* small 'tab-style' rounding/shadowing, eg topnav */
+#topnav .current_nav_page a,
+#topnav a.active, #topnav a.active:hover,
+#topnav a:hover {
+}
+
 
 /* typical inset rounding and shadowing */
 #topnav,
@@ -110,9 +125,7 @@ a.imagelink:hover {
 /* elements on the page that need rounding/shadowing */
 /* these don't
 #clan_trophies,
-#clan_header > div */
-{
-    
+#clan_header > div */ {
     -webkit-box-shadow: 0px 0px 10px #888;
     -moz-box-shadow: 0px 0px 10px #888;
     box-shadow: 0px 0px 10px #888;
@@ -123,21 +136,6 @@ a.imagelink:hover {
     -moz-opacity: 0.9; 
     opacity: 0.9; 
 }
-/* small 'tab-style' rounding/shadowing, eg topnav */
-#topnav .current_nav_page a,
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
-    -webkit-border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 4px;
-    -moz-border-radius-topleft: 4px;
-    -moz-border-radius-topright: 4px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    -webkit-box-shadow: 0px 0px 10px #aaa;
-    -moz-box-shadow: 0px 0px 10px #aaa;
-    box-shadow: 0px 0px 10px #aaa;
-}
-
 /* slightly larger and darker rounding/shadowing, eg error messages...? */
 #errors,
 #messages {
@@ -184,7 +182,7 @@ form#login_form > fieldset > input[type=submit],
     width: 100%;
     margin: 0 auto;
     padding: 0;
-    height: 50px;
+    height: 80px;
     margin-top: 10px;
 }
 #topnav, #topnav ul {
@@ -195,25 +193,34 @@ form#login_form > fieldset > input[type=submit],
     display: none;
 }
 #topnav ul {
-    width: 101.5%;
+    width: 100%;
 }
 #topnav li {
     float: left;
-    width: 16%;
-    margin-left: 4.3%;
-    margin-right: 4.3%;
-    line-height: 50px;
+    width: auto;
+    margin: 5px;
+    margin-top: 25px;
+    line-height: 30px;
     text-align: center;
 }
+#topnav li.first {
+/* some space */
+    margin: 10px;
+    margin-left: 20px;
+    line-height: 60px;
+}
+#topnav li.first img {
+    vertical-align: middle;
+}
 #topnav li a {
+    padding-right: 10px;
+    padding-left: 10px;
     display: block;
     text-decoration: none;
 }
 #topnav .current_nav_page a,
 #topnav a.active, #topnav a.active:hover,
 #topnav a:hover {
-    margin-top: 5px;
-    line-height: 45px;
 }
 
 /**************************
