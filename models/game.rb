@@ -198,7 +198,8 @@ class Game
     end
     # entered Hell
     def entered_hell?
-        event and event.to_i & 0x00020 > 0
+        return false if version != 'NH-1.3d'
+        (event and event.to_i & 0x00020 > 0) or maxlvl >= 30
     end
     # defeated Rodney
     def defeated_rodney?
