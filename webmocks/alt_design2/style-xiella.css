@@ -72,6 +72,18 @@ a.active.imagelink, a.active.imagelink:hover,
 a.imagelink:hover {
     text-decoration: none;
 }
+/* misc */
+#container {
+    width: 750px;
+    margin: 0 auto;
+}
+
+/*****************************************
+**                                      **
+**         fiddly css3 properties       **
+**                                      **
+*****************************************/
+
 #footer,
 /* topnav */
 .text_content_wrapper, #topnav {
@@ -80,32 +92,6 @@ a.imagelink:hover {
     -moz-border-radius: 10px;
     border-radius: 10px;
 }
-#topnav li a {
-    color: #555;
-}
-#topnav li {
-}
-#topnav .current_nav_page a, /* class for debugging, but useful in production */
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
-    color: #000;
-    background-color: #eee;
-}
-#topnav .first a.active,
-#topnav .first a.active:hover,
-#topnav .first a:hover {
-/* if we don't want the home to have a highlight * /
-    background-color: #ddd;
-    background-color: transparent;
-    */
-}
-/* small 'tab-style' rounding/shadowing, eg topnav */
-#topnav .current_nav_page a,
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
-}
-
-
 /* typical inset rounding and shadowing */
 #topnav,
 #footer,
@@ -157,16 +143,9 @@ form#login_form > fieldset > input[type=submit],
     box-shadow: 0px 5px 20px #555;
 }
 
-/* misc */
-#container {
-    width: 750px;
-    margin: 0 auto;
-}
 ::-moz-selection{ background: #aaa; color:#fff; text-shadow: none; }
 ::-webkit-selection{ background: #aaa; color:#fff; text-shadow: none; }
 ::selection { background:#aaa; color:#fff; text-shadow: none; }
-
-
 
 /**************************
 **                       **
@@ -211,14 +190,25 @@ form#login_form > fieldset > input[type=submit],
     vertical-align: middle;
 }
 #topnav li a {
+    color: #555;
     padding-right: 10px;
     padding-left: 10px;
     display: block;
     text-decoration: none;
 }
-#topnav .current_nav_page a,
+#topnav .current_nav_page a, /* class for debugging, but useful in production */
 #topnav a.active, #topnav a.active:hover,
 #topnav a:hover {
+    color: #000;
+    background-color: #eee;
+}
+#topnav .first a.active,
+#topnav .first a.active:hover,
+#topnav .first a:hover {
+/* if we don't want the home to have a highlight * /
+    background-color: #ddd;
+    background-color: transparent;
+    */
 }
 
 /**************************
