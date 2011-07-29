@@ -160,7 +160,7 @@ form#login_form > fieldset > input[type=submit],
     width: 100%;
     margin: 0 auto;
     padding: 0;
-    height: 80px;
+    height: 60px;
     margin-top: 10px;
 }
 /* because of ie's amazing expanding box trick * /
@@ -182,13 +182,13 @@ form#login_form > fieldset > input[type=submit],
     float: left;
     width: auto;
     margin: 5px;
-    margin-top: 25px;
+    margin-top: 15px;
     line-height: 30px;
     text-align: center;
 }
 #topnav .main > li.first {
     margin: 0px;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 #topnav .main > li.first > a {
     background: url(vivid_divider2.png) no-repeat top left;
