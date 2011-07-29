@@ -28,12 +28,15 @@ def fetch_all
         end
         if DateTime.parse(server.xloglastmodified) < DateTime.parse(header['Last-Modified'])
             @fetch_logger.info "fetching games ...."
-            if games = XLog.fetch_from_xlog(server.xlogurl, server.xlogcurrentoffset, header['Content-Length'])
+            if gamesIO = XLog.fetch_from_xlog(server.xlogurl, server.xlogcurrentoffset, header['Content-Length'])
+                games = gamesIO.readlines
                 @fetch_logger.info "So many games ... #{games.length}"
                 i = 0
-                    for hgame in games
+                    games.each do |line|
                         i += 1
-                        #@fetch_logger.info hgame.inspect
+                        #@fetch_logger.debug "#{line.length} #{line}"
+                        xlog_add_offset = line.length
+                        hgame = XLog.parse_xlog line
                         if hgame['starttime'].to_i >= $tournament_starttime and
                             hgame['endtime'].to_i   <= $tournament_endtime
                             acc = Account.first(:name => hgame["name"], :server_id => server.id)
@@ -42,13 +45,17 @@ def fetch_all
                             if game.save
                                 @fetch_logger.info "created #{i}"
                             else
-                                @fetch_logger.info "something went wrong, could not create games"
+                                raise "something went wrong, could not create games"
                             end
                         else
                             @fetch_logger.info "not part of tournament #{i}"
                         end
+                        # this game is completely input into the db
+                        # don't parse it again
+                        server.xlogcurrentoffset += xlog_add_offset
+                        server.save
                     end
-                server.xlogcurrentoffset = header['Content-Length'].to_i
+                raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['Content-Length'].to_i}" if server.xlogcurrentoffset != header['Content-Length'].to_i
             else
                 @fetch_logger.info "No games at all!"
             end

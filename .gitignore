@@ -16,3 +16,4 @@ models/*.swp
 nohup.out
 xlogfile
 logs
+trace

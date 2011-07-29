@@ -87,6 +87,7 @@ $trophy_names = {
     "defeated_a_high_priest" => "defeated a High Priest",
     "entered_planes" => "entered the Elemental Planes",
     "entered_astral" => "entered the Astral Plane",
+    "escapologist" => "escaped in celestial disgrace",
 
     "ascended_without_defeating_nemesis" => "Too good for quests (ascended without defeating the quest nemesis)",
     "ascended_without_defeating_vlad" => "Too good for Vladbanes (ascended without defeating Vlad)",
@@ -239,6 +240,10 @@ class Game
     end
     def entered_astral?
         maxlvl == -5
+    end
+
+    def escapologist?
+        death == "escaped (in celestial disgrace)"
     end
 
     def variant_name
