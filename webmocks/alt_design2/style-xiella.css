@@ -280,6 +280,7 @@ submenus
 /* space between title and rest of content */
 /*  locate space here to avoid future margin collapse */
 .content_bulk {
+  /* not sure if position is needed for z-index, but ie would probably complain anyway */
     position: relative;
     z-index: 1;
     margin-top: 1em;
