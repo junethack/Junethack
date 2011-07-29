@@ -91,15 +91,14 @@ a.imagelink:hover {
     color: #000;
     background-color: #eee;
 }
-#topnav .full_height a.active,
-#topnav .full_height a.active:hover,
-#topnav .full_height a:hover {
+#topnav .first a.active,
+#topnav .first a.active:hover,
+#topnav .first a:hover {
 /* if we don't want the home to have a highlight * /
     background-color: #ddd;
     background-color: transparent;
     */
 }
-
 /* small 'tab-style' rounding/shadowing, eg topnav */
 #topnav .current_nav_page a,
 #topnav a.active, #topnav a.active:hover,
@@ -194,6 +193,7 @@ form#login_form > fieldset > input[type=submit],
 }
 #topnav ul {
     width: 100%;
+    margin-left: 10px;
 }
 #topnav li {
     float: left;
@@ -204,9 +204,7 @@ form#login_form > fieldset > input[type=submit],
     text-align: center;
 }
 #topnav li.first {
-/* some space */
-    margin: 10px;
-    margin-left: 20px;
+    margin: 8px;
     line-height: 60px;
 }
 #topnav li.first img {
