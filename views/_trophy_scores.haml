@@ -3,7 +3,7 @@
 .trophycabinet
     %h3 Cross-Variant
     %ul
-        - ["king_of_the_world", "globetrotter", "sightseeing_tour"].each do |individualtrophy|
+        - ["king_of_the_world", "anti_stoner", "globetrotter", "sightseeing_tour"].each do |individualtrophy|
             %li
                 - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id, icon from individualtrophies where trophy = ? order by upper(user);", individualtrophy
                 - if users.size > 0

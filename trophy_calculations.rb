@@ -116,6 +116,11 @@ def globetrotter?(user)
     anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d';", user
     return anz[0] == 4
 end
+#  Anti-Stoner: defeat Medusa in each variant
+def anti_stoner?(user)
+    anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d' and trophy='defeated_medusa';", user
+    return anz[0] == 4
+end
 
 
 def update_scores(game)
@@ -342,6 +347,10 @@ def update_scores(game)
     Individualtrophy.first_or_create(:user_id => game.user_id,
         :trophy => :sightseeing_tour,
         :icon => "sightseeing.png").save if sightseeing_tour? game.user_id
+    # Anti-Stoner: defeat Medusa in all variants
+    Individualtrophy.first_or_create(:user_id => game.user_id,
+        :trophy => :anti_stoner,
+        :icon => "anti-stoner.png").save if anti_stoner? game.user_id
     # Globetrotter: get a trophy for each variant
     Individualtrophy.first_or_create(:user_id => game.user_id,
         :trophy => :globetrotter,
