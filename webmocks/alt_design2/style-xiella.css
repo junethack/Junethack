@@ -241,16 +241,16 @@ submenus
 /* Specificity in case we decide we want to add 2ndary menus */
 #topnav .main > li > ul > li {
   background-color: #555;
-  text-align: left; 
-}
-#topnav .main > li > ul > li.first {
-  background-image: none;
+  text-align: left;
 }
 #topnav .main > li > ul > li > a {
   background-image: url(shine50h.png);
   background-repeat: no-repeat;
   background-position: top center;
   color: #fff;
+}
+#topnav .main > li > ul > li.first a {
+  background-image: none;
 }
 #topnav .main > li > ul > li > a:active,
 #topnav .main > li > ul > li > a:hover,
