@@ -22,6 +22,11 @@
                 %a{:href => "/login"} Login
             %li
               %a{:href => "/scoreboard"} Scoreboard
+              %ul
+                %li.first
+                  %a{:href => "/activity"} Activity
+                %li
+                  %a{:href => "/ascensions"} Ascensions
             %li
               - if !@logged_in then
                 %a{:href => "/logout"} Logout
