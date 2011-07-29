@@ -153,6 +153,10 @@ form#login_form > fieldset > input[type=submit],
 **                       **
 **************************/
 
+#container > .navigation {
+  position: relative;
+  z-index: 200;
+}
 /*
  * Using #topnav not .navigation because of possible 2ndary navigation at a later date, and don't want topnav styles to apply there as well
  * */
@@ -229,7 +233,6 @@ submenus
   position: absolute;
   display: none;
   width: 150px;
-  z-index: 200;
   min-width: 150px;
 }
 #topnav li:hover ul {
@@ -238,15 +241,15 @@ submenus
 /* Specificity in case we decide we want to add 2ndary menus */
 #topnav .main > li > ul > li {
   background-color: #555;
-  background-image: url(shine50h.png);
-  background-repeat: no-repeat;
-  background-position: top center;
   text-align: left; 
 }
 #topnav .main > li > ul > li.first {
   background-image: none;
 }
 #topnav .main > li > ul > li > a {
+  background-image: url(shine50h.png);
+  background-repeat: no-repeat;
+  background-position: top center;
   color: #fff;
 }
 #topnav .main > li > ul > li > a:active,
@@ -277,6 +280,8 @@ submenus
 /* space between title and rest of content */
 /*  locate space here to avoid future margin collapse */
 .content_bulk {
+    position: relative;
+    z-index: 1;
     margin-top: 1em;
 }
 
@@ -330,7 +335,6 @@ submenus
 
 .text_content_wrapper {
     /* space between the main content and the element before - eg signup button */
-    z-index: 1;
     margin-top: 3.0em;
     padding-top: 1px;
     padding-bottom: 30px;
