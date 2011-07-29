@@ -372,28 +372,14 @@ table.misc,
     padding-right: 3px;
     padding-left: 3px;
 }
-#accountlist.greytable,
-#accountlist.greytable tr,
-#accountlist.greytable td
-{
-    /* not supported by ie
-    width: inherit; */
-}
-#accountlist.greytable tr.norow,
-#accountlist.greytable tr.norow td,
-#accountlist.greytable td.noborder
-{
-    border-width: 0px;
-    background-color: inherit;
-    vertical-align: middle;
-}
-#accountlist.greytable input[type="text"]
+/* next two declarations are probably deprecated */
+.greytable input[type="text"]
 {
     width: 6em;
     margin: 3px 3px 3px 3px;
     padding: 0;
 }
-#accountlist.greytable select
+.greytable select
 {
     font-size: 100%;
 }
