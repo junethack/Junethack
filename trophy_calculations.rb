@@ -230,6 +230,11 @@ def update_scores(game)
                 end
             end
         end
+        ## Non-Ascension non-devnull achievement
+        # escaped in celestial disgrace
+        Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+            :trophy => :escapologist,
+            :icon => "escapologist.png").save if game.escapologist?
     end
 
         if game.version == 'NH-1.3d' then
