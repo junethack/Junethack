@@ -187,15 +187,11 @@ form#login_form > fieldset > input[type=submit],
     margin-top: 15px;
 }
 #topnav li.first a {
-    background: url(../webmocks/alt_design2/vivid2.png) no-repeat top left;
+    background: url(vivid_divider2.png) no-repeat top left;
     display: block;
     width: 100px;
     height: 51px;
 }
-#topnav li.first a span {
-    display: none;
-}
-/* backward compatibility */
 #topnav li.first img {
     display: none;
 }
@@ -219,7 +215,7 @@ form#login_form > fieldset > input[type=submit],
 /* if we don't want the home to have a highlight */
     background-color: #ddd;
     background-color: transparent;
-    background: url(../webmocks/alt_design2/vivid2.png) no-repeat bottom left;
+    background: url(vivid_divider2.png) no-repeat bottom left;
 /*    */
 }
 
