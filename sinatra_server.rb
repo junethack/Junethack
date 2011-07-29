@@ -47,6 +47,8 @@ before do
 end
 
 def caching_check_last_played_game
+    return if @messages.size > 0 or @errors.size > 0
+
     last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id is not null;")[0]
 
     etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
@@ -54,6 +56,8 @@ def caching_check_last_played_game
 end
 
 def caching_check_last_played_game_by(user)
+    return if @messages.size > 0 or @errors.size > 0
+
     last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id = (select user_id from users where login = ?);", user)[0]
 
     etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
@@ -61,7 +65,7 @@ def caching_check_last_played_game_by(user)
 end
 
 def caching_check_application_start_time
-    return if session["messages"].size > 0 or session["errors"].size > 0
+    return if @messages.size > 0 or @errors.size > 0
 
     etag "#{$application_start.to_i}_#{@user.to_i}".hash if $application_start
     last_modified $application_start.httpdate if $application_start
