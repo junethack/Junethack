@@ -12,10 +12,10 @@
           / use of the nav element: http://www.webteacher.ws/2009/07/09/html5-the-nav-element
           %h1
             Navigation
-          %ul
+          %ul.main
             %li.first
               %a{:href => "/"} 
-                %img{:alt => "Logo", :src => "/vivid_divider.png"}/
+                %img{:alt => "Home", :src => "/vivid_divider.png"}/
             %li
               - if !@logged_in then
                 %a{:href => "/home"} #{h @user.login}
@@ -23,6 +23,11 @@
                 %a{:href => "/login"} Login
             %li
               %a{:href => "/scoreboard"} Scoreboard
+              %ul
+                %li.first
+                  %a{:href => "/activity"} Activity
+                %li
+                  %a{:href => "/ascensions"} Ascensions
             %li
               - if !@logged_in then
                 %a{:href => "/logout"} Logout

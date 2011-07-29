@@ -72,6 +72,18 @@ a.active.imagelink, a.active.imagelink:hover,
 a.imagelink:hover {
     text-decoration: none;
 }
+/* misc */
+#container {
+    width: 750px;
+    margin: 0 auto;
+}
+
+/*****************************************
+**                                      **
+**         fiddly css3 properties       **
+**                                      **
+*****************************************/
+
 #footer,
 /* topnav */
 .text_content_wrapper, #topnav {
@@ -80,33 +92,6 @@ a.imagelink:hover {
     -moz-border-radius: 10px;
     border-radius: 10px;
 }
-#topnav li a {
-    color: #555;
-}
-#topnav li {
-}
-#topnav .current_nav_page a, /* class for debugging, but useful in production */
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
-    color: #000;
-    background-color: #eee;
-}
-#topnav .full_height a.active,
-#topnav .full_height a.active:hover,
-#topnav .full_height a:hover {
-/* if we don't want the home to have a highlight * /
-    background-color: #ddd;
-    background-color: transparent;
-    */
-}
-
-/* small 'tab-style' rounding/shadowing, eg topnav */
-#topnav .current_nav_page a,
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
-}
-
-
 /* typical inset rounding and shadowing */
 #topnav,
 #footer,
@@ -158,16 +143,9 @@ form#login_form > fieldset > input[type=submit],
     box-shadow: 0px 5px 20px #555;
 }
 
-/* misc */
-#container {
-    width: 750px;
-    margin: 0 auto;
-}
 ::-moz-selection{ background: #aaa; color:#fff; text-shadow: none; }
 ::-webkit-selection{ background: #aaa; color:#fff; text-shadow: none; }
 ::selection { background:#aaa; color:#fff; text-shadow: none; }
-
-
 
 /**************************
 **                       **
@@ -175,6 +153,10 @@ form#login_form > fieldset > input[type=submit],
 **                       **
 **************************/
 
+#container > .navigation {
+  position: relative;
+  z-index: 200;
+}
 /*
  * Using #topnav not .navigation because of possible 2ndary navigation at a later date, and don't want topnav styles to apply there as well
  * */
@@ -182,45 +164,98 @@ form#login_form > fieldset > input[type=submit],
     width: 100%;
     margin: 0 auto;
     padding: 0;
-    height: 80px;
+    height: 60px;
     margin-top: 10px;
 }
-#topnav, #topnav ul {
-    /* because of ie's amazing expanding box trick */
+/* because of ie's amazing expanding box trick * /
+#topnav, #topnav ul.main {
+  z-index: 99;
     overflow: hidden;
 }
+/* maybe not. */
 #topnav h1 {
     display: none;
 }
-#topnav ul {
+#topnav .main {
     width: 100%;
+    margin-left: 30px;
 }
-#topnav li {
+#topnav .main > li {
+  /* Any li in main can be a label for a submenu */
+    position: relative;
     float: left;
     width: auto;
     margin: 5px;
-    margin-top: 25px;
+    margin-top: 15px;
     line-height: 30px;
     text-align: center;
 }
-#topnav li.first {
-/* some space */
-    margin: 10px;
-    margin-left: 20px;
-    line-height: 60px;
+#topnav .main > li.first {
+    margin: 0px;
+    margin-top: 5px;
 }
-#topnav li.first img {
-    vertical-align: middle;
+#topnav .main > li.first > a {
+    background: url(vivid_divider2.png) no-repeat top left;
+    display: block;
+    width: 100px;
+    height: 51px;
 }
-#topnav li a {
+#topnav .main > li.first img {
+    display: none;
+}
+
+#topnav .main li a {
+    color: #555;
     padding-right: 10px;
     padding-left: 10px;
     display: block;
     text-decoration: none;
 }
-#topnav .current_nav_page a,
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
+#topnav .main > li > a.active, #topnav .main > li > a.active:hover,
+#topnav .main > li > a:hover {
+    color: #000;
+    background-color: #ccc;
+}
+#topnav .main > li.first > a.active,
+#topnav .main > li.first > a.active:hover,
+#topnav .main > li.first > a:hover {
+/* if we don't want the home to have a highlight */
+    background-color: #ddd;
+    background-color: transparent;
+    background: url(vivid_divider2.png) no-repeat bottom left;
+/*    */
+}
+
+/*******
+submenus
+********/
+#topnav .main li ul {
+  position: absolute;
+  display: none;
+  width: 150px;
+  min-width: 150px;
+}
+#topnav li:hover ul {
+    display: block;
+}
+/* Specificity in case we decide we want to add 2ndary menus */
+#topnav .main > li > ul > li {
+  background-color: #555;
+  text-align: left; 
+}
+#topnav .main > li > ul > li.first {
+  background-image: none;
+}
+#topnav .main > li > ul > li > a {
+  background-image: url(shine50h.png);
+  background-repeat: no-repeat;
+  background-position: top center;
+  color: #fff;
+}
+#topnav .main > li > ul > li > a:active,
+#topnav .main > li > ul > li > a:hover,
+#topnav .main > li > ul > li > a.active:active {
+    background-color: #777;
 }
 
 /**************************
@@ -245,6 +280,9 @@ form#login_form > fieldset > input[type=submit],
 /* space between title and rest of content */
 /*  locate space here to avoid future margin collapse */
 .content_bulk {
+  /* not sure if position is needed for z-index, but ie would probably complain anyway */
+    position: relative;
+    z-index: 1;
     margin-top: 1em;
 }
 
@@ -384,28 +422,14 @@ table.misc,
     padding-right: 3px;
     padding-left: 3px;
 }
-#accountlist.greytable,
-#accountlist.greytable tr,
-#accountlist.greytable td
-{
-    /* not supported by ie
-    width: inherit; */
-}
-#accountlist.greytable tr.norow,
-#accountlist.greytable tr.norow td,
-#accountlist.greytable td.noborder
-{
-    border-width: 0px;
-    background-color: inherit;
-    vertical-align: middle;
-}
-#accountlist.greytable input[type="text"]
+/* next two declarations are probably deprecated */
+.greytable input[type="text"]
 {
     width: 6em;
     margin: 3px 3px 3px 3px;
     padding: 0;
 }
-#accountlist.greytable select
+.greytable select
 {
     font-size: 100%;
 }
