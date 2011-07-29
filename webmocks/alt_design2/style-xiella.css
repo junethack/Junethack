@@ -83,7 +83,6 @@ a.imagelink:hover {
 **         fiddly css3 properties       **
 **                                      **
 *****************************************/
-
 #footer,
 /* topnav */
 .text_content_wrapper, #topnav {
@@ -264,8 +263,8 @@ submenus
   border-top: 0;
 }
 #topnav .main > li > ul > li > a:active,
-#topnav .main > li > ul > li > a:hover,
-#topnav .main > li > ul > li > a.active:active {
+#topnav .main > li > ul > li > a.active:hover,
+#topnav .main > li > ul > li > a:hover {
     background-color: #666;
 }
 
