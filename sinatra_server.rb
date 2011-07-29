@@ -198,7 +198,7 @@ post "/create" do
     begin
         if user.save
             session['messages'] = "Registration successful. Please log in."
-            redirect "/"
+            redirect "/login"
         else
             session['errors'] = "Could not register account"
             redirect "/register"
