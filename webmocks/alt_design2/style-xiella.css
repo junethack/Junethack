@@ -172,7 +172,7 @@ form#login_form > fieldset > input[type=submit],
 }
 #topnav ul {
     width: 100%;
-    margin-left: 10px;
+    margin-left: 30px;
 }
 #topnav li {
     float: left;
@@ -183,12 +183,23 @@ form#login_form > fieldset > input[type=submit],
     text-align: center;
 }
 #topnav li.first {
-    margin: 8px;
-    line-height: 60px;
+    margin: 0px;
+    margin-top: 15px;
 }
+#topnav li.first a {
+    background: url(../webmocks/alt_design2/vivid2.png) no-repeat top left;
+    display: block;
+    width: 100px;
+    height: 51px;
+}
+#topnav li.first a span {
+    display: none;
+}
+/* backward compatibility */
 #topnav li.first img {
-    vertical-align: middle;
+    display: none;
 }
+
 #topnav li a {
     color: #555;
     padding-right: 10px;
@@ -205,10 +216,11 @@ form#login_form > fieldset > input[type=submit],
 #topnav .first a.active,
 #topnav .first a.active:hover,
 #topnav .first a:hover {
-/* if we don't want the home to have a highlight * /
+/* if we don't want the home to have a highlight */
     background-color: #ddd;
     background-color: transparent;
-    */
+    background: url(../webmocks/alt_design2/vivid2.png) no-repeat bottom left;
+/*    */
 }
 
 /**************************
