@@ -163,18 +163,22 @@ form#login_form > fieldset > input[type=submit],
     height: 80px;
     margin-top: 10px;
 }
-#topnav, #topnav ul {
-    /* because of ie's amazing expanding box trick */
+/* because of ie's amazing expanding box trick * /
+#topnav, #topnav ul.main {
+  z-index: 99;
     overflow: hidden;
 }
+/* maybe not. */
 #topnav h1 {
     display: none;
 }
-#topnav ul {
+#topnav .main {
     width: 100%;
     margin-left: 30px;
 }
-#topnav li {
+#topnav .main > li {
+  /* Any li in main can be a label for a submenu */
+    position: relative;
     float: left;
     width: auto;
     margin: 5px;
@@ -182,41 +186,73 @@ form#login_form > fieldset > input[type=submit],
     line-height: 30px;
     text-align: center;
 }
-#topnav li.first {
+#topnav .main > li.first {
     margin: 0px;
     margin-top: 15px;
 }
-#topnav li.first a {
+#topnav .main > li.first > a {
     background: url(vivid_divider2.png) no-repeat top left;
     display: block;
     width: 100px;
     height: 51px;
 }
-#topnav li.first img {
+#topnav .main > li.first img {
     display: none;
 }
 
-#topnav li a {
+#topnav .main li a {
     color: #555;
     padding-right: 10px;
     padding-left: 10px;
     display: block;
     text-decoration: none;
 }
-#topnav .current_nav_page a, /* class for debugging, but useful in production */
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
+#topnav .main > li > a.active, #topnav .main > li > a.active:hover,
+#topnav .main > li > a:hover {
     color: #000;
     background-color: #eee;
 }
-#topnav .first a.active,
-#topnav .first a.active:hover,
-#topnav .first a:hover {
+#topnav .main > li.first > a.active,
+#topnav .main > li.first > a.active:hover,
+#topnav .main > li.first > a:hover {
 /* if we don't want the home to have a highlight */
     background-color: #ddd;
     background-color: transparent;
     background: url(vivid_divider2.png) no-repeat bottom left;
 /*    */
+}
+
+/*******
+submenus
+********/
+#topnav .main li ul {
+  position: absolute;
+  display: none;
+  width: 150px;
+  z-index: 200;
+  min-width: 150px;
+}
+#topnav li:hover ul {
+    display: block;
+}
+/* Specificity in case we decide we want to add 2ndary menus */
+#topnav .main > li > ul > li {
+  background-color: #555;
+  background-image: url(shine50h.png);
+  background-repeat: no-repeat;
+  background-position: top center;
+  text-align: left; 
+}
+#topnav .main > li > ul > li.first {
+  background-image: none;
+}
+#topnav .main > li > ul > li > a {
+  color: #fff;
+}
+#topnav .main > li > ul > li > a:active,
+#topnav .main > li > ul > li > a:hover,
+#topnav .main > li > ul > li > a.active:active {
+    background-color: #777;
 }
 
 /**************************
@@ -294,6 +330,7 @@ form#login_form > fieldset > input[type=submit],
 
 .text_content_wrapper {
     /* space between the main content and the element before - eg signup button */
+    z-index: 1;
     margin-top: 3.0em;
     padding-top: 1px;
     padding-bottom: 30px;
