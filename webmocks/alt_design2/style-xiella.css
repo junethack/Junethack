@@ -233,10 +233,9 @@ submenus
   position: absolute;
   display: none;
   width: 150px;
-  min-width: 150px;
 }
 #topnav li:hover ul {
-    display: block;
+  display: block;
 }
 /* Specificity in case we decide we want to add 2ndary menus */
 #topnav .main > li > ul > li {
@@ -244,13 +243,11 @@ submenus
   text-align: left;
 }
 #topnav .main > li > ul > li > a {
-  background-image: url(shine50h.png);
-  background-repeat: no-repeat;
-  background-position: top center;
+  border-top: 1px solid #666;
   color: #fff;
 }
 #topnav .main > li > ul > li.first a {
-  background-image: none;
+  border-top: 0;
 }
 #topnav .main > li > ul > li > a:active,
 #topnav .main > li > ul > li > a:hover,
