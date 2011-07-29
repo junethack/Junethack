@@ -257,7 +257,7 @@ submenus
   text-align: left;
 }
 #topnav .main > li > ul > li > a {
-  border-top: 1px solid #777;
+  border-top: 1px solid #444;
   color: #fff;
 }
 #topnav .main > li > ul > li.first a {
