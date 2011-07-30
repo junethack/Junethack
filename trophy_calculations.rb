@@ -365,7 +365,10 @@ def update_scores(game)
 end
 
 helpers do
-    def most_ascended_combinations_sql
+    def ascended_combinations_user_sql
+        "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id = ?"
+    end
+    def ascended_combinations_sql
         "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
     end
 end
@@ -384,7 +387,7 @@ def update_clan_scores(game)
         c.value = points
         c.save
 
-        most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+most_ascended_combinations_sql+");", clan_name)[0]
+        most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+ascended_combinations_sql+");", clan_name)[0]
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_ascended_combinations",
                                         :icon => "clan-points.png")
