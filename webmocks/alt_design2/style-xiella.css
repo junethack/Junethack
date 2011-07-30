@@ -250,6 +250,7 @@ submenus
 }
 /* Specificity in case we decide we want to add 2ndary menus */
 #topnav .main > li > ul > li {
+  /* line height is inherited from .main > li */
   background-color: #555;
   background-image: url(blacktransparent.png);
   background-repeat: no-repeat;
