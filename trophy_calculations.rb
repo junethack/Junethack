@@ -364,13 +364,11 @@ def update_scores(game)
     return false if not update_clan_scores(game)
 end
 
-helpers do
-    def ascended_combinations_user_sql
-        "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id = ?"
-    end
-    def ascended_combinations_sql
-        "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
-    end
+def ascended_combinations_user_sql
+    "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id = ?"
+end
+def ascended_combinations_sql
+    "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
 end
 
 
