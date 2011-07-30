@@ -29,23 +29,16 @@
               The first place player(s) get 4 points, the second place
               player(s) get 3 points, the third place player(s) get 2 points,
               and the remaining players get points according to the ratio
-              of their best evaluated game to the winner(s)' best evalued
+              of their best evaluated game to the winner(s)' best evaluated
               game.
             %li
               In case of a tie, all the players with the same evaluation get
               the same amount of points; in the ranking, they're considered
               as one player.
             %li
-              The "fastest gametime ascension" competition has turn
-              granularity; the "fastest realtime ascension" competition
-              considers the elapsed time to be the delta between start time
-              and end time, with second granularity.
-            %li
-              The "lowest scoring ascension" competition ignores the depth
-              of the dungeon - the bonus points for the depth are ignored in
-              NetHack, UnNetHack and SporkHack, while AceHack has no problems
-              with that. Games with negative scores are discarded for this
-              competition
+              Games with negative scores are discarded for the "lowest scoring
+              ascension" competition.
+
         .text_content.non_top_post
         %p
           The score for trophies is fixed - one point for each trophy;
