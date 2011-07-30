@@ -461,6 +461,12 @@ get "/deaths" do
     haml :deaths
 end
 
+get "/clan_competition" do
+    caching_check_last_played_game
+
+    haml :clan_competition
+end
+
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
