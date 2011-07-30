@@ -364,6 +364,13 @@ def update_scores(game)
     return false if not update_clan_scores(game)
 end
 
+helpers do
+    def most_ascended_combinations_sql
+        "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+    end
+end
+
+
 def update_clan_scores(game)
     return true if not game.user_id
 
@@ -374,13 +381,19 @@ def update_clan_scores(game)
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_points",
                                         :icon => "clan-points.png")
-        if c.value.nil? or c.value < points then
-            c.value = points
-            c.save
-        end
+        c.value = points
+        c.save
+
+        most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+most_ascended_combinations_sql+");", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_ascended_combinations",
+                                        :icon => "clan-points.png")
+        c.value = most_ascended_combinations
+        c.save
     end
 
     rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
 
     return true
 end
