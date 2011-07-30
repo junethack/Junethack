@@ -12,6 +12,8 @@ require 'userscore'
 require 'time'
 require 'logger'
 
+require 'irc'
+
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
 # Scheduler: fetch game data every 15 minutes
@@ -20,6 +22,9 @@ scheduler.cron('*/15 * * * *') { fetch_all }
 
 $application_start = Time.new
 
+bot = IRC.new('irc.freenode.net', 6667, "junetbot", "#junethack")
+bot.connect
+bot.main_loop
 
 # http://groups.google.com/group/rack-devel/browse_frm/thread/ffec93533180e98a
 class WorkaroundLogger < Logger
@@ -177,6 +182,7 @@ post "/add_server_account" do
     end
     begin
         account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true, :clan => Clan.get(@user.clan))
+        bot.say "#{@user.login} added account #{account.name} on #{server.name}"
     rescue
         session['errors'].push(*account.errors)
     end
@@ -195,17 +201,22 @@ post "/create" do
     redirect "/register" and return unless session['errors'].empty?
     user = User.new(:login => params["username"])
     user.password = params["password"]
+    puts "CREATED USER LOL"
     begin
         if user.save
             session['messages'] = "Registration successful. Please log in."
-            redirect "/login"
+            bot.say "#{user.login} registered"
+            puts "botsay down"
+            redirect "/login" and return 
         else
             session['errors'] = "Could not register account"
-            redirect "/register"
+            puts "SOMETHING WENT WRONG LOL"
+            redirect "/register" and return
         end
     rescue
         session['errors'].push(*user.errors)
-        redirect "/register"
+        puts "GOT DAMMIT FUCK EXCEPTION CAUGHT"
+        redirect "/register" and return
     end
 end
 
