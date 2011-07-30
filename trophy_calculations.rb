@@ -429,13 +429,13 @@ def score_clans
     clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points') group by clan_name"
     clan_scores.each do |clan_score|
         c = ClanScoreEntry.first_or_new(:clan_name => clan_score.clan_name,
-                                        :trophy  => "clan_points")
+                                        :trophy  => "clan_winner")
         c.value = (clan_score.sum_points*100).to_i
         c.points = clan_score.sum_points
         c.save
     end
 
-    rank_collection(ClanScoreEntry.all(:trophy  => "clan_points", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "clan_winner", :order => [ :value.desc ]))
 end
 
 # Update competition trophies for an ascended game,

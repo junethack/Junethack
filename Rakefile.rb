@@ -159,7 +159,7 @@ namespace :update do
         end
     end
 
-    task :clan_points do
+    task :clan_winner do
         score_clans
     end
 end
