@@ -83,7 +83,6 @@ a.imagelink:hover {
 **         fiddly css3 properties       **
 **                                      **
 *****************************************/
-
 #footer,
 /* topnav */
 .text_content_wrapper, #topnav {
@@ -230,32 +229,44 @@ form#login_form > fieldset > input[type=submit],
 submenus
 ********/
 #topnav .main li ul {
+  background-image: url(menu-arrow.png);
+  background-repeat: no-repeat;
+  background-position: 40px 0;
+  padding-top: 5px;
   position: absolute;
   display: none;
   width: 150px;
-  min-width: 150px;
 }
+/* Also, if the position of the arrow is wrong, put a class on it :) */
+#topnav .main li.long ul {  background-position: 50px 0;  }
+#topnav .main li.longer ul {  background-position: 60px 0;  }
+#topnav .main li.verylong ul {  background-position: 70px 0;  }
+#topnav .main li.short ul {  background-position: 30px 0;  }
+#topnav .main li.shorter ul {  background-position: 20px 0;  } 
+#topnav .main li.veryshort ul {  background-position: 10px 0; }
+
 #topnav li:hover ul {
-    display: block;
+  display: block;
 }
 /* Specificity in case we decide we want to add 2ndary menus */
 #topnav .main > li > ul > li {
+  /* line height is inherited from .main > li */
   background-color: #555;
-  text-align: left; 
-}
-#topnav .main > li > ul > li.first {
-  background-image: none;
+  background-image: url(blacktransparent.png);
+  background-repeat: no-repeat;
+  text-align: left;
 }
 #topnav .main > li > ul > li > a {
-  background-image: url(shine50h.png);
-  background-repeat: no-repeat;
-  background-position: top center;
+  border-top: 1px solid #444;
   color: #fff;
 }
+#topnav .main > li > ul > li.first a {
+  border-top: 0;
+}
 #topnav .main > li > ul > li > a:active,
-#topnav .main > li > ul > li > a:hover,
-#topnav .main > li > ul > li > a.active:active {
-    background-color: #777;
+#topnav .main > li > ul > li > a.active:hover,
+#topnav .main > li > ul > li > a:hover {
+    background-color: #666;
 }
 
 /**************************
@@ -605,7 +616,7 @@ a#flattr {
 }
 table.prettytable th,
 /* specificity override for padding */
-#clan_page table tr/*<--extraspecific*/ th,
+#clan_page table.clan_members tr/*<--extraspecific*/ th,
 table#clans th,
 table#servers th {
     text-align: left;

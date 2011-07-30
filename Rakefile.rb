@@ -1,5 +1,6 @@
 require 'rubygems'
 require "bundler/setup"
+require 'sinatra'
 require 'database'
 require 'fetch_games'
 require 'date'
@@ -156,5 +157,9 @@ namespace :update do
             puts i
             game.save! # only change field and don't call hooks
         end
+    end
+
+    task :clan_winner do
+        score_clans
     end
 end

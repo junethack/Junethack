@@ -97,9 +97,16 @@ $trophy_names = {
     "defeated_croesus" => "Assault on Fort Knox (defeated Croesus)",
     "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)",
 
+    # Cross-Variant
     "sightseeing_tour"  => "Sightseeing Tour: finish a game in all variants",
     "globetrotter"      => "Globetrotter: get a trophy for each variant",
-    "king_of_the_world" => "King of the world: ascend in all variants"
+    "king_of_the_world" => "King of the world: ascend in all variants",
+
+    # Clan
+    "most_ascensions_in_a_24_hour_period" => "Most ascensions in a 24 hour period",
+    "most_ascended_combinations" => "Most ascended variant/role/race/alignment/gender combinations (starting)",
+    "most_points" => "Most points",
+    "most_unique_deaths" => "Most unique deaths",
 }
 
 class Game

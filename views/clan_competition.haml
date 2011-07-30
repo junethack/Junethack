@@ -1,0 +1,9 @@
+.content_bulk
+  .text_content_wrapper
+    .text_content
+      %h1 Clan Competition Overview
+      =haml :_clan_trophies
+      - @trophy = "most_points"
+      =haml :clan_competition_trophy
+      - @trophy = "most_ascended_combinations"
+      =haml :clan_competition_trophy

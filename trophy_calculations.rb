@@ -364,6 +364,16 @@ def update_scores(game)
     return false if not update_clan_scores(game)
 end
 
+helpers do
+    def ascended_combinations_user_sql
+        "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id = ?"
+    end
+    def ascended_combinations_sql
+        "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+    end
+end
+
+
 def update_clan_scores(game)
     return true if not game.user_id
 
@@ -374,15 +384,60 @@ def update_clan_scores(game)
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_points",
                                         :icon => "clan-points.png")
-        if c.value.nil? or c.value < points then
-            c.value = points
-            c.save
-        end
+        c.value = points
+        c.save
+
+        most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+ascended_combinations_sql+");", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_ascended_combinations",
+                                        :icon => "clan-points.png")
+        c.value = most_ascended_combinations
+        c.save
     end
 
     rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
+
+    score_clans
 
     return true
+end
+
+def score_clans
+    clanscoreentries = ClanScoreEntry.all(:order => [:trophy.asc, :rank.asc])
+
+    best_value = 0
+    clanscoreentries.each do |c|
+        best_value = c.value if c.rank == 1
+        case c.rank
+        when 1
+            c.points = 4.0
+        when 2
+            c.points = 3.0
+        when 3
+            c.points = 2.0
+        else
+            if c.value == 0 then
+              c.points = 0.0
+            else
+              c.points = (c.value.to_f*100 / best_value.to_f).round.to_f / 100
+            end
+        end
+        c.save
+        #puts "#{c.trophy} #{best_value} #{c.value} #{c.rank} #{c.points}"
+    end
+
+    # calculate clan points
+    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points') group by clan_name"
+    clan_scores.each do |clan_score|
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_score.clan_name,
+                                        :trophy  => "clan_winner")
+        c.value = (clan_score.sum_points*100).to_i
+        c.points = clan_score.sum_points
+        c.save
+    end
+
+    rank_collection(ClanScoreEntry.all(:trophy  => "clan_winner", :order => [ :value.desc ]))
 end
 
 # Update competition trophies for an ascended game,

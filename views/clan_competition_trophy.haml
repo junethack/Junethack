@@ -1,22 +1,24 @@
-%h2
-  Clan Competition
+%h2{:id => @trophy}= $trophy_names[@trophy]
 .scorelisting
-  %table.greytable.misc
+  %table.greytable
     %tr
-      %th 
+      %th
         Clan
-      %th 
-        Score
-      %th 
+      %th.competition_value
+      %th.competition_value
+        Clan Points
+      %th.competition_placing
         Rank
     - count = 0
-    - ClanScoreEntry.all(:order => [:rank.asc], :trophy => 'clan_winner').each do |entry|
+    - ClanScoreEntry.all(:order => [:rank.asc], :trophy => @trophy, :value.gt => 0).each do |entry|
       - style = (count % 2) == 0 ? "cell1" : "cell2"
       - count += 1
       %tr{:id => style}
         %td
           %a{:href => "/clan/#{CGI::escape entry.clan.name}"}
             #{h entry.clan.name}
+        %td.table_number
+          #{h entry.value}
         %td.table_number
           #{h entry.points}
         %td.table_number
