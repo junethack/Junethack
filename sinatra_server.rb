@@ -176,7 +176,7 @@ post "/add_server_account" do
         redirect "/home" and return
     end
     begin
-        account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
+        account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true, :clan => Clan.get(@user.clan))
     rescue
         session['errors'].push(*account.errors)
     end
