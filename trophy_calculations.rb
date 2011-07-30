@@ -398,12 +398,14 @@ def update_clan_scores(game)
     rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
 
+    score_clans
+
     return true
 end
 
 def score_clans
     clanscoreentries = ClanScoreEntry.all(:order => [:trophy.asc, :rank.asc])
-    puts clanscoreentries.inspect
+
     best_value = 0
     clanscoreentries.each do |c|
         best_value = c.value if c.rank == 1
@@ -422,7 +424,7 @@ def score_clans
             end
         end
         c.save
-        puts "#{c.trophy} #{best_value} #{c.value} #{c.rank} #{c.points}"
+        #puts "#{c.trophy} #{best_value} #{c.value} #{c.rank} #{c.points}"
     end
 
     # calculate clan points

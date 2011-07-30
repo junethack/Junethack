@@ -22,11 +22,20 @@
                 %a{:href => "/login"} Login
             %li.short
               %a{:href => "/scoreboard"} Scoreboard
+            %li
+              %a{:href => "/games"} Games
               %ul
                 %li.first
-                  %a{:href => "/activity"} Activity
-                %li
                   %a{:href => "/ascensions"} Ascensions
+                %li
+                  %a{:href => "/deaths"} Deaths
+            %li
+              %a{:href => "/users"} Users
+            %li
+              %a{:href => "/clans"} Clans
+              %ul
+                %li.first
+                  %a{:href => "/clan_competition"} Clan Competition
             %li
               - if !@logged_in then
                 %a{:href => "/logout"} Logout
