@@ -8,7 +8,7 @@
             %th Count
             %th Death
           - count = 0
-          - @unique_deaths.each do |death|
+          - @deaths.each do |death|
             - style = (count % 2) == 0 ? "cell1" : "cell2"
             - count += 1
             %tr{:id => style}

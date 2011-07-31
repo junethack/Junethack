@@ -364,12 +364,13 @@ def update_scores(game)
 
     return false if not update_clan_scores(game)
 
-    return false if not normalized_death(game)
+    return false if not normalize_death(game)
 end
 
 def normalize_death(game)
     normalized_death = NormalizedDeath.first_or_create(:game_id => game.id)
     normalized_death.death = game.normalize_death
+    normalized_death.user_id = game.user_id
     normalized_death.save
 end
 
@@ -378,6 +379,9 @@ def ascended_combinations_user_sql
 end
 def ascended_combinations_sql
     "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+end
+def unique_deaths_sql
+    "SELECT DISTINCT death from normalized_deaths where user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
 end
 
 
@@ -400,11 +404,18 @@ def update_clan_scores(game)
                                         :icon => "clan-points.png")
         c.value = most_ascended_combinations
         c.save
+
+        most_unique_deaths = (repository.adapter.select "SELECT count(1) from ("+unique_deaths_sql+");", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_unique_deaths",
+                                        :icon => "clan-deaths.png")
+        c.value = most_unique_deaths
+        c.save
     end
 
     rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
-
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_unique_deaths", :order => [ :value.desc ]))
     score_clans
 
     return true
@@ -435,7 +446,7 @@ def score_clans
     end
 
     # calculate clan points
-    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points') group by clan_name"
+    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points','most_unique_deaths') group by clan_name"
     clan_scores.each do |clan_score|
         c = ClanScoreEntry.first_or_new(:clan_name => clan_score.clan_name,
                                         :trophy  => "clan_winner")
