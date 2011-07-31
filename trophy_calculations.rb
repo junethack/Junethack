@@ -1,5 +1,6 @@
 require 'userscore'
 require 'trophyscore'
+require 'normalize_death'
 
 # This one returns last games ordered by endtime, with the latest game
 # first.
@@ -362,6 +363,14 @@ def update_scores(game)
         :icon => "globetrotter.png").save if globetrotter? game.user_id
 
     return false if not update_clan_scores(game)
+
+    return false if not normalized_death(game)
+end
+
+def normalize_death(game)
+    normalized_death = NormalizedDeath.first_or_create(:game_id => game.id)
+    normalized_death.death = game.normalize_death
+    normalized_death.save
 end
 
 def ascended_combinations_user_sql

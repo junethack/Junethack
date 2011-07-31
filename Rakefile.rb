@@ -5,6 +5,7 @@ require 'database'
 require 'fetch_games'
 require 'date'
 require 'trophyscore'
+require 'normalize_death'
 
 namespace :bogus do
 
@@ -161,5 +162,13 @@ namespace :update do
 
     task :clan_winner do
         score_clans
+    end
+
+    task :normalize_deaths do
+        (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
+            i += 1
+            puts "#{i} #{game.version}"
+            normalize_death(Game.get(game.id))
+        }
     end
 end

@@ -285,3 +285,11 @@ DataMapper::MigrationRunner.migration( 2, :create_trophy_indexes ) do
   end
 end
 
+
+class NormalizedDeath
+    include DataMapper::Resource
+    belongs_to :game,  :key => true
+    belongs_to :user,  :required => false
+
+    property :death,     String
+end
