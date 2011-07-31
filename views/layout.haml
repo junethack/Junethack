@@ -20,9 +20,9 @@
                 %a{:href => "/home"} #{h @user.login}
               - if @logged_in then
                 %a{:href => "/login"} Login
-            %li.short
-              %a{:href => "/scoreboard"} Scoreboard
             %li
+              %a{:href => "/scoreboard"} Scoreboard
+            %li.longer1
               %a{:href => "/games"} Games
               %ul
                 %li.first
@@ -31,7 +31,7 @@
                   %a{:href => "/deaths"} Deaths
             %li
               %a{:href => "/users"} Users
-            %li
+            %li.shorter1
               %a{:href => "/clans"} Clans
               %ul
                 %li.first
