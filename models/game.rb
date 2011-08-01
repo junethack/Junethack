@@ -100,6 +100,7 @@ $trophy_names = {
     # Cross-Variant
     "sightseeing_tour"  => "Sightseeing Tour: finish a game in all variants",
     "globetrotter"      => "Globetrotter: get a trophy for each variant",
+    "anti_stoner"       => "Anti-Stoner: defeat Medusa in all variants",
     "king_of_the_world" => "King of the world: ascend in all variants",
 
     # Clan
