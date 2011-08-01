@@ -69,6 +69,21 @@
       - @ascended_combinations_value = @clan.name
       =haml :ascended_combinations
 
+    - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
+    .text_content.non_top_post
+      %h2= "#{unique_deaths.count} unique death#{'s' if unique_deaths.count != 1}"
+      .scorelisting
+        %table.greytable.misc
+          %tr
+            %th
+              Unique death
+          - count = 0
+          - unique_deaths.each do |death|
+            - style = (count % 2) == 0 ? "cell1" : "cell2"
+            - count += 1
+            %tr{:id => style}
+              %td= h death
+
     - if !@logged_in
       - if @user.login == @clan.get_admin.login
         .text_content.non_top_post#clan_invite

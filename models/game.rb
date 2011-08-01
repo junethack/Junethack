@@ -100,6 +100,7 @@ $trophy_names = {
     # Cross-Variant
     "sightseeing_tour"  => "Sightseeing Tour: finish a game in all variants",
     "globetrotter"      => "Globetrotter: get a trophy for each variant",
+    "anti_stoner"       => "Anti-Stoner: defeat Medusa in all variants",
     "king_of_the_world" => "King of the world: ascend in all variants",
 
     # Clan
@@ -285,3 +286,11 @@ DataMapper::MigrationRunner.migration( 2, :create_trophy_indexes ) do
   end
 end
 
+
+class NormalizedDeath
+    include DataMapper::Resource
+    belongs_to :game,  :key => true
+    belongs_to :user,  :required => false
+
+    property :death,     String
+end

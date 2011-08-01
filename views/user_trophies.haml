@@ -1,0 +1,10 @@
+%li
+    .trophyleft= "#{$variants_mapping[@variant]}"
+    .trophyright
+        - all_trophies = Trophy.all :variant => @variant
+        - puts all_trophies.inspect
+        - user_trophies = repository.adapter.select "select trophy from scoreentries where user_id = ? and variant = ?", @player.id, @variant
+        - for trophy in all_trophies
+            - icon = (user_trophies.include? trophy.trophy) ? trophy.icon : trophy.light_icon
+            %a.imagelink{:title => trophy.text, :href => "/trophies#" + trophy.anchor}
+                %img{:src => "/icons/" + icon, :alt => trophy.text}
