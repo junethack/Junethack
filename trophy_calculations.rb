@@ -414,7 +414,7 @@ def update_clan_scores(game)
         most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+ascended_combinations_sql+");", clan_name)[0]
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_ascended_combinations",
-                                        :icon => "clan-points.png")
+                                        :icon => "clan-combinations.png")
         c.value = most_ascended_combinations
         c.save
 
