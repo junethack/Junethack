@@ -18,14 +18,14 @@
     .trophycabinet
         %h3= variant_name
         %ul
-            - scoreentries = repository.adapter.select "select distinct trophy, icon from scoreentries where variant = ? order by trophy;", variant
-            - scoreentries.each do |s|
-                - if $trophy_names[s.trophy]
-                    %li
-                        %a.imagelink{:title => $trophy_names[s.trophy], :href => "/trophies#" + s.icon[0 .. (s.icon.length - 5)]}
-                            %img.trophyleft{:src => "/icons/" + s.icon, :alt => $trophy_names[s.trophy]}
-                        - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id from scoreentries where variant = ? and trophy = ? order by upper(user);", variant, s.trophy
-                        .trophyright
-                            - users.each do |u|
-                                %span
-                                    %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
+            - trophies = Trophy.all :variant => variant
+            - trophies.each do |trophy|
+                %li
+                    - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id from scoreentries where variant = ? and trophy = ? order by upper(user);", variant, trophy.trophy
+                    - icon = (users.size > 0) ? trophy.icon : trophy.light_icon
+                    %a.imagelink{:title => trophy.text, :href => "/trophies##{trophy.anchor}"}
+                        %img.trophyleft{:src => "/icons/#{icon}", :alt => trophy.text}
+                    .trophyright
+                        - users.each do |u|
+                            %span
+                                %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
