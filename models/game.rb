@@ -247,7 +247,7 @@ class Game
         deathlev < 0
     end
     def entered_astral?
-        maxlvl == -5
+        deathlev == -5
     end
 
     def escapologist?
