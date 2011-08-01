@@ -130,10 +130,10 @@ DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_nemesis", :text => "Too good for quests (ascended without defeating the quest nemesis)", :icon => "m-no-nemesis.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_vlad", :text => "Too good for Vladbanes (ascended without defeating Vlad)", :icon => "m-no-vlad.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_rodney", :text => "Too good for... wait, what? How? (ascended without defeating Rodney)", :icon => "m-no-wizard.png"
-      Trophy.create :variant => variant, :trophy => "ascended_without_defeating_cthulhu", :text => "Too good for a brain (ascended without defeating Cthulhu)", :icon => "m-no-cthulhu.png" if variant == unnethack
       Trophy.create :variant => variant, :trophy => "ascended_with_all_invocation_items", :text => "Hoarder (ascended carrying all the invocation items)", :icon => "m-hoarder.png"
       Trophy.create :variant => variant, :trophy => "defeated_croesus", :text => "Assault on Fort Knox (defeated Croesus)", :icon => "m-croesus.png"
       Trophy.create :variant => variant, :trophy => "defeated_one_eyed_sam", :text => "No membership card (defeated One-Eyed Sam)", :icon => "m-sam.png" if variant == unnethack
+      Trophy.create :variant => variant, :trophy => "ascended_without_defeating_cthulhu", :text => "Too good for a brain (ascended without defeating Cthulhu)", :icon => "m-no-cthulhu.png" if variant == unnethack
     end
 
   end
