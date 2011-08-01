@@ -10,7 +10,7 @@ class XLog
     include Singleton
 
     def self.parse_xlog xlog
-        puts "#{xlog}"
+        #puts "#{xlog}"
         Hash[xlog.chomp.split(":").map{|e| e.split("=")}]
     end
 
