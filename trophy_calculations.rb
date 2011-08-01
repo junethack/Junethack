@@ -364,10 +364,10 @@ def update_scores(game)
 
     return false if not update_clan_scores(game)
 
-    return false if not normalize_death(game)
+    return false if not local_normalize_death(game)
 end
 
-def normalize_death(game)
+def local_normalize_death(game)
     normalized_death = NormalizedDeath.first_or_create(:game_id => game.id)
     normalized_death.death = game.normalize_death
     normalized_death.user_id = game.user_id
@@ -431,7 +431,6 @@ def update_clan_scores(game)
         c.value = most_ascensions_in_a_24_hour_period clan_name
         c.save
 
-raise "hallo"
         most_variant_trophy_combinations = (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_sql+");", clan_name)[0]
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_variant_trophy_combinations",
