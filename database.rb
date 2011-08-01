@@ -23,6 +23,7 @@ require 'models/account'
 require 'models/game'
 require 'models/clan'
 require 'models/scoreentry'
+require 'models/trophy'
 
 DataMapper.finalize
 DataMapper.auto_upgrade!

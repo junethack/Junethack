@@ -14,6 +14,14 @@ class Trophy
     def Trophy.cross_variant_trophies
         Trophy.all :conditions => ["variant is null"]
     end
+
+    # used for href
+    def anchor
+        self.icon[0 ..-5]
+    end
+    def light_icon
+        anchor+"_light.png"
+    end
 end
 
 $trophy_names = {
