@@ -105,11 +105,14 @@ DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
     for variant in $variants do
       Trophy.create :variant => variant, :trophy => "ascended", :text => "ascended", :icon => "ascension.png"
       Trophy.create :variant => variant, :trophy => "escapologist", :text => "escaped in celestial disgrace", :icon => "escapologist.png"
-      Trophy.create :variant => variant, :trophy => "entered_astral_plane", :text => "entered Astral Plane", :icon => "m-astral.png"
-      Trophy.create :variant => variant, :trophy => "entered_elemental_planes", :text => "entered Elemental Planes", :icon => "m-planes.png"
+      Trophy.create :variant => variant, :trophy => "entered_astral_plane", :text => "entered Astral Plane", :icon => "m-astral.png" if variant != acehack
+      Trophy.create :variant => variant, :trophy => "entered_astral", :text => "entered Astral Plane", :icon => "m-astral.png" if variant == acehack
+      Trophy.create :variant => variant, :trophy => "entered_elemental_planes", :text => "entered Elemental Planes", :icon => "m-planes.png" if variant != acehack
+      Trophy.create :variant => variant, :trophy => "entered_planes", :text => "entered Elemental Planes", :icon => "m-planes.png" if variant == acehack
       Trophy.create :variant => variant, :trophy => "obtained_the_amulet_of_yendor", :text => "obtained the Amulet of Yendor", :icon => "m-amulet.png" if variant != acehack
       Trophy.create :variant => variant, :trophy => "defeated_a_high_priest", :text => "defeated a High Priest", :icon => "m-amulet.png" if variant == acehack
-      Trophy.create :variant => variant, :trophy => "performed_the_invocation_ritual", :text => "performed the Invocation Ritual", :icon => "m-invocation.png"
+      Trophy.create :variant => variant, :trophy => "performed_the_invocation_ritual", :text => "performed the Invocation Ritual", :icon => "m-invocation.png" if variant != acehack
+      Trophy.create :variant => variant, :trophy => "did_invocation", :text => "performed the Invocation Ritual", :icon => "m-invocation.png" if variant == acehack
       Trophy.create :variant => variant, :trophy => "obtained_the_book_of_the_dead", :text => "obtained the Book of the Dead", :icon => "m-book.png" if variant != acehack
       Trophy.create :variant => variant, :trophy => "defeated_rodney", :text => "defeated Rodney at least once", :icon => "m-book.png" if variant == acehack
       Trophy.create :variant => variant, :trophy => "obtained_the_candelabrum_of_invocation", :text => "obtained the Candelabrum of Invocation", :icon => "m-candelabrum.png" if variant != acehack
