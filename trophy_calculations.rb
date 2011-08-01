@@ -383,6 +383,9 @@ end
 def unique_deaths_sql
     "SELECT DISTINCT death from normalized_deaths where user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
 end
+def variant_trophy_combinations_sql
+    "SELECT DISTINCT variant, trophy from scoreentries where user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+end
 
 def most_ascensions_in_a_24_hour_period(clan)
     clan_endtimes = repository.adapter.select "select * from (select (select clan from users where user_id = id) as clan, endtime, endtime+86400 as endtime_end from games where ascended='t' and clan = ? and user_id is not null order by endtime)", clan
@@ -427,12 +430,21 @@ def update_clan_scores(game)
                                         :icon => "clan-24h.png")
         c.value = most_ascensions_in_a_24_hour_period clan_name
         c.save
+
+raise "hallo"
+        most_variant_trophy_combinations = (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_sql+");", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_variant_trophy_combinations",
+                                        :icon => "clan-variant-trophies.png")
+        c.value = most_variant_trophy_combinations
+        c.save
     end
 
     rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_unique_deaths", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascensions_in_a_24_hour_period", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_variant_trophy_combinations", :order => [ :value.desc ]))
     score_clans
 
     return true
