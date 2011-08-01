@@ -384,6 +384,16 @@ def unique_deaths_sql
     "SELECT DISTINCT death from normalized_deaths where user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
 end
 
+def most_ascensions_in_a_24_hour_period(clan)
+    clan_endtimes = repository.adapter.select "select * from (select (select clan from users where user_id = id) as clan, endtime, endtime+86400 as endtime_end from games where ascended='t' and clan = ? and user_id is not null order by endtime)", clan
+
+    max_ascensions = 0
+    clan_endtimes.each do |e|
+        ascensions = (repository.adapter.select "select count(1) from games where (select clan from users where user_id = id) = ? and ascended='t' and endtime >= ? and endtime <= ?", e.clan, e.endtime, e.endtime_end)[0]
+        max_ascensions = ascensions if ascensions > max_ascensions
+    end
+    return max_ascensions
+end
 
 def update_clan_scores(game)
     return true if not game.user_id
@@ -411,11 +421,18 @@ def update_clan_scores(game)
                                         :icon => "clan-deaths.png")
         c.value = most_unique_deaths
         c.save
+
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_ascensions_in_a_24_hour_period",
+                                        :icon => "clan-24h.png")
+        c.value = most_ascensions_in_a_24_hour_period clan_name
+        c.save
     end
 
     rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_unique_deaths", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_ascensions_in_a_24_hour_period", :order => [ :value.desc ]))
     score_clans
 
     return true
@@ -446,7 +463,7 @@ def score_clans
     end
 
     # calculate clan points
-    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points','most_unique_deaths') group by clan_name"
+    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points','most_unique_deaths','most_ascensions_in_a_24_hour_period') group by clan_name"
     clan_scores.each do |clan_score|
         c = ClanScoreEntry.first_or_new(:clan_name => clan_score.clan_name,
                                         :trophy  => "clan_winner")
