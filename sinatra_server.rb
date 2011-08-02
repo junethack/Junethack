@@ -22,9 +22,9 @@ scheduler.cron('*/15 * * * *', :blocking => true) { fetch_all }
 
 $application_start = Time.new
 
-bot = IRC.new('irc.freenode.net', 6667, "junetbot", "#junethack")
-bot.connect
-bot.main_loop
+#bot = IRC.new('irc.freenode.net', 6667, "junetbot", "#junethack")
+#bot.connect
+#bot.main_loop
 
 # http://groups.google.com/group/rack-devel/browse_frm/thread/ffec93533180e98a
 class WorkaroundLogger < Logger
