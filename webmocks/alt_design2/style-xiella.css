@@ -604,8 +604,6 @@ a#flattr {
 **                       **
 **************************/
 .prettytable,
-/* /clan/*name */
-#clan_page table,
 /* /clans */
 #clans,
 /* /servers */
@@ -624,8 +622,6 @@ table#servers th {
 }
 .prettytable th,
 .prettytable td,
-#clan_page table th,
-#clan_page table td,
 #clans th,
 #clans td,
 #servers th,
@@ -633,7 +629,6 @@ table#servers th {
     padding: 5px 8px;
 }
 .prettytable tr,
-#clan_page table tr,
 #clans tr,
 #servers tr {
     border-bottom: 1px solid #ccc;
