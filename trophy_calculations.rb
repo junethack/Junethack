@@ -450,7 +450,7 @@ def update_clan_scores(game)
 end
 
 def score_clans
-    clanscoreentries = ClanScoreEntry.all(:order => [:trophy.asc, :rank.asc])
+    clanscoreentries = ClanScoreEntry.all(:order => [:trophy.asc, :rank.asc], :trophy.not => 'clan_winner')
 
     best_value = 0
     clanscoreentries.each do |c|
