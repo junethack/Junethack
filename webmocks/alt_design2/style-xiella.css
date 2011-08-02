@@ -760,6 +760,7 @@ ul.trophypage > li > img,
     margin-bottom: 0;
     border-bottom: 3px double #bbb;
 }
+.trophycabinet .endofcabinetrow,
 .trophycabinet > ul li {
     border-bottom: 1px solid #ccc;
 }
