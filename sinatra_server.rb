@@ -17,8 +17,8 @@ require 'irc'
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
 # Scheduler: fetch game data every 15 minutes
-scheduler = Rufus::Scheduler.start_new
-scheduler.cron('*/15 * * * *') { fetch_all }
+scheduler = Rufus::Scheduler.start_new(:frequency => 1.0)
+scheduler.cron('*/15 * * * *', :blocking => true) { fetch_all }
 
 $application_start = Time.new
 
