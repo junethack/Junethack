@@ -17,14 +17,14 @@ require 'irc'
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
 # Scheduler: fetch game data every 15 minutes
-scheduler = Rufus::Scheduler.start_new
-scheduler.cron('*/15 * * * *') { fetch_all }
+scheduler = Rufus::Scheduler.start_new(:frequency => 1.0)
+scheduler.cron('*/15 * * * *', :blocking => true) { fetch_all }
 
 $application_start = Time.new
 
-bot = IRC.new('irc.freenode.net', 6667, "junetbot", "#junethack")
-bot.connect
-bot.main_loop
+#bot = IRC.new('irc.freenode.net', 6667, "junetbot", "#junethack")
+#bot.connect
+#bot.main_loop
 
 # http://groups.google.com/group/rack-devel/browse_frm/thread/ffec93533180e98a
 class WorkaroundLogger < Logger
@@ -229,8 +229,14 @@ get "/user/:name" do
         @userscore = UserScore.new @player.id
         @scoreentries = Scoreentry.all(:user_id => @player.id)
 
-        @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
-        @games_played_title = "Games played"
+        startscummed_games = Game.count(:user_id => @player.id, :conditions => ["turns <= 10 and death in ('escaped', 'quit')"])
+        if startscummed_games > 0 then
+          @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ], :conditions => ["turns > 10 or death not in ('escaped','quit')"])
+          @games_played_title = "Games played (without #{startscummed_games} startscummed games)"
+        else
+          @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
+          @games_played_title = "Games played"
+        end
         @user_id = @player.id
 
         haml :user

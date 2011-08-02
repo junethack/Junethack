@@ -21,14 +21,14 @@
           - else
             no games
         %span.clear
-      #clan_trophies
+      #clan_trophies.trophycabinet
         %h2
           Clan trophies
         / TODO: trophy image for clan competition winner
         - ClanScoreEntry.all(:clan_name => @clan.name, :trophy.not => 'clan_winner', :rank => 1).each do |trophy|
           %a.imagelink{:href => "/trophies#" + trophy.icon[0 .. (trophy.icon.length - 5)], :title => trophy.trophy} 
-            %span.trophyicon
-              %img{:src => "/icons/" + trophy.icon}
+            %img.trophyicon{:src => "/icons/" + trophy.icon}
+          %span.clear.endofcabinetrow
     .text_content.non_top_post#clan_members
       %h2
         Clan members

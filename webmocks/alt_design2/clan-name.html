@@ -3,7 +3,8 @@
   <head>
     <meta content='application/xhtml+xml;charset=utf-8' http-equiv='content-type' />
     <link href='../../public/style-xiella.css' rel='stylesheet' type='text/css' />
-    <title>Junethack - 86 players registered - 2161 games played!</title>
+    <script src='../../public/analytics.js'></script>
+    <title>Junethack - 306 players registered - 8388 games played!</title>
   </head>
   <body>
     <div id='container'>
@@ -13,20 +14,42 @@
           <h1>
             Navigation
           </h1>
-          <ul class="main">
-            <li class="first">
+          <ul class='main'>
+            <li class='first'>
               <a href='/'>
-                <img alt='Logo' src='../../public/vivid_divider.png' />
+                <img alt='Home' src='../../public/vivid_divider.png' />
               </a>
             </li>
             <li>
-              <a href='/home'>xaiph</a>
+              <a href='/login'>Login</a>
             </li>
             <li>
               <a href='/scoreboard'>Scoreboard</a>
             </li>
+            <li class='longer1'>
+              <a href='/games'>Games</a>
+              <ul>
+                <li class='first'>
+                  <a href='/ascensions'>Ascensions</a>
+                </li>
+                <li>
+                  <a href='/deaths'>Deaths</a>
+                </li>
+              </ul>
+            </li>
             <li>
-              <a href='/logout'>Logout</a>
+              <a href='/users'>Users</a>
+            </li>
+            <li class='shorter1'>
+              <a href='/clans'>Clans</a>
+              <ul>
+                <li class='first'>
+                  <a href='/clan_competition'>Clan Competition</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='/about'>Help</a>
             </li>
           </ul>
           <span class='clear'></span>
@@ -39,30 +62,37 @@
           <div class='text_content' id='clan_about'>
             <div id='clan_header'>
               <h1>
-                rival_botclan
+                Not so bad at this
               </h1>
-              <div id='clan_invite'>
-                <a href='#invite_account'>Invite</a>
-              </div>
               <div id='clan_placing'>
-                Placing: no games
+                Placing:
+                1
               </div>
               <div id='clan_points'>
-                Points: no games
+                Points:
+                1045998148
               </div>
               <span class='clear'></span>
             </div>
-            <div id='clan_trophies'>
+            <div id='clan_trophies' class="trophycabinet">
               <h2>
                 Clan trophies
               </h2>
+              <!-- TODO: trophy image for clan competition winner -->
+              <a class='imagelink' href='/trophies#clan-points' title='most_points'>
+                <img src='../../public/icons/clan-points.png' class="trophyicon" />
+              </a>
+              <a class='imagelink' href='/trophies#clan-variant-trophies' title='most_variant_trophy_combinations'>
+                <img src='../../public/icons/clan-variant-trophies.png' class="trophyicon" />
+              </a>
+              <span class="clear endofcabinetrow"></span>
             </div>
           </div>
           <div class='text_content non_top_post' id='clan_members'>
             <h2>
               Clan members
             </h2>
-            <table class='prettytable'>
+            <table class='prettytable clan_members'>
               <tr>
                 <th>
                   Player
@@ -82,15 +112,148 @@
               </tr>
               <tr>
                 <td>
-                  <a href='/user/xaiph'>
-                    xaiph
+                  <a href='/user/rawrmage'>
+                    rawrmage
+                  </a>
+                </td>
+                <td>
+                  member
+                </td>
+                <td>
+                  2011-07-28 22:08
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  1
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href='/user/ishanyx'>
+                    ishanyx
+                  </a>
+                </td>
+                <td>
+                  member
+                </td>
+                <td>
+                  2011-08-02 03:34
+                </td>
+                <td>
+                  4
+                </td>
+                <td>
+                  43
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href='/user/Nomiisama'>
+                    Nomiisama
                   </a>
                 </td>
                 <td>
                   admin
                 </td>
                 <td>
-                  2011-07-22 02:25
+                  2011-07-20 20:06
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  11
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href='/user/Nightpenguin'>
+                    Nightpenguin
+                  </a>
+                </td>
+                <td>
+                  member
+                </td>
+                <td>
+                  2011-07-27 00:41
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href='/user/stenno'>
+                    stenno
+                  </a>
+                </td>
+                <td>
+                  member
+                </td>
+                <td>
+                  2011-08-01 11:32
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  13
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href='/user/init'>
+                    init
+                  </a>
+                </td>
+                <td>
+                  member
+                </td>
+                <td>
+                  2011-08-02 04:23
+                </td>
+                <td>
+                  6
+                </td>
+                <td>
+                  12
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href='/user/Ykstort'>
+                    Ykstort
+                  </a>
+                </td>
+                <td>
+                  member
+                </td>
+                <td>
+                  2011-08-01 22:00
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  29
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href='/user/mikee'>
+                    mikee
+                  </a>
+                </td>
+                <td>
+                  member
+                </td>
+                <td>
+                  2011-07-17 18:39
                 </td>
                 <td>
                   1
@@ -101,29 +264,566 @@
               </tr>
             </table>
           </div>
-          <div class='text_content non_top_post' id='clan_invite'>
-            <div>
-              <h2>
-                Invite an account to your clan
-              </h2>
-              <form action='/clan/invite' id='invite_account' method='POST' class="smallform">
-                <input id='accountname' name='accountname' type='text' />
-                <label for="invite_server">on</label>
-                <select name='server' id="invite_server">
-                  <option name='1' value='1'>nethack.alt.org (nao)</option>
-                  <option name='2' value='2'>acehack.rawrnix.com (arc)</option>
-                  <option name='3' value='3'>acehack.sovrappensiero.info (asi)</option>
-                  <option name='4' value='4'>un.nethack.nu (eun)</option>
-                  <option name='5' value='5'>nethack.fi (nfi)</option>
-                  <option name='6' value='6'>sporkhack.com (shc)</option>
-                  <option name='7' value='7'>us.un.nethack.nu (uun)</option>
-                  <option name='8' value='8'>acehack.sovrappensiero.info (n13)</option>
-                  <option name='9' value='9'>nethack.eu (neu)</option>
-                </select>
-                <input name='clan' type='hidden' value='rival_botclan' />
-                <input type='submit' value='Invite Account' />
-                <span class="clear"></span>
-              </form>
+          <div class='text_content non_top_post'>
+            <h2 id='ascended_combinations'>Ascended combinations</h2>
+                <div class='scorelisting'>
+                  <table class='greytable misc'>
+                    <tr>
+                      <th>Variant</th>
+                      <th>Role</th>
+                      <th>Race</th>
+                      <th>Alignment</th>
+                      <th>Gender</th>
+                    </tr>
+                    <tr id='cell1'>
+                      <td>NetHack 3.4.3</td>
+                      <td>Rog</td>
+                      <td>Hum</td>
+                      <td>Cha</td>
+                      <td>Fem</td>
+                    </tr>
+                    <tr id='cell2'>
+                      <td>NetHack 3.4.3</td>
+                      <td>Sam</td>
+                      <td>Hum</td>
+                      <td>Law</td>
+                      <td>Mal</td>
+                    </tr>
+                    <tr id='cell1'>
+                      <td>NetHack 3.4.3</td>
+                      <td>Val</td>
+                      <td>Dwa</td>
+                      <td>Law</td>
+                      <td>Fem</td>
+                    </tr>
+                    <tr id='cell2'>
+                      <td>NetHack 3.4.3</td>
+                      <td>Val</td>
+                      <td>Hum</td>
+                      <td>Law</td>
+                      <td>Fem</td>
+                    </tr>
+                    <tr id='cell1'>
+                      <td>NetHack 3.4.3</td>
+                      <td>Wiz</td>
+                      <td>Elf</td>
+                      <td>Cha</td>
+                      <td>Mal</td>
+                    </tr>
+                    <tr id='cell2'>
+                      <td>UnNetHack</td>
+                      <td>Wiz</td>
+                      <td>Gno</td>
+                      <td>Neu</td>
+                      <td>Fem</td>
+                    </tr>
+                    <tr id='cell1'>
+                      <td>AceHack</td>
+                      <td>Val</td>
+                      <td>Dwa</td>
+                      <td>Law</td>
+                      <td>Fem</td>
+                    </tr>
+                    <tr id='cell2'>
+                      <td>AceHack</td>
+                      <td>Wiz</td>
+                      <td>Elf</td>
+                      <td>Cha</td>
+                      <td>Fem</td>
+                    </tr>
+                  </table>
+                </div>
+          </div>
+          <div class='text_content non_top_post'>
+            <h2>160 unique deaths</h2>
+            <div class='scorelisting'>
+              <table class='greytable misc'>
+                <tr>
+                  <th>
+                    Unique death
+                  </th>
+                </tr>
+                <tr id='cell1'>
+                  <td>ascended</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>caught eirself in eir own ball of cold</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>crushed to death by a collapsing drawbridge</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>crushed to death by an exploding drawbridge</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>dead homunculus</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>died of starvation</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>dog</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>drowned in a pool of water by a giant eel</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>escaped</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>fell into a pit</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>fell into a pit of iron spikes</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>gnome</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by Mr. Possogroenoe, the shopkeeper</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by Mr. Yad, the shopkeeper</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by Ms. Adjama, the shopkeeper</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by Ms. Kittamagh, the shopkeeper</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by Wizard of Yendor</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a Green-elf</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a Kop Lieutenant</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a Kop Sergeant</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a Mordor orc</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a Woodland-elf</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a bat</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a blast of disintegration</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a blast of fire</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a blast of frost</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a blue jelly</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a boiling potion</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a bolt of cold</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a bolt of fire</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a bolt of lightning</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a boulder</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a brown mold</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a bugbear</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a captain</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a cave spider</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a coyote</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a crossbow bolt</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a dagger</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a dart</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a dingo</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a dwarf</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a dwarf lord</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a dwarf zombie</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a falling rock</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a fire ant</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a fire giant</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a flaming sphere</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a fog cloud</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a forest centaur</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a fox</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a gargoyle</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a gas spore&#x27;s explosion</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a gecko</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a gelatinous cube</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a giant ant</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a giant bat</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a giant beetle</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a giant mimic</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a giant rat</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a giant spider</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a giant zombie</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a gnome</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a gnome king</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a gnome lord</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a gnomish wizard</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a goblin</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a gold golem</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a gray unicorn</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a gremlin</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a hill orc</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a hobbit</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a horse</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a housecat</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a human mummy</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a human zombie</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a jabberwock</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a jackal</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a jaguar</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a killer bee</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a kitten</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a kobold zombie</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a land mine</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a large kobold</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a large mimic</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a leather golem</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a leocrotta</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a lieutenant</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a little dog</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a magic missile</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a mastodon</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a minotaur</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a mumak</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a nightmare</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a panther</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a paper golem</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a plains centaur</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a pony</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a potion of acid</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a priestess of Tyr</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a quasit</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a rabid rat</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a raven</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a rock mole</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a rock troll</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a rope golem</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a rothe</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a sewer rat</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a shocking sphere</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a shower of rocks</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a shuriken</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a small mimic</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a snow ant</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a soldier</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a soldier ant</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a straw golem</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a system shock</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a tengu</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a tiger</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a vrock</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a wand</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a watch captain</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a water demon</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a water moccasin</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a werejackal</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a wererat</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a werewolf</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a white unicorn</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a winged gargoyle</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a winter wolf cub</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a wolf</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by a wraith</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by a xorn</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by an Elvenking</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by an Olog-hai</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by an Uruk-hai</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by an acidic corpse</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by an air elemental</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by an arrow</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by an energy vortex</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by an ettin mummy</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by an ettin zombie</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by an exploding rune</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by an iguana</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by an ogre king</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by an orc zombie</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by an orcish arrow</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by an owlbear</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by falling downstairs</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by genocidal confusion</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>killed by the wrath of Huan Ti</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>killed by the wrath of Thoth</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>magic missile</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>orc</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>petrified by a chickatrice</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>petrified by a chickatrice corpse</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>poisoned by a centipede</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>quit</td>
+                </tr>
+                <tr id='cell1'>
+                  <td>shopkeeper</td>
+                </tr>
+                <tr id='cell2'>
+                  <td>shot eirself with a death ray</td>
+                </tr>
+              </table>
             </div>
           </div>
           <span class='clear' id='end_of_content_spacer'></span>
@@ -139,14 +839,15 @@
           <a href='/rules'>Rules</a>
           ]
           [
-          <a href='/users'>Users</a>
-          -
-          <a href='/clans'>Clans</a>
+          <a href='/activity'>Activity</a>
           -
           <a href='/servers'>Servers</a>
           -
           <a href='/trophies'>Trophies</a>
           ]
+          <a class='imagelink' href='http://flattr.com/thing/345872/Junethack-Nethack-Tournament' id='flattr' target='_blank'>
+            <img alt='Flattr this' border='0' src='http://api.flattr.com/button/flattr-badge-large.png' title='Flattr this' />
+          </a>
         </footer>
       </div>
     </div>
