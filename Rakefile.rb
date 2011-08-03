@@ -1,9 +1,11 @@
 require 'rubygems'
 require "bundler/setup"
+require 'sinatra'
 require 'database'
 require 'fetch_games'
 require 'date'
 require 'trophyscore'
+require 'normalize_death'
 
 namespace :bogus do
 
@@ -139,6 +141,14 @@ namespace :update do
         }
     end
 
+    task :user_competition do
+        (repository.adapter.select "select version,id,ascended from games where user_id is not null and ascended='t' order by endtime").each {|game|
+            i += 1
+            puts "#{i} #{game.version}"
+            update_competition_scores_ascended(Game.get(game.id))
+        }
+    end
+
     # only update nconducts field
     task :nconducts do
         i = 0
@@ -148,5 +158,17 @@ namespace :update do
             puts i
             game.save! # only change field and don't call hooks
         end
+    end
+
+    task :clan_winner do
+        score_clans
+    end
+
+    task :normalize_deaths do
+        (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
+            i += 1
+            puts "#{i} #{game.version}"
+            normalize_death(Game.get(game.id))
+        }
     end
 end

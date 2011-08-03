@@ -7,22 +7,30 @@
         %h2
           Trophies
         %h3
-          Individual
+          Cross-Variant
         %ul.trophypage
           %li#sightseeing
             %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/sightseeing.png"}
             %span
               Sightseeing tour: finish a game in all variants (die after 1000 turns or ascend)
-            
+
           %li#globetrotter
             %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/globetrotter.png"}
             %span
               Globetrotter: get a trophy for each variant
-            
+
+          %li#anti-stoner
+            %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/anti-stoner.png"}
+            %span
+              Anti-Stoner: defeat Medusa in all variants
+
           %li#king
             %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/king.png"}
             %span
               King of the world: ascend in all variants
+
+        %p{:style => "font-size: 0.9em;"} "All variants" means Vanilla NetHack, SporkHack, UnNetHack and AceHack. NetHack 1.3d does not contribute to the completion of these trophies.
+
         .text_content.non_top_post
         %h3
           All Variants
@@ -135,6 +143,10 @@
                 %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/m-astral.png"}
                 %span
                   enter the Astral Plane
+              %li#escapologist
+                %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/escapologist.png"}
+                %span
+                  Escapologist: escape in celestial disgrace
         .text_content.non_top_post
         %h3
           AceHack and UnNetHack
@@ -213,11 +225,11 @@
           %li#c-fastest-gametime
             %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/c-fastest-gametime.png"}
             %span
-              Fastest ascension (gametime)
+              Fastest ascension (by turns)
           %li#c-fastest-realtime
             %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/c-fastest-realtime.png"}
             %span
-              Fastest ascension (realtime)
+              Fastest ascension (by wall-clock time)
           %li#c-highest-score
             %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/c-highest-score.png"}
             %span
@@ -225,7 +237,7 @@
           %li#c-lowest-score
             %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/c-lowest-score.png"}
             %span
-              Lowest scoring ascension (modulo depth)
+              Lowest scoring ascension
           %li#c-most-conducts
             %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/c-most-conducts.png"}
             %span
@@ -248,7 +260,6 @@
               Most points
           %li#clan-deaths
             %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/clan-deaths.png"}
-            %span
-              Most unique deaths
+            %span= "Most unique deaths (<a href='/deaths#unique_deaths'>look here for unique deaths of played games</a>)"
         .text_content.non_top_post
     %span#end_of_content_spacer.clear

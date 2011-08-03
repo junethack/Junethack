@@ -1,11 +1,6 @@
 require 'userscore'
 require 'trophyscore'
-
-# Limits by 10 any collection
-def limit_by_10(collection)
-    return collection.take(10) if collection.instance_of?(Array)
-    collection.all(:limit => 10)
-end
+require 'normalize_death'
 
 # This one returns last games ordered by endtime, with the latest game
 # first.
@@ -122,6 +117,11 @@ def globetrotter?(user)
     anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d';", user
     return anz[0] == 4
 end
+#  Anti-Stoner: defeat Medusa in each variant
+def anti_stoner?(user)
+    anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d' and trophy='defeated_medusa';", user
+    return anz[0] == 4
+end
 
 
 def update_scores(game)
@@ -231,6 +231,11 @@ def update_scores(game)
                 end
             end
         end
+        ## Non-Ascension non-devnull achievement
+        # escaped in celestial disgrace
+        Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+            :trophy => :escapologist,
+            :icon => "escapologist.png").save if game.escapologist?
     end
 
         if game.version == 'NH-1.3d' then
@@ -348,12 +353,49 @@ def update_scores(game)
     Individualtrophy.first_or_create(:user_id => game.user_id,
         :trophy => :sightseeing_tour,
         :icon => "sightseeing.png").save if sightseeing_tour? game.user_id
+    # Anti-Stoner: defeat Medusa in all variants
+    Individualtrophy.first_or_create(:user_id => game.user_id,
+        :trophy => :anti_stoner,
+        :icon => "anti-stoner.png").save if anti_stoner? game.user_id
     # Globetrotter: get a trophy for each variant
     Individualtrophy.first_or_create(:user_id => game.user_id,
         :trophy => :globetrotter,
         :icon => "globetrotter.png").save if globetrotter? game.user_id
 
     return false if not update_clan_scores(game)
+
+    return false if not local_normalize_death(game)
+end
+
+def local_normalize_death(game)
+    normalized_death = NormalizedDeath.first_or_create(:game_id => game.id)
+    normalized_death.death = game.normalize_death
+    normalized_death.user_id = game.user_id
+    normalized_death.save
+end
+
+def ascended_combinations_user_sql
+    "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id = ?"
+end
+def ascended_combinations_sql
+    "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+end
+def unique_deaths_sql
+    "SELECT DISTINCT death from normalized_deaths where user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+end
+def variant_trophy_combinations_sql
+    "SELECT DISTINCT variant, trophy from scoreentries where user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+end
+
+def most_ascensions_in_a_24_hour_period(clan)
+    clan_endtimes = repository.adapter.select "select * from (select (select clan from users where user_id = id) as clan, endtime, endtime+86400 as endtime_end from games where ascended='t' and clan = ? and user_id is not null order by endtime)", clan
+
+    max_ascensions = 0
+    clan_endtimes.each do |e|
+        ascensions = (repository.adapter.select "select count(1) from games where (select clan from users where user_id = id) = ? and ascended='t' and endtime >= ? and endtime <= ?", e.clan, e.endtime, e.endtime_end)[0]
+        max_ascensions = ascensions if ascensions > max_ascensions
+    end
+    return max_ascensions
 end
 
 def update_clan_scores(game)
@@ -366,15 +408,82 @@ def update_clan_scores(game)
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_points",
                                         :icon => "clan-points.png")
-        if c.value.nil? or c.value < points then
-            c.value = points
-            c.save
-        end
+        c.value = points
+        c.save
+
+        most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+ascended_combinations_sql+");", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_ascended_combinations",
+                                        :icon => "clan-combinations.png")
+        c.value = most_ascended_combinations
+        c.save
+
+        most_unique_deaths = (repository.adapter.select "SELECT count(1) from ("+unique_deaths_sql+");", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_unique_deaths",
+                                        :icon => "clan-deaths.png")
+        c.value = most_unique_deaths
+        c.save
+
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_ascensions_in_a_24_hour_period",
+                                        :icon => "clan-24h.png")
+        c.value = most_ascensions_in_a_24_hour_period clan_name
+        c.save
+
+        most_variant_trophy_combinations = (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_sql+");", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_variant_trophy_combinations",
+                                        :icon => "clan-variant-trophies.png")
+        c.value = most_variant_trophy_combinations
+        c.save
     end
 
     rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_unique_deaths", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_ascensions_in_a_24_hour_period", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_variant_trophy_combinations", :order => [ :value.desc ]))
+    score_clans
 
     return true
+end
+
+def score_clans
+    clanscoreentries = ClanScoreEntry.all(:order => [:trophy.asc, :rank.asc], :trophy.not => 'clan_winner')
+
+    best_value = 0
+    clanscoreentries.each do |c|
+        best_value = c.value if c.rank == 1
+        case c.rank
+        when 1
+            c.points = 4.0
+        when 2
+            c.points = 3.0
+        when 3
+            c.points = 2.0
+        else
+            if c.value == 0 then
+              c.points = 0.0
+            else
+              c.points = (c.value.to_f*100 / best_value.to_f).round.to_f / 100
+            end
+        end
+        c.save
+        #puts "#{c.trophy} #{best_value} #{c.value} #{c.rank} #{c.points}"
+    end
+
+    # calculate clan points
+    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points','most_unique_deaths','most_ascensions_in_a_24_hour_period') group by clan_name"
+    clan_scores.each do |clan_score|
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_score.clan_name,
+                                        :trophy  => "clan_winner")
+        c.value = (clan_score.sum_points*100).to_i
+        c.points = clan_score.sum_points
+        c.save
+    end
+
+    rank_collection(ClanScoreEntry.all(:trophy  => "clan_winner", :order => [ :value.desc ]))
 end
 
 # Update competition trophies for an ascended game,
@@ -396,8 +505,76 @@ def update_competition_scores_ascended(game)
         c.save
     end
 
+    points = u.highest_scoring_ascension(game.version)[0]
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "highest_scoring_ascension",
+                                        :icon => "c-highest-score.png")
+    if c.value.nil? or c.value < points then
+        c.value = points
+        c.save
+    end
+
+    points = u.lowest_scoring_ascension(game.version)[0]
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "lowest_scoring_ascension",
+                                        :icon => "c-lowest-score.png")
+    if c.value.nil? or c.value > points then
+        c.value = points
+        c.save
+    end
+
+    realtime = u.fastest_ascension_realtime(game.version)
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "fastest_ascension_realtime",
+                                        :icon => "c-fastest-realtime.png")
+    if c.value.nil? or c.value > realtime then
+        c.value = realtime
+        c.save
+    end
+
+    gametime = u.fastest_ascension_gametime(game.version)
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "fastest_ascension_gametime",
+                                        :icon => "c-fastest-gametime.png")
+    if c.value.nil? or c.value > gametime then
+        c.value = gametime
+        c.save
+    end
+
+    ascensions = u.most_ascensions(game.version)
+    c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                        :variant => game.version,
+                                        :trophy  => "most_ascensions",
+                                        :icon => "c-most-ascensions.png")
+    if c.value.nil? or c.value < ascensions then
+        c.value = ascensions
+        c.save
+    end
+
+    longest_ascension_streak = u.longest_ascension_streak(game.version)
+    if longest_ascension_streak > 0 then
+        c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
+                                            :variant => game.version,
+                                            :trophy  => "longest_ascension_streaks",
+                                            :icon => "c-longest-streak.png")
+        if c.value.nil? or c.value < longest_ascension_streak then
+            c.value = longest_ascension_streak
+            c.save
+        end
+    end
+
     $variants_mapping.keys.each do |v|
         rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "most_conducts_ascension", :order => [ :value.desc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "highest_scoring_ascension", :order => [ :value.desc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "lowest_scoring_ascension", :order => [ :value.asc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "fastest_ascension_realtime", :order => [ :value.asc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "fastest_ascension_gametime", :order => [ :value.asc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "most_ascensions", :order => [ :value.desc ]))
+        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "longest_ascension_streaks", :order => [ :value.desc ]))
     end
 
     return true

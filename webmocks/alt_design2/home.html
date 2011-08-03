@@ -13,10 +13,10 @@
           <h1>
             Navigation
           </h1>
-          <ul>
-            <li>
+          <ul class="main">
+            <li class="first">
               <a href='/'>
-                <img alt='Logo' src='../../public/vivid_divider.png' />
+                <img alt='Home' src='../../public/vivid_divider.png' />
               </a>
             </li>
             <li>
@@ -26,7 +26,27 @@
               <a href='/scoreboard'>Scoreboard</a>
             </li>
             <li>
-              <a href='/logout'>Logout</a>
+              <a href='/scoreboard'>Logout</a>
+            </li>
+            <li class="short">
+              <a href='/statistics'>Statistics</a>
+              <ul>
+                <li class="first">
+                  <a href="/games">
+                    One
+                  </a>
+                </li>
+                <li>
+                  <a href="/ascensions">
+                    Two
+                  </a>
+                </li>
+                <li>
+                  <a href="/games">
+                    Three
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
           <span class='clear'></span>
@@ -37,55 +57,49 @@
       <div class='content_bulk'>
         <div class='text_content_wrapper'>
           <div class='text_content'>
+            <h2>
+              Manage your accounts
+            </h2>
             <div id='greeting'>
-              Hi xaiph, to have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># junethack2011 xaiph</tt><br/> to your options file on the public server and enter your public server account name (case-sensitive) into the form below.
+              Hi xaiph!  To have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># junethack2011 xaiph</tt><br/> to your options file on the public server and enter your public server account name (case-sensitive) into the form below.
             </div>
-            <form action='/add_server_account' method='post'>
-              <table id='accountlist'>
-                <tr>
-                  <th>Server</th>
-                  <th>Account</th>
-                  <th>Variant</th>
-                </tr>
-                <tr class='account' id='cell1'>
-                  <td>nethack.alt.org (nao)</td>
-                  <td>xaiph</td>
-                  <td>vanilla</td>
-                  <td class='noborder'></td>
-                </tr>
-                <tr class='account' id='cell2'>
-                  <td>acehack.rawrnix.com (arc)</td>
-                  <td>xaiph</td>
-                  <td>acehack</td>
-                  <td class='noborder'></td>
-                </tr>
-                <tr class='account' id='cell1'>
-                  <td>nethack.fi (nfi)</td>
-                  <td>xaiph</td>
-                  <td>vanilla</td>
-                  <td class='noborder'></td>
-                </tr>
-                <tr class='norow'>
-                  <fieldset>
-                    <td>
-                      <select name='server'>
-                        <option value='3'>acehack.sovrappensiero.info (asi)</option>
-                        <option value='4'>un.nethack.nu (eun)</option>
-                        <option value='6'>sporkhack.com (shc)</option>
-                        <option value='7'>us.un.nethack.nu (uun)</option>
-                        <option value='8'>acehack.sovrappensiero.info (n13)</option>
-                        <option value='9'>nethack.eu (neu)</option>
-                      </select>
-                    </td>
-                    <td>
-                      <input class='text' name='user' type='text' />
-                    </td>
-                    <td class='noborder'>
-                      <input class='small_button' type='submit' value='add account' />
-                    </td>
-                  </fieldset>
-                </tr>
-              </table>
+            <table id='accountlist' class="greytable">
+              <tr>
+                <th>Server</th>
+                <th>Account</th>
+                <th>Variant</th>
+              </tr>
+              <tr class='account' id='cell1'>
+                <td>nethack.alt.org (nao)</td>
+                <td>xaiph</td>
+                <td>vanilla</td>
+              </tr>
+              <tr class='account' id='cell2'>
+                <td>acehack.rawrnix.com (arc)</td>
+                <td>xaiph</td>
+                <td>acehack</td>
+              </tr>
+              <tr class='account' id='cell1'>
+                <td>nethack.fi (nfi)</td>
+                <td>xaiph</td>
+                <td>vanilla</td>
+              </tr>
+            </table>
+            <h3>
+              Add an account to your name
+            </h3>
+            <form class="smallform" id="add_server_form" action='/add_server_account' method='post'>
+              <select name='server'>
+                <option value='3'>acehack.sovrappensiero.info (asi)</option>
+                <option value='4'>un.nethack.nu (eun)</option>
+                <option value='6'>sporkhack.com (shc)</option>
+                <option value='7'>us.un.nethack.nu (uun)</option>
+                <option value='8'>acehack.sovrappensiero.info (n13)</option>
+                <option value='9'>nethack.eu (neu)</option>
+              </select>
+              <input name='user' type='text' />
+              <input type='submit' value='add account' />
+              <span class="clear"></span>
             </form>
           </div>
           <div class='text_content non_top_post'>
@@ -105,6 +119,19 @@
                     <a href="" class="imagelink" title="here is a trophy">
                       <img src="" alt="a trophy" />
                     </a>
+                    <a href="" class="imagelink" title="here is a trophy">
+                      <img src="" alt="a trophy" />
+                    </a>
+                  </div>
+                </li>
+                <li>
+                  <div class="trophyleft">
+                    Here is a variant name
+                  </div>
+                  <div class="trophyright">
+                    <a href="" class="imagelink" title="here is a trophy">
+                      <img src="" alt="a trophy" />
+                    </a>
                   </div>
                 </li>
               </ul>
@@ -116,7 +143,7 @@
             </h2>
             <h4>NetHack 3.4.3</h4>
             <div class='scorelisting'>
-              <table>
+              <table class="greytable">
                 <tr>
                   <th>Competition</th>
                   <th></th>
@@ -126,11 +153,11 @@
                   <td class='table_number'>0</td>
                 </tr>
                 <tr id='cell2'>
-                  <td>Fastest ascension (gametime)</td>
+                  <td>Fastest ascension (by turns)</td>
                   <td class='table_number'></td>
                 </tr>
                 <tr id='cell1'>
-                  <td>Fastest ascension (realtime)</td>
+                  <td>Fastest ascension (by wall-clock time)</td>
                   <td class='table_number'></td>
                 </tr>
                 <tr id='cell2'>
@@ -152,7 +179,7 @@
               </table>
             </div>
             <div class='scorelisting'>
-              <table>
+              <table class="greytable">
                 <tr>
                   <th>Trophies</th>
                 </tr>
@@ -162,7 +189,7 @@
           <div class='text_content non_top_post'>
             <h2>Games you've played</h2>
             <div class='scorelisting'>
-              <table style='width: 100%;'>
+              <table class="greytable">
                 <tr>
                   <th>Name</th>
                   <th>Variant</th>
@@ -3086,7 +3113,7 @@
           </div>
           <div class='text_content non_top_post'>
             <h2>Create a new clan</h2>
-            <form action='/clan' method='POST'>
+            <form action='/clan' method='POST' class="smallform" id="create_clan_form">
               <label for='server'>Creator account</label>
               <select name='server'>
                 <option value='1'>xaiph on nao</option>
@@ -3109,7 +3136,7 @@
                 invitation(s)
               </p>
               <div class='scorelisting'>
-                <table>
+                <table class="greytable">
                   <tr>
                     <th>Clan</th>
                     <th>Accept</th>

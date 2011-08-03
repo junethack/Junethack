@@ -33,6 +33,7 @@ class ClanScoreEntry
     property :value,     Integer
     property :icon,      String
     property :rank,      Integer, :default => -1
+    property :points,    Float, :default => 0.0
 end
 
 # variant-specific competition user trophies

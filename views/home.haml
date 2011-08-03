@@ -1,100 +1,58 @@
 .content_bulk
     .text_content_wrapper
         .text_content
+            %h2
+                Manage your accounts
             - server_accounts = (Server.all - @user.servers)
             - if server_accounts.size > 0
                 #greeting
-                    = "Hi #{h @user.login}, to have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># #{h @tournament_identifier}</tt><br/> to your options file on the public server and enter your public server account name (case-sensitive) into the form below."
-            %form{ :action => "/add_server_account", :method => "post"}
-                %table#accountlist
-                    %tr
-                        %th Server
-                        %th Account
-                        %th Variant
-                    - count = 0
-                    - for account in @user.accounts
-                        - style = (count % 2) == 0 ? "cell1" : "cell2"
-                        - count += 1
-                        %tr.account{:id => style}
-                            %td= account.server.display_name
-                            %td= account.name
-                            %td= account.server.variant
-                            %td.noborder
-
-                    - if server_accounts.size > 0
-                        %tr.norow
-                            %fieldset
-                                %td
-                                    %select{:name => "server"}
-                                        - server_accounts.each do |s|
-                                            %option{:value => s.id}= s.display_name
-                                %td
-                                    %input{:type => "text", :name => "user", :class => "text"}
-                                %td.noborder
-                                    %input{:type => "submit", :value => "add account", :class => "small_button"}
+                    = "Hi #{h @user.login}!  To have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># #{h @tournament_identifier}</tt><br/> to your options file on the public server and enter your public server account name (case-sensitive) into the form below."
+            %table.greytable
+                %tr
+                    %th Server
+                    %th Account
+                    %th Variant
+                - count = 0
+                - for account in @user.accounts
+                    - style = (count % 2) == 0 ? "cell1" : "cell2"
+                    - count += 1
+                    %tr.account{:id => style}
+                        %td= account.server.display_name
+                        %td= account.name
+                        %td= account.server.variant
+            - if server_accounts.size > 0
+                %h3
+                    Add an account to your name
+                %form#add_server_form.smallform{ :action => "/add_server_account", :method => "post"}
+                    %select{:name => "server"}
+                        - server_accounts.each do |s|
+                            %option{:value => s.id}= s.display_name
+                    %input{:type => "text", :name => "user"}
+                    %input{:type => "submit", :value => "add account"}
+                    %span.clear
         .text_content.non_top_post
             .trophycabinet.text_cabinet
                 %h3
                     Trophies
                 %ul
-                    - if @user.individualtrophies.count > 0
-                        %li
-                            .trophyleft
-                                Individual
-                            .trophyright
-                                - for individualtrophy in @user.individualtrophies
-                                    %a.imagelink{:title => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
-                                        %img{:src => "/icons/" + individualtrophy.icon, :alt => $trophy_names[individualtrophy.trophy]}
-                    - unless @user.scoreentries.select{|entry| entry.variant == "3.6.0"}.empty?
-                        %li
-                            .trophyleft
-                                AceHack
-                            .trophyright
-                                - for scoreentry in @user.scoreentries
-                                    - if scoreentry.variant == "3.6.0"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                            %img{:src => "/icons/" + scoreentry.icon}
-                        - unless @user.scoreentries.select{|entry| entry.variant == "3.4.3"}.empty?
-                            %li
-                                .trophyleft
-                                    NetHack 3.4.3
-                                .trophyright
-                                    - for scoreentry in @user.scoreentries
-                                        - if scoreentry.variant == "3.4.3"
-                                            %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                                %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
-                        - unless @user.scoreentries.select{|entry| entry.variant == "UNH-3.5.4"}.empty?
-                            %li
-                                .trophyleft
-                                    UnNetHack
-                                .trophyright
-                                    - for scoreentry in @user.scoreentries
-                                        - if scoreentry.variant == "UNH-3.5.4"
-                                            %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                                %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
-                        - unless @user.scoreentries.select{|entry| entry.variant == "0.6.3"}.empty?
-                            %li
-                                .trophyleft
-                                    SporkHack
-                                .trophyright
-                                    - for scoreentry in @user.scoreentries
-                                        - if scoreentry.variant == "0.6.3"
-                                            %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                                %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
-                        - unless @user.scoreentries.select{|entry| entry.variant == "NH-1.3d"}.empty?
-                            %li
-                                .trophyleft
-                                    NetHack 1.3d
-                                .trophyright
-                                    - for scoreentry in @user.scoreentries
-                                        - if scoreentry.variant == "NH-1.3d"
-                                            %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                                %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
+                    - @player = @user
+                    =haml :user_cross_variant_trophies
+                    - for @variant in $variants
+                        =haml :user_trophies
+                    - @variant = "NH-1.3d"
+                    =haml :user_trophies
+
         .text_content.non_top_post
             =haml :_user_games
         .text_content.non_top_post
             =haml :games_played
+        .text_content.non_top_post
+            - @ascended_combinations_sql = ascended_combinations_user_sql
+            - @ascended_combinations_value = @user.id
+            =haml :ascended_combinations
         #clanmanager.text_content.non_top_post
+            %h2
+                Manage your clans
             - for account in @user.accounts
                 .account-clan
                     %h3= account.name + " on " + account.server.name
@@ -128,8 +86,8 @@
         - clanless_accs = @user.accounts.select{|a| a.clan.nil?}
         - unless clanless_accs.empty?
             %div.text_content.non_top_post
-                %h4 Create a new clan
-                %form{:method => "POST", :action => "/clan"}
+                %h2 Create a new clan
+                %form#create_clan_form.smallform{:method => "POST", :action => "/clan"}
                     %label{:for => "server"}  Creator account
                     %select{:name => "server"}
                         - for acc in clanless_accs

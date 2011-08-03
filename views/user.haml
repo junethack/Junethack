@@ -8,82 +8,36 @@
                 - else
                     | #{h @player.games.length} Games Played
             - server_accounts = (Server.all - @player.servers)
-            %form{ :action => "/add_server_account", :method => "post"}
-                %table#accountlist
-                    %tr
-                        %th Server
-                        %th Account
-                        %th
-                    - count = 0
-                    - for account in @player.accounts
-                        - style = (count % 2) == 0 ? "cell1" : "cell2"
-                        - count += 1
-                        %tr.account{:id => style}
-                            %td= account.server.display_name
-                            %td= account.name
-                            %td.noborder
+            %table.greytable
+                %tr
+                    %th Server
+                    %th Account
+                - count = 0
+                - for account in @player.accounts
+                    - style = (count % 2) == 0 ? "cell1" : "cell2"
+                    - count += 1
+                    %tr.account{:id => style}
+                        %td= account.server.display_name
+                        %td= account.name
 
         .text_content.non_top_post
             .trophycabinet.text_cabinet
                 %h3
                     Trophies
                 %ul
-                    - if @player.individualtrophies.count > 0
-                        %li
-                            .trophyleft
-                                Individual
-                            .trophyright
-                                - for individualtrophy in @player.individualtrophies
-                                    %a.imagelink{:title => $trophy_names[individualtrophy.trophy], :href => "/trophies#" + individualtrophy.icon[0 .. (individualtrophy.icon.length - 5)]}
-                                        %img{:src => "/icons/" + individualtrophy.icon, :alt => $trophy_names[individualtrophy.trophy]}
-                    - unless @player.scoreentries.select{|entry| entry.variant == "3.6.0"}.empty?
-                        %li
-                            .trophyleft
-                                AceHack
-                            .trophyright
-                                - for scoreentry in @player.scoreentries
-                                    - if scoreentry.variant == "3.6.0"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                            %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
-                    - unless @player.scoreentries.select{|entry| entry.variant == "3.4.3"}.empty?
-                        %li
-                            .trophyleft
-                                NetHack 3.4.3
-                            .trophyright
-                                - for scoreentry in @player.scoreentries
-                                    - if scoreentry.variant == "3.4.3"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                            %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
-                    - unless @player.scoreentries.select{|entry| entry.variant == "UNH-3.5.4"}.empty?
-                        %li
-                            .trophyleft
-                                UnNetHack
-                            .trophyright
-                                - for scoreentry in @player.scoreentries
-                                    - if scoreentry.variant == "UNH-3.5.4"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                            %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
-                    - unless @player.scoreentries.select{|entry| entry.variant == "0.6.3"}.empty?
-                        %li
-                            .trophyleft
-                                SporkHack
-                            .trophyright
-                                - for scoreentry in @player.scoreentries
-                                    - if scoreentry.variant == "0.6.3"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                            %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
-                    - unless @player.scoreentries.select{|entry| entry.variant == "NH-1.3d"}.empty?
-                        %li
-                            .trophyleft
-                                NetHack 1.3d
-                            .trophyright
-                                - for scoreentry in @player.scoreentries
-                                    - if scoreentry.variant == "NH-1.3d"
-                                        %a.imagelink{:title => $trophy_names[scoreentry.trophy], :href => "/trophies#" + scoreentry.icon[0 .. (scoreentry.icon.length - 5)]}
-                                            %img{:src => "/icons/" + scoreentry.icon, :alt => $trophy_names[scoreentry.trophy]}
-        =haml :_player_games
+                    =haml :user_cross_variant_trophies
+                    - for @variant in $variants
+                        =haml :user_trophies
+                    - @variant = "NH-1.3d"
+                    =haml :user_trophies
+        .text_content.non_top_post
+            =haml :_player_games
         .text_content.non_top_post
             =haml :games_played
+        .text_content.non_top_post
+            - @ascended_combinations_sql = ascended_combinations_user_sql
+            - @ascended_combinations_value = @player.id
+            =haml :ascended_combinations
         #clanmanager.text_content.non_top_post
             - for account in @player.accounts
                 .account-clan
@@ -94,4 +48,4 @@
                     - else
                         No clan
                         %span#small_content_spacer.clear
-	
+

@@ -87,6 +87,7 @@ $trophy_names = {
     "defeated_a_high_priest" => "defeated a High Priest",
     "entered_planes" => "entered the Elemental Planes",
     "entered_astral" => "entered the Astral Plane",
+    "escapologist" => "escaped in celestial disgrace",
 
     "ascended_without_defeating_nemesis" => "Too good for quests (ascended without defeating the quest nemesis)",
     "ascended_without_defeating_vlad" => "Too good for Vladbanes (ascended without defeating Vlad)",
@@ -96,9 +97,17 @@ $trophy_names = {
     "defeated_croesus" => "Assault on Fort Knox (defeated Croesus)",
     "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)",
 
+    # Cross-Variant
     "sightseeing_tour"  => "Sightseeing Tour: finish a game in all variants",
     "globetrotter"      => "Globetrotter: get a trophy for each variant",
-    "king_of_the_world" => "King of the world: ascend in all variants"
+    "anti_stoner"       => "Anti-Stoner: defeat Medusa in all variants",
+    "king_of_the_world" => "King of the world: ascend in all variants",
+
+    # Clan
+    "most_ascensions_in_a_24_hour_period" => "Most ascensions in a 24 hour period",
+    "most_ascended_combinations" => "Most ascended variant/role/race/alignment/gender combinations (starting)",
+    "most_points" => "Most points",
+    "most_unique_deaths" => "Most unique deaths",
 }
 
 class Game
@@ -198,7 +207,8 @@ class Game
     end
     # entered Hell
     def entered_hell?
-        event and event.to_i & 0x00020 > 0
+        return false if version != 'NH-1.3d'
+        (event and event.to_i & 0x00020 > 0) or maxlvl >= 30
     end
     # defeated Rodney
     def defeated_rodney?
@@ -237,7 +247,11 @@ class Game
         deathlev < 0
     end
     def entered_astral?
-        maxlvl == -5
+        deathlev == -5
+    end
+
+    def escapologist?
+        death == "escaped (in celestial disgrace)"
     end
 
     def variant_name
@@ -272,3 +286,11 @@ DataMapper::MigrationRunner.migration( 2, :create_trophy_indexes ) do
   end
 end
 
+
+class NormalizedDeath
+    include DataMapper::Resource
+    belongs_to :game,  :key => true
+    belongs_to :user,  :required => false
+
+    property :death,     String
+end

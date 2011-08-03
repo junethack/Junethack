@@ -1,0 +1,9 @@
+%li
+    .trophyleft
+        Cross-Variant
+    .trophyright
+        - trophies = repository.adapter.select "select trophy from individualtrophies where user_id = ?", @player.id
+        - for individualtrophy in Trophy.cross_variant_trophies
+            - icon = (trophies.include? individualtrophy.trophy) ? individualtrophy.icon : individualtrophy.light_icon
+            %a.imagelink{:title => individualtrophy.text, :href => "/trophies#" + individualtrophy.anchor}
+                %img{:src => "/icons/" + icon, :alt => individualtrophy.text}

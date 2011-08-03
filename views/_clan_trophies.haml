@@ -1,9 +1,7 @@
 %h2
   Clan Competition
-%h3
-  Highest Score
 .scorelisting
-  %table
+  %table.greytable.misc
     %tr
       %th 
         Clan
@@ -12,15 +10,14 @@
       %th 
         Rank
     - count = 0
-    - ClanScoreEntry.all(:order => [:rank.asc]).each do |entry| 
-      - if count >= 3
-        - break
-      %tr#cell1
+    - ClanScoreEntry.all(:order => [:rank.asc], :trophy => 'clan_winner').each do |entry|
+      - style = (count % 2) == 0 ? "cell1" : "cell2"
+      - count += 1
+      %tr{:id => style}
         %td
           %a{:href => "/clan/#{CGI::escape entry.clan.name}"}
             #{h entry.clan.name}
-        %td
-          #{h entry.value}
+        %td.table_number
+          #{h entry.points}
         %td.table_number
           #{h entry.rank}
-      - count += 1

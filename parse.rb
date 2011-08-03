@@ -1,18 +1,21 @@
 require 'rubygems'
 require 'json'
+require 'time'
 
 require 'singleton'
+
+Dir.mkdir('trace') unless File.exists?('trace')
 
 class XLog
     include Singleton
 
     def self.parse_xlog xlog
-        puts "#{xlog}"
+        #puts "#{xlog}"
         Hash[xlog.chomp.split(":").map{|e| e.split("=")}]
     end
 
     def self.fetch_header xlog_url
-        %x{ curl -I -s #{xlog_url}}
+        %x{ curl --trace-time --trace-ascii "trace/#{Time.new.iso8601}_trace_head.log" -I -s #{xlog_url}}
     end 
 
     def self.parse_header raw_header
@@ -20,9 +23,11 @@ class XLog
     end
     
     def self.fetch_from_xlog xlog_url, startp, endp
-        puts
-        return false if startp.to_i >= endp.to_i
-        %x{ curl -s -r #{startp}-#{endp} #{xlog_url}}.split("\n").map{|g| XLog.parse_xlog(g)}
+        return false if startp.to_i >= endp.to_i-1
+        time = Time.new.iso8601
+        xlogdiff = %x{ curl --trace-time --trace-ascii "trace/#{time}_trace.log" -s -r #{startp}-#{endp.to_i-1} #{xlog_url}}
+        File.open("trace/#{time}_xlogfile.txt", 'w') {|f| f.write(xlogdiff) }
+        StringIO.new xlogdiff
     end
     private 
     def self.instance

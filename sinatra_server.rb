@@ -12,14 +12,19 @@ require 'userscore'
 require 'time'
 require 'logger'
 
+require 'irc'
+
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
 # Scheduler: fetch game data every 15 minutes
-scheduler = Rufus::Scheduler.start_new
-scheduler.cron('*/15 * * * *') { fetch_all }
+scheduler = Rufus::Scheduler.start_new(:frequency => 1.0)
+scheduler.cron('*/15 * * * *', :blocking => true) { fetch_all }
 
 $application_start = Time.new
 
+#bot = IRC.new('irc.freenode.net', 6667, "junetbot", "#junethack")
+#bot.connect
+#bot.main_loop
 
 # http://groups.google.com/group/rack-devel/browse_frm/thread/ffec93533180e98a
 class WorkaroundLogger < Logger
@@ -47,6 +52,8 @@ before do
 end
 
 def caching_check_last_played_game
+    return if @messages.size > 0 or @errors.size > 0
+
     last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id is not null;")[0]
 
     etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
@@ -54,6 +61,8 @@ def caching_check_last_played_game
 end
 
 def caching_check_last_played_game_by(user)
+    return if @messages.size > 0 or @errors.size > 0
+
     last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id = (select user_id from users where login = ?);", user)[0]
 
     etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
@@ -61,7 +70,7 @@ def caching_check_last_played_game_by(user)
 end
 
 def caching_check_application_start_time
-    return if session["messages"].size > 0 or session["errors"].size > 0
+    return if @messages.size > 0 or @errors.size > 0
 
     etag "#{$application_start.to_i}_#{@user.to_i}".hash if $application_start
     last_modified $application_start.httpdate if $application_start
@@ -141,6 +150,8 @@ get "/home" do
     @userscore = UserScore.new session['user_id']
 
     @user = User.get(session['user_id'])
+    @user_id = @user.id
+
     @scoreentries = Scoreentry.all(:user_id => @user.id)
 
     @games_played = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
@@ -170,7 +181,8 @@ post "/add_server_account" do
         redirect "/home" and return
     end
     begin
-        account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
+        account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true, :clan => Clan.get(@user.clan))
+        bot.say "#{@user.login} added account #{account.name} on #{server.name}"
     rescue
         session['errors'].push(*account.errors)
     end
@@ -189,17 +201,22 @@ post "/create" do
     redirect "/register" and return unless session['errors'].empty?
     user = User.new(:login => params["username"])
     user.password = params["password"]
+    puts "CREATED USER LOL"
     begin
         if user.save
             session['messages'] = "Registration successful. Please log in."
-            redirect "/"
+            bot.say "#{user.login} registered"
+            puts "botsay down"
+            redirect "/login" and return 
         else
             session['errors'] = "Could not register account"
-            redirect "/register"
+            puts "SOMETHING WENT WRONG LOL"
+            redirect "/register" and return
         end
     rescue
         session['errors'].push(*user.errors)
-        redirect "/register"
+        puts "GOT DAMMIT FUCK EXCEPTION CAUGHT"
+        redirect "/register" and return
     end
 end
 
@@ -212,8 +229,15 @@ get "/user/:name" do
         @userscore = UserScore.new @player.id
         @scoreentries = Scoreentry.all(:user_id => @player.id)
 
-        @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
-        @games_played_title = "Games played"
+        startscummed_games = Game.count(:user_id => @player.id, :conditions => ["turns <= 10 and death in ('escaped', 'quit')"])
+        if startscummed_games > 0 then
+          @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ], :conditions => ["turns > 10 or death not in ('escaped','quit')"])
+          @games_played_title = "Games played (without #{startscummed_games} startscummed games)"
+        else
+          @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
+          @games_played_title = "Games played"
+        end
+        @user_id = @player.id
 
         haml :user
     else
@@ -281,7 +305,7 @@ post "/clan/invite" do
             acc.update(:invitations => (acc.invitations.push(invitation)).to_json)
             session['messages'] << "Successfully invited #{acc.name} to #{clan.name}"
         else
-            session['errors'] << "Could not find #{params[:accountname]} on #{params[:server]}"
+            session['errors'] << "Could not invite #{params[:accountname]} on #{Server.get(params[:server]).display_name}"
         end
     else
         sessions['errors'] << "You are not the clan admin"
@@ -412,6 +436,42 @@ get "/games" do
     @games_played_user_links = true
     @games_played_title = "Last #{@games_played.size} games played"
     haml :last_games_played
+end
+
+get "/ascensions" do
+    caching_check_last_played_game
+
+    @games_played = Game.all(:conditions => [ "user_id is not null and ascended='t'" ], :order => [ :endtime.desc ])
+    @games_played_user_links = true
+    @games_played_title = "#{@games_played.size} ascended games"
+    haml :last_games_played
+end
+
+get "/activity" do
+    caching_check_last_played_game
+
+    @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and turns > 10 and death != 'quit') group by datum order by datum asc;"
+
+    @ascensions_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum order by datum asc;"
+
+    @new_users_per_day = repository.adapter.select "select date, count(1) as count from (select date(created_at) as date from users where created_at is not null) group by date order by date asc;"
+
+    haml :activity
+end
+
+get "/deaths" do
+    caching_check_last_played_game
+
+    @deaths = repository.adapter.select "select death, count(1) as count from games where user_id is not null group by death order by count desc;"
+    @unique_deaths = repository.adapter.select "select death, count(1) as count from normalized_deaths group by death order by count desc;"
+
+    haml :deaths
+end
+
+get "/clan_competition" do
+    caching_check_last_played_game
+
+    haml :clan_competition
 end
 
 helpers do

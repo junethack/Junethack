@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'data_mapper'
 require 'dm-serializer'
+require 'dm-timestamps'
+
 $dbname = "junethack.db"
 
 # for debugging: print all generated SQL statemtens
@@ -21,6 +23,7 @@ require 'models/account'
 require 'models/game'
 require 'models/clan'
 require 'models/scoreentry'
+require 'models/trophy'
 
 DataMapper.finalize
 DataMapper.auto_upgrade!

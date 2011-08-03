@@ -72,6 +72,17 @@ a.active.imagelink, a.active.imagelink:hover,
 a.imagelink:hover {
     text-decoration: none;
 }
+/* misc */
+#container {
+    width: 750px;
+    margin: 0 auto;
+}
+
+/*****************************************
+**                                      **
+**         fiddly css3 properties       **
+**                                      **
+*****************************************/
 #footer,
 /* topnav */
 .text_content_wrapper, #topnav {
@@ -80,18 +91,6 @@ a.imagelink:hover {
     -moz-border-radius: 10px;
     border-radius: 10px;
 }
-#topnav li a {
-    color: #555;
-}
-#topnav li {
-}
-#topnav .current_nav_page a, /* class for debugging, but useful in production */
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
-    color: #000;
-    background-color: #eee;
-}
-
 /* typical inset rounding and shadowing */
 #topnav,
 #footer,
@@ -110,9 +109,7 @@ a.imagelink:hover {
 /* elements on the page that need rounding/shadowing */
 /* these don't
 #clan_trophies,
-#clan_header > div */
-{
-    
+#clan_header > div */ {
     -webkit-box-shadow: 0px 0px 10px #888;
     -moz-box-shadow: 0px 0px 10px #888;
     box-shadow: 0px 0px 10px #888;
@@ -123,21 +120,6 @@ a.imagelink:hover {
     -moz-opacity: 0.9; 
     opacity: 0.9; 
 }
-/* small 'tab-style' rounding/shadowing, eg topnav */
-#topnav .current_nav_page a,
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
-    -webkit-border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 4px;
-    -moz-border-radius-topleft: 4px;
-    -moz-border-radius-topright: 4px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    -webkit-box-shadow: 0px 0px 10px #aaa;
-    -moz-box-shadow: 0px 0px 10px #aaa;
-    box-shadow: 0px 0px 10px #aaa;
-}
-
 /* slightly larger and darker rounding/shadowing, eg error messages...? */
 #errors,
 #messages {
@@ -160,16 +142,9 @@ form#login_form > fieldset > input[type=submit],
     box-shadow: 0px 5px 20px #555;
 }
 
-/* misc */
-#container {
-    width: 750px;
-    margin: 0 auto;
-}
 ::-moz-selection{ background: #aaa; color:#fff; text-shadow: none; }
 ::-webkit-selection{ background: #aaa; color:#fff; text-shadow: none; }
 ::selection { background:#aaa; color:#fff; text-shadow: none; }
-
-
 
 /**************************
 **                       **
@@ -177,6 +152,10 @@ form#login_form > fieldset > input[type=submit],
 **                       **
 **************************/
 
+#container > .navigation {
+  position: relative;
+  z-index: 200;
+}
 /*
  * Using #topnav not .navigation because of possible 2ndary navigation at a later date, and don't want topnav styles to apply there as well
  * */
@@ -184,36 +163,109 @@ form#login_form > fieldset > input[type=submit],
     width: 100%;
     margin: 0 auto;
     padding: 0;
-    height: 50px;
+    height: 60px;
     margin-top: 10px;
 }
-#topnav, #topnav ul {
-    /* because of ie's amazing expanding box trick */
+/* because of ie's amazing expanding box trick * /
+#topnav, #topnav ul.main {
+  z-index: 99;
     overflow: hidden;
 }
+/* maybe not. */
 #topnav h1 {
     display: none;
 }
-#topnav ul {
-    width: 101.5%;
+#topnav .main {
+    width: 100%;
+    margin-left: 30px;
 }
-#topnav li {
+#topnav .main > li {
+  /* Any li in main can be a label for a submenu */
+    position: relative;
     float: left;
-    width: 16%;
-    margin-left: 4.3%;
-    margin-right: 4.3%;
-    line-height: 50px;
+    width: auto;
+    margin: 5px;
+    margin-top: 15px;
+    line-height: 30px;
     text-align: center;
 }
-#topnav li a {
+#topnav .main > li.first {
+    margin: 0px;
+    margin-top: 5px;
+}
+#topnav .main > li.first > a {
+    background: url(vivid_divider2.png) no-repeat top left;
+    display: block;
+    width: 100px;
+    height: 51px;
+}
+#topnav .main > li.first img {
+    display: none;
+}
+
+#topnav .main li a {
+    color: #555;
+    padding-right: 10px;
+    padding-left: 10px;
     display: block;
     text-decoration: none;
 }
-#topnav .current_nav_page a,
-#topnav a.active, #topnav a.active:hover,
-#topnav a:hover {
-    margin-top: 5px;
-    line-height: 45px;
+#topnav .main > li > a.active, #topnav .main > li > a.active:hover,
+#topnav .main > li > a:hover {
+    color: #000;
+    background-color: #ccc;
+}
+#topnav .main > li.first > a.active,
+#topnav .main > li.first > a.active:hover,
+#topnav .main > li.first > a:hover {
+/* if we don't want the home to have a highlight */
+    background-color: #ddd;
+    background-color: transparent;
+    background: url(vivid_divider2.png) no-repeat bottom left;
+/*    */
+}
+
+/*******
+submenus
+********/
+#topnav .main li ul {
+  background-image: url(menu-arrow.png);
+  background-repeat: no-repeat;
+  background-position: 25px 0;
+  padding-top: 5px;
+  position: absolute;
+  display: none;
+  width: 150px;
+}
+/* Also, if the position of the arrow is wrong, put a class on it :) */
+#topnav .main li.longer ul {  background-position: 30px 0;  }
+#topnav .main li.shorter ul {  background-position: 20px 0;  }
+/* add more with more numbers at the end as necessary */
+#topnav .main li.longer1 ul {  background-position: 27px 0;  }
+#topnav .main li.shorter1 ul {  background-position: 22px 0;  }
+
+#topnav li:hover ul {
+  display: block;
+}
+/* Specificity in case we decide we want to add 2ndary menus */
+#topnav .main > li > ul > li {
+  /* line height is inherited from .main > li */
+  background-color: #555;
+  background-image: url(blacktransparent.png);
+  background-repeat: no-repeat;
+  text-align: left;
+}
+#topnav .main > li > ul > li > a {
+  border-top: 1px solid #444;
+  color: #fff;
+}
+#topnav .main > li > ul > li.first a {
+  border-top: 0;
+}
+#topnav .main > li > ul > li > a:active,
+#topnav .main > li > ul > li > a.active:hover,
+#topnav .main > li > ul > li > a:hover {
+    background-color: #666;
 }
 
 /**************************
@@ -238,6 +290,9 @@ form#login_form > fieldset > input[type=submit],
 /* space between title and rest of content */
 /*  locate space here to avoid future margin collapse */
 .content_bulk {
+  /* not sure if position is needed for z-index, but ie would probably complain anyway */
+    position: relative;
+    z-index: 1;
     margin-top: 1em;
 }
 
@@ -320,88 +375,118 @@ form#login_form > fieldset > input[type=submit],
     width: 114px;
     display: block;
     margin: 0 auto;
+    margin-top: 20px;
 }
 
-/* TABLES */
-/* Now this one is for score listing */
-.scorelisting
-{
-    text-align: center;
-}
+/**************************
+**                       **
+**      scoreboard       **
+**                       **
+**************************/
 
-
-#accountlist,
-.scorelisting table {
+.greytable { /* replaces .scorelisting table and #accountlist */
     font-size: 85%;
     border-collapse: collapse;
-    /* Hard limit on width */
-    width: 600px;
+    width: 100%; /* there's an inline style here.. */
     text-align: left;
     vertical-align: middle;
+    margin: 10px 0;
 }
-#accountlist th,
-.scorelisting th
-{
+table.misc,
+.greytable.misc { /* override width:100% */
+    width: auto;
+}
+.greytable th {
     text-align: left;
     padding-right: 20px;
     padding-left: 3px;
 }
-#cell1 td,
-#cell2 td
+.greytable #cell1 td,
+.greytable #cell2 td
 {
     border: 1px solid black;
     padding-right: 10px;
     padding-left: 3px;
     vertical-align: middle;
 }
-#cell1 td
+.greytable #cell1 td
 {
     background-color: #ccc;
 }
-#cell2 td
+.greytable #cell2 td
 {
     background-color: #bbb;
 }
 
-#cell1 td.table_number,
-#cell2 td.table_number
+.greytable #cell1 td.table_number,
+.greytable #cell2 td.table_number
 {
     text-align: right;
     padding-right: 3px;
     padding-left: 3px;
 }
-#cell1 td.table_date,
-#cell2 td.table_date
+.greytable #cell1 td.table_date,
+.greytable #cell2 td.table_date
 {
     text-align: center;
     padding-right: 3px;
     padding-left: 3px;
 }
-
-#accountlist,
-#accountlist tr,
-#accountlist td
-{
-    width: inherit;
-}
-#accountlist tr.norow,
-#accountlist tr.norow td,
-#accountlist td.noborder
-{
-    border-width: 0px;
-    background-color: inherit;
-    vertical-align: middle;
-}
-#accountlist input[type="text"]
+/* next two declarations are probably deprecated */
+.greytable input[type="text"]
 {
     width: 6em;
     margin: 3px 3px 3px 3px;
     padding: 0;
 }
-#accountlist select
+.greytable select
 {
     font-size: 100%;
 }
+
+/**************************
+**                       **
+**      small forms      **
+**                       **
+**************************/
+
+.smallform {
+  margin-bottom: 10px;
+}
+.smallform label,
+.smallform input,
+.smallform select {
+    margin-right: 10px;
+    float:left;
+}
+.smallform input,
+.smallform select,
+.smallform label,
+.smallform input[type=submit] {
+  margin-top: 10px;
+  height: 30px;
+}
+.smallform select {
+  padding: 0;
+}
+
+.smallform input {
+  padding: 5px 5px 5px 5px;
+  height: 20px;
+}
+
+.smallform input[type=submit] {
+  padding: 5px 10px;
+  margin-left: 0;
+}
+/* cascading from label...maybe? or maybe i should make label into #login label and #register label */
+.smallform label {
+  margin-left: 0;
+  width: auto;
+  line-height: 30px;
+  clear: none;
+}
+
 
 /**************************
 **                       **
@@ -491,14 +576,6 @@ form#login_form > fieldset > input[type=submit].active:hover {
     background-color: #c22;
 }
 
-input[type="submit"].small_button {
-    height: auto;
-    width: auto;
-    margin: 2px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-}
-
 /**************************
 **                       **
 **     footer styles     **
@@ -511,6 +588,11 @@ input[type="submit"].small_button {
     text-align: center;
     margin: 20px 0;
 }
+#flattr img,
+a#flattr {
+    vertical-align: baseline;
+    margin-bottom: -5px;
+}
 
 
 /**************************
@@ -522,8 +604,6 @@ input[type="submit"].small_button {
 **                       **
 **************************/
 .prettytable,
-/* /clan/*name */
-#clan_page table,
 /* /clans */
 #clans,
 /* /servers */
@@ -533,7 +613,7 @@ input[type="submit"].small_button {
 }
 table.prettytable th,
 /* specificity override for padding */
-#clan_page table tr/*<--extraspecific*/ th,
+#clan_page table.clan_members tr/*<--extraspecific*/ th,
 table#clans th,
 table#servers th {
     text-align: left;
@@ -542,8 +622,6 @@ table#servers th {
 }
 .prettytable th,
 .prettytable td,
-#clan_page table th,
-#clan_page table td,
 #clans th,
 #clans td,
 #servers th,
@@ -551,10 +629,19 @@ table#servers th {
     padding: 5px 8px;
 }
 .prettytable tr,
-#clan_page table tr,
 #clans tr,
 #servers tr {
     border-bottom: 1px solid #ccc;
+}
+
+/* tables for competition score entries */
+th.competition_value {
+    width: 10em;
+}
+th.competition_placing {
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 3em;
 }
 
 /**************************
@@ -563,29 +650,32 @@ table#servers th {
 **                       **
 **************************/
 
+#clan_header {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
 #clan_header > div,
 #clan_header > h1 {
     margin-bottom: 0;
-    height: 60px;
-    line-height: 60px;
+    height: 50px;
+    line-height: 50px;
 }
 
 #clan_header > h1 {
+    line-height: 50px;
     width: auto;
     text-align: center;
     float: left;
 }
-#clan_header > h1 > span {
-    width: 100%;
-    display: block;
-}
-/* small icons */
+/* the group of right hand things */
 #clan_header > div {
-    float: right;
-    width: 16%;
-    text-align: center;
     border-left: 1px solid #ccc;
+    float: right;
+    padding: 0 20px;
+    text-align: center;
 }
+/* links only - no spans here please */
 #clan_header > div a {
     display: block;
 }
@@ -593,25 +683,6 @@ table#servers th {
     background-color: #dadada;
     text-decoration: none;
 }
-#clan_members,
-#clan_trophies {
-    clear: both;
-    border-top: 1px solid #ccc;
-}
-/* internal wrapper */
-#clan_members > div,
-#clan_trophies > div {
-    margin: 15px;
-}
-#clan_trophies .trophyicon {
-    margin-left: 5px;
-    margin-top: 5px;
-    background: #eee;
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-}
-
 /**************************
 **                       **
 ** Display trophy images **
@@ -642,6 +713,18 @@ ul.trophypage > li > img,
     height: 35px;
     width: 35px;
 }
+
+/* exception for clan page trophies */
+#clan_trophies .trophyicon {
+    margin-left: 5px;
+    margin-top: 5px;
+    background: #eee;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+
+
 /* vertically align text and images */
 .trophycabinet .trophyleft {
     vertical-align: middle;
@@ -655,8 +738,8 @@ ul.trophypage > li > img,
     width: 20%;
 }
 .text_cabinet.trophycabinet .trophyright {
-    /* quick fix to allow for strange things happening with the a */
-    margin-bottom: 5px;
+  /* quick fix for i dunno what's happening with that a height */
+    margin-bottom: 0px;
     width: 75%;
 }
 .trophycabinet .trophyleft,
@@ -666,14 +749,18 @@ ul.trophypage > li > img,
 }
 /* finer-grained display styles */
 .trophycabinet .trophyright, .trophycabinet .trophyleft {
-    margin: 10px 0px 10px 10px;
+    margin: 5px 0px 5px 5px;
 }
+.trophycabinet h2,
 .trophycabinet h3 {
     line-height: 2.5em;
 }
+.trophycabinet h2,
 .trophycabinet h3 {
+    margin-bottom: 0;
     border-bottom: 3px double #bbb;
 }
+.trophycabinet .endofcabinetrow,
 .trophycabinet > ul li {
     border-bottom: 1px solid #ccc;
 }
