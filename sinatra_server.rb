@@ -205,17 +205,16 @@ post "/create" do
     begin
         if user.save
             session['messages'] = "Registration successful. Please log in."
-            bot.say "#{user.login} registered"
-            puts "botsay down"
             redirect "/login" and return 
         else
             session['errors'] = "Could not register account"
-            puts "SOMETHING WENT WRONG LOL"
+            puts "could not register user #{params[:username]}"
             redirect "/register" and return
         end
     rescue
         session['errors'].push(*user.errors)
-        puts "GOT DAMMIT FUCK EXCEPTION CAUGHT"
+        puts "registering user threw an exception"
+        puts "#{$!}"
         redirect "/register" and return
     end
 end
@@ -278,16 +277,21 @@ post "/clan" do
         begin
             clan = Clan.create(:name => params[:clanname], :admin => [acc.user.id, acc.server.id])
         rescue
-            session['errors'].push(*clan.errors)
+            session['errors'] << "There was an error creating the clan"
             redirect "/home" and return
         end
-        acc.clan = clan
-        acc.save
-        @user.clan = clan.name
-        @user.save
-        session['messages'] << "Successfully created clan #{params[:clanname]}"
-        puts CGI.escape(acc.clan.name)
-        redirect "/clan/" + CGI.escape(acc.clan.name)
+        if clan
+            acc.clan = clan
+            acc.save
+            @user.clan = clan.name
+            @user.save
+            session['messages'] << "Successfully created clan #{params[:clanname]}"
+            puts CGI.escape(acc.clan.name)
+            redirect "/clan/" + CGI.escape(acc.clan.name) and return
+        else
+            session['errors'] << "Could not create clan"
+            
+        end
     else 
         session['errors'] << "Could not find your account on this server"
         redirect "/home"
@@ -323,7 +327,15 @@ get "/respond/:server_id/:token" do #respond to invitation
                 session['messages'] << "Successfully #{accept ? "accepted" : "declined"} invitation"
                 acc.invitations.reject!{|inv| inv['token'] == params[:token]}
                 if accept
-                    acc.clan = Clan.first(:name => invitation['clan_id'])
+                    clan = Clan.first(:name => invitation['clan_id'])
+                    if clan
+                        for account in @user.accounts
+                            if account.clan.nil?
+                                account.clan = clan
+                                account.save
+                            end
+                        end
+                    end     
                     @user.clan = acc.clan.name
                     @user.save
                 end
