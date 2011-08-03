@@ -318,7 +318,7 @@ get "/clan/disband/:name" do
     clan = Clan.get(params[:name])
     if clan
         admin = clan.get_admin
-        if @user.accounts.include? admin
+        if clan.admin[0] == @user.id
             ClanScoreEntry.all(:clan_name => clan.name).destroy
             if clan.destroy
                 session['messages'] << "Successfully disbanded #{params[:name]}"

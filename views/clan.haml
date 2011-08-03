@@ -6,6 +6,8 @@
           #{ h @clan.name }
         - if !@logged_in
           -if @user.login == @clan.get_admin.login
+            #clan_disband
+              %a{:href => "/clan/disband/#{@clan.name}"} Disband
             #clan_invite
               %a{:href => "#invite_account"} Invite
         #clan_placing
