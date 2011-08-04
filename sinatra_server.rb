@@ -231,7 +231,7 @@ get "/user/:name" do
         startscummed_games = Game.count(:user_id => @player.id, :conditions => ["turns <= 10 and death in ('escaped', 'quit')"])
         if startscummed_games > 0 then
           @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ], :conditions => ["turns > 10 or death not in ('escaped','quit')"])
-          @games_played_title = "Games played (without #{startscummed_games} startscummed games)"
+          @games_played_title = "Games played (not showing #{startscummed_games} startscummed games)"
         else
           @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
           @games_played_title = "Games played"
