@@ -197,6 +197,7 @@ post "/add_server_account" do
     end
     # set user_id on all already played games
     Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
+    repository.adapter.execute "UPDATE start_scummed_games set user_id = ? where name = ? and server_id = ?", session['user_id'], params[:user], server.id
 
     redirect "/home"
 end
