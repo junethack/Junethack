@@ -53,6 +53,11 @@ class User
     def to_i
         self.id
     end
+
+    def User.max_created_at
+        repository.adapter.select "select strftime('%s',max(created_at)) from users"
+    end
+
 end
 #DataMapper::MigrationRunner.migration(1, :add_clan_to_users) do
 #    up do

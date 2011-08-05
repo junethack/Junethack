@@ -1,46 +1,53 @@
 .content_bulk
   .text_content_wrapper
-    .text_content
-      %h2 Ascensions per Day
-      .scorelisting
-        %table.greytable.misc
-          %tr
-            %th Date (UTC)
-            %th
-          - count = 0
-          - @ascensions_per_day.each do |game|
-            - style = (count % 2) == 0 ? "cell1" : "cell2"
-            - count += 1
-            %tr{:id => style}
-              %td.table_date= h game.datum
-              %td.table_number= game.count
+    - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
+      - @ascensions_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum order by datum asc;"
+      .text_content
+        %h2 Ascensions per Day
+        .scorelisting
+          %table.greytable.misc
+            %tr
+              %th Date (UTC)
+              %th
+            - count = 0
+            - @ascensions_per_day.each do |game|
+              - style = (count % 2) == 0 ? "cell1" : "cell2"
+              - count += 1
+              %tr{:id => style}
+                %td.table_date= h game.datum
+                %td.table_number= game.count
 
-    .text_content.non_top_post
-      %h2 Finished Games per Day (without obvious start scummers)
-      .scorelisting
-        %table.greytable.misc
-          %tr
-            %th Date (UTC)
-            %th
-          - count = 0
-          - @finished_games_per_day.each do |game|
-            - style = (count % 2) == 0 ? "cell1" : "cell2"
-            - count += 1
-            %tr{:id => style}
-              %td.table_date= h game.datum
-              %td.table_number= game.count
+    - cache_fragment("games_#{Game.max_endtime}") do
+      - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and turns > 10 and death != 'quit') group by datum order by datum asc;"
+      .text_content.non_top_post
+        %h2 Finished Games per Day (without obvious start scummers)
+        .scorelisting
+          %table.greytable.misc
+            %tr
+              %th Date (UTC)
+              %th
+            - count = 0
+            - @finished_games_per_day.each do |game|
+              - style = (count % 2) == 0 ? "cell1" : "cell2"
+              - count += 1
+              %tr{:id => style}
+                %td.table_date= h game.datum
+                %td.table_number= game.count
 
-    .text_content.non_top_post
-      %h2 New Users per Day
-      .scorelisting
-        %table.greytable.misc
-          %tr
-            %th Date (UTC)
-            %th
-          - count = 0
-          - @new_users_per_day.each do |game|
-            - style = (count % 2) == 0 ? "cell1" : "cell2"
-            - count += 1
-            %tr{:id => style}
-              %td.table_date= h game.date
-              %td.table_number= game.count
+    - cache_fragment("users_#{User.max_created_at}") do
+      - @new_users_per_day = repository.adapter.select "select date, count(1) as count from (select date(created_at) as date from users where created_at is not null) group by date order by date asc;"
+      .text_content.non_top_post
+      .text_content.non_top_post
+        %h2 New Users per Day
+        .scorelisting
+          %table.greytable.misc
+            %tr
+              %th Date (UTC)
+              %th
+            - count = 0
+            - @new_users_per_day.each do |game|
+              - style = (count % 2) == 0 ? "cell1" : "cell2"
+              - count += 1
+              %tr{:id => style}
+                %td.table_date= h game.date
+                %td.table_number= game.count

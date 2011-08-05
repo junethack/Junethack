@@ -2,6 +2,7 @@ require 'rubygems'
 require 'cgi'
 require 'bundler/setup'
 require 'sinatra'
+require 'sinatra/cache'
 require 'database'
 require 'haml'
 require 'fetch_games'
@@ -13,6 +14,13 @@ require 'time'
 require 'logger'
 
 require 'irc'
+
+## settings for sinatra-cache
+# NB! you need to set the root of the app first
+set :root, "#{Dir.pwd}"
+set :cache_enabled, false  # complet
+#set :cache_output_dir, "#{Dir.pwd}/cache"
+
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
@@ -461,12 +469,6 @@ end
 
 get "/activity" do
     caching_check_last_played_game
-
-    @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and turns > 10 and death != 'quit') group by datum order by datum asc;"
-
-    @ascensions_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum order by datum asc;"
-
-    @new_users_per_day = repository.adapter.select "select date, count(1) as count from (select date(created_at) as date from users where created_at is not null) group by date order by date asc;"
 
     haml :activity
 end
