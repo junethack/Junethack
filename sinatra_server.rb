@@ -476,9 +476,6 @@ end
 get "/deaths" do
     caching_check_last_played_game
 
-    @deaths = repository.adapter.select "select death, count(1) as count from games where user_id is not null group by death order by count desc;"
-    @unique_deaths = repository.adapter.select "select death, count(1) as count from normalized_deaths group by death order by count desc;"
-
     haml :deaths
 end
 
