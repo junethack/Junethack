@@ -483,4 +483,12 @@ end
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
+
+  # overwrite cache_fragment
+  # it doesn't honor the setting of :environment
+  if not production?
+    def cache_fragment(fragment_name, shared = nil, &block)
+      block.call
+    end
+  end
 end
