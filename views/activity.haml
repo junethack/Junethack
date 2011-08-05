@@ -18,9 +18,9 @@
                 %td.table_number= game.count
 
     - cache_fragment("games_#{Game.max_endtime}") do
-      - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and turns > 10 and death != 'quit') group by datum order by datum asc;"
+      - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null) group by datum order by datum asc;"
       .text_content.non_top_post
-        %h2 Finished Games per Day (without obvious start scummers)
+        %h2 Finished Games per Day
         .scorelisting
           %table.greytable.misc
             %tr
@@ -36,7 +36,6 @@
 
     - cache_fragment("users_#{User.max_created_at}") do
       - @new_users_per_day = repository.adapter.select "select date, count(1) as count from (select date(created_at) as date from users where created_at is not null) group by date order by date asc;"
-      .text_content.non_top_post
       .text_content.non_top_post
         %h2 New Users per Day
         .scorelisting
