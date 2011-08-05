@@ -24,6 +24,7 @@ set :cache_enabled, false  # complet
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
+use Rack::Deflater
 # Scheduler: fetch game data every 15 minutes
 scheduler = Rufus::Scheduler.start_new(:frequency => 1.0)
 scheduler.cron('*/15 * * * *', :blocking => true) { fetch_all }
