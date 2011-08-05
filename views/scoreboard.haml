@@ -1,13 +1,20 @@
-.content_bulk
-  .text_content_wrapper
-    .text_content
-      %h1
-        Scoreboard
-    .text_content
-      =haml :_clan_trophies
-    .text_content.non_top_post
-      =haml :_trophy_scores
-    .text_content.non_top_post
-      =haml :competition_scores
-    %span#end_of_content_spacer.clear
+- cache_fragment(Game.max_endtime) do
+  - @most_ascended_users = most_ascensions_users
+
+  - @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
+  - @games_played_user_links = true
+  - @games_played_title = "Last #{@games_played.size} games played"
+
+  .content_bulk
+    .text_content_wrapper
+      .text_content
+        %h1
+          Scoreboard
+      .text_content
+        =haml :_clan_trophies
+      .text_content.non_top_post
+        =haml :_trophy_scores
+      .text_content.non_top_post
+        =haml :competition_scores
+      %span#end_of_content_spacer.clear
 / end of container

@@ -2,6 +2,7 @@ require 'rubygems'
 require 'cgi'
 require 'bundler/setup'
 require 'sinatra'
+require 'sinatra/cache'
 require 'database'
 require 'haml'
 require 'fetch_games'
@@ -13,6 +14,13 @@ require 'time'
 require 'logger'
 
 require 'irc'
+
+## settings for sinatra-cache
+# NB! you need to set the root of the app first
+set :root, "#{Dir.pwd}"
+set :cache_enabled, false  # complet
+#set :cache_output_dir, "#{Dir.pwd}/cache"
+
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
@@ -205,17 +213,16 @@ post "/create" do
     begin
         if user.save
             session['messages'] = "Registration successful. Please log in."
-            bot.say "#{user.login} registered"
-            puts "botsay down"
             redirect "/login" and return 
         else
             session['errors'] = "Could not register account"
-            puts "SOMETHING WENT WRONG LOL"
+            puts "could not register user #{params[:username]}"
             redirect "/register" and return
         end
     rescue
         session['errors'].push(*user.errors)
-        puts "GOT DAMMIT FUCK EXCEPTION CAUGHT"
+        puts "registering user threw an exception"
+        puts "#{$!}"
         redirect "/register" and return
     end
 end
@@ -232,7 +239,7 @@ get "/user/:name" do
         startscummed_games = Game.count(:user_id => @player.id, :conditions => ["turns <= 10 and death in ('escaped', 'quit')"])
         if startscummed_games > 0 then
           @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ], :conditions => ["turns > 10 or death not in ('escaped','quit')"])
-          @games_played_title = "Games played (without #{startscummed_games} startscummed games)"
+          @games_played_title = "Games played (not showing #{startscummed_games} startscummed games)"
         else
           @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
           @games_played_title = "Games played"
@@ -278,16 +285,21 @@ post "/clan" do
         begin
             clan = Clan.create(:name => params[:clanname], :admin => [acc.user.id, acc.server.id])
         rescue
-            session['errors'].push(*clan.errors)
+            session['errors'] << "There was an error creating the clan"
             redirect "/home" and return
         end
-        acc.clan = clan
-        acc.save
-        @user.clan = clan.name
-        @user.save
-        session['messages'] << "Successfully created clan #{params[:clanname]}"
-        puts CGI.escape(acc.clan.name)
-        redirect "/clan/" + CGI.escape(acc.clan.name)
+        if clan
+            acc.clan = clan
+            acc.save
+            @user.clan = clan.name
+            @user.save
+            session['messages'] << "Successfully created clan #{params[:clanname]}"
+            puts CGI.escape(acc.clan.name)
+            redirect "/clan/" + CGI.escape(acc.clan.name) and return
+        else
+            session['errors'] << "Could not create clan"
+            
+        end
     else 
         session['errors'] << "Could not find your account on this server"
         redirect "/home"
@@ -323,7 +335,15 @@ get "/respond/:server_id/:token" do #respond to invitation
                 session['messages'] << "Successfully #{accept ? "accepted" : "declined"} invitation"
                 acc.invitations.reject!{|inv| inv['token'] == params[:token]}
                 if accept
-                    acc.clan = Clan.first(:name => invitation['clan_id'])
+                    clan = Clan.first(:name => invitation['clan_id'])
+                    if clan
+                        for account in @user.accounts
+                            if account.clan.nil?
+                                account.clan = clan
+                                account.save
+                            end
+                        end
+                    end     
                     @user.clan = acc.clan.name
                     @user.save
                 end
@@ -401,12 +421,6 @@ end
 get "/scoreboard" do
     caching_check_last_played_game
 
-    @most_ascended_users = most_ascensions_users
-
-    @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
-    @games_played_user_links = true
-    @games_played_title = "Last #{@games_played.size} games played"
-
     haml :scoreboard
 end
 
@@ -450,20 +464,11 @@ end
 get "/activity" do
     caching_check_last_played_game
 
-    @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and turns > 10 and death != 'quit') group by datum order by datum asc;"
-
-    @ascensions_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum order by datum asc;"
-
-    @new_users_per_day = repository.adapter.select "select date, count(1) as count from (select date(created_at) as date from users where created_at is not null) group by date order by date asc;"
-
     haml :activity
 end
 
 get "/deaths" do
     caching_check_last_played_game
-
-    @deaths = repository.adapter.select "select death, count(1) as count from games where user_id is not null group by death order by count desc;"
-    @unique_deaths = repository.adapter.select "select death, count(1) as count from normalized_deaths group by death order by count desc;"
 
     haml :deaths
 end

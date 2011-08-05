@@ -258,6 +258,14 @@ class Game
         return $variants_mapping[version]
     end
 
+    def Game.max_ascended_endtime
+        Game.max :endtime, :ascended => true, :conditions => [ 'user_id is not null' ]
+    end
+
+    def Game.max_endtime
+        Game.max :endtime, :conditions => [ 'user_id is not null' ]
+    end
+
     after :update do
         update_scores(self)
     end

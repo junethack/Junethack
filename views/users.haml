@@ -1,27 +1,28 @@
-.content_bulk
-  .text_content_wrapper
-    .text_content
-      %h3
-        All Players
-      %table.prettytable
-        %tr
-          %th
-            Username
-          %th
-            Accounts
-          %th
-            Games Played
-          %th
-            Trophies Earned
-        - @users.each do |user|
+- cache_fragment(Game.max_endtime) do
+  .content_bulk
+    .text_content_wrapper
+      .text_content
+        %h3
+          All Players
+        %table.prettytable
           %tr
-            %td
-              %a{:href => "/user/" + user.login}
-                #{h user.login}
-            %td
-              #{h user.accounts.count}
-            %td
-              #{h user.games_count}
-            %td
-              #{h user.scoreentries.count}
-    %span#end_of_content_spacer.clear
+            %th
+              Username
+            %th
+              Accounts
+            %th
+              Games Played
+            %th
+              Trophies Earned
+          - @users.each do |user|
+            %tr
+              %td
+                %a{:href => "/user/" + user.login}
+                  #{h user.login}
+              %td
+                #{h user.accounts.count}
+              %td
+                #{h user.games_count}
+              %td
+                #{h user.scoreentries.count}
+      %span#end_of_content_spacer.clear

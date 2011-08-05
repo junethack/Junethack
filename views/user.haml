@@ -1,51 +1,52 @@
-.content_bulk
-    .text_content_wrapper
-        .text_content
-            %h2
-                #{h @player.login} @ junethack2011
-                - if @player.games.length == 1
-                    | #{h @player.games.length} Game Played
-                - else
-                    | #{h @player.games.length} Games Played
-            - server_accounts = (Server.all - @player.servers)
-            %table.greytable
-                %tr
-                    %th Server
-                    %th Account
-                - count = 0
-                - for account in @player.accounts
-                    - style = (count % 2) == 0 ? "cell1" : "cell2"
-                    - count += 1
-                    %tr.account{:id => style}
-                        %td= account.server.display_name
-                        %td= account.name
-
-        .text_content.non_top_post
-            .trophycabinet.text_cabinet
-                %h3
-                    Trophies
-                %ul
-                    =haml :user_cross_variant_trophies
-                    - for @variant in $variants
-                        =haml :user_trophies
-                    - @variant = "NH-1.3d"
-                    =haml :user_trophies
-        .text_content.non_top_post
-            =haml :_player_games
-        .text_content.non_top_post
-            =haml :games_played
-        .text_content.non_top_post
-            - @ascended_combinations_sql = ascended_combinations_user_sql
-            - @ascended_combinations_value = @player.id
-            =haml :ascended_combinations
-        #clanmanager.text_content.non_top_post
-            - for account in @player.accounts
-                .account-clan
-                    %h3= account.name + " on " + account.server.name
-                    - if account.clan
-                        %a{:href => "/clan/#{CGI::escape account.clan.name}"}= account.clan.name
-                        %span#small_content_spacer.clear
+- cache_fragment(Game.max :endtime, :user_id => @player.id) do
+    .content_bulk
+        .text_content_wrapper
+            .text_content
+                %h2
+                    #{h @player.login} @ junethack2011
+                    - if @player.games.length == 1
+                        | #{h @player.games.length} Game Played
                     - else
-                        No clan
-                        %span#small_content_spacer.clear
+                        | #{h @player.games.length} Games Played
+                - server_accounts = (Server.all - @player.servers)
+                %table.greytable
+                    %tr
+                        %th Server
+                        %th Account
+                    - count = 0
+                    - for account in @player.accounts
+                        - style = (count % 2) == 0 ? "cell1" : "cell2"
+                        - count += 1
+                        %tr.account{:id => style}
+                            %td= account.server.display_name
+                            %td= account.name
+
+            .text_content.non_top_post
+                .trophycabinet.text_cabinet
+                    %h3
+                        Trophies
+                    %ul
+                        =haml :user_cross_variant_trophies
+                        - for @variant in $variants
+                            =haml :user_trophies
+                        - @variant = "NH-1.3d"
+                        =haml :user_trophies
+            .text_content.non_top_post
+                =haml :_player_games
+            .text_content.non_top_post
+                =haml :games_played
+            .text_content.non_top_post
+                - @ascended_combinations_sql = ascended_combinations_user_sql
+                - @ascended_combinations_value = @player.id
+                =haml :ascended_combinations
+            #clanmanager.text_content.non_top_post
+                - for account in @player.accounts
+                    .account-clan
+                        %h3= account.name + " on " + account.server.name
+                        - if account.clan
+                            %a{:href => "/clan/#{CGI::escape account.clan.name}"}= account.clan.name
+                            %span#small_content_spacer.clear
+                        - else
+                            No clan
+                            %span#small_content_spacer.clear
 
