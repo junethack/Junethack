@@ -421,12 +421,6 @@ end
 get "/scoreboard" do
     caching_check_last_played_game
 
-    @most_ascended_users = most_ascensions_users
-
-    @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
-    @games_played_user_links = true
-    @games_played_title = "Last #{@games_played.size} games played"
-
     haml :scoreboard
 end
 
