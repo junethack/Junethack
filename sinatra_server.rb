@@ -238,14 +238,9 @@ get "/user/:name" do
         @userscore = UserScore.new @player.id
         @scoreentries = Scoreentry.all(:user_id => @player.id)
 
-        startscummed_games = Game.count(:user_id => @player.id, :conditions => ["turns <= 10 and death in ('escaped', 'quit')"])
-        if startscummed_games > 0 then
-          @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ], :conditions => ["turns > 10 or death not in ('escaped','quit')"])
-          @games_played_title = "Games played (not showing #{startscummed_games} startscummed games)"
-        else
-          @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
-          @games_played_title = "Games played"
-        end
+        @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
+        @games_played_title = @player.display_game_statistics
+
         @user_id = @player.id
 
         haml :user
