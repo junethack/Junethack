@@ -44,6 +44,10 @@ class User
     def games_count
         Game.count(:user_id => self.id)
     end
+    # count of start scummed games by this user
+    def start_scummed_games_count
+        StartScummedGame.count(:user_id => self.id)
+    end
 
     def ascensions
         self.accounts.map{|account| account.get_ascensions}.flatten
@@ -56,6 +60,16 @@ class User
 
     def User.max_created_at
         repository.adapter.select "select strftime('%s',max(created_at)) from users"
+    end
+
+    def display_game_statistics
+        n = self.games_count
+        s = (n == 1) ? "" : "s"
+        game = "#{n} Game#{s} Played"
+        n = self.start_scummed_games_count
+        s = (n == 1) ? "" : "s"
+        game += " | #{n} Game#{s} Start Scummed" if n > 0
+        return game
     end
 
 end

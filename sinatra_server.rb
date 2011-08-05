@@ -164,7 +164,7 @@ get "/home" do
     @scoreentries = Scoreentry.all(:user_id => @user.id)
 
     @games_played = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
-    @games_played_title = "Games played"
+    @games_played_title = @user.display_game_statistics
 
     haml :home
 end
