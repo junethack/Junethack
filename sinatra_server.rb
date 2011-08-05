@@ -24,6 +24,7 @@ set :cache_enabled, false  # complet
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
+use Rack::Deflater
 # Scheduler: fetch game data every 15 minutes
 scheduler = Rufus::Scheduler.start_new(:frequency => 1.0)
 scheduler.cron('*/15 * * * *', :blocking => true) { fetch_all }
@@ -163,7 +164,7 @@ get "/home" do
     @scoreentries = Scoreentry.all(:user_id => @user.id)
 
     @games_played = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
-    @games_played_title = "Games played"
+    @games_played_title = @user.display_game_statistics
 
     haml :home
 end
@@ -196,6 +197,7 @@ post "/add_server_account" do
     end
     # set user_id on all already played games
     Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
+    repository.adapter.execute "UPDATE start_scummed_games set user_id = ? where name = ? and server_id = ?", session['user_id'], params[:user], server.id
 
     redirect "/home"
 end
@@ -236,14 +238,9 @@ get "/user/:name" do
         @userscore = UserScore.new @player.id
         @scoreentries = Scoreentry.all(:user_id => @player.id)
 
-        startscummed_games = Game.count(:user_id => @player.id, :conditions => ["turns <= 10 and death in ('escaped', 'quit')"])
-        if startscummed_games > 0 then
-          @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ], :conditions => ["turns > 10 or death not in ('escaped','quit')"])
-          @games_played_title = "Games played (not showing #{startscummed_games} startscummed games)"
-        else
-          @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
-          @games_played_title = "Games played"
-        end
+        @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
+        @games_played_title = @player.display_game_statistics
+
         @user_id = @player.id
 
         haml :user
@@ -482,4 +479,12 @@ end
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
+
+  # overwrite cache_fragment
+  # it doesn't honor the setting of :environment
+  if not production?
+    def cache_fragment(fragment_name, shared = nil, &block)
+      block.call
+    end
+  end
 end
