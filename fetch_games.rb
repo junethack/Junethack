@@ -40,7 +40,7 @@ def fetch_all
                         if hgame['starttime'].to_i >= $tournament_starttime and
                             hgame['endtime'].to_i   <= $tournament_endtime
                             acc = Account.first(:name => hgame["name"], :server_id => server.id)
-                            if hgame['turns'].to_i <= 10 and ['death','quit'].include? hgame['death'] then
+                            if hgame['turns'].to_i <= 10 and ['escaped','quit'].include? hgame['death'] then
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.info "start scummed game"
                             else
