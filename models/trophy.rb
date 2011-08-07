@@ -15,6 +15,10 @@ class Trophy
         Trophy.all :conditions => ["variant is null"]
     end
 
+    def Trophy.user_trophies variant
+        Trophy.all :variant => variant
+    end
+
     # used for href
     def anchor
         self.icon[0 ..-5]
