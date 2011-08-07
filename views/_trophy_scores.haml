@@ -18,7 +18,7 @@
     .trophycabinet
         %h3= variant_name
         %ul
-            - trophies = Trophy.all :variant => variant
+            - trophies = Trophy.user_trophies variant
             - trophies.each do |trophy|
                 %li
                     - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id from scoreentries where variant = ? and trophy = ? order by upper(user);", variant, trophy.trophy

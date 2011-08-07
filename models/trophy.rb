@@ -10,9 +10,21 @@ class Trophy
     property :trophy,    String, :required => true
     property :text,      String, :required => true
     property :icon,      String, :required => true
+    property :user_competition, Boolean, :required => true, :default => false
 
+    # returns all cross variant trophies
     def Trophy.cross_variant_trophies
         Trophy.all :conditions => ["variant is null"]
+    end
+
+    # returns all variant-specific user trophies
+    def Trophy.user_trophies variant
+        Trophy.all :variant => variant, :user_competition => false
+    end
+
+    # returns all variant-specific user competition trophies
+    def Trophy.user_competition_trophies variant
+        Trophy.all :variant => variant, :user_competition => true
     end
 
     # used for href
@@ -87,5 +99,21 @@ DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
   end
   down do
     Trophy.all.destroy
+  end
+end
+
+DataMapper::MigrationRunner.migration( 2, :create_user_competition_trophies ) do
+  up do
+
+    # Standard achievements
+    for variant in $variants do
+      Trophy.create :variant => variant, :trophy => "most_ascensions", :text => "Most ascensions", :icon => "c-most-ascensions.png", :user_competition => true
+      Trophy.create :variant => variant, :trophy => "fastest_ascension_gametime", :text => "Fastest ascension (by turns)", :icon => "c-fastest-gametime.png", :user_competition => true
+      Trophy.create :variant => variant, :trophy => "fastest_ascension_realtime", :text => "Fastest ascension (by wall-clock time)", :icon => "c-fastest-realtime.png", :user_competition => true
+      Trophy.create :variant => variant, :trophy => "highest_scoring_ascension", :text => "Highest scoring ascension", :icon => "c-highest-score.png", :user_competition => true
+      Trophy.create :variant => variant, :trophy => "lowest_scoring_ascension", :text => "Lowest scoring ascension", :icon => "c-lowest-score.png", :user_competition => true
+      Trophy.create :variant => variant, :trophy => "most_conducts_ascension", :text => "Most conducts in a single ascension", :icon => "c-most-conducts.png", :user_competition => true
+      Trophy.create :variant => variant, :trophy => "longest_ascension_streaks", :text => "Longest ascension streak", :icon => "c-longest-streak.png", :user_competition => true
+    end
   end
 end
