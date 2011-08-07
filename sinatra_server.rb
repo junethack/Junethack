@@ -12,8 +12,11 @@ require 'helper'
 require 'userscore'
 require 'time'
 require 'logger'
+require 'sync'
 
 require 'irc'
+
+$db_access = Sync.new
 
 ## settings for sinatra-cache
 # NB! you need to set the root of the app first
@@ -58,6 +61,13 @@ before do
     puts "#{@errors.inspect}"
     session["messages"] = []
     session["errors"] = []
+
+    $db_access.lock :SH
+end
+
+after do
+    $db_access.unlock :SH
+    puts $db_access.inspect
 end
 
 def caching_check_last_played_game
@@ -172,6 +182,7 @@ end
 post "/add_server_account" do
     redirect "/" and return unless session['user_id']
 
+  $db_access.synchronize {
     server = Server.get(params[:server])
 
     session['errors'] = "Add account name!" and redirect "/home" and return if params[:user].strip.empty?
@@ -198,11 +209,13 @@ post "/add_server_account" do
     # set user_id on all already played games
     Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
     repository.adapter.execute "UPDATE start_scummed_games set user_id = ? where name = ? and server_id = ?", session['user_id'], params[:user], server.id
+  }
 
     redirect "/home"
 end
 
 post "/create" do
+  $db_access.synchronize {
     errors = []
     errors.push("Password and confirmation do not match.") if params["confirm"] != params["password"]
     errors.push("Username already exists.") if User.first(:login => params[:username])
@@ -227,6 +240,7 @@ post "/create" do
         puts "#{$!}"
         redirect "/register" and return
     end
+  }
 end
 
 get "/user/:name" do
@@ -277,6 +291,7 @@ get "/clan/:name" do
 end
 
 post "/clan" do
+  $db_access.synchronize {
     acc = Account.first(:user_id => @user.id, :server_id => params[:server].to_i)
     if acc
         begin
@@ -301,8 +316,10 @@ post "/clan" do
         session['errors'] << "Could not find your account on this server"
         redirect "/home"
     end
+  }
 end
 post "/clan/invite" do
+  $db_access.synchronize {
     clan = Clan.get(params[:clan])
     
     if clan.admin[0] == @user.id
@@ -320,8 +337,10 @@ post "/clan/invite" do
         sessions['errors'] << "You are not the clan admin"
     end
     redirect "/clan/#{CGI.escape(params[:clan])}"
+  }
 end
 get "/respond/:server_id/:token" do #respond to invitation
+  $db_access.synchronize {
     puts "respond invite with params #{params.inspect}"
     acc = @user.accounts.get(@user.id, params[:server_id].to_i)
     if acc
@@ -354,8 +373,10 @@ get "/respond/:server_id/:token" do #respond to invitation
         session['errors'] << "Could not find account"
     end
     redirect "/home"
+  }
 end
 get "/clan/disband/:name" do
+  $db_access.synchronize {
     clan = Clan.get(params[:name])
     if clan
         admin = clan.get_admin
@@ -375,12 +396,14 @@ get "/clan/disband/:name" do
         session['errors'] << "Could not find clan #{params[:name]}"
     end
     redirect "/home"
+  }
 end
-            
+
 get "/leaveclan/:server" do  #leave a clan
+  $db_access.synchronize {
     redirect "/" and return unless @user
     if account = Account.get(@user.id, params[:server])
-        
+
         puts "found account #{account.name}"
         if account.clan.admin == [account.user.id, account.server.id]
             session['errors'] << "The clan admin can not leave the clan."
@@ -398,6 +421,7 @@ get "/leaveclan/:server" do  #leave a clan
         session['errors'] << "No account on this server"
     end
     redirect "/home"
+  }
 end
 
 get "/scores/:name" do |name|

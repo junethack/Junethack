@@ -6,6 +6,9 @@ require 'fetch_games'
 require 'date'
 require 'trophyscore'
 require 'normalize_death'
+require 'sync'
+
+$db_access = Sync.new
 
 namespace :bogus do
 

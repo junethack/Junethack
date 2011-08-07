@@ -23,7 +23,7 @@ def fetch_all
         if server.xlogcurrentoffset == nil
             server.xlogcurrentoffset = header['Content-Length'].to_i
             server.xloglastmodified = header['Last-Modified']
-            server.save
+            $db_access.synchronize { server.save }
             next
         end
         if DateTime.parse(server.xloglastmodified) < DateTime.parse(header['Last-Modified'])
@@ -33,6 +33,10 @@ def fetch_all
                 @fetch_logger.info "So many games ... #{games.length}"
                 i = 0
                     games.each do |line|
+                      begin
+                        $db_access.lock :EX
+                        @fetch_logger.debug $db_access.inspect
+
                         i += 1
                         #@fetch_logger.debug "#{line.length} #{line}"
                         xlog_add_offset = line.length
@@ -59,13 +63,17 @@ def fetch_all
                         # don't parse it again
                         server.xlogcurrentoffset += xlog_add_offset
                         server.save
+                      ensure
+                        $db_access.unlock :EX
+                        @fetch_logger.debug $db_access.inspect
+                      end
                     end
                 raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['Content-Length'].to_i}" if server.xlogcurrentoffset != header['Content-Length'].to_i
             else
                 @fetch_logger.info "No games at all!"
             end
             server.xloglastmodified = header['Last-Modified']
-            server.save
+            $db_access.synchronize { server.save }
         else
             @fetch_logger.info "no new games, try again later"
         end
