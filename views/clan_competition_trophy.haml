@@ -1,4 +1,7 @@
-%h2{:id => @trophy}= $trophy_names[@trophy]
+- trophy = Trophy.first :trophy => @trophy
+%h2{:id => trophy.anchor}
+  %img{:src => "/icons/#{trophy.icon}", :alt => trophy.text}
+  #{trophy.text}
 .scorelisting
   %table.greytable
     %tr
