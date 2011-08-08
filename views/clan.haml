@@ -10,16 +10,17 @@
               %a{:href => "/clan/disband/#{@clan.name}"} Disband
             #clan_invite
               %a{:href => "#invite_account"} Invite
+        - clan_score_entry = ClanScoreEntry.first(:clan_name => @clan.name, :trophy => 'clan_winner')
         #clan_placing
-          Placing:
-          - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
-            #{h ClanScoreEntry.all(:clan_name => @clan.name).first.rank}
+          Rank:
+          - if clan_score_entry
+            #{h clan_score_entry.rank}
           - else
             no games
         #clan_points
-          Points:
-          - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
-            #{h ClanScoreEntry.all(:clan_name => @clan.name).sum(:value)}
+          Clan Points:
+          - if clan_score_entry
+            #{h clan_score_entry.points}
           - else
             no games
         %span.clear
@@ -65,6 +66,9 @@
               #{h user.accounts.all(:clan => @clan).length}
             %td
               #{h user.scoreentries.length}
+
+    .text_content.non_top_post
+      =haml :clan_points_summary
 
     .text_content.non_top_post
       - @ascended_combinations_sql = ascended_combinations_sql
