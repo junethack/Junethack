@@ -65,6 +65,9 @@
               #{h user.scoreentries.length}
 
     .text_content.non_top_post
+      =haml :clan_points_summary
+
+    .text_content.non_top_post
       - @ascended_combinations_sql = ascended_combinations_sql
       - @ascended_combinations_value = @clan.name
       =haml :ascended_combinations

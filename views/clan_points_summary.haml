@@ -1,0 +1,25 @@
+%h2
+  Clan Points Summary
+.scorelisting
+  %table.greytable
+    %tr
+      %th
+        Trophy
+      %th.competition_value
+      %th.competition_value
+        Clan Points
+      %th.competition_placing
+        Rank
+    - count = 0
+    - ClanScoreEntry.all(:clan_name => @clan.name, :trophy.not => 'clan_winner').each do |entry|
+      - style = (count % 2) == 0 ? "cell1" : "cell2"
+      - count += 1
+      %tr{:id => style}
+        %td
+          #{h $trophy_names[entry.trophy]}
+        %td.table_number
+          #{h entry.value}
+        %td.table_number
+          #{h entry.points}
+        %td.table_number
+          #{h entry.rank}
