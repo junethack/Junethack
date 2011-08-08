@@ -8,16 +8,17 @@
           -if @user.login == @clan.get_admin.login
             #clan_invite
               %a{:href => "#invite_account"} Invite
+        - clan_score_entry = ClanScoreEntry.first(:clan_name => @clan.name, :trophy => 'clan_winner')
         #clan_placing
-          Placing:
-          - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
-            #{h ClanScoreEntry.all(:clan_name => @clan.name).first.rank}
+          Rank:
+          - if clan_score_entry
+            #{h clan_score_entry.rank}
           - else
             no games
         #clan_points
-          Points:
-          - if ClanScoreEntry.all(:clan_name => @clan.name).length != 0
-            #{h ClanScoreEntry.all(:clan_name => @clan.name).sum(:value)}
+          Clan Points:
+          - if clan_score_entry
+            #{h clan_score_entry.points}
           - else
             no games
         %span.clear
