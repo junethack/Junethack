@@ -501,60 +501,48 @@ def update_competition_scores_ascended(game)
                                         :variant => game.version,
                                         :trophy  => "most_conducts_ascension",
                                         :icon => "c-most-conducts.png")
-    if c.value.nil? or c.value < nconducts then
-        c.value = nconducts
-        c.save
-    end
+    c.value = nconducts
+    c.save
 
     points = u.highest_scoring_ascension(game.version)[0]
     c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
                                         :variant => game.version,
                                         :trophy  => "highest_scoring_ascension",
                                         :icon => "c-highest-score.png")
-    if c.value.nil? or c.value < points then
-        c.value = points
-        c.save
-    end
+    c.value = points
+    c.save
 
     points = u.lowest_scoring_ascension(game.version)[0]
     c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
                                         :variant => game.version,
                                         :trophy  => "lowest_scoring_ascension",
                                         :icon => "c-lowest-score.png")
-    if c.value.nil? or c.value > points then
-        c.value = points
-        c.save
-    end
+    c.value = points
+    c.save
 
     realtime = u.fastest_ascension_realtime(game.version)
     c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
                                         :variant => game.version,
                                         :trophy  => "fastest_ascension_realtime",
                                         :icon => "c-fastest-realtime.png")
-    if c.value.nil? or c.value > realtime then
-        c.value = realtime
-        c.save
-    end
+    c.value = realtime
+    c.save
 
     gametime = u.fastest_ascension_gametime(game.version)
     c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
                                         :variant => game.version,
                                         :trophy  => "fastest_ascension_gametime",
                                         :icon => "c-fastest-gametime.png")
-    if c.value.nil? or c.value > gametime then
-        c.value = gametime
-        c.save
-    end
+    c.value = gametime
+    c.save
 
     ascensions = u.most_ascensions(game.version)
     c = CompetitionScoreEntry.first_or_new(:user_id => game.user_id,
                                         :variant => game.version,
                                         :trophy  => "most_ascensions",
                                         :icon => "c-most-ascensions.png")
-    if c.value.nil? or c.value < ascensions then
-        c.value = ascensions
-        c.save
-    end
+    c.value = ascensions
+    c.save
 
     longest_ascension_streak = u.longest_ascension_streak(game.version)
     if longest_ascension_streak > 0 then
@@ -562,10 +550,8 @@ def update_competition_scores_ascended(game)
                                             :variant => game.version,
                                             :trophy  => "longest_ascension_streaks",
                                             :icon => "c-longest-streak.png")
-        if c.value.nil? or c.value < longest_ascension_streak then
-            c.value = longest_ascension_streak
-            c.save
-        end
+        c.value = longest_ascension_streak
+        c.save
     end
 
     $variants_mapping.keys.each do |v|
