@@ -37,13 +37,12 @@
                 - @ascended_combinations_value = @player.id
                 =haml :ascended_combinations
             #clanmanager.text_content.non_top_post
-                - for account in @player.accounts
-                    .account-clan
-                        %h3= account.name + " on " + account.server.name
-                        - if account.clan
-                            %a{:href => "/clan/#{CGI::escape account.clan.name}"}= account.clan.name
-                            %span#small_content_spacer.clear
-                        - else
-                            No clan
-                            %span#small_content_spacer.clear
+                %h2 Clan
+                - if @player.clan
+                    - clan = Clan.get @player.clan
+                    %a{:href => "/clan/#{CGI::escape clan.name}"}= clan.name
+                    %span#small_content_spacer.clear
+                - else
+                    No clan
+                    %span#small_content_spacer.clear
 

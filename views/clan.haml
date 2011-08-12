@@ -29,7 +29,8 @@
           Clan trophies
         / TODO: trophy image for clan competition winner
         - ClanScoreEntry.all(:clan_name => @clan.name, :trophy.not => 'clan_winner', :rank => 1).each do |trophy|
-          %a.imagelink{:href => "/trophies#" + trophy.icon[0 .. (trophy.icon.length - 5)], :title => trophy.trophy} 
+          - trophy = Trophy.first :trophy => trophy.trophy
+          %a.imagelink{:href => "/trophies#" + trophy.anchor, :title => trophy.text}
             %img.trophyicon{:src => "/icons/" + trophy.icon}
         %span.clear.endofcabinetrow
     .text_content.non_top_post#clan_members
@@ -42,12 +43,10 @@
           %th
             Role
           %th
-            Last game played (UTC)
-          %th
-            Clan accounts 
-          %th
             User trophies 
-        - @clan.accounts.users.each do |user|
+          %th
+            Last game played (UTC)
+        - (User.all :clan => @clan.name, :order => [:login.asc]).each do |user|
           %tr
             %td
               %a{:href => "/user/" + user.login}
@@ -57,15 +56,13 @@
                 admin
               - else
                 member
+            %td.table_number
+              #{h user.scoreentries.length}
             %td
               - if user.games.length != 0
                 #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
               - else
                 no games played
-            %td
-              #{h user.accounts.all(:clan => @clan).length}
-            %td
-              #{h user.scoreentries.length}
 
     .text_content.non_top_post
       =haml :clan_points_summary
