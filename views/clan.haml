@@ -41,12 +41,10 @@
           %th
             Role
           %th
-            Last game played (UTC)
-          %th
-            Clan accounts 
-          %th
             User trophies 
-        - @clan.accounts.users.each do |user|
+          %th
+            Last game played (UTC)
+        - (User.all :clan => @clan.name, :order => [:login.asc]).each do |user|
           %tr
             %td
               %a{:href => "/user/" + user.login}
@@ -56,15 +54,13 @@
                 admin
               - else
                 member
+            %td.table_number
+              #{h user.scoreentries.length}
             %td
               - if user.games.length != 0
                 #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
               - else
                 no games played
-            %td
-              #{h user.accounts.all(:clan => @clan).length}
-            %td
-              #{h user.scoreentries.length}
 
     .text_content.non_top_post
       =haml :clan_points_summary
