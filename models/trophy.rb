@@ -19,12 +19,17 @@ class Trophy
 
     # returns all variant-specific user trophies
     def Trophy.user_trophies variant
-        Trophy.all :variant => variant, :user_competition => false
+        Trophy.all :variant => variant, :user_competition => false, :conditions => [ "trophy not like 'all_%'" ]
     end
 
     # returns all variant-specific user competition trophies
     def Trophy.user_competition_trophies variant
         Trophy.all :variant => variant, :user_competition => true
+    end
+
+    # returns all variant-specific user trophies
+    def Trophy.user_all_stuff_trophies variant
+        Trophy.all :variant => variant, :conditions => [ "trophy like 'all_%'" ]
     end
 
     # used for href
@@ -166,6 +171,25 @@ DataMapper::MigrationRunner.migration( 2, :create_user_competition_trophies ) do
       Trophy.create :variant => variant, :trophy => "lowest_scoring_ascension", :text => "Lowest scoring ascension", :icon => "c-lowest-score.png", :user_competition => true
       Trophy.create :variant => variant, :trophy => "most_conducts_ascension", :text => "Most conducts in a single ascension", :icon => "c-most-conducts.png", :user_competition => true
       Trophy.create :variant => variant, :trophy => "longest_ascension_streaks", :text => "Longest ascension streak", :icon => "c-longest-streak.png", :user_competition => true
+    end
+  end
+end
+
+DataMapper::MigrationRunner.migration( 3, :create_all_stuff_trophies ) do
+  up do
+
+    # Standard achievements
+    for variant in $variants do
+      Trophy.create :variant => variant, :trophy => "all_conducts", :text => "All conducts: follow each conduct in at least one ascension", :icon => "all-conducts.png"
+      Trophy.create :variant => variant, :trophy => "all_conducts_streak", :text => "All conducts (in a streak): follow each conduct in at least one ascension, with all the ascensions belonging to the same streak", :icon => "streak-conducts.png"
+      Trophy.create :variant => variant, :trophy => "all_roles", :text => "All roles: ascend a character for each role", :icon => "all-roles.png"
+      Trophy.create :variant => variant, :trophy => "all_roles_streak", :text => "All roles (in a streak): ascend a character for each role in the same streak", :icon => "streak-roles.png"
+      Trophy.create :variant => variant, :trophy => "all_races", :text => "All races: ascend a character of every race", :icon => "all-races.png"
+      Trophy.create :variant => variant, :trophy => "all_races_streak", :text => "All races (in a streak): ascend a character of every race in the same streak", :icon => "streak-races.png"
+      Trophy.create :variant => variant, :trophy => "all_alignments", :text => "All alignments: ascend a character of every alignment (the starting alignment is considered)", :icon => "all-alignments.png"
+      Trophy.create :variant => variant, :trophy => "all_alignments_streak", :text => "All alignments (in a streak): ascend a character of every alignment in the same streak (the starting alignment is considered)", :icon => "streak-alignments.png"
+      Trophy.create :variant => variant, :trophy => "all_genders", :text => "All genders: ascend a character of each gender (the starting gender is considered)", :icon => "all-genders.png"
+      Trophy.create :variant => variant, :trophy => "all_genders_streak", :text => "All genders (in a streak): ascend a character of each gender (the starting gender is considered)", :icon => "streak-genders.png"
     end
   end
 end
