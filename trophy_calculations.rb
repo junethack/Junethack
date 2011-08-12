@@ -378,13 +378,13 @@ def ascended_combinations_user_sql
     "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id = ?"
 end
 def ascended_combinations_sql
-    "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+    "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT id FROM users WHERE clan = ?)"
 end
 def unique_deaths_sql
-    "SELECT DISTINCT death from normalized_deaths where user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+    "SELECT DISTINCT death from normalized_deaths where user_id in (SELECT id FROM users WHERE clan = ?)"
 end
 def variant_trophy_combinations_sql
-    "SELECT DISTINCT variant, trophy from scoreentries where user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?))"
+    "SELECT DISTINCT variant, trophy from scoreentries where user_id in (SELECT id FROM users WHERE clan = ?)"
 end
 
 def most_ascensions_in_a_24_hour_period(clan)
@@ -402,9 +402,9 @@ def update_clan_scores(game)
     return true if not game.user_id
 
     # Clan competition
-    clan_name = (User.get game.user_id).accounts.collect{|a| a.clan_name}.compact[0]
+    clan_name = (User.get game.user_id).clan
     if clan_name then
-        points = (repository.adapter.select "SELECT SUM(points) FROM games WHERE user_id in (SELECT user_id FROM accounts WHERE clan_name IN (SELECT name FROM clans WHERE name = ?));", clan_name)[0]
+        points = (repository.adapter.select "SELECT SUM(points) FROM games WHERE user_id in (SELECT id FROM users WHERE clan = ?);", clan_name)[0]
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_points",
                                         :icon => "clan-points.png")
@@ -554,15 +554,14 @@ def update_competition_scores_ascended(game)
         c.save
     end
 
-    $variants_mapping.keys.each do |v|
-        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "most_conducts_ascension", :order => [ :value.desc ]))
-        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "highest_scoring_ascension", :order => [ :value.desc ]))
-        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "lowest_scoring_ascension", :order => [ :value.asc ]))
-        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "fastest_ascension_realtime", :order => [ :value.asc ]))
-        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "fastest_ascension_gametime", :order => [ :value.asc ]))
-        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "most_ascensions", :order => [ :value.desc ]))
-        rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "longest_ascension_streaks", :order => [ :value.desc ]))
-    end
+    v = game.version
+    rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "most_conducts_ascension", :order => [ :value.desc ]))
+    rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "highest_scoring_ascension", :order => [ :value.desc ]))
+    rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "lowest_scoring_ascension", :order => [ :value.asc ]))
+    rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "fastest_ascension_realtime", :order => [ :value.asc ]))
+    rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "fastest_ascension_gametime", :order => [ :value.asc ]))
+    rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "most_ascensions", :order => [ :value.desc ]))
+    rank_collection(CompetitionScoreEntry.all(:variant => v, :trophy  => "longest_ascension_streaks", :order => [ :value.desc ]))
 
     return true
 end
