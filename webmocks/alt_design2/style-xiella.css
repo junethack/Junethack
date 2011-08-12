@@ -817,3 +817,7 @@ li.multiline > span {
 .flat {
     height: 0;
 }
+
+.small_print {
+    font-size: 0.9em;
+}
