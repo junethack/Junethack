@@ -210,6 +210,8 @@ def update_scores(game)
                 :icon => "king.png").save if king_of_the_world? game.user_id
 
             return false if not update_competition_scores_ascended(game)
+
+            return false if not update_all_stuff(game)
         end
         # achievements
         achievements = game.achieve.hex if game.achieve
@@ -576,4 +578,60 @@ def rank_collection(collection)
         c.rank = rank
         c.save
     }
+end
+
+
+# All conducts: follow each conduct in at least one ascension.
+def all_conducts?(user_id, variant)
+    anz = repository.adapter.select "select max(nconducts) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
+    return anz[0] == 12 # Vegetarian, Vegan, Foodless, Atheist, Weaponless, Pacifist, Literate, Polypiles, Polyself, Wishing, Wishing for Artifacts, Genocide
+end
+
+# All roles: ascend a character for each role.
+def all_roles?(user_id, variant)
+    anz = repository.adapter.select "select count(distinct role) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
+    return anz[0] == 13 # Archeologist, Barbarian, Caveman, Healer, Knight, Monk, Priest, Ranger, Rogue, Samurai, Tourist, Valkyrie, Wizard
+end
+
+# All races: ascend a character of every race.
+def all_races?(user_id, variant)
+    anz = repository.adapter.select "select count(distinct race) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
+    return anz[0] == 5 # Dwarves, Elves, Gnomes, Humans, Orcs
+end
+
+# All alignments: ascend a character of every alignment (the starting alignment is considered). 
+def all_alignments?(user_id, variant)
+    anz = repository.adapter.select "select count(distinct align0) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
+    return anz[0] == 3 # Lawful, Neutral, Chaotic
+end
+
+# All genders: ascend a character of each gender (the starting gender is considered).
+def all_genders?(user_id, variant)
+    anz = repository.adapter.select "select count(distinct gender0) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
+    return anz[0] == 2 # Mal, Fem
+end
+
+def update_all_stuff(game)
+    return true if not game.user_id and not game.ascended
+
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_conducts).save if all_conducts? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_conducts_streak).save if all_? game.user_id, game.version
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_roles).save if all_roles? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_roles_streak).save if all_? game.user_id, game.version
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_races).save if all_races? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_races_streak).save if all_? game.user_id, game.version
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_alignments).save if all_alignments? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_alignments_streak).save if all_? game.user_id, game.version
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_genders).save if all_genders? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_genders_streak).save if all_? game.user_id, game.version
 end

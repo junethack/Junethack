@@ -174,4 +174,12 @@ namespace :update do
             normalize_death(Game.get(game.id))
         }
     end
+
+    task :all_stuff do
+        (repository.adapter.select "select version,id,ascended from games where user_id is not null and ascended='t' order by endtime").each {|game|
+            i += 1
+            puts "#{i} #{game.version}"
+            update_all_stuff(Game.get(game.id))
+        }
+    end
 end
