@@ -586,11 +586,17 @@ def all_conducts?(user_id, variant)
     anz = repository.adapter.select "select max(nconducts) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
     return anz[0] == 12 # Vegetarian, Vegan, Foodless, Atheist, Weaponless, Pacifist, Literate, Polypiles, Polyself, Wishing, Wishing for Artifacts, Genocide
 end
+def all_conducts_streak?(user_id, variant)
+    all_stuff_streak "nconducts", 12, user_id, variant
+end
 
 # All roles: ascend a character for each role.
 def all_roles?(user_id, variant)
     anz = repository.adapter.select "select count(distinct role) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
     return anz[0] == 13 # Archeologist, Barbarian, Caveman, Healer, Knight, Monk, Priest, Ranger, Rogue, Samurai, Tourist, Valkyrie, Wizard
+end
+def all_roles_streak?(user_id, variant)
+    all_stuff_streak "role", 13, user_id, variant
 end
 
 # All races: ascend a character of every race.
@@ -598,11 +604,17 @@ def all_races?(user_id, variant)
     anz = repository.adapter.select "select count(distinct race) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
     return anz[0] == 5 # Dwarves, Elves, Gnomes, Humans, Orcs
 end
+def all_races_streak?(user_id, variant)
+    all_stuff_streak "race", 5, user_id, variant
+end
 
 # All alignments: ascend a character of every alignment (the starting alignment is considered). 
 def all_alignments?(user_id, variant)
     anz = repository.adapter.select "select count(distinct align0) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
     return anz[0] == 3 # Lawful, Neutral, Chaotic
+end
+def all_alignments_streak?(user_id, variant)
+    all_stuff_streak "align0", 3, user_id, variant
 end
 
 # All genders: ascend a character of each gender (the starting gender is considered).
@@ -610,28 +622,47 @@ def all_genders?(user_id, variant)
     anz = repository.adapter.select "select count(distinct gender0) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
     return anz[0] == 2 # Mal, Fem
 end
+def all_genders_streak?(user_id, variant)
+    all_stuff_streak "gender0", 2, user_id, variant
+end
+
+def all_stuff_streak(column, len, user_id, variant)
+    games = (repository.adapter.select "select * from (select "+column+" as column,ascended,endtime from games where version = ? and user_id = ? union all select "+column+" as column,ascended,endtime from start_scummed_games where version = ? and user_id = ?) order by endtime desc;", variant, user_id, variant, user_id)
+
+    distinct_values = {}
+    asc = 0;
+    games.each {|game|
+        if game.ascended == 't'
+            distinct_values[game.column] = 1
+        else
+            distinct_values = {}
+        end
+        return true if distinct_values.keys.size == len
+    }
+    return false
+end
 
 def update_all_stuff(game)
     return true if not game.user_id and not game.ascended
 
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_conducts).save if all_conducts? game.user_id, game.version
-    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-    #   :trophy => :all_conducts_streak).save if all_? game.user_id, game.version
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_conducts_streak).save if all_conducts_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_roles).save if all_roles? game.user_id, game.version
-    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-    #   :trophy => :all_roles_streak).save if all_? game.user_id, game.version
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_roles_streak).save if all_roles_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_races).save if all_races? game.user_id, game.version
-    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-    #   :trophy => :all_races_streak).save if all_? game.user_id, game.version
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_races_streak).save if all_races_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_alignments).save if all_alignments? game.user_id, game.version
-    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-    #   :trophy => :all_alignments_streak).save if all_? game.user_id, game.version
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_alignments_streak).save if all_alignments_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_genders).save if all_genders? game.user_id, game.version
-    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-    #   :trophy => :all_genders_streak).save if all_? game.user_id, game.version
+    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+       :trophy => :all_genders_streak).save if all_genders_streak? game.user_id, game.version
 end
