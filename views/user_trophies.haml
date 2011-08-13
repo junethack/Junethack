@@ -14,7 +14,7 @@
 
         / user "All Conducts/Roles/Races/Alignments/Genders" trophies
         - trophies = Trophy.user_all_stuff_trophies @variant
-        - user_all_stuff_trophies = repository.adapter.select "select trophy from scoreentries where user_id = ? and variant = ?", @player.id, @variant
+        - user_all_stuff_trophies = repository.adapter.select "select trophy from scoreentries where user_id = ? and variant = ? and trophy like 'all_%'", @player.id, @variant
         / only show if there are any
         - if user_all_stuff_trophies.size > 0 then
             - for trophy in trophies
