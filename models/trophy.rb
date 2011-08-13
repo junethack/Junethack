@@ -31,6 +31,10 @@ class Trophy
     def Trophy.user_all_stuff_trophies variant
         Trophy.all :variant => variant, :conditions => [ "trophy like 'all_%'" ]
     end
+    # returns the count of achieved variant-specific user trophies
+    def Trophy.achieved_user_all_stuff_trophies_count variant
+        Scoreentry.count :variant => variant, :conditions => [ "trophy like 'all_%'" ]
+    end
 
     # used for href
     def anchor
