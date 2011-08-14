@@ -1,27 +1,30 @@
 .content_bulk
   .text_content_wrapper
     .text_content
-      %form#register_form{:action => "/create", :method => "post"}
-        %fieldset
-          #username_row
-            %label{:for => "username"} Username:
-            %input#username{:name => "username", :type => "textbox", :value => "", :autofocus => ""}/
-            .form_msg
-              Field required
-            %span.clear
-          #password_row
-            %label{:for => "password"} Password:
-            %input#password{:name => "password", :type => "password", :value => ""}/
-            .form_msg
-              Field required
-            %span.clear
-          #confirm_row
-            %label{:for => "confirm"} Confirm Password:
-            %input#confirm{:name => "confirm", :type => "password", :value => ""}/
-            .form_msg
-              Field required
-            %span.clear
-          %input#submit.bigred{:name => "submit", :type => "submit", :value => "Register!"}/
+      - if (Time.new.to_i > $tournament_endtime)
+        %h1.hcenter Sorry, this years' tournament year has ended.
+      - else
+        %form#register_form{:action => "/create", :method => "post"}
+          %fieldset
+            #username_row
+              %label{:for => "username"} Username:
+              %input#username{:name => "username", :type => "textbox", :value => "", :autofocus => ""}/
+              .form_msg
+                Field required
+              %span.clear
+            #password_row
+              %label{:for => "password"} Password:
+              %input#password{:name => "password", :type => "password", :value => ""}/
+              .form_msg
+                Field required
+              %span.clear
+            #confirm_row
+              %label{:for => "confirm"} Confirm Password:
+              %input#confirm{:name => "confirm", :type => "password", :value => ""}/
+              .form_msg
+                Field required
+              %span.clear
+            %input#submit.bigred{:name => "submit", :type => "submit", :value => "Register!"}/
     %span#end_of_content_spacer.clear
 / end of container
 %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"}
