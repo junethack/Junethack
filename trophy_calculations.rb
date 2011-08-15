@@ -209,9 +209,9 @@ def update_scores(game)
                 :trophy => :king_of_the_world,
                 :icon => "king.png").save if king_of_the_world? game.user_id
 
-            return false if not update_competition_scores_ascended(game)
+            update_competition_scores_ascended(game)
 
-            return false if not update_all_stuff(game)
+            update_all_stuff(game)
         end
         # achievements
         achievements = game.achieve.hex if game.achieve
