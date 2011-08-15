@@ -2,7 +2,7 @@
   .text_content_wrapper
     .text_content
       - if (Time.new.to_i > $tournament_endtime)
-        %h1.hcenter Sorry, this years' tournament year has ended.
+        %h1.hcenter Sorry, this year's tournament year has ended.
       - else
         %form#register_form{:action => "/create", :method => "post"}
           %fieldset
