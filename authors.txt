@@ -1,7 +1,7 @@
 AUTHORS
 
 Junethack developers:
-    Edoardo Spadolini (AKA kerio)
+    Edoardo Spadolini <kerio00@gmail.com> (AKA kerio)
     Christian Stegen <c.stegen@jungundwillich.de> (AKA stenno)
     Cheryl Chong <cheryl@chongsworship.com> (AKA xiella)
     Ryan Karl <rawrnix@rawrnix.com> (AKA rawrmage)
