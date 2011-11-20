@@ -17,3 +17,6 @@ nohup.out
 xlogfile
 logs
 trace
+# ignore tmp directories
+public/tmp
+temp

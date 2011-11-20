@@ -14,6 +14,8 @@ require 'time'
 require 'logger'
 require 'sync'
 
+require 'graph'
+
 require 'irc'
 
 $db_access = Sync.new
