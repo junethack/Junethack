@@ -55,25 +55,3 @@ DataMapper::MigrationRunner.migration( 1, :delete_most_variant_trophy_combinatio
   end
 end
 
-# unnethack specific trophies aren't tracked because of an old version on the servers
-DataMapper::MigrationRunner.migration( 2, :unnethack_manual_trophies ) do
-  up do
-    # http://un.nethack.nu/user/Mortuis/dumps/Mortuis.1312367137.txt.html
-    execute "insert into scoreentries (variant, trophy, user_id) values ('UNH-3.5.4','defeated_croesus',70);"
-    # http://un.nethack.nu/user/BlastHardcheese/dumps/BlastHardcheese.1313108554.txt.html
-    execute "insert into scoreentries (variant, trophy, user_id) values ('UNH-3.5.4','defeated_one_eyed_sam',284);"
-
-    # http://un.nethack.nu/user/aaxelb/dumps/aaxelb.1312059308.txt.html
-    execute "insert into scoreentries (variant, trophy, user_id) values ('UNH-3.5.4','ascended_with_all_invocation_items',55);"
-    # http://un.nethack.nu/user/Alice/dumps/Alice.1311631675.txt.html
-    execute "insert into scoreentries (variant, trophy, user_id) values ('UNH-3.5.4','ascended_with_all_invocation_items',6);"
-    # http://un.nethack.nu/user/BlastHardcheese/dumps/BlastHardcheese.1313108554.txt.html
-    execute "insert into scoreentries (variant, trophy, user_id) values ('UNH-3.5.4','ascended_with_all_invocation_items',284);"
-    # http://un.nethack.nu/user/spontiff/dumps/spontiff.1311782654.txt.html
-    execute "insert into scoreentries (variant, trophy, user_id) values ('UNH-3.5.4','ascended_with_all_invocation_items',25);"
-
-    # no UnNetHack specific trophies for this ascensions
-    # http://un.nethack.nu/user/ishanyx/dumps/ishanyx.1311832452.txt.html
-    # http://un.nethack.nu/user/stenno/dumps/stenno.1312918341.txt.html
-  end
-end
