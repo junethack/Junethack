@@ -95,12 +95,12 @@ a.imagelink:hover {
 #topnav,
 #footer,
 .text_content_wrapper {
-    -webkit-box-shadow: inset 0px 0px 10px #888;
-    -moz-box-shadow: inset 0px 0px 10px #888;
-    box-shadow: inset 0px 0px 10px #888;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-box-shadow: inset 0px 0px 2px #222;
+    -moz-box-shadow: inset 0px 0px 2px #222;
+    box-shadow: inset 0px 0px 2px #222;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
     filter:alpha(opacity=90); 
     -moz-opacity: 0.9; 
     opacity: 0.9; 
@@ -214,6 +214,12 @@ form#login_form > fieldset > input[type=submit],
 #topnav .main > li > a:hover {
     color: #000;
     background-color: #ccc;
+    -webkit-box-shadow: inset 0px 0px 2px #222;
+    -moz-box-shadow: inset 0px 0px 2px #222;
+    box-shadow: inset 0px 0px 2px #222;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 #topnav .main > li.first > a.active,
 #topnav .main > li.first > a.active:hover,
@@ -222,6 +228,9 @@ form#login_form > fieldset > input[type=submit],
     background-color: #ddd;
     background-color: transparent;
     background: url(vivid_divider2.png) no-repeat bottom left;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 /*    */
 }
 
