@@ -20,7 +20,7 @@ $trophies_name = [
 
 $variants_mapping = {}
 $variants_mapping["3.4.3"]     = "NetHack 3.4.3"
-$variants_mapping["UNH-3.5.4"] = "UnNetHack"
+$variants_mapping["UNH-3.6.0"] = "UnNetHack"
 $variants_mapping["3.6.0"]     = "AceHack"
 $variants_mapping["0.6.3"]     = "SporkHack"
 $variants_mapping["NH-1.3d"]   = "NetHack 1.3d"
@@ -30,7 +30,7 @@ $variants_mapping["NH-1.3d"]   = "NetHack 1.3d"
 $variants = []
 $variants << "3.4.3"
 $variants << "0.6.3"
-$variants << "UNH-3.5.4"
+$variants << "UNH-3.6.0"
 $variants << "3.6.0"
 
 def helper_get_variants_for_user(id)
