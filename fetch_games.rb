@@ -4,9 +4,7 @@ require 'time'
 require 'database'
 require 'parse'
 require 'logger'
-
-$tournament_starttime = Time.parse("2012-06-01 00:00:00Z").to_i
-$tournament_endtime   = Time.parse("2012-07-01 00:00:00Z").to_i
+require 'tournament_times'
 
 Dir.mkdir('logs') unless File.exists?('logs')
 @fetch_logger = Logger.new('logs/fetch_games.log', 'daily')

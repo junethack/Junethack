@@ -13,6 +13,7 @@ require 'userscore'
 require 'time'
 require 'logger'
 require 'sync'
+require 'tournament_times'
 
 require 'irc'
 
