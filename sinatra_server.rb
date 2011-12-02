@@ -216,6 +216,21 @@ post "/add_server_account" do
 end
 
 post "/create" do
+  errors = []
+
+  # don't allow registrations at wrong times
+  now = Time.new.to_i
+  if (now < $tournament_starttime)
+    errors.push("Tournament registration has not opened yet.")
+  elsif (now >= $tournament_endtime)
+    errors.push("Tournament has already ended.")
+  end
+
+  if (!errors.empty?)
+    session['errors'] = errors
+    redirect "/" and return
+  end
+
   $db_access.synchronize {
     errors = []
     errors.push("Password and confirmation do not match.") if params["confirm"] != params["password"]
@@ -225,7 +240,7 @@ post "/create" do
     redirect "/register" and return unless session['errors'].empty?
     user = User.new(:login => params["username"])
     user.password = params["password"]
-    puts "CREATED USER LOL"
+    puts "CREATED USER LOL" # o'rly
     begin
         if user.save
             session['messages'] = "Registration successful. Please log in."
