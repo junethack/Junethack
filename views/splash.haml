@@ -1,9 +1,16 @@
 .content_bulk
-  %div.hcenter{:style => "margin: 1.75em; font-weight: bold; font-size: 1.25em;"} Running from 1 June until the end of 30 June 2012
-  - if @logged_in and (Time.new.to_i < $tournament_endtime)
-    .signup_text
-      %p
-        %a{:href => "register"} Sign up now!
+  .title_text
+    %p
+      Running from 1 June until the end of 30 June 2012
+  - if @logged_in 
+    - if Time.new.to_i > $tournament_signupstarttime and Time.new.to_i < $tournament_endtime
+      .signup_text
+        %p
+          %a{:href => "register"} Sign up now!
+    - if Time.new.to_i < $tournament_signupstarttime
+      .title_text
+        %p
+          Registration opens in May
   .text_content_wrapper
     .text_content
       %h2
