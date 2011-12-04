@@ -290,6 +290,22 @@ submenus
     margin-top: 2.5em;
 }
 
+/* The texts around the logo itself */
+.logotitles
+{
+    color: #000;
+}
+
+.logotitles h1 {
+    font-size: 3em;
+}
+.logotitles h2 {
+    font-size: 2em;
+}
+.logoimage {
+    margin: -1em;
+}
+
 /* The text below the logo on the front page. */
 .title_text {
     margin: 1.75em;

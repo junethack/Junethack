@@ -44,8 +44,13 @@
           %span.clear
       .hcenter
         - if @show_banner
-          %p
-            %img{:alt => "Logo", :src => "/banner_at2.png"}/
+          .logotitles
+            %h1 NetHack
+          .logoimage
+            %p
+              %img{:alt => "Logo", :src => "/banner_at2.png"}/
+          .logotitles
+            %h2 Summer Tournament
       - if !@messages.empty? then
         #messages
           %div
