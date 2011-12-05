@@ -3,7 +3,10 @@
         .text_content_wrapper
             .text_content
                 %h2
-                    #{h @player.login} @ junethack2011
+                    Junethack 2012
+                %h2
+                    #{h @player.login}
+                %h2
                     #{@player.display_game_statistics}
                 - server_accounts = (Server.all - @player.servers)
                 %table.greytable
