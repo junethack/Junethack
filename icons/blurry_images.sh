@@ -4,7 +4,7 @@ function light_me {
  original_image=$1
  light_image=`basename $1 .png`
 
- composite -blur 2x2 -blend 25 $original_image -size 54x54 xc:'#FFFFFF' -alpha Set "$light_image"_light.png
+ convert $original_image -colorspace sRGB -modulate 50,25 "$light_image"_light.png
 }
 
 light_me "all-alignments.png"
