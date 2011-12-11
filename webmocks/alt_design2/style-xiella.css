@@ -87,6 +87,7 @@ a.imagelink:hover {
 /* topnav */
 .text_content_wrapper, #topnav {
     background-color: #ddd;
+    background-image: url('gradientti.png');
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -95,9 +96,9 @@ a.imagelink:hover {
 #topnav,
 #footer,
 .text_content_wrapper {
-    -webkit-box-shadow: inset 0px 0px 2px #222;
-    -moz-box-shadow: inset 0px 0px 2px #222;
-    box-shadow: inset 0px 0px 2px #222;
+    -webkit-box-shadow: 0px 0px 8px #222;
+    -moz-box-shadow: 0px 0px 8px #222;
+    box-shadow: 0px 0px 8px #222;
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
