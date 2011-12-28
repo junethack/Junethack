@@ -93,7 +93,7 @@ namespace :bogus do
                 :deathlev => rand(30) + 1,
                 :realtime => rand(10000) + 10000,
                 :turns => rand(1000) + 200,
-                :birthdate => (Time.now - 100000).strftime("%Y%m%d"),
+                :birthdate => Time.utc(2012, 6, 2).strftime("%Y%m%d"),
                 :conduct => rand(4096),        #some bitmask (wrong)
                 :nconducts => rand(12),        #as of now, does not match with the 'conduct' property
                 :role => %w(Arc Bar Cav Hea Kni Mon Pri Ran Rog Sam Tou Val Wiz)[rand 13],
@@ -103,12 +103,12 @@ namespace :bogus do
                 :uid => 5,        #dunno what that does
                 :maxhp => rand(250) + 10,
                 :points => rand(350000),
-                :deathdate => (Time.now - 50000).strftime("%Y%m%d"),
+                :deathdate => Time.utc(2012, 6, 3).strftime("%Y%m%d"),
                 :version => "3.4.3",
                 :align => align,
                 :align0 => align,
-                :starttime => Time.now.to_i - 100000, #too lazy for realistic values...
-                :endtime => Time.now.to_i - 50000,
+                :starttime => Time.utc(2012, 6, 2).to_i, #too lazy for realistic values...
+                :endtime => Time.utc(2012, 6, 3).to_i,
                 :achieve => rand(4096),            #wrong here, too lazy
                 :hp => death == "ascended" ? rand(250) + 10 : rand(10) - 10,
                 :maxlvl => rand(57),
