@@ -1,3 +1,9 @@
+%script{:type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"}
+%script{:type => "text/javascript", :src => "/graph/highcharts.js"}
+%script{:type => "text/javascript", :src => "/graph/graph_ascensions.js"}
+%script{:type => "text/javascript", :src => "/graph/graph_finished_games_per_day.js"}
+%script{:type => "text/javascript", :src => "/graph/graph_new_users_per_day.js"}
+
 .content_bulk
   .text_content_wrapper
     - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
@@ -7,7 +13,6 @@
       .text_content
         %h2 Ascensions per Day
         .scorelisting
-          %img{:src => "tmp/activity.png", :style => "float: right"}
           %table.greytable.misc
             %tr
               %th Date (UTC)
@@ -21,14 +26,16 @@
               %tr{:id => style}
                 %td.table_date= h game.datum
                 %td.table_number= game.count ? game.count : 0
-          - graph.write("activity.png")
+                - if count == 1
+                  %td.chart{:rowspan => @ascensions_per_day.size}
+                    %div{:id => "chart_ascensions"}
+          - graph.write("activity")
 
 
     - cache_fragment("games_#{Game.max_endtime}") do
       - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null) group by datum order by datum asc;"
       .text_content.non_top_post
         %h2 Finished Games per Day
-        %img{:src => "tmp/finished_games_per_day.png", :style => "float: right"}
         .scorelisting
           %table.greytable.misc
             %tr
@@ -43,7 +50,10 @@
               %tr{:id => style}
                 %td.table_date= h game.datum
                 %td.table_number= game.count
-          - graph.write("finished_games_per_day.png")
+                - if count == 1
+                  %td.chart{:rowspan => @finished_games_per_day.size}
+                    %div{:id => "chart_finished_games_per_day"}
+          - graph.write("finished_games_per_day")
 
     - cache_fragment("users_#{User.max_created_at}") do
       // same comment as for @ascensions_per_day applies
@@ -55,10 +65,16 @@
             %tr
               %th Date (UTC)
               %th
+            - graph = Graph.new
             - count = 0
             - @new_users_per_day.each do |game|
+              - graph.add_data_point(game.date, game.count)
               - style = (count % 2) == 0 ? "cell1" : "cell2"
               - count += 1
               %tr{:id => style}
                 %td.table_date= h game.date
                 %td.table_number= game.count ? game.count : 0
+                - if count == 1
+                  %td.chart{:rowspan => @new_users_per_day.size}
+                    %div{:id => "chart_new_users_per_day"}
+          - graph.write("new_users_per_day")
