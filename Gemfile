@@ -9,3 +9,6 @@ gem "sinatra", "~> 1.2.6"
 gem "rufus-scheduler"
 gem "orderedhash", "~> 0.0.6"
 gem "sinatra-cache"
+
+# charts
+gem "fastercsv"
