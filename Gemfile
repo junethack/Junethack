@@ -11,5 +11,4 @@ gem "orderedhash", "~> 0.0.6"
 gem "sinatra-cache"
 
 # charts
-gem "gruff", "0.3.6", :git => "git://github.com/bhaak/gruff.git", :branch => "fix_y_axis_increment"
 gem "fastercsv"
