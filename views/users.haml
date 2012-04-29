@@ -14,7 +14,7 @@
               Games Played
             %th
               Trophies Earned
-          - @users.each do |user|
+          - @users.sort_by {|user| user.login.downcase }.each do |user|
             %tr
               %td
                 %a{:href => "/user/" + user.login}

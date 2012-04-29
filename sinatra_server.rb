@@ -130,7 +130,7 @@ end
 get "/users" do 
     caching_check_last_played_game
 
-    @users = User.all :order => [ :login.asc ]
+    @users = User.all
     haml :users
 end
 
