@@ -48,10 +48,3 @@ class CompetitionScoreEntry
     property :rank,      Integer, :default => -1
 end
 
-# we don't have that trophy in the 2011 tournament
-DataMapper::MigrationRunner.migration( 1, :delete_most_variant_trophy_combinations ) do
-  up do
-    ClanScoreEntry.all(:trophy => 'most_variant_trophy_combinations').destroy
-  end
-end
-

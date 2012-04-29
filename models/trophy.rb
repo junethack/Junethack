@@ -98,6 +98,7 @@ $trophy_names = {
     "most_ascended_combinations" => "Most ascended variant/role/race/alignment/gender combinations (starting)",
     "most_points" => "Most points",
     "most_unique_deaths" => "Most unique deaths",
+    "most_variant_trophy_combinations" => "Most variant/trophy combinations",
 }
 
 DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
@@ -119,6 +120,7 @@ DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
     Trophy.create :variant => "clan", :trophy => "most_ascended_combinations", :text => "Most ascended variant/role/race/alignment/gender combinations (starting)", :icon => "clan-combinations.png"
     Trophy.create :variant => "clan", :trophy => "most_points", :text => "Most points", :icon => "clan-points.png"
     Trophy.create :variant => "clan", :trophy => "most_unique_deaths", :text => "Most unique deaths", :icon => "clan-deaths.png"
+    Trophy.create :variant => "clan", :trophy => "most_variant_trophy_combinations", :text => "Most variant/trophy combinations", :icon => "clan-variant-trophies.png"
     
     # Standard achievements
     acehack = '3.6.0'

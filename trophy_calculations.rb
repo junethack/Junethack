@@ -363,20 +363,21 @@ def update_clan_scores(game)
         c.value = most_ascensions_in_a_24_hour_period clan_name
         c.save
 
-        # we don't have this clan trophy for the 2011 tournament
-        #most_variant_trophy_combinations = (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_sql+");", clan_name)[0]
-        #c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
-        #                                :trophy  => "most_variant_trophy_combinations",
-        #                                :icon => "clan-variant-trophies.png")
-        #c.value = most_variant_trophy_combinations
-        #c.save
+        # This one is new for 2012.
+        # We didn't have this clan trophy for the 2011 tournament.
+        most_variant_trophy_combinations = (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_sql+");", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_variant_trophy_combinations",
+                                        :icon => "clan-variant-trophies.png")
+        c.value = most_variant_trophy_combinations
+        c.save
     end
 
     rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_unique_deaths", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascensions_in_a_24_hour_period", :order => [ :value.desc ]))
-    #rank_collection(ClanScoreEntry.all(:trophy  => "most_variant_trophy_combinations", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_variant_trophy_combinations", :order => [ :value.desc ]))
     score_clans
 
     return true

@@ -108,6 +108,7 @@ $trophy_names = {
     "most_ascended_combinations" => "Most ascended variant/role/race/alignment/gender combinations (starting)",
     "most_points" => "Most points",
     "most_unique_deaths" => "Most unique deaths",
+    "most_variant_trophy_combinations" => "Most variant/trophy combinations",
 }
 
 class Game
