@@ -122,7 +122,7 @@ DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
     
     # Standard achievements
     acehack = '3.6.0'
-    unnethack = 'UNH-3.6.0'
+    unnethack = 'UNH-4.1.0'
     for variant in $variants do
       Trophy.create :variant => variant, :trophy => "ascended", :text => "ascended", :icon => "ascension.png"
       Trophy.create :variant => variant, :trophy => "escapologist", :text => "escaped in celestial disgrace", :icon => "escapologist.png"
