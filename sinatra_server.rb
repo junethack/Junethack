@@ -55,7 +55,8 @@ end
 before do
     @user = User.get(session['user_id'])
     @logged_in = @user.nil?
-    @tournament_identifier = "junethack2011 #{@user.login}" if @user
+    @tournament_identifier = "junethack #{@user.login}" if @user
+    @tournament_identifier_regexp = /junethack(2011)? #{Regexp.quote @user.login}/ if @user
     @messages = session["messages"] || []
     @errors = session["errors"] || []
 
@@ -192,7 +193,7 @@ post "/add_server_account" do
 
     # verify that this user wants to connect this account to this user
     begin
-        if server.verify_user(params[:user], Regexp.new(Regexp.quote(@tournament_identifier)))
+        if server.verify_user(params[:user], @tournament_identifier_regexp)
             session['messages'] = 'Account verified and added.'
         else
             session['errors'] = 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.display_name)]
