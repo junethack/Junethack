@@ -15,6 +15,7 @@ load File.expand_path('spec/spec.rake')
 namespace :bogus do
 
     names = %w(r4wrmage ad3on k3rio bh44k c4smith789 st3nno)    #hi #junethack
+    desc "add bogus server, user and games"
     task :init do
       User.transaction do
         Rake::Task['bogus:add_servers'].invoke
@@ -27,6 +28,7 @@ namespace :bogus do
       end
     end
 
+    desc "add a bogus server"
     task :add_server, :name, :variant, :url, :xlogurl, :configfileurl do |t, args|
         puts "add server got #{args.inspect}"
         Server.create(:name => args[:name], :variant => args[:variant], :url => args[:url], :xlogurl => args[:xlogurl], :configfileurl => args[:configfileurl])
@@ -37,7 +39,7 @@ namespace :bogus do
 	puts "added #{ Server.all.length } test servers"
     end
 
-
+    desc "add a bogus user"
     task :add_user, :name, :servername do |t, args|
         
         puts "args were: #{args.inspect}"
@@ -53,10 +55,12 @@ namespace :bogus do
         end
     end
 
+    desc "add a lot of randomly generated games"
     task :add_a_lot_of_games do
         Rake::Task['bogus:add_game'].invoke 500
     end
 
+    desc "add randomly generated games"
     task :add_game, :games do |t, args|
         
         deaths = [        #some deaths, feel free to add more :P #done -nooodl
@@ -131,6 +135,7 @@ namespace :bogus do
 end
 
 namespace :fetch do
+    desc "fetch new xlogfile entries from game servers"
     task :get_games do
         fetch_all
     end
@@ -138,6 +143,7 @@ end
 
 namespace :update do
     i = 0
+    desc "recalculate scores"
     task :scores do
         (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
             i += 1
@@ -146,6 +152,7 @@ namespace :update do
         }
     end
 
+    desc "recalculate competition scores"
     task :user_competition do
         (repository.adapter.select "select version,id,ascended from games where user_id is not null and ascended='t' order by endtime").each {|game|
             i += 1
@@ -165,6 +172,7 @@ namespace :update do
         end
     end
 
+    desc "recalculate clan scores"
     task :clan_winner do
         score_clans
     end
