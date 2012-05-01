@@ -7,6 +7,8 @@ require 'date'
 require 'trophyscore'
 require 'normalize_death'
 require 'sync'
+require 'rake/dsl_definition'
+require 'rake'
 
 $db_access = Sync.new
 
