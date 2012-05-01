@@ -11,7 +11,9 @@ class XLog
 
     def self.parse_xlog xlog
         #puts "#{xlog}"
-        Hash[xlog.chomp.split(":").map{|e| e.split("=")}]
+        # xlogfiles look like key1=value1:key2=value2:...
+        # there are no : in the value fields but = may appear
+        Hash[xlog.chomp.split(":").map{|e| e.split("=", 2)}]
     end
 
     def self.fetch_header xlog_url

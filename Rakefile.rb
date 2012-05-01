@@ -10,6 +10,8 @@ require 'sync'
 
 $db_access = Sync.new
 
+load File.expand_path('spec/spec.rake')
+
 namespace :bogus do
 
     names = %w(r4wrmage ad3on k3rio bh44k c4smith789 st3nno)    #hi #junethack

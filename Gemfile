@@ -12,3 +12,9 @@ gem "sinatra-cache"
 
 # charts
 gem "fastercsv"
+
+group :development, :test do
+  gem 'rake'
+  gem 'rspec'
+  gem 'rcov'
+end
