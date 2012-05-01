@@ -3,8 +3,6 @@ povray_images/*.pov-state
 junethack.db
 test_xlog.txt
 test_xlog2.txt
-# Ignore Gemfile.lock
-Gemfile.lock
 # cheryl - ignore temporary files
 webmocks/alt_design2/*.swp
 webmocks/alt_design2/*.tmp
