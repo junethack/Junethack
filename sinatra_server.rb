@@ -223,7 +223,7 @@ post "/create" do
 
   # don't allow registrations at wrong times
   now = Time.new.to_i
-  if (now < $tournament_starttime)
+  if (now < $tournament_signupstarttime)
     errors.push("Tournament registration has not opened yet.")
   elsif (now >= $tournament_endtime)
     errors.push("Tournament has already ended.")
