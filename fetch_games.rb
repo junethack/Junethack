@@ -24,7 +24,12 @@ def fetch_all
             $db_access.synchronize { server.save }
             next
         end
-        if DateTime.parse(server.xloglastmodified) < DateTime.parse(header['Last-Modified'])
+
+        # in case the web server doesn't send Last-Modified, use current time
+        # because of byte-range fetching, not much overhead is generated
+        last_modified = header['Last-Modified'] || Time.now.httpdate
+        @fetch_logger.info "last-modified #{last_modified}"
+        if DateTime.parse(server.xloglastmodified) < DateTime.parse(last_modified)
             @fetch_logger.info "fetching games ...."
             if gamesIO = XLog.fetch_from_xlog(server.xlogurl, server.xlogcurrentoffset, header['Content-Length'])
                 games = gamesIO.readlines
@@ -70,7 +75,7 @@ def fetch_all
             else
                 @fetch_logger.info "No games at all!"
             end
-            server.xloglastmodified = header['Last-Modified']
+            server.xloglastmodified = last_modified
             $db_access.synchronize { server.save }
         else
             @fetch_logger.info "no new games, try again later"
