@@ -6,3 +6,4 @@ Junethack developers:
     Cheryl Chong <cheryl@chongsworship.com> (AKA xiella)
     Ryan Karl <rawrnix@rawrnix.com> (AKA rawrmage)
     Mikko Juola <mikjuo@gmail.com> (AKA Adeon)
+    Patric Mueller <bhaak@gmx.net> (AKA bhaak)
