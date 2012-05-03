@@ -54,6 +54,9 @@ class StartScummedGame
     property :dlev_name,  String
     property :elbereths,  Integer, :default => -1
 
+    property :xplevel, Integer, :default => 0
+    property :exp,     Integer, :default => 0
+    property :mode,    String
 end
 
 
