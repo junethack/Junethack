@@ -3,7 +3,11 @@
   %head
     %meta{:content => "application/xhtml+xml;charset=utf-8", "http-equiv" => "content-type"}/
     %link{:href => "/style-xiella.css", :rel => "stylesheet", :type => "text/css"}/
-    %title= "Junethack - #{User.count} players registered - #{Game.count :conditions => [ 'user_id is not null' ] } games played!"
+    - games_count = Game.count :conditions => [ 'user_id is not null' ]
+    - if games_count == 0 then
+      %title= "Junethack - #{User.count} players already registered!"
+    - else
+      %title= "Junethack - #{User.count} players registered - #{games_count} games played!"
   %body
     #container
       #topnav.navigation
