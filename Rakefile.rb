@@ -195,3 +195,29 @@ namespace :update do
         }
     end
 end
+
+namespace :run do
+    desc "start maintenance mode"
+    task :maintenance  do
+        set :environment, :production
+        require 'maintenance'
+        Sinatra::Application.run!
+    end
+
+    desc "run sinatra app locally"
+    desc "start server in production mode"
+    task :dev  do
+        require 'sinatra_server'
+        Sinatra::Application.run!
+    end
+
+    desc "start server in production mode"
+    task :production do
+        set :environment, :production
+        require 'sinatra_server'
+        Sinatra::Application.run!
+    end
+end
+
+task :default => ["run:production"]
+
