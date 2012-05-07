@@ -10,7 +10,13 @@ Dir.mkdir('logs') unless File.exists?('logs')
 @fetch_logger = Logger.new('logs/fetch_games.log', 'daily')
 @fetch_logger_error = Logger.new('logs/fetch_games_errors.log', 'daily')
 
+@stop_fetching_games = "stop_fetching_games"
+
 def fetch_all
+    if File.exists? @stop_fetching_games then
+      @fetch_logger.info "File #{@stop_fetching_games} exists, don't get new games."
+      return
+    end
     for server in Server.all
       begin
         @fetch_logger.info "server #{server.name} start!"
