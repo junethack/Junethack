@@ -60,9 +60,9 @@ before do
     @messages = session["messages"] || []
     @errors = session["errors"] || []
 
-    puts "got #{@messages.length} messages"
-    puts "and #{@errors.length} errors"
-    puts "#{@errors.inspect}"
+    #puts "got #{@messages.length} messages"
+    #puts "and #{@errors.length} errors"
+    #puts "#{@errors.inspect}"
     session["messages"] = []
     session["errors"] = []
 
@@ -71,7 +71,7 @@ end
 
 after do
     $db_access.unlock :SH
-    puts $db_access.inspect
+    #puts $db_access.inspect
 end
 
 def caching_check_last_played_game
@@ -144,7 +144,7 @@ end
 post "/login" do
     if user = User.authenticate(params["username"], params["password"])
         session['user_id'] = user.id
-        puts "Id is #{user.id}"
+        #puts "Id is #{user.id}"
         session["messages"] 
         redirect "/home"
     else
