@@ -19,6 +19,10 @@ def fetch_all
     end
     for server in Server.all
       begin
+        count_games = 0
+        count_scummed_games = 0
+        count_non_tournament_games = 0
+
         @fetch_logger.info "server #{server.name} start!"
         @fetch_logger.info "url #{server.xlogurl}"
         header = XLog.parse_header XLog.fetch_header(server.xlogurl)
@@ -56,17 +60,21 @@ def fetch_all
                             if hgame['turns'].to_i <= 10 and ['escaped','quit'].include? hgame['death'] then
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.info "start scummed game"
+                                count_scummed_games += 1
                             else
                                 game = Game.create(hgame.merge({"server" => server}))
+                                count_games += 1
                             end
                             game.user_id = acc.user_id if acc
                             if game.save
                                 @fetch_logger.info "created #{i}"
+                                bot.say "created #{i}"
                             else
                                 raise "something went wrong, could not create games"
                             end
                         else
                             @fetch_logger.info "not part of tournament #{i}"
+                            count_non_tournament_games += 1
                         end
                         # this game is completely input into the db
                         # don't parse it again
@@ -78,6 +86,7 @@ def fetch_all
                       end
                     end
                 raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['Content-Length'].to_i}" if server.xlogcurrentoffset != header['Content-Length'].to_i
+                @fetch_logger.info "Inserted #{count_games} tournament, #{count_non_tournament_games} non tournament. and #{count_scummed_games} start scummed games."
             else
                 @fetch_logger.info "No games at all!"
             end
