@@ -34,6 +34,7 @@ namespace :bogus do
     task :add_server, :name, :variant, :url, :xlogurl, :configfileurl do |t, args|
         puts "add server got #{args.inspect}"
         Server.create(:name => args[:name], :variant => args[:variant], :url => args[:url], :xlogurl => args[:xlogurl], :configfileurl => args[:configfileurl])
+        Trophy.check_trophies_for_variant args[:variant]
     end
     task :add_servers do
         Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0, :configfileurl => "text_xlog_random_user.rc")

@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'bundler/setup'
+
 require 'dm-migrations'
 require 'dm-migrations/migration_runner'
 require 'trophy_calculations'
@@ -101,55 +104,60 @@ $trophy_names = {
     "most_variant_trophy_combinations" => "Most variant/trophy combinations",
 }
 
-DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
-  up do
-    # Cross Variant
-    Trophy.create :trophy => "king_of_the_world", :text => "King of the world: ascend in all variants", :icon => "king.png"
-    Trophy.create :trophy => "anti_stoner",       :text => "Anti-Stoner: defeated Medusa in all variants", :icon => "anti-stoner.png"
-    Trophy.create :trophy => "globetrotter",      :text => "Globetrotter: get a trophy for each variant", :icon => "globetrotter.png"
-    Trophy.create :trophy => "sightseeing_tour",  :text => "Sightseeing Tour: finish a game in all variants", :icon => "sightseeing.png"
-    
+# create variant specific trophies
+def Trophy.check_trophies_for_variant variant_description
+
+  # get variant designator by description
+  variant = helper_get_variant_for variant_description
+
+  # check if there are already trophies for this variant
+  if (Trophy.first :variant => variant).nil? then
     # NetHack 1.3d
-    Trophy.create :variant => "NH-1.3d", :trophy => "ascended_old", :text => "ascended", :icon => "old-ascension.png"
-    Trophy.create :variant => "NH-1.3d", :trophy => "crowned", :text => "got crowned", :icon => "old-crowned.png"
-    Trophy.create :variant => "NH-1.3d", :trophy => "entered_hell", :text => "entered Hell", :icon => "old-hell.png"
-    Trophy.create :variant => "NH-1.3d", :trophy => "defeated_old_rodney", :text => "defeated Rodney", :icon => "old-wizard.png"
-    
-    # Clan
-    Trophy.create :variant => "clan", :trophy => "most_ascensions_in_a_24_hour_period", :text => "Most ascensions in a 24 hour period", :icon => "clan-24h.png"
-    Trophy.create :variant => "clan", :trophy => "most_ascended_combinations", :text => "Most ascended variant/role/race/alignment/gender combinations (starting)", :icon => "clan-combinations.png"
-    Trophy.create :variant => "clan", :trophy => "most_points", :text => "Most points", :icon => "clan-points.png"
-    Trophy.create :variant => "clan", :trophy => "most_unique_deaths", :text => "Most unique deaths", :icon => "clan-deaths.png"
-    Trophy.create :variant => "clan", :trophy => "most_variant_trophy_combinations", :text => "Most variant/trophy combinations", :icon => "clan-variant-trophies.png"
-    
-    # Standard achievements
-    acehack = '3.6.0'
-    unnethack = 'UNH-4.1.0'
-    for variant in $variants do
-      Trophy.create :variant => variant, :trophy => "ascended", :text => "ascended", :icon => "ascension.png"
-      Trophy.create :variant => variant, :trophy => "escapologist", :text => "escaped in celestial disgrace", :icon => "escapologist.png"
-      Trophy.create :variant => variant, :trophy => "entered_astral_plane", :text => "entered Astral Plane", :icon => "m-astral.png"
-      Trophy.create :variant => variant, :trophy => "entered_elemental_planes", :text => "entered Elemental Planes", :icon => "m-planes.png"
-      Trophy.create :variant => variant, :trophy => "obtained_the_amulet_of_yendor", :text => "obtained the Amulet of Yendor", :icon => "m-amulet.png" if variant != acehack
-      Trophy.create :variant => variant, :trophy => "defeated_a_high_priest", :text => "defeated a High Priest", :icon => "m-amulet.png" if variant == acehack
-      Trophy.create :variant => variant, :trophy => "performed_the_invocation_ritual", :text => "performed the Invocation Ritual", :icon => "m-invocation.png"
-      Trophy.create :variant => variant, :trophy => "obtained_the_book_of_the_dead", :text => "obtained the Book of the Dead", :icon => "m-book.png" if variant != acehack
-      Trophy.create :variant => variant, :trophy => "defeated_rodney", :text => "defeated Rodney at least once", :icon => "m-book.png" if variant == acehack
-      Trophy.create :variant => variant, :trophy => "obtained_the_candelabrum_of_invocation", :text => "obtained the Candelabrum of Invocation", :icon => "m-candelabrum.png" if variant != acehack
-      Trophy.create :variant => variant, :trophy => "defeated_vlad", :text => "defeated Vlad", :icon => "m-candelabrum.png" if variant == acehack
-      Trophy.create :variant => variant, :trophy => "entered_gehennom", :text => "entered Gehennom", :icon => "m-gehennom.png" if variant != acehack
-      Trophy.create :variant => variant, :trophy => "event_entered_gehennom_front_way", :text => "entered Gehennom the front way", :icon => "m-gehennom.png" if variant == acehack
-      Trophy.create :variant => variant, :trophy => "defeated_medusa", :text => "defeated Medusa", :icon => "m-medusa.png"
-      Trophy.create :variant => variant, :trophy => "obtained_bell_of_opening", :text => "obtained the Bell of Opening", :icon => "m-bell.png" if variant != acehack
-      Trophy.create :variant => variant, :trophy => "defeated_quest_nemesis", :text => "defeated the Quest Nemesis", :icon => "m-bell.png" if variant == acehack
-      Trophy.create :variant => variant, :trophy => "obtained_the_luckstone_from_the_mines", :text => "obtained the luckstone from the Mines", :icon => "m-luckstone.png" if variant != acehack
-      Trophy.create :variant => variant, :trophy => "accepted_for_quest", :text => "get accepted to the Quest", :icon => "m-luckstone.png" if variant == acehack
-      Trophy.create :variant => variant, :trophy => "obtained_the_sokoban_prize", :text => "obtained the Sokoban Prize", :icon => "m-soko.png" if variant != acehack
-      Trophy.create :variant => variant, :trophy => "bought_oracle_consultation", :text => "got an Oracle consultation", :icon => "m-soko.png" if variant == acehack
+    if variant == "NH-1.3d" then
+      Trophy.create :variant => "NH-1.3d", :trophy => "ascended_old", :text => "ascended", :icon => "old-ascension.png"
+      Trophy.create :variant => "NH-1.3d", :trophy => "crowned", :text => "got crowned", :icon => "old-crowned.png"
+      Trophy.create :variant => "NH-1.3d", :trophy => "entered_hell", :text => "entered Hell", :icon => "old-hell.png"
+      Trophy.create :variant => "NH-1.3d", :trophy => "defeated_old_rodney", :text => "defeated Rodney", :icon => "old-wizard.png"
+      return
     end
-    
-    # AceHack and UnNetHack
-    for variant in [acehack, unnethack] do
+
+    # Standard achievements
+    # all variants get these
+    # get current versions
+    acehack = helper_get_variant_for 'acehack'
+    unnethack = helper_get_variant_for 'unnethack'
+    if variant == acehack then
+      # these variants don't have standard xlogfile achievement flags
+      broken_xlogfile = true
+    else
+      broken_xlogfile = false
+    end
+
+    # standard devnull achievement trophies
+    Trophy.create :variant => variant, :trophy => "ascended", :text => "ascended", :icon => "ascension.png"
+    Trophy.create :variant => variant, :trophy => "escapologist", :text => "escaped in celestial disgrace", :icon => "escapologist.png"
+    Trophy.create :variant => variant, :trophy => "entered_astral_plane", :text => "entered Astral Plane", :icon => "m-astral.png"
+    Trophy.create :variant => variant, :trophy => "entered_elemental_planes", :text => "entered Elemental Planes", :icon => "m-planes.png"
+    Trophy.create :variant => variant, :trophy => "obtained_the_amulet_of_yendor", :text => "obtained the Amulet of Yendor", :icon => "m-amulet.png" if not broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "defeated_a_high_priest", :text => "defeated a High Priest", :icon => "m-amulet.png" if broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "performed_the_invocation_ritual", :text => "performed the Invocation Ritual", :icon => "m-invocation.png"
+    Trophy.create :variant => variant, :trophy => "obtained_the_book_of_the_dead", :text => "obtained the Book of the Dead", :icon => "m-book.png" if not broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "defeated_rodney", :text => "defeated Rodney at least once", :icon => "m-book.png" if broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "obtained_the_candelabrum_of_invocation", :text => "obtained the Candelabrum of Invocation", :icon => "m-candelabrum.png" if not broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "defeated_vlad", :text => "defeated Vlad", :icon => "m-candelabrum.png" if broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "entered_gehennom", :text => "entered Gehennom", :icon => "m-gehennom.png" if not broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "event_entered_gehennom_front_way", :text => "entered Gehennom the front way", :icon => "m-gehennom.png" if broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "defeated_medusa", :text => "defeated Medusa", :icon => "m-medusa.png"
+    Trophy.create :variant => variant, :trophy => "obtained_bell_of_opening", :text => "obtained the Bell of Opening", :icon => "m-bell.png" if not broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "defeated_quest_nemesis", :text => "defeated the Quest Nemesis", :icon => "m-bell.png" if broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "obtained_the_luckstone_from_the_mines", :text => "obtained the luckstone from the Mines", :icon => "m-luckstone.png" if not broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "accepted_for_quest", :text => "get accepted to the Quest", :icon => "m-luckstone.png" if broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "obtained_the_sokoban_prize", :text => "obtained the Sokoban Prize", :icon => "m-soko.png" if not broken_xlogfile
+    Trophy.create :variant => variant, :trophy => "bought_oracle_consultation", :text => "got an Oracle consultation", :icon => "m-soko.png" if broken_xlogfile
+
+    # AceHack and UnNetHack specific achievements
+    if variant == acehack or
+       variant == unnethack then
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_nemesis", :text => "Too good for quests (ascended without defeating the quest nemesis)", :icon => "m-no-nemesis.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_vlad", :text => "Too good for Vladbanes (ascended without defeating Vlad)", :icon => "m-no-vlad.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_rodney", :text => "Too good for... wait, what? How? (ascended without defeating Rodney)", :icon => "m-no-wizard.png"
@@ -159,43 +167,61 @@ DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_cthulhu", :text => "Too good for a brain (ascended without defeating Cthulhu)", :icon => "m-no-cthulhu.png" if variant == unnethack
     end
 
+    # user competition trophies
+    Trophy.create :variant => variant, :trophy => "most_ascensions", :text => "Most ascensions", :icon => "c-most-ascensions.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "fastest_ascension_gametime", :text => "Fastest ascension (by turns)", :icon => "c-fastest-gametime.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "fastest_ascension_realtime", :text => "Fastest ascension (by wall-clock time)", :icon => "c-fastest-realtime.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "highest_scoring_ascension", :text => "Highest scoring ascension", :icon => "c-highest-score.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "lowest_scoring_ascension", :text => "Lowest scoring ascension", :icon => "c-lowest-score.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "most_conducts_ascension", :text => "Most conducts in a single ascension", :icon => "c-most-conducts.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "longest_ascension_streaks", :text => "Longest ascension streak", :icon => "c-longest-streak.png", :user_competition => true
+
+    # multiple ascension trophies
+    Trophy.create :variant => variant, :trophy => "all_conducts", :text => "All conducts: follow each conduct in at least one ascension", :icon => "all-conducts.png"
+    Trophy.create :variant => variant, :trophy => "all_conducts_streak", :text => "All conducts (in a streak): follow each conduct in at least one ascension, with all the ascensions belonging to the same streak", :icon => "streak-conducts.png"
+    Trophy.create :variant => variant, :trophy => "all_roles", :text => "All roles: ascend a character for each role", :icon => "all-roles.png"
+    Trophy.create :variant => variant, :trophy => "all_roles_streak", :text => "All roles (in a streak): ascend a character for each role in the same streak", :icon => "streak-roles.png"
+    Trophy.create :variant => variant, :trophy => "all_races", :text => "All races: ascend a character of every race", :icon => "all-races.png"
+    Trophy.create :variant => variant, :trophy => "all_races_streak", :text => "All races (in a streak): ascend a character of every race in the same streak", :icon => "streak-races.png"
+    Trophy.create :variant => variant, :trophy => "all_alignments", :text => "All alignments: ascend a character of every alignment (the starting alignment is considered)", :icon => "all-alignments.png"
+    Trophy.create :variant => variant, :trophy => "all_alignments_streak", :text => "All alignments (in a streak): ascend a character of every alignment in the same streak (the starting alignment is considered)", :icon => "streak-alignments.png"
+    Trophy.create :variant => variant, :trophy => "all_genders", :text => "All genders: ascend a character of each gender (the starting gender is considered)", :icon => "all-genders.png"
+    Trophy.create :variant => variant, :trophy => "all_genders_streak", :text => "All genders (in a streak): ascend a character of each gender (the starting gender is considered)", :icon => "streak-genders.png"
+
+  end
+end
+
+DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
+  up do
+    # Cross Variant
+    Trophy.create :trophy => "king_of_the_world", :text => "King of the world: ascend in all variants", :icon => "king.png"
+    Trophy.create :trophy => "anti_stoner",       :text => "Anti-Stoner: defeated Medusa in all variants", :icon => "anti-stoner.png"
+    Trophy.create :trophy => "globetrotter",      :text => "Globetrotter: get a trophy for each variant", :icon => "globetrotter.png"
+    Trophy.create :trophy => "sightseeing_tour",  :text => "Sightseeing Tour: finish a game in all variants", :icon => "sightseeing.png"
+
+    # Clan
+    Trophy.create :variant => "clan", :trophy => "most_ascensions_in_a_24_hour_period", :text => "Most ascensions in a 24 hour period", :icon => "clan-24h.png"
+    Trophy.create :variant => "clan", :trophy => "most_ascended_combinations", :text => "Most ascended variant/role/race/alignment/gender combinations (starting)", :icon => "clan-combinations.png"
+    Trophy.create :variant => "clan", :trophy => "most_points", :text => "Most points", :icon => "clan-points.png"
+    Trophy.create :variant => "clan", :trophy => "most_unique_deaths", :text => "Most unique deaths", :icon => "clan-deaths.png"
+    Trophy.create :variant => "clan", :trophy => "most_variant_trophy_combinations", :text => "Most variant/trophy combinations", :icon => "clan-variant-trophies.png"
+
   end
   down do
     Trophy.all.destroy
   end
 end
 
-DataMapper::MigrationRunner.migration( 2, :create_user_competition_trophies ) do
+DataMapper::MigrationRunner.migration( 4, :delete_variant_trophies ) do
   up do
+    # delete all variant trophies
+    execute "delete from trophies where variant is not null and variant != 'clan';"
 
-    # Standard achievements
-    for variant in $variants do
-      Trophy.create :variant => variant, :trophy => "most_ascensions", :text => "Most ascensions", :icon => "c-most-ascensions.png", :user_competition => true
-      Trophy.create :variant => variant, :trophy => "fastest_ascension_gametime", :text => "Fastest ascension (by turns)", :icon => "c-fastest-gametime.png", :user_competition => true
-      Trophy.create :variant => variant, :trophy => "fastest_ascension_realtime", :text => "Fastest ascension (by wall-clock time)", :icon => "c-fastest-realtime.png", :user_competition => true
-      Trophy.create :variant => variant, :trophy => "highest_scoring_ascension", :text => "Highest scoring ascension", :icon => "c-highest-score.png", :user_competition => true
-      Trophy.create :variant => variant, :trophy => "lowest_scoring_ascension", :text => "Lowest scoring ascension", :icon => "c-lowest-score.png", :user_competition => true
-      Trophy.create :variant => variant, :trophy => "most_conducts_ascension", :text => "Most conducts in a single ascension", :icon => "c-most-conducts.png", :user_competition => true
-      Trophy.create :variant => variant, :trophy => "longest_ascension_streaks", :text => "Longest ascension streak", :icon => "c-longest-streak.png", :user_competition => true
-    end
-  end
-end
-
-DataMapper::MigrationRunner.migration( 3, :create_all_stuff_trophies ) do
-  up do
-
-    # Standard achievements
-    for variant in $variants do
-      Trophy.create :variant => variant, :trophy => "all_conducts", :text => "All conducts: follow each conduct in at least one ascension", :icon => "all-conducts.png"
-      Trophy.create :variant => variant, :trophy => "all_conducts_streak", :text => "All conducts (in a streak): follow each conduct in at least one ascension, with all the ascensions belonging to the same streak", :icon => "streak-conducts.png"
-      Trophy.create :variant => variant, :trophy => "all_roles", :text => "All roles: ascend a character for each role", :icon => "all-roles.png"
-      Trophy.create :variant => variant, :trophy => "all_roles_streak", :text => "All roles (in a streak): ascend a character for each role in the same streak", :icon => "streak-roles.png"
-      Trophy.create :variant => variant, :trophy => "all_races", :text => "All races: ascend a character of every race", :icon => "all-races.png"
-      Trophy.create :variant => variant, :trophy => "all_races_streak", :text => "All races (in a streak): ascend a character of every race in the same streak", :icon => "streak-races.png"
-      Trophy.create :variant => variant, :trophy => "all_alignments", :text => "All alignments: ascend a character of every alignment (the starting alignment is considered)", :icon => "all-alignments.png"
-      Trophy.create :variant => variant, :trophy => "all_alignments_streak", :text => "All alignments (in a streak): ascend a character of every alignment in the same streak (the starting alignment is considered)", :icon => "streak-alignments.png"
-      Trophy.create :variant => variant, :trophy => "all_genders", :text => "All genders: ascend a character of each gender (the starting gender is considered)", :icon => "all-genders.png"
-      Trophy.create :variant => variant, :trophy => "all_genders_streak", :text => "All genders (in a streak): ascend a character of each gender (the starting gender is considered)", :icon => "streak-genders.png"
-    end
+    # add all already existing variants
+    Trophy.check_trophies_for_variant "vanilla"
+    Trophy.check_trophies_for_variant "sporkhack"
+    Trophy.check_trophies_for_variant "unnethack"
+    Trophy.check_trophies_for_variant "acehack"
+    Trophy.check_trophies_for_variant "grunthack"
   end
 end

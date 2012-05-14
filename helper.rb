@@ -34,6 +34,16 @@ $variants << "UNH-4.1.0"
 $variants << "3.6.0"
 $variants << "0.2.0"
 
+def helper_get_variant_for(description)
+    # hard coded descriptions for some variants
+    return '3.4.3' if description.downcase == 'vanilla'
+    return 'NH-1.3d' if description.downcase == 'oldhack'
+
+    # find variant by text description
+    variant = $variants_mapping.find {|v,k| k.downcase == description.downcase}
+    return variant[0] if variant
+end
+
 def helper_get_variants_for_user(id)
     variants = repository.adapter.select "select distinct version from games where user_id = ?;", @id
     v = $variants_mapping.dup.reject {|key,value| not variants.include? key }
