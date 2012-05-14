@@ -127,7 +127,7 @@ get "/trophies" do
     haml :trophies
 end
 
-get "/users" do 
+get "/users" do
     caching_check_last_played_game
 
     @users = User.all
