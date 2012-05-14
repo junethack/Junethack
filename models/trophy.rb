@@ -125,8 +125,9 @@ def Trophy.check_trophies_for_variant variant_description
     # all variants get these
     # get current versions
     acehack = helper_get_variant_for 'acehack'
+    nethack4 = helper_get_variant_for 'nethack4'
     unnethack = helper_get_variant_for 'unnethack'
-    if variant == acehack then
+    if [acehack, nethack4].include? variant then
       # these variants don't have standard xlogfile achievement flags
       broken_xlogfile = true
     else
@@ -155,9 +156,8 @@ def Trophy.check_trophies_for_variant variant_description
     Trophy.create :variant => variant, :trophy => "obtained_the_sokoban_prize", :text => "obtained the Sokoban Prize", :icon => "m-soko.png" if not broken_xlogfile
     Trophy.create :variant => variant, :trophy => "bought_oracle_consultation", :text => "got an Oracle consultation", :icon => "m-soko.png" if broken_xlogfile
 
-    # AceHack and UnNetHack specific achievements
-    if variant == acehack or
-       variant == unnethack then
+    # AceHack, NetHack4 and UnNetHack specific achievements
+    if [acehack, nethack4, unnethack].include? variant then
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_nemesis", :text => "Too good for quests (ascended without defeating the quest nemesis)", :icon => "m-no-nemesis.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_vlad", :text => "Too good for Vladbanes (ascended without defeating Vlad)", :icon => "m-no-vlad.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_rodney", :text => "Too good for... wait, what? How? (ascended without defeating Rodney)", :icon => "m-no-wizard.png"
@@ -223,5 +223,6 @@ DataMapper::MigrationRunner.migration( 4, :delete_variant_trophies ) do
     Trophy.check_trophies_for_variant "unnethack"
     Trophy.check_trophies_for_variant "acehack"
     Trophy.check_trophies_for_variant "grunthack"
+    Trophy.check_trophies_for_variant "nethack4"
   end
 end
