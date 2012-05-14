@@ -45,11 +45,11 @@ class StartScummedGame
        self.death = death[0,255]
     end
 
-    #acehack/unnethack-specific properties
+    # acehack/unnethack-specific properties
     property :carried,  String
     property :event,    String
 
-    #acehack/unnethack-specific properties
+    # acehack/unnethack-specific properties
     property :deathdname, String
     property :dlev_name,  String
     property :elbereths,  Integer, :default => -1
@@ -57,6 +57,9 @@ class StartScummedGame
     property :xplevel, Integer, :default => 0
     property :exp,     Integer, :default => 0
     property :mode,    String
+
+    # nethack4-specific properties
+    property :charname, String
 end
 
 
