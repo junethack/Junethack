@@ -68,7 +68,6 @@ def fetch_all
                             game.user_id = acc.user_id if acc
                             if game.save
                                 @fetch_logger.info "created #{i}"
-                                bot.say "created #{i}"
                             else
                                 raise "something went wrong, could not create games"
                             end
