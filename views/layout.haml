@@ -1,5 +1,5 @@
 <!doctype html>
-%html
+%html{"xmlns:og" => "http://ogp.me/ns#"}
   %head
     %meta{:content => "application/xhtml+xml;charset=utf-8", "http-equiv" => "content-type"}/
     %link{:href => "/style-xiella.css", :rel => "stylesheet", :type => "text/css"}/
@@ -8,6 +8,12 @@
       %title= "Junethack - #{User.count} players already registered!"
     - else
       %title= "Junethack - #{User.count} players registered - #{games_count} games played!"
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Junethack" />
+    <meta property="og:url" content="http://junethack.rawrnix.com/" />
+    <meta property="og:description" content="The NetHack Cross-Variant Summer Tournament" />
+    <meta property="og:image" content="http://junethack.rawrnix.com/vivid_divider.png" />
+
   %body
     #container
       #topnav.navigation
