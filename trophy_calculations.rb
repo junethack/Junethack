@@ -578,22 +578,22 @@ def update_all_stuff(game)
 
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_conducts).save if all_conducts? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_conducts_streak).save if all_conducts_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_conducts_streak).save if all_conducts_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_roles).save if all_roles? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_roles_streak).save if all_roles_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_roles_streak).save if all_roles_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_races).save if all_races? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_races_streak).save if all_races_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_races_streak).save if all_races_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_alignments).save if all_alignments? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_alignments_streak).save if all_alignments_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_alignments_streak).save if all_alignments_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_genders).save if all_genders? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_genders_streak).save if all_genders_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_genders_streak).save if all_genders_streak? game.user_id, game.version
 end

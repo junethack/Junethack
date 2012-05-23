@@ -178,15 +178,15 @@ def Trophy.check_trophies_for_variant variant_description
 
     # multiple ascension trophies
     Trophy.create :variant => variant, :trophy => "all_conducts", :text => "All conducts: follow each conduct in at least one ascension", :icon => "all-conducts.png"
-    Trophy.create :variant => variant, :trophy => "all_conducts_streak", :text => "All conducts (in a streak): follow each conduct in at least one ascension, with all the ascensions belonging to the same streak", :icon => "streak-conducts.png"
+    #Trophy.create :variant => variant, :trophy => "all_conducts_streak", :text => "All conducts (in a streak): follow each conduct in at least one ascension, with all the ascensions belonging to the same streak", :icon => "streak-conducts.png"
     Trophy.create :variant => variant, :trophy => "all_roles", :text => "All roles: ascend a character for each role", :icon => "all-roles.png"
-    Trophy.create :variant => variant, :trophy => "all_roles_streak", :text => "All roles (in a streak): ascend a character for each role in the same streak", :icon => "streak-roles.png"
+    #Trophy.create :variant => variant, :trophy => "all_roles_streak", :text => "All roles (in a streak): ascend a character for each role in the same streak", :icon => "streak-roles.png"
     Trophy.create :variant => variant, :trophy => "all_races", :text => "All races: ascend a character of every race", :icon => "all-races.png"
-    Trophy.create :variant => variant, :trophy => "all_races_streak", :text => "All races (in a streak): ascend a character of every race in the same streak", :icon => "streak-races.png"
+    #Trophy.create :variant => variant, :trophy => "all_races_streak", :text => "All races (in a streak): ascend a character of every race in the same streak", :icon => "streak-races.png"
     Trophy.create :variant => variant, :trophy => "all_alignments", :text => "All alignments: ascend a character of every alignment (the starting alignment is considered)", :icon => "all-alignments.png"
-    Trophy.create :variant => variant, :trophy => "all_alignments_streak", :text => "All alignments (in a streak): ascend a character of every alignment in the same streak (the starting alignment is considered)", :icon => "streak-alignments.png"
+    #Trophy.create :variant => variant, :trophy => "all_alignments_streak", :text => "All alignments (in a streak): ascend a character of every alignment in the same streak (the starting alignment is considered)", :icon => "streak-alignments.png"
     Trophy.create :variant => variant, :trophy => "all_genders", :text => "All genders: ascend a character of each gender (the starting gender is considered)", :icon => "all-genders.png"
-    Trophy.create :variant => variant, :trophy => "all_genders_streak", :text => "All genders (in a streak): ascend a character of each gender (the starting gender is considered)", :icon => "streak-genders.png"
+    #Trophy.create :variant => variant, :trophy => "all_genders_streak", :text => "All genders (in a streak): ascend a character of each gender (the starting gender is considered)", :icon => "streak-genders.png"
 
   end
 end
@@ -224,5 +224,12 @@ DataMapper::MigrationRunner.migration( 4, :delete_variant_trophies ) do
     Trophy.check_trophies_for_variant "acehack"
     Trophy.check_trophies_for_variant "grunthack"
     Trophy.check_trophies_for_variant "nethack4"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 5, :delete_streak_trophies ) do
+  up do
+    # delete all variant trophies
+    execute "delete from trophies where trophy like 'all%streak';"
   end
 end
