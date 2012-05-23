@@ -19,6 +19,9 @@ require 'graph'
 
 require 'irc'
 
+require 'rack/mobile-detect'
+use Rack::MobileDetect
+
 $db_access = Sync.new
 
 ## settings for sinatra-cache
@@ -67,7 +70,10 @@ before do
     session["errors"] = []
 
     # switch to a different layout for mobile devices
-    @layout = true
+    @layout = env['X_MOBILE_DEVICE'] ? :layout_mobile : true
+    # for debugging
+    # @layout = :layout_mobile
+    # puts env.sort.map{ |v| v.join(': ') }.join("\n") + "\n"
 
     $db_access.lock :SH
 end

@@ -10,6 +10,8 @@ gem "rufus-scheduler"
 gem "orderedhash", "~> 0.0.6"
 gem "sinatra-cache"
 
+gem "rack-mobile-detect"
+
 gem "thin"
  # eventmachine 0.12.10 crashes with:
  # undefined method `associate_callback_target' for #<Thin::Connection:0x7f9bcfa666a8>
