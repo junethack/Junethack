@@ -83,7 +83,7 @@ a.imagelink:hover {
 **         fiddly css3 properties       **
 **                                      **
 *****************************************/
-#footer,
+.footer,
 /* topnav */
 .text_content_wrapper, #topnav {
     background-color: #ddd;
@@ -109,7 +109,7 @@ a.imagelink:hover {
 }
 /* typical inset rounding and shadowing */
 #topnav,
-#footer,
+.footer,
 .text_content_wrapper {
     -webkit-box-shadow: 0px 0px 8px #222;
     -moz-box-shadow: 0px 0px 8px #222;
@@ -639,11 +639,33 @@ form#login_form > fieldset > input[type=submit].active:hover {
 **                       **
 **************************/
 
-#footer {
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
+.footer {
+    height: auto;
     margin: 20px 0;
+    padding-bottom: 20px;
+}
+.footer ul {
+    text-align: center;
+}
+.footer h3 {
+    font-size: 1.2em;
+}
+.footer img {
+    padding: 0px;
+    margin: 0px;
+}
+.footer li {
+    display: inline-block;
+    text-align: left;
+    margin: 10px;
+}
+.footer_column li {
+    display: block;
+}
+.footer_column a {
+    margin: 0px;
+    padding: 0px;
+
 }
 #flattr img,
 a#flattr {

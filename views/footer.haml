@@ -1,16 +1,47 @@
-#footer
+.footer
   %footer
-    (c) 2011-2012
-    %a{:href => "/authors.txt"} Junethack developers.
-    [
-    %a{:href => "/about"} About 
-    \-
-    %a{:href => "/rules"} Rules
-    ]
-    [
-    %a{:href => "/activity"} Activity
-    \-
-    %a{:href => "/servers"} Servers
-    \-
-    %a{:href => "/trophies"} Trophies
-    ]
+    %ul
+      %li
+        .footer_column
+          %ul
+            %li
+              %h3 Junethack
+            %li
+              %a{:href => "/authors.txt"} Junethack developers
+            %li
+              %a{:href => "/about"} About
+      %li
+        .footer_column
+          %ul
+            %li
+              %h3 Tournament
+            %li
+              %a{:href => "/rules"} Rules
+            %li
+              %a{:href => "/trophies"} Trophies
+      %li
+        .footer_column
+          %ul
+            %li
+              %h3 Activity
+            %li
+              %a{:href => "/activity"} Statistics
+            %li
+              %a{:href => "/servers"} Servers
+      %li
+        .footer_column
+          %ul
+            %li
+              %h3 Scoreboards
+            %li
+              %a{:href => "/scoreboard"} Scoreboard
+            %li
+              %a{:href => "/clan_competition"} Clan scores
+      .footer_column
+        %ul
+          %li
+            .center
+              %img{:alt => "Junethack logo", :src =>"/vivid_divider.png"}
+          %li
+            .center
+              &copy; 2011-2012 Junethack developers
