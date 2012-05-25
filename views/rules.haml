@@ -2,7 +2,9 @@
   .text_content_wrapper
     .text_content
       %h1
-        Rules and scoring
+        Rules
+      %p
+        Some rules are needed so that everyone can play nice with each other.
       %h2
         Cheating
       %p
@@ -51,55 +53,8 @@
           We haven't had any blatant cheating incidents in the past. Just use 
           common sense and you will be fine.
         .text_content.non_top_post
-
-        %h2{:id => "scoring"}
-          Scoring
-        %p
-          The score for competitions and clan competitions is calculated as
-          follows:
-          %p
-            %li
-              Only the best game for each player is considered, for each
-              category.
-            %li
-              The first place player(s) get 4 points, the second place
-              player(s) get 3 points, the third place player(s) get 2 points,
-              and the remaining players get points according to the ratio
-              of their best evaluated game to the winner(s)' best evaluated
-              game.
-            %li
-              In case of a tie, all the players with the same evaluation get
-              the same amount of points; in the ranking, they're considered
-              as one player.
-            %li
-              Games with negative scores are discarded for the "lowest scoring
-              ascension" competition.
-
-        .text_content.non_top_post
-        %p
-          The score for trophies is fixed - one point for each trophy;
-          streak trophies are separate from their standard counterpart,
-          the requirement for those is that all the requirements for the
-          trophy are fulfilled in a sequence of ascensions on a single
-          game server account.
-          Achievement trophies yield equal fractions of a point according
-          to how many achievements were obtained in the whole tournament.
-        %p
-          You can view a list of the available trophies and competitions
-          %a{:href => "/trophies"}
-            here.
-        %p
-          The "Sightseeing
-          Tour" trophy requires a finished game from each variant to be played for at
-          least 1000 turns, or finished with an ascension; the "Globetrotter"
-          trophy doesn't require a full trophy for each variant - a single
-          achievement out of the set for each variant is enough.
-        %p
-          The "No membership card" and "Too good for a brain" trophies are
-          UnNetHack-specific.
-        .text_content.non_top_post
       %h2
-        Other things
+        Startscumming
       %p
         %p{:id => "startscumming"}
           For this tournament,
@@ -107,7 +62,5 @@
           are defined as games where the player escapes or quits within the first 10
           turns. Such games are hidden on the games tables but are otherwise treated like
           normal games.
-        %p
-          Streaks are sequences of non-overlapping games played on a single
-          game server account, with no games in-between.
+      .text_content.non_top_post
     %span#end_of_content_spacer.clear
