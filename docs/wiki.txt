@@ -1,0 +1,10 @@
+Junethack is a multi-server, multi-variant NetHack tournament, established 2011. It features virtual trophies for achievements (some of which are cross-server) and a user and clan competition. The junethack website (junethack.rawrnix.com) lets users register their accounts and create or join a clan. It also gives an overview of the users' achievements. 
+User trophies are for example ascending in all variants (cross-server), ascending a character of each gender, or ascend without defeating Cthulhu (unnethack only). Clan trophies include most ascensions in a 24-hour period and most unique deaths. A full list of the trophies and competitions can be found on http://junethack.rawrnix.com/trophies.
+Junethack differs from other tournaments like /dev/null insofar as that the users play on participating public servers instead of dedicated tournament servers. This allows to continue established accounts and also to include variants with relative ease. Participating servers are:
+
+Users can register their accounts by adding the line 
+    #junethack username
+to the rcfiles of the server. More information is available on the tournament website, after signing up.
+The 2nd tournament runs from June 1st to June 30th, 2012. For questions, criticism or even praise, visit the #junethack IRC channel on irc.freenode.net.
+
+The junethack server software is written in Ruby, with the sinatra web framework and datamapper as the database interface. The source code is released under GPL 3. You can download it on github: github.com/junethack/Junethack
