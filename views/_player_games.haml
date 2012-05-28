@@ -40,7 +40,7 @@
           %td.table_number= h c.value
           %td.table_number= h c.rank
         %tr#cell2
-          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "most_ascensions"
+          - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "most_conducts_ascension"
           %td Most conducts in a single ascension
           %td.table_number= h c.value
           %td.table_number= h c.rank
