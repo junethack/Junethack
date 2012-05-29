@@ -1,5 +1,7 @@
 LICENSE STUFF
 
+Junethack (c) 2011-2012 Junethack developers
+
 Copyright holders are in authors.txt
 
 Everything is under GPLv3 (gpl.txt) except for the following:

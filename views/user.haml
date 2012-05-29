@@ -3,7 +3,10 @@
         .text_content_wrapper
             .text_content
                 %h2
-                    #{h @player.login} @ junethack2011
+                    Junethack 2012
+                %h2
+                    #{h @player.login}
+                %h2
                     #{@player.display_game_statistics}
                 - server_accounts = (Server.all - @player.servers)
                 %table.greytable
@@ -26,8 +29,6 @@
                         =haml :user_cross_variant_trophies
                         - for @variant in $variants
                             =haml :user_trophies
-                        - @variant = "NH-1.3d"
-                        =haml :user_trophies
             .text_content.non_top_post
                 =haml :_player_games
             .text_content.non_top_post

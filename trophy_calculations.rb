@@ -18,76 +18,6 @@ def most_ascensions_users(user=nil)
     end
 end
 
-# Helper class for calculating ascension density
-class AccountCalc
-    attr_accessor :games, :score, :account, :game1, :game2
-    def initialize
-        @games = [ ]
-        @score = 0
-    end
-
-    def num_ascensions
-        ascensions = 0
-        @games.each do |game|
-            ascensions += 1 if game.death == 'ascended'
-        end
-        ascensions
-    end
-
-    def calculate_score_between(games, min_score = 0.0)
-        final_max = 0.0
-        max_so_far = max_ending_here = 0.0
-        for asc in games do
-            a = asc.death == 'ascended' ? 1.0 : -1.0
-            max_ending_here = max_ending_here + a if max_ending_here + a > 0
-            max_so_far = max_so_far > max_ending_here ? max_so_far : max_ending_here
-        end
-        final_max = final_max > max_so_far ? final_max : max_so_far
-        final_max
-    end
-
-    def calculate_score
-        # Calculate the longest distance between ascensions
-        # So first ascension and last ascension
-
-        @score = calculate_score_between(@games)
-        @score
-    end
-end
-
-
-def best_sustained_ascension_rate(and_collection=nil)
-    # First step, collect the games.
-    accounts = Account.all
-    accounts_c = { }
-    accounts.each do |account|
-        accounts_c[account.name] = AccountCalc.new
-        accounts_c[account.name].account = account
-        accounts_c[account.name].games = Game.all(:name => account.name,
-                                                  :order => [:endtime.desc])
-    end
-
-    # Sort the games and calculate score
-    accounts_c.each do |account, account_class|
-        account_class.calculate_score
-    end
-
-    users = { }
-    # Wrap the thing up to users.
-    accounts_c.each do |account, account_class|
-        users[account_class.account.user.login] = { } if
-            users[account_class.account.user.login].nil?
-        u = users[account_class.account.user.login]
-        if u[:score].nil? or u[:score] < account_class.score then
-            u[:score] = account_class.score
-            u[:game1] = account_class.game1
-            u[:game2] = account_class.game2
-        end
-    end
-
-    users.sort_by{|username, info| -info[:score]}
-end
-
 def best_sustained_ascension_rate(and_collection=nil)
     games = repository.adapter.select "select endtime, (select login from users where id = user_id) as user, death, name from games where user_id is not null order by user_id, endtime asc;"
     score = Hash.new(0)
@@ -104,23 +34,23 @@ end
 # King of the world: ascend in all variants
 def king_of_the_world?(user)
     anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and ascended='t';", user
-    return anz[0] == 4
+    return anz[0] == $variants.size
 end
 
 # Sightseeing tour: finish a game in all variants (die after at least 1000 turns or ascend)
 def sightseeing_tour?(user)
     anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and turns >= 1000;", user
-    return anz[0] == 4
+    return anz[0] == $variants.size
 end
 #  Globetrotter: get a trophy for each variant
 def globetrotter?(user)
     anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d';", user
-    return anz[0] == 4
+    return anz[0] == $variants.size
 end
 #  Anti-Stoner: defeat Medusa in each variant
 def anti_stoner?(user)
     anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d' and trophy='defeated_medusa';", user
-    return anz[0] == 4
+    return anz[0] == $variants.size
 end
 
 
@@ -433,20 +363,21 @@ def update_clan_scores(game)
         c.value = most_ascensions_in_a_24_hour_period clan_name
         c.save
 
-        # we don't have this clan trophy for the 2011 tournament
-        #most_variant_trophy_combinations = (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_sql+");", clan_name)[0]
-        #c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
-        #                                :trophy  => "most_variant_trophy_combinations",
-        #                                :icon => "clan-variant-trophies.png")
-        #c.value = most_variant_trophy_combinations
-        #c.save
+        # This one is new for 2012.
+        # We didn't have this clan trophy for the 2011 tournament.
+        most_variant_trophy_combinations = (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_sql+");", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_variant_trophy_combinations",
+                                        :icon => "clan-variant-trophies.png")
+        c.value = most_variant_trophy_combinations
+        c.save
     end
 
     rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_unique_deaths", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascensions_in_a_24_hour_period", :order => [ :value.desc ]))
-    #rank_collection(ClanScoreEntry.all(:trophy  => "most_variant_trophy_combinations", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_variant_trophy_combinations", :order => [ :value.desc ]))
     score_clans
 
     return true
@@ -647,22 +578,22 @@ def update_all_stuff(game)
 
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_conducts).save if all_conducts? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_conducts_streak).save if all_conducts_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_conducts_streak).save if all_conducts_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_roles).save if all_roles? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_roles_streak).save if all_roles_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_roles_streak).save if all_roles_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_races).save if all_races? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_races_streak).save if all_races_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_races_streak).save if all_races_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_alignments).save if all_alignments? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_alignments_streak).save if all_alignments_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_alignments_streak).save if all_alignments_streak? game.user_id, game.version
     Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
        :trophy => :all_genders).save if all_genders? game.user_id, game.version
-    Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-       :trophy => :all_genders_streak).save if all_genders_streak? game.user_id, game.version
+    #Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+    #   :trophy => :all_genders_streak).save if all_genders_streak? game.user_id, game.version
 end

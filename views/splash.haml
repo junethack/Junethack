@@ -1,13 +1,20 @@
 .content_bulk
-  %div.hcenter{:style => "margin: 1.75em; font-weight: bold; font-size: 1.25em;"} Running from July 17th until the end of August 14th 2011
-  - if @logged_in and (Time.new.to_i < $tournament_endtime)
-    .signup_text
-      %p
-        %a{:href => "register"} Sign up now!
+  .title_text
+    %p
+      Running from 1 June until the end of 30 June 2012
+  - if @logged_in 
+    - if Time.new.to_i > $tournament_signupstarttime and Time.new.to_i < $tournament_endtime
+      .signup_text
+        %p
+          %a{:href => "register"} Sign up now!
+    - if Time.new.to_i < $tournament_signupstarttime
+      .title_text
+        %p
+          Registration opens in May
   .text_content_wrapper
     .text_content
       %h2
-        Welcome to the NetHack Summer tournament site!
+        Welcome to the NetHack Cross-Variant Summer Tournament site!
       %p
         Are you ready to embark the Dungeons of Doom? To kill all your
         enemies and EAT their corpses? Collect all the treasures the
@@ -18,10 +25,13 @@
       %p
         Then play NetHack.
       %p
-        And also play in the NetHack Summer tournament.
+        And also play in the NetHack Cross-Variant Summer Tournament.
     .text_content.non_top_post
       =haml :news
     .text_content.non_top_post
+      %p
+        You can view the results of the 2011 tournament at the
+        %a{:href => "http://junethack-2011.rawrnix.com/"} Junethack 2011 site.
       %p
         You can view the tournament rules at the 
         %a{:href => "/rules"} Rules page.
@@ -41,7 +51,7 @@
         What's
         %a{:href => "about"} this all about?
       %p
-        The tournament starts July 17th at UTC midnight and runs until 
-        the end of August 14th.
+        The tournament starts 1 June 2012 at UTC midnight and runs until
+        the end of 30 June 2012.
     %span#end_of_content_spacer.clear
 / end of container

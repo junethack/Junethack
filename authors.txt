@@ -1,8 +1,11 @@
-AUTHORS
+The following people have contributed to the development of Junethack.
 
-Junethack developers:
-    Edoardo Spadolini (AKA kerio)
-    Christian Stegen <c.stegen@jungundwillich.de> (AKA stenno)
-    Cheryl Chong <cheryl@chongsworship.com> (AKA xiella)
-    Ryan Karl <rawrnix@rawrnix.com> (AKA rawrmage)
-    Mikko Juola <mikjuo@gmail.com> (AKA Adeon)
+    Name               Nickname   E-mail
+    ========================================================
+    Edoardo Spadolini  'kerio'    <kerio00@gmail.com>
+    Christian Stegen   'stenno'   <junethack@app42.de>
+    Cheryl Chong       'xiella'   <cheryl@chongsworship.com>
+    Ryan Karl          'rawrmage' <rawrnix@rawrnix.com>
+    Mikko Juola        'Adeon'    <mikjuo@gmail.com>
+    Patric Mueller     'bhaak'    <bhaak@gmx.net>
+

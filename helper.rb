@@ -20,18 +20,31 @@ $trophies_name = [
 
 $variants_mapping = {}
 $variants_mapping["3.4.3"]     = "NetHack 3.4.3"
-$variants_mapping["UNH-3.5.4"] = "UnNetHack"
+$variants_mapping["UNH-4.1.0"] = "UnNetHack"
 $variants_mapping["3.6.0"]     = "AceHack"
 $variants_mapping["0.6.3"]     = "SporkHack"
-$variants_mapping["NH-1.3d"]   = "NetHack 1.3d"
+$variants_mapping["0.2.0"]     = "GruntHack"
+$variants_mapping["4.2.0"]     = "NetHack4"
 
 # hard coded ordering of variants with competition score entries
 # order by release date
 $variants = []
 $variants << "3.4.3"
 $variants << "0.6.3"
-$variants << "UNH-3.5.4"
+$variants << "UNH-4.1.0"
 $variants << "3.6.0"
+$variants << "0.2.0"
+$variants << "4.2.0"
+
+def helper_get_variant_for(description)
+    # hard coded descriptions for some variants
+    return '3.4.3' if description.downcase == 'vanilla'
+    return 'NH-1.3d' if description.downcase == 'oldhack'
+
+    # find variant by text description
+    variant = $variants_mapping.find {|v,k| k.downcase == description.downcase}
+    return variant[0] if variant
+end
 
 def helper_get_variants_for_user(id)
     variants = repository.adapter.select "select distinct version from games where user_id = ?;", @id

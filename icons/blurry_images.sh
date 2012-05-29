@@ -56,4 +56,5 @@ light_me "streak-conducts.png"
 light_me "streak-genders.png"
 light_me "streak-races.png"
 light_me "streak-roles.png"
+light_me "clan-variant-trophies.png"
 

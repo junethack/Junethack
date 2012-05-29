@@ -7,12 +7,17 @@ require 'date'
 require 'trophyscore'
 require 'normalize_death'
 require 'sync'
+require 'rake/dsl_definition'
+require 'rake'
 
 $db_access = Sync.new
+
+load File.expand_path('spec/spec.rake')
 
 namespace :bogus do
 
     names = %w(r4wrmage ad3on k3rio bh44k c4smith789 st3nno)    #hi #junethack
+    desc "add bogus server, user and games"
     task :init do
       User.transaction do
         Rake::Task['bogus:add_servers'].invoke
@@ -25,9 +30,11 @@ namespace :bogus do
       end
     end
 
+    desc "add a bogus server"
     task :add_server, :name, :variant, :url, :xlogurl, :configfileurl do |t, args|
         puts "add server got #{args.inspect}"
         Server.create(:name => args[:name], :variant => args[:variant], :url => args[:url], :xlogurl => args[:xlogurl], :configfileurl => args[:configfileurl])
+        Trophy.check_trophies_for_variant args[:variant]
     end
     task :add_servers do
         Server.create(:name => "test server 1", :url => "localhost", :xlogurl => "file://test_xlog.txt", :xloglastmodified => "1.1.1970", :xlogcurrentoffset => 0, :configfileurl => "text_xlog_random_user.rc")
@@ -35,7 +42,7 @@ namespace :bogus do
 	puts "added #{ Server.all.length } test servers"
     end
 
-
+    desc "add a bogus user"
     task :add_user, :name, :servername do |t, args|
         
         puts "args were: #{args.inspect}"
@@ -51,10 +58,12 @@ namespace :bogus do
         end
     end
 
+    desc "add a lot of randomly generated games"
     task :add_a_lot_of_games do
         Rake::Task['bogus:add_game'].invoke 500
     end
 
+    desc "add randomly generated games"
     task :add_game, :games do |t, args|
         
         deaths = [        #some deaths, feel free to add more :P #done -nooodl
@@ -93,7 +102,7 @@ namespace :bogus do
                 :deathlev => rand(30) + 1,
                 :realtime => rand(10000) + 10000,
                 :turns => rand(1000) + 200,
-                :birthdate => (Time.now - 100000).strftime("%Y%m%d"),
+                :birthdate => Time.utc(2012, 6, 2).strftime("%Y%m%d"),
                 :conduct => rand(4096),        #some bitmask (wrong)
                 :nconducts => rand(12),        #as of now, does not match with the 'conduct' property
                 :role => %w(Arc Bar Cav Hea Kni Mon Pri Ran Rog Sam Tou Val Wiz)[rand 13],
@@ -103,12 +112,12 @@ namespace :bogus do
                 :uid => 5,        #dunno what that does
                 :maxhp => rand(250) + 10,
                 :points => rand(350000),
-                :deathdate => (Time.now - 50000).strftime("%Y%m%d"),
+                :deathdate => Time.utc(2012, 6, 3).strftime("%Y%m%d"),
                 :version => "3.4.3",
                 :align => align,
                 :align0 => align,
-                :starttime => Time.now.to_i - 100000, #too lazy for realistic values...
-                :endtime => Time.now.to_i - 50000,
+                :starttime => Time.utc(2012, 6, 2).to_i, #too lazy for realistic values...
+                :endtime => Time.utc(2012, 6, 3).to_i,
                 :achieve => rand(4096),            #wrong here, too lazy
                 :hp => death == "ascended" ? rand(250) + 10 : rand(10) - 10,
                 :maxlvl => rand(57),
@@ -129,6 +138,7 @@ namespace :bogus do
 end
 
 namespace :fetch do
+    desc "fetch new xlogfile entries from game servers"
     task :get_games do
         fetch_all
     end
@@ -136,6 +146,7 @@ end
 
 namespace :update do
     i = 0
+    desc "recalculate scores"
     task :scores do
         (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
             i += 1
@@ -144,6 +155,7 @@ namespace :update do
         }
     end
 
+    desc "recalculate competition scores"
     task :user_competition do
         (repository.adapter.select "select version,id,ascended from games where user_id is not null and ascended='t' order by endtime").each {|game|
             i += 1
@@ -163,6 +175,7 @@ namespace :update do
         end
     end
 
+    desc "recalculate clan scores"
     task :clan_winner do
         score_clans
     end
@@ -183,3 +196,29 @@ namespace :update do
         }
     end
 end
+
+namespace :run do
+    desc "start maintenance mode"
+    task :maintenance  do
+        set :environment, :production
+        require 'maintenance'
+        Sinatra::Application.run!
+    end
+
+    desc "run sinatra app locally"
+    desc "start server in production mode"
+    task :dev  do
+        require 'sinatra_server'
+        Sinatra::Application.run!
+    end
+
+    desc "start server in production mode"
+    task :production do
+        set :environment, :production
+        require 'sinatra_server'
+        Sinatra::Application.run!
+    end
+end
+
+task :default => ["run:production"]
+

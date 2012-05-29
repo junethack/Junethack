@@ -13,6 +13,9 @@ require 'userscore'
 require 'time'
 require 'logger'
 require 'sync'
+require 'tournament_times'
+
+require 'graph'
 
 require 'irc'
 
@@ -52,13 +55,14 @@ end
 before do
     @user = User.get(session['user_id'])
     @logged_in = @user.nil?
-    @tournament_identifier = "junethack2011 #{@user.login}" if @user
+    @tournament_identifier = "junethack #{@user.login}" if @user
+    @tournament_identifier_regexp = /junethack(2011)? #{Regexp.quote @user.login}/ if @user
     @messages = session["messages"] || []
     @errors = session["errors"] || []
 
-    puts "got #{@messages.length} messages"
-    puts "and #{@errors.length} errors"
-    puts "#{@errors.inspect}"
+    #puts "got #{@messages.length} messages"
+    #puts "and #{@errors.length} errors"
+    #puts "#{@errors.inspect}"
     session["messages"] = []
     session["errors"] = []
 
@@ -67,7 +71,7 @@ end
 
 after do
     $db_access.unlock :SH
-    puts $db_access.inspect
+    #puts $db_access.inspect
 end
 
 def caching_check_last_played_game
@@ -123,10 +127,10 @@ get "/trophies" do
     haml :trophies
 end
 
-get "/users" do 
+get "/users" do
     caching_check_last_played_game
 
-    @users = User.all :order => [ :login.asc ]
+    @users = User.all
     haml :users
 end
 
@@ -140,7 +144,7 @@ end
 post "/login" do
     if user = User.authenticate(params["username"], params["password"])
         session['user_id'] = user.id
-        puts "Id is #{user.id}"
+        #puts "Id is #{user.id}"
         session["messages"] 
         redirect "/home"
     else
@@ -189,7 +193,7 @@ post "/add_server_account" do
 
     # verify that this user wants to connect this account to this user
     begin
-        if server.verify_user(params[:user], Regexp.new(Regexp.quote(@tournament_identifier)))
+        if server.verify_user(params[:user], @tournament_identifier_regexp)
             session['messages'] = 'Account verified and added.'
         else
             session['errors'] = 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.display_name)]
@@ -215,6 +219,21 @@ post "/add_server_account" do
 end
 
 post "/create" do
+  errors = []
+
+  # don't allow registrations at wrong times
+  now = Time.new.to_i
+  if (now < $tournament_signupstarttime)
+    errors.push("Tournament registration has not opened yet.")
+  elsif (now >= $tournament_endtime)
+    errors.push("Tournament has already ended.")
+  end
+
+  if (!errors.empty?)
+    session['errors'] = errors
+    redirect "/" and return
+  end
+
   $db_access.synchronize {
     errors = []
     errors.push("Password and confirmation do not match.") if params["confirm"] != params["password"]
@@ -224,7 +243,7 @@ post "/create" do
     redirect "/register" and return unless session['errors'].empty?
     user = User.new(:login => params["username"])
     user.password = params["password"]
-    puts "CREATED USER LOL"
+    puts "CREATED USER LOL" # o'rly
     begin
         if user.save
             session['messages'] = "Registration successful. Please log in."

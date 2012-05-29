@@ -74,7 +74,7 @@ a.imagelink:hover {
 }
 /* misc */
 #container {
-    width: 750px;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -83,24 +83,40 @@ a.imagelink:hover {
 **         fiddly css3 properties       **
 **                                      **
 *****************************************/
-#footer,
+.footer,
 /* topnav */
 .text_content_wrapper, #topnav {
     background-color: #ddd;
+    background-image: linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
+    background-image: -o-linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
+    background-image: -moz-linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
+    background-image: -webkit-linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
+    background-image: -ms-linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
+
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        color-stop(0.0, rgb(255,255,255)),
+        color-stop(0.15, rgb(221,221,221)),
+        color-stop(0.85, rgb(221,221,221)),
+        color-stop(1.0, rgb(255,255,255))
+    );
+
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
 }
 /* typical inset rounding and shadowing */
 #topnav,
-#footer,
+.footer,
 .text_content_wrapper {
-    -webkit-box-shadow: inset 0px 0px 10px #888;
-    -moz-box-shadow: inset 0px 0px 10px #888;
-    box-shadow: inset 0px 0px 10px #888;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 8px #222;
+    -moz-box-shadow: 0px 0px 8px #222;
+    box-shadow: 0px 0px 8px #222;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
     filter:alpha(opacity=90); 
     -moz-opacity: 0.9; 
     opacity: 0.9; 
@@ -214,6 +230,12 @@ form#login_form > fieldset > input[type=submit],
 #topnav .main > li > a:hover {
     color: #000;
     background-color: #ccc;
+    -webkit-box-shadow: inset 0px 0px 2px #222;
+    -moz-box-shadow: inset 0px 0px 2px #222;
+    box-shadow: inset 0px 0px 2px #222;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
 #topnav .main > li.first > a.active,
 #topnav .main > li.first > a.active:hover,
@@ -222,6 +244,9 @@ form#login_form > fieldset > input[type=submit],
     background-color: #ddd;
     background-color: transparent;
     background: url(vivid_divider2.png) no-repeat bottom left;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 /*    */
 }
 
@@ -279,6 +304,31 @@ submenus
     text-align: center;
     /* space between nav and title */
     margin-top: 2.5em;
+}
+
+/* The texts around the logo itself */
+.logotitles
+{
+    color: #000;
+}
+
+.logotitles h1 {
+    font-size: 2.6em;
+}
+.logotitles h2 {
+    font-size: 2em;
+}
+.logoimage {
+    margin: -1em;
+}
+
+/* The text below the logo on the front page. */
+.title_text {
+    margin: 1.75em;
+    font-weight: bold;
+    font-size: 1.25em;
+    clear: both;
+    text-align: center;
 }
 
 /**************************
@@ -418,19 +468,26 @@ table.misc,
     background-color: #bbb;
 }
 
+.greytable #cell1 td.chart,
+.greytable #cell2 td.chart
+{
+    background-color: inherit;
+    border: 0;
+    padding-left: 1em;
+}
 .greytable #cell1 td.table_number,
 .greytable #cell2 td.table_number
 {
     text-align: right;
-    padding-right: 3px;
-    padding-left: 3px;
+    padding-right: 0.25em;
+    padding-left: 0.5em;
 }
 .greytable #cell1 td.table_date,
 .greytable #cell2 td.table_date
 {
     text-align: center;
-    padding-right: 3px;
-    padding-left: 3px;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
 }
 /* next two declarations are probably deprecated */
 .greytable input[type="text"]
@@ -582,16 +639,38 @@ form#login_form > fieldset > input[type=submit].active:hover {
 **                       **
 **************************/
 
-#footer {
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
+.footer {
+    height: auto;
     margin: 20px 0;
+    padding-bottom: 1px;
+}
+.footer ul {
+    text-align: center;
+}
+.footer h3 {
+    font-size: 1.2em;
+}
+.footer img {
+    padding: 0px;
+    margin: 0px;
+}
+.footer li {
+    display: inline-block;
+    text-align: left;
+    margin: 10px;
+}
+.footer_column li {
+    display: block;
+}
+.footer_column a {
+    margin: 0px;
+    padding: 0px;
+
 }
 #flattr img,
 a#flattr {
     vertical-align: baseline;
-    margin-bottom: -5px;
+    margin-top: 0.6em;
 }
 
 

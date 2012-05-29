@@ -108,6 +108,7 @@ $trophy_names = {
     "most_ascended_combinations" => "Most ascended variant/role/race/alignment/gender combinations (starting)",
     "most_points" => "Most points",
     "most_unique_deaths" => "Most unique deaths",
+    "most_variant_trophy_combinations" => "Most variant/trophy combinations",
 }
 
 class Game
@@ -154,19 +155,26 @@ class Game
        self.death = death[0,255]
     end
 
-    #acehack/unnethack-specific properties
+    # acehack/unnethack-specific properties
     property :carried,  String
     property :event,    String
     def get_conducts
         $conducts.map{|c| self.conduct & c[0] == c[0] ? c[2] : ""}.join
     end
 
-    #acehack/unnethack-specific properties
+    # acehack/unnethack-specific properties
     property :deathdname, String
     property :dlev_name,  String
     property :elbereths,  Integer, :default => -1
 
-    ## AcheHand and UnNetHack specific
+    property :xplevel, Integer, :default => 0
+    property :exp,     Integer, :default => 0
+    property :mode,    String
+
+    # nethack4-specific properties
+    property :charname, String
+
+    ## AceHack and UnNetHack specific
     # Assault on Fort Knox
     def defeated_croesus?
         event and event.to_i & 0x00800 > 0
