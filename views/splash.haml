@@ -3,6 +3,9 @@
     %p
       Running from 1 June until the end of 30 June 2012
   - if @logged_in 
+    - if Time.new.to_i < $tournament_starttime
+      .title_text
+        %p= parse_seconds $tournament_starttime - Time.new.to_i
     - if Time.new.to_i > $tournament_signupstarttime and Time.new.to_i < $tournament_endtime
       .signup_text
         %p
