@@ -315,8 +315,12 @@ end
 def unique_deaths_sql
     "SELECT DISTINCT death from normalized_deaths where user_id in (SELECT id FROM users WHERE clan = ?)"
 end
+
 def variant_trophy_combinations_sql
-    "SELECT DISTINCT variant, trophy from scoreentries where user_id in (SELECT id FROM users WHERE clan = ?)"
+    "SELECT DISTINCT variant, trophy from (SELECT user_id, variant, trophy from scoreentries UNION SELECT user_id, variant, trophy from competition_score_entries) where user_id in (SELECT id FROM users WHERE clan = ?)"
+end
+def variant_trophy_combinations_user_sql
+    "SELECT DISTINCT variant, trophy from (SELECT user_id, variant, trophy from scoreentries UNION SELECT user_id, variant, trophy from competition_score_entries) where user_id = ?"
 end
 
 def most_ascensions_in_a_24_hour_period(clan)

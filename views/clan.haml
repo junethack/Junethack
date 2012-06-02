@@ -57,7 +57,7 @@
               - else
                 member
             %td.table_number
-              #{h user.scoreentries.length}
+              #{h user.most_variant_trophies_count}
             %td
               - if user.games.length != 0
                 #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
