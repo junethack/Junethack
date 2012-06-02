@@ -53,6 +53,10 @@ class User
         self.accounts.map{|account| account.get_ascensions}.flatten
     end
 
+    def most_variant_trophies_count
+        (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_user_sql+");", self.id)[0]
+    end
+
     # user.to_i will return user.id or 0 if user == nil
     def to_i
         self.id
