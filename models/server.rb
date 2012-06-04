@@ -11,7 +11,7 @@ class Server
     property :name,              String, :length => 255
     property :url,               String, :length => 255
     property :xlogurl,           String, :length => 255
-    property :xloglastmodified,  String
+    property :xloglastmodified,  String, :default => "Sat Jan 01 00:00:00 UTC 2000"
     property :variant,           String
     property :xlogcurrentoffset, Integer
     property :configfileurl,     String, :length => 255
