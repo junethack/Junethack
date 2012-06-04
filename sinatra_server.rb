@@ -475,7 +475,21 @@ get "/server/:name" do
     caching_check_last_played_game
     @server = Server.first(:name => params[:name])
     if @server
-        @games = @server.games :conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50
+        @games = @server.games :conditions => [ 'user_id > 0' ], :order => [ :endtime.desc ], :limit => 100
+        haml :server
+    else
+        session['errors'] << "Could not find server #{ params[:name] }"
+        redirect "/"
+    end
+end
+
+get "/server/:name/all" do
+    caching_check_last_played_game
+    @server = Server.first(:name => params[:name])
+    if @server
+        # limit by date for not permanently showing users that haven't
+        # added themselves to Junethack
+        @games = @server.games :conditions => [ "endtime > #{Time.new.to_i-7*60*60*24}" ], :order => [ :endtime.desc ], :limit => 100
         haml :server
     else
         session['errors'] << "Could not find server #{ params[:name] }"
