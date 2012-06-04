@@ -22,7 +22,10 @@
             - count += 1
             %tr{:id => style}
               %td
-                %a{:href => "/user_id/#{game.user_id}"}= h game.name
+                - if game.user_id then
+                  %a{:href => "/user_id/#{game.user_id}"}= h game.name
+                - else
+                  #{h game.name}
               %td.table_number= game.points
               %td= h game.death
               %td.table_date= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
