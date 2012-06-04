@@ -92,11 +92,9 @@ def caching_check_last_played_game_by(user)
     last_modified Time.at(last_played_game_time.to_i).httpdate if last_played_game_time
 end
 
+# TODO: replace this function with something more appropriate
 def caching_check_application_start_time
-    return if @messages.size > 0 or @errors.size > 0
-
-    etag "#{$application_start.to_i}_#{@user.to_i}".hash if $application_start
-    last_modified $application_start.httpdate if $application_start
+    caching_check_last_played_game
 end
 
 get "/" do
