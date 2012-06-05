@@ -231,9 +231,11 @@ def update_scores(game)
                 :icon => "m-sam.png").save if game.defeated_one_eyed_sam?
         end
 
-        # AceHack
-        if game.version == '3.6.0' then
-            ## AceHack specific trophies as it doesn't track xlogfile achievements
+        # AceHack and NetHack4 specific trophies
+        acehack = helper_get_variant_for 'acehack'
+        nethack4 = helper_get_variant_for 'nethack4'
+        if [acehack, nethack4].include? game.version then
+            ## specific trophies as they don't track xlogfile achievements
             # bought an Oracle consultation
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
                 :trophy => :bought_oracle_consultation,
@@ -264,7 +266,7 @@ def update_scores(game)
                 :icon => "m-book.png").save if game.event_defeated_rodney?
             # did the invocation
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :did_invocation,
+                :trophy => :performed_the_invocation_ritual,
                 :icon => "m-invocation.png").save if game.event_did_invocation?
             # defeated a high priest
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
@@ -272,11 +274,11 @@ def update_scores(game)
                 :icon => "m-amulet.png").save if game.event_defeated_a_high_priest?
             # entered the planes
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :entered_planes,
+                :trophy => :entered_elemental_planes,
                 :icon => "m-planes.png").save if game.entered_planes?
             # entered astral
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :entered_astral,
+                :trophy => :entered_astral_plane,
                 :icon => "m-astral.png").save if game.entered_astral?
         end
 
