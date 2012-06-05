@@ -233,3 +233,12 @@ DataMapper::MigrationRunner.migration( 5, :delete_streak_trophies ) do
     execute "delete from trophies where trophy like 'all%streak';"
   end
 end
+
+DataMapper::MigrationRunner.migration( 6, :fix_acehack_trophies ) do
+  up do
+    # delete all variant trophies
+    execute "update scoreentries set trophy = 'performed_the_invocation_ritual' where variant = '3.6.0' and trophy = 'did_invocation';"
+    execute "update scoreentries set trophy = 'entered_elemental_planes' where variant = '3.6.0' and trophy = 'entered_planes';"
+    execute "update scoreentries set trophy = 'entered_astral_plane' where variant = '3.6.0' and trophy = 'entered_astral';"
+  end
+end
