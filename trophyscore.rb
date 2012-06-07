@@ -7,7 +7,7 @@ def most_ascensions(variant=nil)
 end
 
 def highest_scoring_ascension(variant=nil)
-    return repository.adapter.select "select distinct points, user_id, (select name from users where user_id = id) as user, endtime from games where version = ? and user_id is not null and ascended='t' and points = (select max(points) from games where version = ? and user_id is not null and ascended='t') order by endtime", variant, variant
+    return repository.adapter.select "select distinct points, user_id, (select name from users where user_id = id) as user, endtime from games where version = ? and user_id is not null and ascended='t' and points = (select max(points) from games where version = ? and user_id is not null and ascended='t') group by points, user_id order by endtime", variant, variant
 end
 
 def lowest_scoring_ascension(variant=nil)
