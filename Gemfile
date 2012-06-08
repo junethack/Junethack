@@ -20,6 +20,7 @@ gem "fastercsv"
 
 group :development, :test do
   gem 'rake'
+  gem "rack-test", "~> 0.6.1"
   gem 'rspec'
   gem 'rcov'
 end
