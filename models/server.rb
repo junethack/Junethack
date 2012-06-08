@@ -29,5 +29,18 @@ class Server
     def display_name
         url+" ("+name+")"
     end
+
+    def dumplog_link(game)
+      case @url
+      when "un.nethack.nu"
+        return "http://un.nethack.nu/user/#{game.name}/dumps/#{game.name}.#{game.endtime}.txt.html"
+      when "nethack.alt.org"
+        return "http://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
+      when "grunthack.org"
+        return "http://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"
+      else
+        return nil
+      end
+    end
 end
 
