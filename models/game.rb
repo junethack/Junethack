@@ -251,8 +251,8 @@ class Game
     def event_defeated_a_high_priest?
         event and event.to_i & 0x08000 > 0
     end
-    def entered_planes?
-        deathlev < 0
+    def entered_planes?        
+        deathlev < 0 and (not death.start_with?('went to heaven prematurely'))
     end
     def entered_astral?
         deathlev == -5
