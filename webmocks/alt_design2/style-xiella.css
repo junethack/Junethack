@@ -500,6 +500,14 @@ table.misc,
 {
     font-size: 100%;
 }
+.greytable #cell1 td.dllink,
+.greytable #cell2 td.dllink
+{
+    text-align: center;
+    width: 1em;
+    padding-right: 0.25em;
+    padding-left: 0.25em;
+}
 
 /**************************
 **                       **

@@ -7,6 +7,8 @@
       %th Server
       %th Points
       %th Killer
+      -# download column
+      %th
       %th Time (UTC)
     - count = 0
     - @games_played.each do |game|
@@ -22,4 +24,9 @@
         %td= h game.server.url
         %td.table_number= game.points
         %td= h game.death
+        %td.dllink
+          -# link to the dumplog of the game if possible
+          - link = game.server.dumplog_link(game)
+          - if link then
+            (<a href="#{link}">d</a>)
         %td.table_date= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
