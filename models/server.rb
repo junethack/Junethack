@@ -38,6 +38,10 @@ class Server
         return "http://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
       when "grunthack.org"
         return "http://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"
+      when "nethack.fi"
+        return "http://nethack.fi/userdata/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
+      when "acehack.us"
+        return "http://acehack.us/userdata/#{game.name}/dumplog/#{game.starttime}"
       else
         return nil
       end
