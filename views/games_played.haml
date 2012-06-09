@@ -7,7 +7,7 @@
       %th Server
       %th Points
       %th Killer
-      // download column
+      -# download column
       %th
       %th Time (UTC)
     - count = 0
@@ -24,8 +24,8 @@
         %td= h game.server.url
         %td.table_number= game.points
         %td= h game.death
-        %td
-          // link to the dumplog of the game if possible
+        %td.dllink
+          -# link to the dumplog of the game if possible
           - link = game.server.dumplog_link(game)
           - if link then
             (<a href="#{link}">d</a>)
