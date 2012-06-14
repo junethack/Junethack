@@ -20,7 +20,7 @@
         %h3{:id => variant}= variant_name
         %ul
             - count = Trophy.achieved_user_all_stuff_trophies_count variant
-            - if count > 1
+            - if count > 0
                 - trophies = Trophy.user_all_stuff_trophies variant
                 - trophies.each do |trophy|
                     %li
