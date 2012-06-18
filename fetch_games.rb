@@ -54,9 +54,9 @@ def fetch_all
                         #@fetch_logger.debug "#{line.length} #{line}"
                         xlog_add_offset = line.length
                         hgame = XLog.parse_xlog line
-                        acehack_explore_mode = hgame['mode'] == 'explore'
+                        strange_acehack_mode = hgame['mode'] == 'explore' or hgame['mode'] == 'multiplayer'
                         if hgame['starttime'].to_i >= $tournament_starttime and
-                            hgame['endtime'].to_i   <= $tournament_endtime and not acehack_explore_mode
+                            hgame['endtime'].to_i   <= $tournament_endtime and not strange_acehack_mode
                             acc = Account.first(:name => hgame["name"], :server_id => server.id)
                             if hgame['turns'].to_i <= 10 and ['escaped','quit'].include? hgame['death'] then
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
