@@ -30,19 +30,22 @@ end
 
 # returns a list of all ascension streaks per variant
 def ascension_streaks(variant=nil)
-    games = repository.adapter.select "select ascended, user_id, endtime, 0 as streaks from games where version = ? and user_id in (select user_id from games where ascended='t') order by endtime desc", variant
+    games = repository.adapter.select "select ascended, user_id, server_id, endtime, 0 as streaks from games where version = ? and user_id in (select user_id from games where ascended='t') order by server_id, endtime desc", variant
 
     # calculate streaks
     streaks = Hash.new(0)
     max_streaks = Hash.new(0)
+    # streaks are per server and per variant
+    server_id = 0
     games.each {|game|
+        streaks[game.user_id] = 0 if game.ascended == 'f' or game.server_id != server_id
+        server_id = game.server_id
+
         streaks[game.user_id] += 1 if game.ascended == 't'
 
         if streaks[game.user_id] > max_streaks[game.user_id]
             max_streaks[game.user_id] = streaks[game.user_id]
         end
-
-        streaks[game.user_id] = 0 if game.ascended == 'f'
     }
 
     # construct return object
