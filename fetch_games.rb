@@ -21,6 +21,7 @@ def fetch_all
       begin
         count_games = 0
         count_scummed_games = 0
+        count_junk_games = 0
         count_non_tournament_games = 0
 
         @fetch_logger.info "server #{server.name} start!"
@@ -54,14 +55,17 @@ def fetch_all
                         #@fetch_logger.debug "#{line.length} #{line}"
                         xlog_add_offset = line.length
                         hgame = XLog.parse_xlog line
-                        strange_acehack_mode = hgame['mode'] == 'explore' or hgame['mode'] == 'multiplayer'
                         if hgame['starttime'].to_i >= $tournament_starttime and
-                            hgame['endtime'].to_i   <= $tournament_endtime and not strange_acehack_mode
+                            hgame['endtime'].to_i   <= $tournament_endtime
                             acc = Account.first(:name => hgame["name"], :server_id => server.id)
                             if hgame['turns'].to_i <= 10 and ['escaped','quit'].include? hgame['death'] then
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.info "start scummed game"
                                 count_scummed_games += 1
+                            elsif hgame['mode'] == 'explore' or hgame['mode'] == 'multiplayer' then
+                                game = JunkGame.create(hgame.merge({"server" => server}))
+                                @fetch_logger.info "junk game"
+                                count_junk_games += 1
                             else
                                 game = Game.create(hgame.merge({"server" => server}))
                                 count_games += 1
@@ -86,7 +90,7 @@ def fetch_all
                       end
                     end
                 raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['Content-Length'].to_i}" if server.xlogcurrentoffset != header['Content-Length'].to_i
-                @fetch_logger.info "Inserted #{count_games} tournament, #{count_non_tournament_games} non tournament. and #{count_scummed_games} start scummed games."
+                @fetch_logger.info "Inserted #{count_games} tournament, #{count_non_tournament_games} non tournament, #{count_scummed_games} start scummed, and #{count_junk_games} junk games."
             else
                 @fetch_logger.info "No games at all!"
             end

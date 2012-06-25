@@ -20,7 +20,7 @@ configure :production do
   DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{$dbname}")
 end
 configure :development do
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/dev_#{$dbname}")
+  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{$dbname}")
 end
 configure :test do
   DataMapper.setup(:default, "sqlite3::memory:")
@@ -41,6 +41,7 @@ require 'models/user'
 require 'models/account'
 require 'models/game'
 require 'models/startscummedgame'
+require 'models/junkgame'
 require 'models/clan'
 require 'models/scoreentry'
 require 'models/trophy'
