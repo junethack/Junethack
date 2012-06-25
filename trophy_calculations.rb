@@ -520,8 +520,13 @@ end
 
 # All conducts: follow each conduct in at least one ascension.
 def all_conducts?(user_id, variant)
-    anz = repository.adapter.select "select max(nconducts) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
-    return anz[0] == 12 # Vegetarian, Vegan, Foodless, Atheist, Weaponless, Pacifist, Literate, Polypiles, Polyself, Wishing, Wishing for Artifacts, Genocide
+    conducts = repository.adapter.select "select conduct from games where version = ? and user_id = ? and ascended='t';", variant, user_id
+
+    # bit-or all conduct integers to find out if all 12 conducts have been followed overall
+    aggregated_conducts = 0
+    conducts.each { |c| aggregated_conducts |= c.to_i }
+
+    return aggregated_conducts == 2**12-1 # Vegetarian, Vegan, Foodless, Atheist, Weaponless, Pacifist, Literate, Polypiles, Polyself, Wishing, Wishing for Artifacts, Genocide
 end
 def all_conducts_streak?(user_id, variant)
     all_stuff_streak "nconducts", 12, user_id, variant
