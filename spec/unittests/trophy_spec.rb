@@ -50,4 +50,21 @@ describe TrophyScore do
       streaks[0]['streaks'].should == 2
     end
   end
+
+  it "should recognize if a player has followed all conducts in ascended games" do
+
+    user_id1 = 1
+    user_id2 = 2
+    version = 'conduct'
+    # followed all conducts
+    Game.new(:version => version, :user_id => user_id1, :server_id => 1, :conduct => 4094, :death => 'ascended').save!
+    Game.new(:version => version, :user_id => user_id1, :server_id => 1, :conduct =>    1, :death => 'ascended').save!
+
+    # followed all conducts but not in ascended games
+    Game.new(:version => version, :user_id => user_id2, :server_id => 1, :conduct =>    1, :death => 'ascended').save!
+    Game.new(:version => version, :user_id => user_id2, :server_id => 1, :conduct => 4094, :death => 'died').save!
+
+    (all_conducts? user_id1, version).should be_true
+    (all_conducts? user_id2, version).should be_false
+  end
 end
