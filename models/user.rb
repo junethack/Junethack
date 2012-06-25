@@ -48,6 +48,10 @@ class User
     def start_scummed_games_count
         StartScummedGame.count(:user_id => self.id)
     end
+    # count of start scummed games by this user
+    def junk_games_count
+        JunkGame.count(:user_id => self.id)
+    end
 
     def ascensions
         self.accounts.map{|account| account.get_ascensions}.flatten
@@ -70,6 +74,9 @@ class User
         n = self.games_count
         s = (n == 1) ? "" : "s"
         game = "#{n} Game#{s} Played"
+        n = self.junk_games_count
+        s = (n == 1) ? "" : "s"
+        game += " | #{n} Junk Game#{s}" if n > 0
         n = self.start_scummed_games_count
         s = (n == 1) ? "" : "s"
         game += " | #{n} Game#{s} Start Scummed" if n > 0
