@@ -2,16 +2,21 @@
   .title_text
     %p
       Running from 1 June until the end of 30 June 2012
-  // countdown to tournament start
-  - if Time.new.to_i < $tournament_starttime
+  - now = Time.new.to_i
+  - if now < $tournament_starttime
+    -# show a (static) countdown to tournament start
     .title_text
-      %p= parse_seconds $tournament_starttime - Time.new.to_i
+      %p= parse_seconds $tournament_starttime - now
+  - elsif now+86400*7 > $tournament_endtime and now < $tournament_endtime
+    -# show informational text if there is only one week left in the tournament
+    .title_text
+      %p= "Only #{parse_seconds $tournament_endtime - now} until the tournament ends!"
   - if @logged_in 
-    - if Time.new.to_i > $tournament_signupstarttime and Time.new.to_i < $tournament_endtime
+    - if now > $tournament_signupstarttime and now < $tournament_endtime
       .signup_text
         %p
           %a{:href => "register"} Sign up now!
-    - if Time.new.to_i < $tournament_signupstarttime
+    - if now < $tournament_signupstarttime
       .title_text
         %p
           Registration opens in May
