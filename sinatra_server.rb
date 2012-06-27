@@ -245,6 +245,7 @@ post "/create" do
     begin
         if user.save
             session['messages'] = "Registration successful. Please log in."
+            Event.new(:text => "New user #{user.login} registered!", :url => "#{base_url}/user/#{user.login}").save
             redirect "/login" and return 
         else
             session['errors'] = "Could not register account"
@@ -531,6 +532,13 @@ get "/clan_competition" do
     haml :clan_competition
 end
 
+get "/junethack_event.rss" do
+  caching_check_application_start_time
+
+  content_type 'application/rss+xml'
+  haml(:rss, :format => :xhtml, :escape_html => true, :layout => false)
+end
+
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
@@ -541,5 +549,10 @@ helpers do
     def cache_fragment(fragment_name, shared = nil, &block)
       block.call
     end
+  end
+
+  # http://stackoverflow.com/questions/2950234/get-absolute-base-url-in-sinatra
+  def base_url
+    @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
   end
 end
