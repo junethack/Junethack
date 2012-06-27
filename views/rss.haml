@@ -1,0 +1,15 @@
+!!! XML
+%rss{:version => "2.0", "xmlns:atom" => "http://www.w3.org/2005/Atom"}
+  %channel
+    %title Notable events in the Junethack tournament event
+    %link http://junethack.rawrnix.com/
+    %description Junethack - NetHack Cross-Variant Summer Tournament
+    <atom:link href="http://junethack.rawrnix.com/junethack_event.rss" rel="self" type="application/rss+xml" />
+    - events = Event.all(:order => [ :created_at.desc ])
+    - events.each do |event|
+      %item
+        %title= event.text
+        -if event.url
+          %link= event.url
+        %pubDate= event.created_at
+
