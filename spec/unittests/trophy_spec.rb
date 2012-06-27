@@ -55,6 +55,7 @@ describe TrophyScore do
 
     user_id1 = 1
     user_id2 = 2
+    user_id3 = 3
     version = 'conduct'
     # followed all conducts
     Game.new(:version => version, :user_id => user_id1, :server_id => 1, :conduct => 4094, :death => 'ascended').save!
@@ -64,7 +65,11 @@ describe TrophyScore do
     Game.new(:version => version, :user_id => user_id2, :server_id => 1, :conduct =>    1, :death => 'ascended').save!
     Game.new(:version => version, :user_id => user_id2, :server_id => 1, :conduct => 4094, :death => 'died').save!
 
+    # conducts saved as hexadecimal numbers should also work
+    Game.new(:version => version, :user_id => user_id3, :server_id => 1, :conduct => '0xfff', :death => 'ascended').save!
+
     (all_conducts? user_id1, version).should be_true
     (all_conducts? user_id2, version).should be_false
+    (all_conducts? user_id3, version).should be_true
   end
 end

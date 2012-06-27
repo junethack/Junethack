@@ -524,7 +524,7 @@ def all_conducts?(user_id, variant)
 
     # bit-or all conduct integers to find out if all 12 conducts have been followed overall
     aggregated_conducts = 0
-    conducts.each { |c| aggregated_conducts |= c.to_i }
+    conducts.each { |c| aggregated_conducts |= (Integer c) }
 
     return aggregated_conducts == 2**12-1 # Vegetarian, Vegan, Foodless, Atheist, Weaponless, Pacifist, Literate, Polypiles, Polyself, Wishing, Wishing for Artifacts, Genocide
 end
