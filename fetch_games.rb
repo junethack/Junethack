@@ -49,7 +49,7 @@ def fetch_all
                     games.each do |line|
                       begin
                         $db_access.lock :EX
-                        @fetch_logger.debug $db_access.inspect
+                        #@fetch_logger.debug $db_access.inspect
 
                         i += 1
                         #@fetch_logger.debug "#{line.length} #{line}"
@@ -58,6 +58,7 @@ def fetch_all
                         if hgame['starttime'].to_i >= $tournament_starttime and
                             hgame['endtime'].to_i   <= $tournament_endtime
                             acc = Account.first(:name => hgame["name"], :server_id => server.id)
+                            regular_game = false
                             if hgame['turns'].to_i <= 10 and ['escaped','quit'].include? hgame['death'] then
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.info "start scummed game"
@@ -69,13 +70,31 @@ def fetch_all
                             else
                                 game = Game.create(hgame.merge({"server" => server}))
                                 count_games += 1
+                                regular_game = true
                             end
-                            game.user_id = acc.user_id if acc
+                            if acc then
+                              game.user_id = acc.user_id
+
+                              if regular_game then
+                                Event.new(:text => "#{game.user.login} ascended a game of #{$variants_mapping[game.version]}!").save if game.ascended
+
+                                # record some gaming milestones
+                                games_count = (Game.count :conditions => [ 'user_id > 0' ])+1
+                                if games_count == 100 or
+                                   games_count == 500 or
+                                   games_count % 1000 == 0 then
+                                  Event.new(:text => "#{games_count} games have been played!").save
+                                end
+
+                              end
+                            end
+
                             if game.save
                                 @fetch_logger.info "created #{i}"
                             else
                                 raise "something went wrong, could not create games"
                             end
+
                         else
                             @fetch_logger.info "not part of tournament #{i}"
                             count_non_tournament_games += 1
@@ -86,7 +105,7 @@ def fetch_all
                         server.save
                       ensure
                         $db_access.unlock :EX
-                        @fetch_logger.debug $db_access.inspect
+                        #@fetch_logger.debug $db_access.inspect
                       end
                     end
                 raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['Content-Length'].to_i}" if server.xlogcurrentoffset != header['Content-Length'].to_i

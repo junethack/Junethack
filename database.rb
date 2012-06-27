@@ -45,6 +45,7 @@ require 'models/junkgame'
 require 'models/clan'
 require 'models/scoreentry'
 require 'models/trophy'
+require 'models/event'
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
