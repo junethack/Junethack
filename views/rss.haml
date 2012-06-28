@@ -1,4 +1,4 @@
-!! XML
+!!! XML
 - require 'time'
 %rss{:version => "2.0", "xmlns:atom" => "http://www.w3.org/2005/Atom"}
   %channel
@@ -12,6 +12,6 @@
         %title= event.text
         -if event.url
           %link= event.url
-        %pubDate= event.created_at.strftime("%a, %d %b %Y %H:%M:%S %Z")
-        %guid{:permaLink => "false"}= event.id.to_s.hash
+        %pubDate= event.created_at.strftime("%a, %d %b %Y %H:%M:%S %z")
+        %guid{:isPermaLink => "false"}= event.id.to_s.hash
 
