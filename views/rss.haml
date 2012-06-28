@@ -1,4 +1,5 @@
 !!! XML
+- require 'time'
 %rss{:version => "2.0", "xmlns:atom" => "http://www.w3.org/2005/Atom"}
   %channel
     %title Notable events in the Junethack tournament event
@@ -11,5 +12,5 @@
         %title= event.text
         -if event.url
           %link= event.url
-        %pubDate= event.created_at
+        %pubDate= event.created_at.strftime("%a, %d %b %Y %H:%M:%S %Z")
 
