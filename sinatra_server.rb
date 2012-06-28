@@ -551,8 +551,7 @@ helpers do
     end
   end
 
-  # http://stackoverflow.com/questions/2950234/get-absolute-base-url-in-sinatra
   def base_url
-    @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
+    @base_url ||= "http://junethack.rawrnix.com/"
   end
 end
