@@ -552,6 +552,6 @@ helpers do
   end
 
   def base_url
-    @base_url ||= "http://junethack.rawrnix.com/"
+    @base_url ||= "http://junethack.rawrnix.com"
   end
 end
