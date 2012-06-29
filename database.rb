@@ -4,8 +4,6 @@ require 'dm-serializer'
 require 'dm-timestamps'
 require 'sinatra'
 
-$dbname = "junethack.db"
-
 # for debugging: print all generated SQL statemtens
 #DataMapper::Logger.new("logs/db.log", :debug)
 
@@ -17,10 +15,10 @@ DataMapper::Property::String.length(255)
 
 options = {}
 configure :production do
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{$dbname}")
+  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/junethack.db")
 end
 configure :development do
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/#{$dbname}")
+  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/junethack_dev.db")
 end
 configure :test do
   DataMapper.setup(:default, "sqlite3::memory:")

@@ -1,8 +1,6 @@
 require 'rubygems'
 require "bundler/setup"
-require 'sinatra'
-require 'database'
-require 'fetch_games'
+
 require 'date'
 require 'trophyscore'
 require 'normalize_death'
@@ -140,6 +138,7 @@ end
 namespace :fetch do
     desc "fetch new xlogfile entries from game servers"
     task :get_games do
+        require 'fetch_games'
         fetch_all
     end
 end
@@ -200,21 +199,21 @@ end
 namespace :run do
     desc "start maintenance mode"
     task :maintenance  do
-        set :environment, :production
+        ENV['RACK_ENV'] = 'production'
         require 'maintenance'
         Sinatra::Application.run!
     end
 
-    desc "run sinatra app locally"
-    desc "start server in production mode"
+    desc "start server in development mode"
     task :dev  do
+        ENV['RACK_ENV'] = 'development'
         require 'sinatra_server'
         Sinatra::Application.run!
     end
 
     desc "start server in production mode"
     task :production do
-        set :environment, :production
+        ENV['RACK_ENV'] = 'production'
         require 'sinatra_server'
         Sinatra::Application.run!
     end
