@@ -48,16 +48,18 @@ def fastest_ascension_gametime(variant=nil)
 end
 
 def longest_ascension_streak(variant=nil)
-    games_ascended = (repository.adapter.select "select ascended from games where version = ? and user_id = ? order by endtime desc", variant, @id)
+    games_ascended = (repository.adapter.select "select ascended, server_id from games where version = ? and user_id = ? order by server_id, endtime desc", variant, @id)
 
     max_asc = 0;
     asc = 0;
-    games_ascended.each {|ascended|
-        if ascended == 't'
-            asc += 1
-        else
-            asc = 0
-        end
+    # streaks are per server and per variant
+    server_id = 0
+    games_ascended.each {|game|
+        asc = 0 if game.ascended == 'f' or game.server_id != server_id
+        server_id = game.server_id
+
+        asc += 1 if game.ascended == 't'
+
         max_asc = asc if asc > max_asc 
     }
     return max_asc
