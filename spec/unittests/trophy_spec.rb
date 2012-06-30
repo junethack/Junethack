@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'trophyscore'
+require 'userscore'
 require 'database'
 
 describe TrophyScore do
@@ -36,6 +37,10 @@ describe TrophyScore do
     t = TrophyScore.new
     streaks = t.longest_ascension_streaks("streak1")
     streaks[0]['streaks'].should == 3
+ 
+    u = UserScore.new(1)
+    streaks = u.longest_ascension_streak("streak1")
+    streaks.should == 3
   end
 
   context "given ascended games from the same server with a non ascended game in between from a different server" do
@@ -48,6 +53,10 @@ describe TrophyScore do
       t = TrophyScore.new
       streaks = t.longest_ascension_streaks("streak2")
       streaks[0]['streaks'].should == 2
+
+      u = UserScore.new(1)
+      streaks = u.longest_ascension_streak("streak2")
+      streaks.should == 2
     end
   end
 
