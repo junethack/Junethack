@@ -29,6 +29,7 @@
                   - $variants.each do |v|
                     - finished_variant_games_per_day = repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and endtime >= ? and endtime < ?;", v, datum, datum+86400
                     %td.table_number= finished_variant_games_per_day
+            -# Total number of tournament games per variant
             - style = (count % 2) == 0 ? "cell1" : "cell2"
             %tr{:id => style}
               %td.table_date= "Total"
@@ -59,6 +60,11 @@
                 - if count == 1
                   %td.chart{:rowspan => @ascensions_per_day.size}
                     %div{:id => "chart_ascensions"}
+            -# Total number of ascended tournament games
+            - style = (count % 2) == 0 ? "cell1" : "cell2"
+            %tr{:id => style}
+              %td.table_date= "Total"
+              %td.table_number= repository.adapter.select "select count(1) from games where user_id > 0 and ascended='t';"
           - graph.write("activity")
 
 
@@ -83,6 +89,11 @@
                 - if count == 1
                   %td.chart{:rowspan => @finished_games_per_day.size}
                     %div{:id => "chart_finished_games_per_day"}
+            -# Total number of played tournament games
+            - style = (count % 2) == 0 ? "cell1" : "cell2"
+            %tr{:id => style}
+              %td.table_date= "Total"
+              %td.table_number= repository.adapter.select "select count(1) from games where user_id > 0;"
           - graph.write("finished_games_per_day")
 
     - cache_fragment("users_#{User.max_created_at}") do
@@ -107,4 +118,9 @@
                 - if count == 1
                   %td.chart{:rowspan => @new_users_per_day.size}
                     %div{:id => "chart_new_users_per_day"}
+            -# Total number of registered users
+            - style = (count % 2) == 0 ? "cell1" : "cell2"
+            %tr{:id => style}
+              %td.table_date= "Total"
+              %td.table_number= repository.adapter.select "select count(1) from users;"
           - graph.write("new_users_per_day")
