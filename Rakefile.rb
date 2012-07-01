@@ -177,6 +177,7 @@ namespace :update do
 
     desc "recalculate clan scores"
     task :clan_winner do
+        rank_clans
         score_clans
     end
 
