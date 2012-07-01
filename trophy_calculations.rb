@@ -418,7 +418,7 @@ def score_clans
     end
 
     # calculate clan points
-    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points','most_unique_deaths','most_ascensions_in_a_24_hour_period') group by clan_name"
+    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points','most_unique_deaths','most_ascensions_in_a_24_hour_period','most_variant_trophy_combinations') group by clan_name"
     clan_scores.each do |clan_score|
         c = ClanScoreEntry.first_or_new(:clan_name => clan_score.clan_name,
                                         :trophy  => "clan_winner")
