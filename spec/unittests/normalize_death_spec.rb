@@ -118,12 +118,33 @@ describe Game,"normalization of death strings" do
     @game.death = "killed by a gnome called killer"
     @game.normalize_death.should == "killed by a gnome"
 
-    @game.death = "killed by kicking an uncursed pick-axe named killer"
-    @game.normalize_death.should == "killed by kicking an uncursed pick-axe"
+    
+    
+    @game.death = "killed by a war hammer named Mjollnir"
+    @game.normalize_death.should == "killed by a war hammer"
   end
   it "should remove (with the Amulet)" do
     @game.death = "killed by a Archon (with the Amulet)"
     @game.normalize_death.should == "killed by a Archon"
+  end
+
+  it "should substitute everything after killed by kicking with something" do
+    result = "killed by kicking something"
+    @game.death = "killed by kicking 23 gold pieces"
+    @game.normalize_death.should == result
+
+    @game.death = "killed by kicking a slime mold"
+    @game.normalize_death.should == result
+  end
+  
+  it "should substitute everything after chocked on with something" do
+    
+    result = "choked on something"
+    @game.death = "choked on the blessed Excalibur"
+    @game.normalize_death.should == result 
+
+    @game.death = "choked on a wraith corpse"
+    @game.normalize_death.should == result
   end
 
 end

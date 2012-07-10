@@ -18,5 +18,9 @@ class Game
     death = death.gsub(/ (called|named) .*/, "")
 
     death = death.gsub(/ \(with the Amulet\)$/, "")
+    # no lookbehind in 1.8.7
+    death = death.gsub(/choked on .*/, "choked on something")
+
+    death = death.gsub(/killed by kicking .*/, "killed by kicking something")
   end
 end
