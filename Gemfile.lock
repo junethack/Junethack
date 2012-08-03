@@ -3,6 +3,9 @@ GEM
   specs:
     addressable (2.2.7)
     bcrypt-ruby (2.1.4)
+    builder (3.0.0)
+    ci_reporter (1.7.0)
+      builder (>= 2.1.2)
     daemons (1.1.8)
     data_mapper (1.1.0)
       dm-aggregates (= 1.1.0)
@@ -101,6 +104,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ci_reporter
   data_mapper (~> 1.1.0)
   datamapper (~> 1.1.0)
   dm-migrations

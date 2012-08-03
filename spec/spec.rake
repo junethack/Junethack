@@ -1,5 +1,6 @@
 begin
   require 'rspec/core/rake_task'
+  require 'ci/reporter/rake/rspec'
 
   desc 'run all specs'
   task :spec => ['spec:unittests']

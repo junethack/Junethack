@@ -23,4 +23,5 @@ group :development, :test do
   gem "rack-test", "~> 0.6.1"
   gem 'rspec'
   gem 'rcov'
+  gem 'ci_reporter'
 end
