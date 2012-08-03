@@ -1,9 +1,7 @@
-require 'rubygems'
-require 'bundler/setup'
+require 'spec_helper'
 
 require 'trophyscore'
 require 'userscore'
-require 'database'
 
 describe TrophyScore do
   context "given 2 ascended games from the same user with identical score points" do
