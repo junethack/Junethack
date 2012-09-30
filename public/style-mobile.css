@@ -454,6 +454,7 @@ form#login_form > fieldset > input[type=submit].active:hover {
 **************************/
 
 #footer {
+    font-size: 80%;
     line-height: 1.25em;
     text-align: center;
     margin: 1em 0;
