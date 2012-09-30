@@ -9,13 +9,14 @@
         Variant: #{h @server.variant}
     .text_content.non_top_post
       %h3= "Last #{@games.size} Games played"
-      .scorelisting
-        %table.greytable
-          %tr
-            %th Name
-            %th Points
-            %th Killer
-            %th Time (UTC)
+      .scorelisting#no-more-tables
+        %table.greytable.cf
+          %thead.cf
+            %tr
+              %th Name
+              %th Points
+              %th Killer
+              %th Time (UTC)
           - count = 0
           - @games.each do |game|
             - style = (count % 2) == 0 ? "cell1" : "cell2"
@@ -23,7 +24,7 @@
             %tr{:id => style}
               %td
                 %a{:href => "/user_id/#{game.user_id}"}= h game.name
-              %td.table_number= game.points
-              %td= h game.death
-              %td.table_date= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
+              %td.table_number{"data-title" => "Points"}= game.points
+              %td{"data-title" => "Killer"}= h game.death
+              %td.table_date{"data-title" => "Time"}= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
     %span#end_of_content_spacer.clear 

@@ -40,9 +40,6 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-h1, h2, h3, h4, h5, h6 {
-    /*font-family: Georgia, Times, "Times New Roman", serif;*/
-}
 
 /**************************
 **                       **
@@ -74,7 +71,7 @@ a.imagelink:hover {
 }
 /* misc */
 #container {
-    width: 90%;
+    width: 99%;
     margin: 0 auto;
 }
 
@@ -235,7 +232,7 @@ form#login_form > fieldset > input[type=submit],
     padding-bottom: 30px;
 }
 .text_content {
-    margin: 35px 30px 0 30px;
+    margin: 1ex 1ex 0 1ex;
     line-height: 1.5em;
 }
 .text_content p {
@@ -278,7 +275,6 @@ form#login_form > fieldset > input[type=submit],
     width: 100%; /* there's an inline style here.. */
     text-align: left;
     vertical-align: middle;
-    margin: 10px 0;
 }
 table.misc,
 .greytable.misc { /* override width:100% */
@@ -286,15 +282,16 @@ table.misc,
 }
 .greytable th {
     text-align: left;
-    padding-right: 20px;
-    padding-left: 3px;
+    padding-right: 1em;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid black;
 }
 .greytable #cell1 td,
 .greytable #cell2 td
 {
-    border: 1px solid black;
-    padding-right: 10px;
-    padding-left: 3px;
+    border-top: 1px solid black;
+    /*padding-left: 0.15em;
+    padding-right: 0.15em;*/
     vertical-align: middle;
 }
 .greytable #cell1 td
@@ -306,27 +303,6 @@ table.misc,
     background-color: #bbb;
 }
 
-.greytable #cell1 td.chart,
-.greytable #cell2 td.chart
-{
-    background-color: inherit;
-    border: 0;
-    padding-left: 1em;
-}
-.greytable #cell1 td.table_number,
-.greytable #cell2 td.table_number
-{
-    text-align: right;
-    padding-right: 0.25em;
-    padding-left: 0.5em;
-}
-.greytable #cell1 td.table_date,
-.greytable #cell2 td.table_date
-{
-    text-align: center;
-    padding-right: 0.5em;
-    padding-left: 0.5em;
-}
 /* next two declarations are probably deprecated */
 .greytable input[type="text"]
 {
@@ -478,10 +454,9 @@ form#login_form > fieldset > input[type=submit].active:hover {
 **************************/
 
 #footer {
-    height: 50px;
-    line-height: 50px;
+    line-height: 1.25em;
     text-align: center;
-    margin: 20px 0;
+    margin: 1em 0;
 }
 #flattr img,
 a#flattr {
