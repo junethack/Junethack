@@ -132,6 +132,17 @@ form#login_form > fieldset > input[type=submit],
 ::-webkit-selection{ background: #aaa; color:#fff; text-shadow: none; }
 ::selection { background:#aaa; color:#fff; text-shadow: none; }
 
+/* temporary nav style, needs a better responsive navigation menu */
+#topnav {
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+#topnav li, #topnav ul {
+    display: inline;
+    line-height: 1.25em;
+    font-size: 100%;
+}
+
 /**************************
 **                       **
 **      title styles     **
@@ -141,8 +152,6 @@ form#login_form > fieldset > input[type=submit],
 .hcenter {
     clear: both;
     text-align: center;
-    /* space between nav and title */
-    margin-top: 2.5em;
 }
 
 /* The texts around the logo itself */
@@ -227,7 +236,6 @@ form#login_form > fieldset > input[type=submit],
 
 .text_content_wrapper {
     /* space between the main content and the element before - eg signup button */
-    margin-top: 3.0em;
     padding-top: 1px;
     padding-bottom: 30px;
 }

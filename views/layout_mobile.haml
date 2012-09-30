@@ -21,33 +21,35 @@
 
   %body
     #container
-      %ul.main
-        %li.first
-          - if !@logged_in then
-            %a{:href => "/home"} #{h @user.login}
-          - if @logged_in then
-            %a{:href => "/login"} Login
-        %li
-          %a{:href => "/scoreboard"} Scoreboard
-        %li.longer1
-          %a{:href => "/games"} Games
-          %ul
+      #topnav.navigation
+        %nav
+          %ul.main
             %li.first
-              %a{:href => "/ascensions"} Ascensions
+              - if !@logged_in then
+                %a{:href => "/home"} #{h @user.login}
+              - if @logged_in then
+                %a{:href => "/login"} Login
             %li
-              %a{:href => "/deaths"} Deaths
-        %li
-          %a{:href => "/users"} Users
-        %li.shorter1
-          %a{:href => "/clans"} Clans
-          %ul
-            %li.first
-              %a{:href => "/clan_competition"} Clan Competition
-        %li
-          - if !@logged_in then
-            %a{:href => "/logout"} Logout
-          - if @logged_in then
-            %a{:href => "/about"} Help
+              %a{:href => "/scoreboard"} Scoreboard
+            %li.longer1
+              %a{:href => "/games"} Games
+              %ul
+                %li.first
+                  %a{:href => "/ascensions"} Ascensions
+                %li
+                  %a{:href => "/deaths"} Deaths
+            %li
+              %a{:href => "/users"} Users
+            %li.shorter1
+              %a{:href => "/clans"} Clans
+              %ul
+                %li.first
+                  %a{:href => "/clan_competition"} Clan Competition
+            %li
+              - if !@logged_in then
+                %a{:href => "/logout"} Logout
+              - if @logged_in then
+                %a{:href => "/about"} Help
       %span.clear
       .hcenter
         - if @show_banner
