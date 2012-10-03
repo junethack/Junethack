@@ -19,10 +19,24 @@
     <!-- Turn off telephone number detection on iOS. -->
     <meta name="format-detection" content="telephone=no">
 
+    <!-- resources for the mobile navigation menu -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/mobilemenu.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    $(".nav-button").click(function () {
+    $(".nav-button,.primary-nav").toggleClass("open");
+    });
+    });
+    </script>
+
   %body
+    <button class="nav-button">Toggle Navigation</button>
     #container
       #topnav.navigation
-        %nav
+        %nav.primary-nav
+          %a.mobile-logo{:href => "/"}
+            %img{:alt => "", :src => "/vivid_divider.png"}/
           %ul.main
             %li.first
               - if !@logged_in then
@@ -31,7 +45,7 @@
                 %a{:href => "/login"} Login
             %li
               %a{:href => "/scoreboard"} Scoreboard
-            %li.longer1
+            %li.longer1.parent
               %a{:href => "/games"} Games
               %ul
                 %li.first
@@ -40,7 +54,7 @@
                   %a{:href => "/deaths"} Deaths
             %li
               %a{:href => "/users"} Users
-            %li.shorter1
+            %li.shorter1.parent
               %a{:href => "/clans"} Clans
               %ul
                 %li.first
