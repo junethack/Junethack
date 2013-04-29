@@ -31,7 +31,7 @@ def fetch_all
         @fetch_logger.info "current offset: #{server.xlogcurrentoffset}"
         if server.xlogcurrentoffset == nil
             server.xlogcurrentoffset = header['Content-Length'].to_i
-            server.xloglastmodified = header['Last-Modified']
+            server.xloglastmodified = header['Last-Modified'] || 'Thu, 01 Jan 1970 00:00:00 GMT'
             $db_access.synchronize { server.save }
             next
         end
