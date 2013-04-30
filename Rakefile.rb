@@ -197,6 +197,25 @@ namespace :update do
     end
 end
 
+namespace :dev do
+    ENV['RACK_ENV'] = 'development'
+    require 'database'
+
+    # Create registered users by using player names.
+    # Combine players on different servers by the common name.
+    task :create_users_heuristically do
+        (repository.adapter.select "select distinct name,server_id from games where user_id is null").each {|u|
+            name = u['name']
+            server = Server.get(u['server_id'])
+            puts "#{name}, #{server.name}"
+            user = User.first_or_create(:login => name)
+            account = Account.first_or_create(:user => user, :server => server, :name => name, :verified => true)
+            Game.all(:name => name, :server => server).update(:user_id => user.id) if account
+            repository.adapter.execute "UPDATE start_scummed_games set user_id = ? where name = ? and server_id = ?", user.id, name, server.id
+        }
+    end
+end
+
 namespace :run do
     desc "start maintenance mode"
     task :maintenance  do
