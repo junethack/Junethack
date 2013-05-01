@@ -1,6 +1,6 @@
-dir = File.dirname(__FILE__)
+dir = File.dirname(__FILE__)+"/junethack"
 
 # add junethack directory to load path
-$LOAD_PATH.unshift dir+"/junethack" unless $LOAD_PATH.include?(dir)
+$LOAD_PATH.unshift dir unless $LOAD_PATH.include?(dir)
 
 

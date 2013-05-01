@@ -18,3 +18,4 @@ trace
 # ignore tmp directories
 public/tmp
 temp
+coverage

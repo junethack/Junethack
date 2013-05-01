@@ -2,7 +2,15 @@
 # specs live under a `spec` directory, which RSpec adds to the `$LOAD_PATH`.
 # Require this file using `require "spec_helper.rb"` to ensure that it is only
 # loaded once.
-#
+
+# Coverage
+require 'simplecov'
+SimpleCov.start do
+  add_filter "/spec/" # don't generate coverage for the unitttests
+
+  add_group "Models", "models"
+end
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
@@ -12,6 +20,8 @@ end
 
 require 'rubygems'
 require 'bundler/setup'
+
+require './lib/junethack'
 
 ENV['RACK_ENV'] = 'test'
 require 'database'
