@@ -2,8 +2,11 @@ require 'rubygems'
 require "bundler/setup"
 
 require 'date'
+
+require 'lib/junethack'
 require 'trophyscore'
 require 'normalize_death'
+
 require 'sync'
 require 'rake/dsl_definition'
 require 'rake'

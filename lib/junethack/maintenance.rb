@@ -7,6 +7,8 @@ require 'helper'
 require 'time'
 require 'logger'
 
+set :root, "#{Dir.pwd}"
+
 class User
 def User.count
     "infinite"
