@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 require 'normalize_death'
 
 # Game mock object
