@@ -1,5 +1,4 @@
-require 'rubygems'
-require 'bundler/setup'
+require 'spec_helper'
 
 require 'datamapper'
 require 'models/game'
@@ -21,8 +20,12 @@ describe 'server linking helper methods' do
       un_nethack_nu.dumplog_link(game).should == "http://un.nethack.nu/user/player/dumps/player.123456.txt.html"
 
       game = Game.new(:name => 'player', :starttime => 123456)
-      nao = Server.new(:url => 'grunthack.org')
-      nao.dumplog_link(game).should == "http://grunthack.org/userdata/p/player/dumplog/123456.gh020.txt"
+      grunthack = Server.new(:url => 'grunthack.org')
+      grunthack.dumplog_link(game).should == "http://grunthack.org/userdata/p/player/dumplog/123456.gh020.txt"
+
+      game = Game.new(:name => 'player', :starttime => 123456)
+      acehack_de = Server.new(:url => 'acehack.de')
+      acehack_de.dumplog_link(game).should == "http://acehack.de/userdata/player/dumplog/123456"
     end
   end
 
