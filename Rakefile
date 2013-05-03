@@ -217,6 +217,13 @@ namespace :dev do
             repository.adapter.execute "UPDATE start_scummed_games set user_id = ? where name = ? and server_id = ?", user.id, name, server.id
         }
     end
+
+    desc "start irb with the development database connected"
+    task :irb do
+        require 'irb'
+        ARGV.clear
+        IRB.start
+    end
 end
 
 namespace :run do
