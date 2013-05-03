@@ -135,6 +135,11 @@ class Game
     property :points,    Integer
     property :deathdate, String
     property :version,   String
+    def version=(new_version)
+      new_version = "UNH" if new_version.start_with? 'UNH-'
+      super new_version
+    end
+
     property :align,     String
     property :align0,    String
     property :starttime, Integer
