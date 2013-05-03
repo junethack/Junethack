@@ -533,7 +533,10 @@ get "/clan_competition" do
 end
 
 get "/junethack_event.rss" do
-  caching_check_application_start_time
+  event = Event.last
+
+  etag "#{event.id}".hash if event
+  last_modified event.created_at.httpdate if event
 
   content_type 'application/rss+xml'
   haml(:rss, :format => :xhtml, :escape_html => true, :layout => false)
