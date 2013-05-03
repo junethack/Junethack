@@ -1,7 +1,6 @@
-require 'rubygems'
-require 'bundler/setup'
+require 'spec_helper'
 
-require File.dirname(__FILE__) + '/../graph.rb'
+require 'graph'
 
 describe Graph do
   it "should generate an empty graph" do

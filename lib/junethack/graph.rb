@@ -1,4 +1,4 @@
-require 'fastercsv'
+require 'csv'
 require 'date'
 
 class Graph
@@ -18,7 +18,7 @@ class Graph
 
   def write(filename)
     # write date points into CSV
-    FasterCSV.open(OUTPUT_DIRECTORY+filename+".csv", "w") do |csv|
+    CSV.open(OUTPUT_DIRECTORY+filename+".csv", "w") do |csv|
       csv << @data
     end
   end
