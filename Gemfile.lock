@@ -71,7 +71,7 @@ GEM
       dm-core (~> 1.1.0)
     do_sqlite3 (0.10.12)
       data_objects (= 0.10.12)
-    eventmachine (0.12.8)
+    eventmachine (1.0.3)
     fastercsv (1.5.5)
     haml (4.0.2)
       tilt
@@ -121,7 +121,6 @@ DEPENDENCIES
   datamapper (~> 1.1.0)
   dm-migrations
   dm-sqlite-adapter
-  eventmachine (<= 0.12.8)
   fastercsv
   haml
   json
