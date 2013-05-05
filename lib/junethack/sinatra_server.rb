@@ -33,7 +33,7 @@ use Rack::Session::Pool #fix 4kb session dropping
 use Rack::Deflater
 # Scheduler: fetch game data every 15 minutes
 scheduler = Rufus::Scheduler.start_new(:frequency => 1.0)
-#scheduler.cron('*/15 * * * *', :blocking => true) { fetch_all }
+scheduler.cron('*/15 * * * *', :blocking => true) { fetch_all }
 
 $application_start = Time.new
 
@@ -533,10 +533,10 @@ get "/clan_competition" do
 end
 
 get "/junethack_event.rss" do
-  event = Event.last
+  event = [Event.last.created_at, News.last.created_at].max
 
-  etag "#{event.id}".hash if event
-  last_modified event.created_at.httpdate if event
+  etag "#{event}".hash if event
+  last_modified event.httpdate if event
 
   content_type 'application/rss+xml'
   haml(:rss, :format => :xhtml, :escape_html => true, :layout => false)

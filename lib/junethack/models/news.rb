@@ -6,6 +6,8 @@ class News
 
     property :id,         Serial
     property :html,       String, :required => true
+    property :text,       String # dummy, only used for compatibility with Event
+    property :url,        String # dummy, only used for compatibility with Event
 
     property :created_at, DateTime
     property :updated_at, DateTime
