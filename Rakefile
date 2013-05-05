@@ -226,6 +226,37 @@ namespace :dev do
     end
 end
 
+namespace :news do
+
+    require 'database'
+    require 'models/news'
+
+    desc "add a new news entry"
+    task :add, :html_snippet do |t, args|
+        news = News.new
+        news.html = args[:html_snippet]
+        news.save
+    end
+
+    desc "delete a new news entry"
+    task :delete, :id do |t, args|
+        news = News.get(args[:id]).destroy
+    end
+
+    desc "update a new news entry"
+    task :update, :id, :html_snippet do |t, args|
+        news = News.get(args[:id])
+        news.html = args[:html_snippet]
+        news.save
+    end
+
+    desc "list all news entries"
+    task :list do |t, args|
+        news = News.all(:order => [ :id.desc ])
+        news.each {|n| puts n.inspect}
+    end
+end
+
 namespace :run do
     desc "start maintenance mode"
     task :maintenance  do

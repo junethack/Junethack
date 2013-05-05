@@ -44,6 +44,7 @@ require 'models/clan'
 require 'models/scoreentry'
 require 'models/trophy'
 require 'models/event'
+require 'models/news'
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
