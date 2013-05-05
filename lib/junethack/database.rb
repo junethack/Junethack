@@ -4,9 +4,6 @@ require 'dm-serializer'
 require 'dm-timestamps'
 require 'sinatra'
 
-# for debugging: print all generated SQL statemtens
-#DataMapper::Logger.new("logs/db.log", :debug)
-
 # raise exception on error when saving
 DataMapper::Model.raise_on_save_failure = true # globally
 
@@ -15,12 +12,19 @@ DataMapper::Property::String.length(255)
 
 options = {}
 configure :production do
+  puts "Configuring production database"
+  # for debugging: print all generated SQL statemtens
+  #DataMapper::Logger.new("logs/db.log", :debug)
   DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/junethack.db")
 end
 configure :development do
+  puts "Configuring development database"
+  # for debugging: print all generated SQL statemtens
+  DataMapper::Logger.new("logs/dev_db.log", :debug)
   DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/junethack_dev.db")
 end
 configure :test do
+  puts "Configuring test database"
   DataMapper.setup(:default, "sqlite3::memory:")
   DataMapper::Logger.new("logs/test_db.log", :debug)
 
