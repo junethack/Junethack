@@ -15,5 +15,5 @@
         -if event.url
           %link= event.url
         %pubDate= event.created_at.strftime("%a, %d %b %Y %H:%M:%S %z")
-        %guid{:isPermaLink => "false"}= event.hash
+        %guid{:isPermaLink => "false"}= "#{event.class.to_s.downcase}_#{event.id}"
 
