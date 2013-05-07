@@ -78,6 +78,8 @@ GEM
     json (1.4.6)
     multi_json (1.7.2)
     rack (1.5.2)
+    rack-mobile-detect (0.4.0)
+      rack
     rack-protection (1.5.0)
       rack
     rack-test (0.6.2)
@@ -124,6 +126,7 @@ DEPENDENCIES
   fastercsv
   haml
   json
+  rack-mobile-detect
   rack-test (~> 0.6.1)
   rake
   rspec

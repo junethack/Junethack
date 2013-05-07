@@ -19,6 +19,9 @@ require 'graph'
 
 require 'irc'
 
+require 'rack/mobile-detect'
+use Rack::MobileDetect
+
 $db_access = Sync.new
 
 ## settings for sinatra-cache
@@ -66,6 +69,12 @@ before do
     session["messages"] = []
     session["errors"] = []
 
+    # switch to a different layout for mobile devices
+    @layout = env['X_MOBILE_DEVICE'] ? :layout_mobile : true
+    # for debugging
+    # @layout = :layout_mobile
+    # puts env.sort.map{ |v| v.join(': ') }.join("\n") + "\n"
+
     $db_access.lock :SH
 end
 
@@ -101,14 +110,14 @@ get "/" do
     caching_check_application_start_time
 
     @show_banner = true
-    haml :splash
+    haml :splash, :layout => @layout
 end
 
 get "/login" do
     caching_check_application_start_time
 
     @show_banner = true
-    haml :login
+    haml :login, :layout => @layout
 end
 
 get "/logout" do
@@ -122,21 +131,21 @@ get "/trophies" do
     caching_check_application_start_time
 
     @show_banner = true
-    haml :trophies
+    haml :trophies, :layout => @layout
 end
 
 get "/users" do
     caching_check_last_played_game
 
     @users = User.all
-    haml :users
+    haml :users, :layout => @layout
 end
 
 get "/about" do
     caching_check_application_start_time
 
     @show_banner = true
-    haml :about
+    haml :about, :layout => @layout
 end
 
 post "/login" do
@@ -155,14 +164,14 @@ get "/register" do
     caching_check_application_start_time
 
     @show_banner = true
-    haml :register
+    haml :register, :layout => @layout
 end
 
 get "/rules" do
     caching_check_application_start_time
 
     @show_banner = true
-    haml :rules
+    haml :rules, :layout => @layout
 end
 
 get "/home" do
@@ -178,7 +187,7 @@ get "/home" do
     @games_played = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
     @games_played_title = @user.display_game_statistics
 
-    haml :home
+    haml :home, :layout => @layout
 end
 
 post "/add_server_account" do
@@ -275,7 +284,7 @@ get "/user/:name" do
 
         @user_id = @player.id
 
-        haml :user
+        haml :user, :layout => @layout
     else
         session['errors'] << "Could not find user #{params[:name]}"
     end
@@ -294,14 +303,14 @@ get "/clans" do
     caching_check_last_played_game
 
     @clans = Clan.all
-    haml :clans
+    haml :clans, :layout => @layout
 end
 get "/clan/:name" do
     @clan = Clan.get(params[:name])   
     if @clan
         puts "Invitations: #{@clan.invitations.inspect}"
         @admin = @clan.get_admin
-        haml :clan
+        haml :clan, :layout => @layout
     else
         session['errors'] << "Could not find clan with id #{params[:name].inspect}"
         redirect "/clans"
@@ -454,20 +463,20 @@ get "/scores/:name" do |name|
     user_id = {:user_id => @u.id}
     @last_10_games = get_last_games(user_id)
     @most_ascended_users = most_ascensions_users(@u.id)
-    haml :user_scores
+    haml :user_scores, :layout => @layout
 end
 
 get "/scoreboard" do
     caching_check_last_played_game
 
-    haml :scoreboard
+    haml :scoreboard, :layout => @layout
 end
 
 get "/servers" do
     caching_check_application_start_time
 
     @servers = Server.all
-    haml :servers
+    haml :servers, :layout => @layout
 end
 
 get "/server/:name" do
@@ -475,7 +484,7 @@ get "/server/:name" do
     @server = Server.first(:name => params[:name])
     if @server
         @games = @server.games :conditions => [ 'user_id > 0' ], :order => [ :endtime.desc ], :limit => 100
-        haml :server
+        haml :server, :layout => @layout
     else
         session['errors'] << "Could not find server #{ params[:name] }"
         redirect "/"
@@ -489,7 +498,7 @@ get "/server/:name/all" do
         # limit by date for not permanently showing users that haven't
         # added themselves to Junethack
         @games = @server.games :conditions => [ "endtime > #{Time.new.to_i-7*60*60*24}" ], :order => [ :endtime.desc ], :limit => 100
-        haml :server
+        haml :server, :layout => @layout
     else
         session['errors'] << "Could not find server #{ params[:name] }"
         redirect "/"
@@ -502,7 +511,7 @@ get "/games" do
     @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 100)
     @games_played_user_links = true
     @games_played_title = "Last #{@games_played.size} games played"
-    haml :last_games_played
+    haml :last_games_played, :layout => @layout
 end
 
 get "/ascensions" do
@@ -511,25 +520,25 @@ get "/ascensions" do
     @games_played = Game.all(:conditions => [ "user_id is not null and ascended='t'" ], :order => [ :endtime.desc ])
     @games_played_user_links = true
     @games_played_title = "#{@games_played.size} ascended games"
-    haml :last_games_played
+    haml :last_games_played, :layout => @layout
 end
 
 get "/activity" do
     caching_check_last_played_game
 
-    haml :activity
+    haml :activity, :layout => @layout
 end
 
 get "/deaths" do
     caching_check_last_played_game
 
-    haml :deaths
+    haml :deaths, :layout => @layout
 end
 
 get "/clan_competition" do
     caching_check_last_played_game
 
-    haml :clan_competition
+    haml :clan_competition, :layout => @layout
 end
 
 get "/junethack_event.rss" do

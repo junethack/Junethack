@@ -1,15 +1,16 @@
 %h2= @games_played_title
-.scorelisting
-  %table.greytable
-    %tr
-      %th Name
-      %th Variant
-      %th Server
-      %th Points
-      %th Killer
-      -# download column
-      %th
-      %th Time (UTC)
+.scorelisting#no-more-tables
+  %table.greytable.cf
+    %thead.cf
+      %tr
+        %th Name
+        %th Variant
+        %th Server
+        %th Points
+        %th Killer
+        -# download column
+        %th
+        %th Time (UTC)
     - count = 0
     - @games_played.each do |game|
       - style = (count % 2) == 0 ? "cell1" : "cell2"
@@ -20,13 +21,13 @@
             %a{:href => "/user_id/#{game.user_id}"}= h game.name
           - else
             = h game.name
-        %td= h game.variant_name
-        %td= h game.server.url
-        %td.table_number= game.points
-        %td= h game.death
+        %td{"data-title" => "Name"}= h game.variant_name
+        %td{"data-title" => "Server"}= h game.server.url
+        %td.table_number{"data-title" => "Points"}= game.points
+        %td{"data-title" => "Killer"}= h game.death
         %td.dllink
           -# link to the dumplog of the game if possible
           - link = game.server.dumplog_link(game)
           - if link then
             (<a href="#{link}">d</a>)
-        %td.table_date= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
+        %td.table_date{"data-title" => "Time"}= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")

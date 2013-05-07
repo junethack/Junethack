@@ -9,6 +9,8 @@ gem "sinatra", "~> 1.4.0"
 gem "rufus-scheduler"
 gem 'sinatra-cache', :git => 'git://github.com/kematzy/sinatra-cache.git'
 
+gem "rack-mobile-detect"
+
 gem "thin"
 
 # charts

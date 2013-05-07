@@ -1,0 +1,5 @@
+This branch has some support for better displaying Junethack on mobile devices by using jquery mobile and automatically detecting mobile devices.
+
+TODO:
+1. more adjustment of the CSS in public/style-mobile.css for small screens
+2. better support for viewing large tables

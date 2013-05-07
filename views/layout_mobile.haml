@@ -1,0 +1,88 @@
+<!doctype html>
+%html{"xmlns:og" => "http://ogp.me/ns#"}
+  %head
+    %meta{:content => "application/xhtml+xml;charset=utf-8", "http-equiv" => "content-type"}/
+    %link{:href => "/style-mobile.css", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "/no-more-tables.css", :rel => "stylesheet", :type => "text/css"}/
+    - games_count = Game.count :conditions => [ 'user_id > 0' ]
+    - if games_count == 0 then
+      %title= "Junethack - #{User.count} players already registered!"
+    - else
+      %title= "Junethack - #{User.count} players registered - #{games_count} games played!"
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Junethack" />
+    <meta property="og:url" content="http://junethack.rawrnix.com/" />
+    <meta property="og:description" content="The NetHack Cross-Variant Summer Tournament" />
+    <meta property="og:image" content="http://junethack.rawrnix.com/vivid_divider.png" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Turn off telephone number detection on iOS. -->
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- resources for the mobile navigation menu -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/mobilemenu.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    $(".nav-button").click(function () {
+    $(".nav-button,.primary-nav").toggleClass("open");
+    });
+    });
+    </script>
+
+  %body
+    <button class="nav-button">Toggle Navigation</button>
+    #container
+      #topnav.navigation
+        %nav.primary-nav
+          %a.mobile-logo{:href => "/"}
+            %img{:alt => "", :src => "/vivid_divider.png"}/
+          %ul.main
+            %li.first
+              - if !@logged_in then
+                %a{:href => "/home"} #{h @user.login}
+              - if @logged_in then
+                %a{:href => "/login"} Login
+            %li
+              %a{:href => "/scoreboard"} Scoreboard
+            %li.longer1.parent
+              %a{:href => "/games"} Games
+              %ul
+                %li.first
+                  %a{:href => "/ascensions"} Ascensions
+                %li
+                  %a{:href => "/deaths"} Deaths
+            %li
+              %a{:href => "/users"} Users
+            %li.shorter1.parent
+              %a{:href => "/clans"} Clans
+              %ul
+                %li.first
+                  %a{:href => "/clan_competition"} Clan Competition
+            %li
+              - if !@logged_in then
+                %a{:href => "/logout"} Logout
+              - if @logged_in then
+                %a{:href => "/about"} Help
+      %span.clear
+      .hcenter
+        - if @show_banner
+          .logotitles
+            %h1 NetHack Cross-Variant
+          .logoimage
+            %p
+              %img{:alt => "Logo", :src => "/banner_at2.png"}/
+          .logotitles
+            %h2 Summer Tournament
+      %hr
+      - if !@messages.empty? then
+        #messages
+          %div
+          - for message in @messages
+            %div.message= message
+      - if !@errors.empty? then
+        #errors
+          - for error in @errors
+            %div.error= error
+      =yield
+      =haml :footer
