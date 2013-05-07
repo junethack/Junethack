@@ -1,44 +1,38 @@
-#Junethack
+Junethack is a server for holding tournaments for the roguelike game NetHack
+and its forks.
 
-##Prerequisites
+This server collects data from several external public servers and show
+achievements and trophies for the participating players.
 
-###Software needed
+## Requirements
 
- - ruby 1.8.7
- - rubygems (latest build)
+### Needed pre-installed software
+
+ - ruby 1.9.3
  - curl
  - sqlite3
 
-###Gems needed
+### Installation
 
- - sinatra
- - haml
- - ruby-sqlite3
- - datamapper
- - dm-serializer
- - bundler
+Clone the repository:
 
-##Usage
-Run the sinatra server with 
-> ruby sinatra_server.rb
-
-Initialize some test servers, accounts, users and write bogus games in xlogfiles.
-> rake bogus:init
-
-- The test users created are "r4wrmage", "ad3on", "k3rio", "bh44k", "c4smith789", and "st3nno".
-- The passwords and account names are the same as the user names.
-- Two servers with xlogfiles are created.
-- Some games are written in the xlogfiles (but are not parsed into the database).
+    git clone https://github.com/junethack/Junethack.git junethack
 
 
-Parse the games into the database
-> rake fetch:get_games
+Install the Ruby interpreter. Example using RVM:
 
-- Checks all servers on changed xlogfiles. If a xlogfile has been changed, the new games are fetched and written in the database
+    \curl -#L https://get.rvm.io | bash -s stable
+    source ~/.rvm/scripts/rvm
+    rvm install `cat junethack/.ruby-version`
+
+Install all required rubygems:
+
+    cd junethack
+    bundle install
+
+Start the server 
+
+    rake
 
 
-Create some new bogus games
-> rake bogus:add_game[10]
-
-- Adds 10 games of random players to random xlogfiles.
-
+TODO: more documentation, distinction prod/dev env, maintenance mode, manually fetching games, dummy users
