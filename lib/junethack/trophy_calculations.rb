@@ -133,11 +133,10 @@ def update_scores(game)
                                   :icon    => "c-longest-streak.png").save
             end
 
-            ## Non-Ascension Individual trophies
+            ## Ascension Individual trophies
             # King of the world: ascend in all variants
-            Individualtrophy.first_or_create(:user_id => game.user_id,
-                :trophy => :king_of_the_world,
-                :icon => "king.png").save if king_of_the_world? game.user_id
+            Individualtrophy.add(game.user_id, "King of the world",
+                :king_of_the_world, "king.png") if king_of_the_world? game.user_id
 
             update_competition_scores_ascended(game)
 
@@ -284,17 +283,14 @@ def update_scores(game)
 
     ## Non-Ascension cross-variant trophies
     # Sightseeing tour: finish a game in all variants
-    Individualtrophy.first_or_create(:user_id => game.user_id,
-        :trophy => :sightseeing_tour,
-        :icon => "sightseeing.png").save if sightseeing_tour? game.user_id
+    Individualtrophy.add(game.user_id, "Sightseeing tour",
+        :sightseeing_tour, "sightseeing.png") if sightseeing_tour? game.user_id
     # Anti-Stoner: defeat Medusa in all variants
-    Individualtrophy.first_or_create(:user_id => game.user_id,
-        :trophy => :anti_stoner,
-        :icon => "anti-stoner.png").save if anti_stoner? game.user_id
+    Individualtrophy.add(game.user_id, "Anti-Stoner",
+        :anti_stoner, "anti-stoner.png") if anti_stoner? game.user_id
     # Globetrotter: get a trophy for each variant
-    Individualtrophy.first_or_create(:user_id => game.user_id,
-        :trophy => :globetrotter,
-        :icon => "globetrotter.png").save if globetrotter? game.user_id
+    Individualtrophy.add(game.user_id, "Globetrotter",
+        :globetrotter, "globetrotter.png") if globetrotter? game.user_id
 
     return false if not update_clan_scores(game)
 
