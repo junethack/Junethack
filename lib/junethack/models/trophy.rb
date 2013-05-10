@@ -91,10 +91,14 @@ $trophy_names = {
     "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)",
 
     # Cross-Variant
-    "sightseeing_tour"  => "Sightseeing Tour: finish a game in all variants",
-    "globetrotter"      => "Globetrotter: get a trophy for each variant",
-    "anti_stoner"       => "Anti-Stoner: defeat Medusa in all variants",
-    "king_of_the_world" => "King of the world: ascend in all variants",
+    "walk_in_the_park"    => "Walk in the Park: finish a game in half of the variants",
+    "sightseeing_tour"    => "Sightseeing Tour: finish a game in all variants",
+    "backpacking_tourist" => "Backpacking Tourist: get a trophy for half of the variants",
+    "globetrotter"        => "Globetrotter: get a trophy for each variant",
+    "hemi_stoner"         => "Hemi-Stoner: defeat Medusa in half of the variants",
+    "anti_stoner"         => "Anti-Stoner: defeat Medusa in all variants",
+    "prince_of_the_world" => "Prince of the World: ascend in half of the variants",
+    "king_of_the_world"   => "King of the World: ascend in all variants",
 
     # Clan
     "most_ascensions_in_a_24_hour_period" => "Most ascensions in a 24 hour period",
@@ -191,24 +195,36 @@ def Trophy.check_trophies_for_variant variant_description
   end
 end
 
-DataMapper::MigrationRunner.migration( 1, :create_trophies ) do
+DataMapper::MigrationRunner.migration( 1, :create_cross_variant_achievements ) do
   up do
     # Cross Variant
-    Trophy.create :trophy => "king_of_the_world", :text => "King of the world: ascend in all variants", :icon => "king.png"
-    Trophy.create :trophy => "anti_stoner",       :text => "Anti-Stoner: defeated Medusa in all variants", :icon => "anti-stoner.png"
-    Trophy.create :trophy => "globetrotter",      :text => "Globetrotter: get a trophy for each variant", :icon => "globetrotter.png"
-    Trophy.create :trophy => "sightseeing_tour",  :text => "Sightseeing Tour: finish a game in all variants", :icon => "sightseeing.png"
+    Trophy.create :trophy => "king_of_the_world", :text => "King of the World: ascend in all variants", :icon => "king.png"
+    Trophy.create :trophy => "prince_of_the_world", :text => "Prince of the World: ascend in half of the variants", :icon => "prince.png"
 
+    Trophy.create :trophy => "anti_stoner",       :text => "Anti-Stoner: defeated Medusa in all variants", :icon => "anti-stoner.png"
+    Trophy.create :trophy => "hemi_stoner",       :text => "Hemi-Stoner: defeat Medusa in half of the variants", :icon => "hemi-stoner.png"
+
+    Trophy.create :trophy => "globetrotter",      :text => "Globetrotter: get a trophy for each variant", :icon => "globetrotter.png"
+    Trophy.create :trophy => "backpacking_tourist", :text => "Backpacking Tourist: get a trophy for half of the variants", :icon => "backpacking_tourist.png"
+
+    Trophy.create :trophy => "sightseeing_tour",  :text => "Sightseeing Tour: finish a game in all variants", :icon => "sightseeing.png"
+    Trophy.create :trophy => "walk_in_the_park",  :text => "Walk in the Park: finish a game in half of the variants", :icon => "walk_in_the_park.png"
+  end
+
+  down do
+    Trophy.all.destroy
+  end
+end
+
+DataMapper::MigrationRunner.migration( 2, :create_clan_trophies ) do
+
+  up do
     # Clan
     Trophy.create :variant => "clan", :trophy => "most_ascensions_in_a_24_hour_period", :text => "Most ascensions in a 24 hour period", :icon => "clan-24h.png"
     Trophy.create :variant => "clan", :trophy => "most_ascended_combinations", :text => "Most ascended variant/role/race/alignment/gender combinations (starting)", :icon => "clan-combinations.png"
     Trophy.create :variant => "clan", :trophy => "most_points", :text => "Most points", :icon => "clan-points.png"
     Trophy.create :variant => "clan", :trophy => "most_unique_deaths", :text => "Most unique deaths", :icon => "clan-deaths.png"
     Trophy.create :variant => "clan", :trophy => "most_variant_trophy_combinations", :text => "Most variant/trophy combinations", :icon => "clan-variant-trophies.png"
-
-  end
-  down do
-    Trophy.all.destroy
   end
 end
 

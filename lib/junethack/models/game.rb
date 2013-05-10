@@ -98,10 +98,14 @@ $trophy_names = {
     "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)",
 
     # Cross-Variant
-    "sightseeing_tour"  => "Sightseeing Tour: finish a game in all variants",
-    "globetrotter"      => "Globetrotter: get a trophy for each variant",
-    "anti_stoner"       => "Anti-Stoner: defeat Medusa in all variants",
-    "king_of_the_world" => "King of the world: ascend in all variants",
+    "walk_in_the_park"    => "Walk in the Park: finish a game in half of the variants",
+    "sightseeing_tour"    => "Sightseeing Tour: finish a game in all variants",
+    "backpacking_tourist" => "Backpacking Tourist: get a trophy for half of the variants",
+    "globetrotter"        => "Globetrotter: get a trophy for each variant",
+    "hemi_stoner"         => "Hemi-Stoner: defeat Medusa in half of the variants",
+    "anti_stoner"         => "Anti-Stoner: defeat Medusa in all variants",
+    "prince_of_the_world" => "Prince of the World: ascend in half of the variants",
+    "king_of_the_world"   => "King of the World: ascend in all variants",
 
     # Clan
     "most_ascensions_in_a_24_hour_period" => "Most ascensions in a 24 hour period",
