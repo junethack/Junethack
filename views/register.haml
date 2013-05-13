@@ -4,12 +4,8 @@
       - if (Time.new.to_i > $tournament_endtime)
         %h1.hcenter Sorry, this year's tournament has ended.
       - elsif (Time.new.to_i < $tournament_signupstarttime)
-        - t = Time.at($tournament_signupstarttime)
-        - day = t.strftime('%d').to_i
-        - month = t.strftime('%B ')
-        - signupstart = "#{month} #{day}"+([nil,'st','nd','rd'][((day)%10)]||'th')
         %h1.hcenter
-          Sorry, registration opens on #{signupstart}.
+          =haml :registrationdate
       - else
         %form#register_form{:action => "/create", :method => "post"}
           %fieldset
