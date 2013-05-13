@@ -196,19 +196,19 @@ post "/add_server_account" do
   $db_access.synchronize {
     server = Server.get(params[:server])
 
-    session['errors'] = "Add account name!" and redirect "/home" and return if params[:user].strip.empty?
+    session['errors'] << "Add account name!" and redirect "/home" and return if params[:user].strip.empty?
 
     # verify that this user wants to connect this account to this user
     begin
         if server.verify_user(params[:user], @tournament_identifier_regexp)
-            session['messages'] = 'Account verified and added.'
+            session['messages'] << 'Account verified and added.'
         else
-            session['errors'] = 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.display_name)]
+            session['errors'] << 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.display_name)]
             redirect "/home" and return
         end
     rescue Exception => e
         puts e
-        session['errors'] = "Could not verify account!<br>" + (h e.message)
+        session['errors'] << "Could not verify account!<br>" + (h e.message)
         redirect "/home" and return
     end
     begin
@@ -237,7 +237,7 @@ post "/create" do
   end
 
   if (!errors.empty?)
-    session['errors'] = errors
+    session['errors'] << errors
     redirect "/" and return
   end
 
@@ -245,7 +245,7 @@ post "/create" do
     errors = []
     errors.push("Password and confirmation do not match.") if params["confirm"] != params["password"]
     errors.push("Username already exists.") if User.first(:login => params[:username])
-    session['errors'] = errors
+    session['errors'] << errors
     puts "session errors are #{session['errors'].inspect}"
     redirect "/register" and return unless session['errors'].empty?
     user = User.new(:login => params["username"])
@@ -253,11 +253,11 @@ post "/create" do
     puts "CREATED USER LOL" # o'rly
     begin
         if user.save
-            session['messages'] = "Registration successful. Please log in."
+            session['messages'] << "Registration successful. Please log in."
             Event.new(:text => "New user #{user.login} registered!", :url => "#{base_url}/user/#{user.login}").save
             redirect "/login" and return 
         else
-            session['errors'] = "Could not register account"
+            session['errors'] << "Could not register account"
             puts "could not register user #{params[:username]}"
             redirect "/register" and return
         end
@@ -455,7 +455,7 @@ get "/scores/:name" do |name|
     # Is the user there? If not, just redirect to home
     @u = User.first(:login => name)
     if @u.nil? then
-        session['errors'] = "No such user."
+        session['errors'] << "No such user."
         redirect "/"
         return
     end
