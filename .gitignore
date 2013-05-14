@@ -8,6 +8,9 @@ webmocks/alt_design2/*.swp
 webmocks/alt_design2/*.tmp
 *.swp
 models/*.swp
+# cheryl - .ignore files, eg working image directories
+*.ignore
+.DS_Store
 # rawrmage - ignore server output and stuff
 *.db
 *.bak
