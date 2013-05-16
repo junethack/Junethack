@@ -541,7 +541,7 @@ get "/clan_competition" do
     haml :clan_competition, :layout => @layout
 end
 
-get "/junethack_event.rss" do
+get "/junethack.rss" do
   # determine date of last event or news
   last_event = Event.last
   last_news = News.last
