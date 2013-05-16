@@ -18,7 +18,7 @@ describe 'the Junethack server' do
   it "should render empty pages" do
     ["/", "/trophies", "/users", "/about", "/rules", "/clans",
      "/clan_competition", "/scoreboard", "/servers", "/ascensions",
-     "/deaths", "/games", "/activity", "/junethack_event.rss"].each do |url|
+     "/deaths", "/games", "/activity", "/junethack.rss"].each do |url|
       get url
       last_response.should be_ok
       last_response.body.should include("Junethack")
