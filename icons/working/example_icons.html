@@ -1,0 +1,284 @@
+<!doctype html>
+<html class="view_compact" xmlns:og='http://ogp.me/ns#'>
+  <head>
+    <meta content='application/xhtml+xml;charset=utf-8' http-equiv='content-type'>
+    <title>Junethack - 629 players registered - 8840 games played!</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Junethack" />
+    <meta property="og:url" content="http://junethack.de/" />
+    <meta property="og:description" content="The NetHack Cross-Variant Summer Tournament" />
+    <meta property="og:image" content="http://junethack.de/apple-touch-icon.png" />
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #444;
+}
+h1 {
+  margin-top: 40px;
+  font-size:200%;
+}
+h2 {
+  margin-top: 25px;
+  font-size: 150%;
+}
+h3 {
+  margin-top: 15px;
+  font-size: 120%;
+}
+a {
+  color: #999;
+  text-decoration: none;
+}
+a:hover {
+  color: #000;
+}
+body {
+  position: relative;
+}
+#controls {
+  position: fixed;
+  top: 30px;
+  left: 40px;
+  text-align: center;
+}
+#controls a {
+  position:relative;
+  display: block;
+  margin-top: 15px;
+  line-height: 40px;
+  width: auto;
+}
+#controls a:hover:after,
+#controls a:active:after {
+  content: "";
+  display:block;
+  position: absolute;
+  top: 0;
+  right: -20px;
+  height: 0;
+  width: 0;
+  border-left:20px solid #eee;
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid transparent;
+}
+#controls a:hover:before,
+#controls a:active:before {
+  content: "";
+  display:block;
+  position: absolute;
+  top: 0;
+  left: -20px;
+  height: 0;
+  width: 0;
+  border-right:20px solid #eee;
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid transparent;
+}
+#controls a:hover,
+#controls a:active {
+  background-color: #eee;
+}
+#container {
+  width: 800px;
+  margin-left: 150px;
+}
+.trophy {
+  display: block;
+  clear: both;
+}
+.trophy_end {
+  display: block;
+  clear: both;
+}
+.cabinet {
+  display: block;
+  float: left;
+}
+.divider {
+  margin: 5px;
+  font-size: 60px;
+  line-height: 50px;
+  font-family: monospace;
+  color: #eee;
+}
+.icon {
+  display:block;
+  height: 54px;
+  width: 54px;
+  margin-top: 5px;
+}
+.view_compact .icon,
+.view_wide .icon {
+  display:inline-block;
+  margin-right: 5px;
+}
+.view_compact .divider,
+.view_wide .divider {
+  margin-left: 0px;
+}
+.view_compact .icon {
+  height: 30px;
+  width: 30px;
+  background-size: contain;
+}
+.view_compact h3 {
+  display:block;
+  float: left;
+  width: 30%;
+}
+.view_compact .divider {
+  margin: 5px 5px 5px
+  margin-left: 3px;
+  font-size: 40px;
+  line-height: 25px;
+  font-family: monospace;
+  color: #ddd;
+}
+.non-existent {
+  background-image: url("../undefined_light.png");
+  background-color: #aef;
+  display: inline-block;
+}
+</style>
+<script>
+function change_class(link){
+  document.documentElement.className = '';
+  switch(link.id){
+    case 'view_wide':
+    case 'view_narrow':
+    case 'view_compact':
+      document.documentElement.className = link.id;
+      break;
+    default:
+      break;
+  }
+}
+</script>
+  </head>
+  <body>
+    <aside>
+      <div id="controls">
+        <a id="view_wide" href="#" onmouseover="change_class(this)" onclick="change_class(this)">Wide</a>
+        <a id="view_narrow" href="#" onmouseover="change_class(this)" onclick="change_class(this)">Narrow</a>
+        <a id="view_compact" href="#" onmouseover="change_class(this)" onclick="change_class(this)">Compact</a>
+      </div>
+    </aside>
+    <div id="container">
+      <h1>
+        Proposed and previous icon comparison
+      </h1>
+      <article>
+        <h2>
+          Cross-variant trophies
+        </h2>
+        <div class="trophy" data-label="trophy">
+          <h3> Walk in the Park </h3>
+          <span class="previous_cabinet cabinet">
+            <div class="non-existent icon"></div>
+          </span>
+          <span class="cabinet divider">&rarr;</span>
+          <span class="proposed_cabinet cabinet">
+            <img src="3walkinthepark_1.png" class="icon"/>
+            <img src="3walkinthepark_2.png" class="icon"/>
+            <img src="3walkinthepark_3.png" class="icon"/>
+          </span>
+          <span class="trophy_end"></span>
+        </div>
+        <div class="trophy" data-label="trophy">
+          <h3> Sightseeing Tour </h3>
+          <span class="previous_cabinet cabinet">
+            <img src="../sightseeing.png" class="icon"/>
+          </span>
+          <span class="cabinet divider">&rarr;</span>
+          <span class="proposed_cabinet cabinet">
+            <img src="../sightseeing.png" class="icon"/>
+            <img src="3walkinthepark_2_matching_sightseeingtour.png" class="icon"/>
+          </span>
+          <span class="trophy_end"></span>
+        </div>
+        <div class="trophy" data-label="trophy">
+          <h3> Backpacking Tourist </h3>
+          <span class="previous_cabinet cabinet">
+            <div class="non-existent icon"></div>
+          </span>
+          <span class="cabinet divider">&rarr;</span>
+          <span class="proposed_cabinet cabinet">
+            <img src="2backpackingtourist_1.png" class="icon"/>
+            <img src="2backpackingtourist_2.png" class="icon"/>
+            <img src="2backpackingtourist_3.png" class="icon"/>
+            <img src="2backpackingtourist_4.png" class="icon"/>
+            <img src="2backpackingtourist_5.png" class="icon"/>
+          </span>
+          <span class="trophy_end"></span>
+        </div>
+        <div class="trophy" data-label="trophy">
+          <h3> Globetrotter </h3>
+          <span class="previous_cabinet cabinet">
+            <img src="../globetrotter.png" class="icon"/>
+          </span>
+          <span class="cabinet divider">&rarr;</span>
+          <span class="proposed_cabinet cabinet">
+            <img src="../globetrotter.png" class="icon"/>
+          </span>
+          <span class="trophy_end"></span>
+        </div>
+        <div class="trophy" data-label="trophy">
+          <h3> Hemi-stoner </h3>
+          <span class="previous_cabinet cabinet">
+            <div class="non-existent icon"></div>
+          </span>
+          <span class="cabinet divider">&rarr;</span>
+          <span class="proposed_cabinet cabinet">
+            <img src="1hemistoner_1.png" class="icon"/>
+            <img src="1hemistoner_2.png" class="icon"/>
+            <img src="1hemistoner_3.png" class="icon"/>
+            <img src="1hemistoner_4.png" class="icon"/>
+            <img src="1hemistoner_5.png" class="icon"/>
+            <img src="1hemistoner_6.png" class="icon"/>
+            <img src="1hemistoner_7.png" class="icon"/>
+          </span>
+          <span class="trophy_end"></span>
+        </div>
+        <div class="trophy" data-label="trophy">
+          <h3> Anti-stoner </h3>
+          <span class="previous_cabinet cabinet">
+            <img src="../anti-stoner.png" class="icon"/>
+          </span>
+          <span class="cabinet divider">&rarr;</span>
+          <span class="proposed_cabinet cabinet">
+            <img src="../anti-stoner.png" class="icon"/>
+          </span>
+          <span class="trophy_end"></span>
+        </div>
+        <div class="trophy" data-label="trophy">
+          <h3> Prince of the World </h3>
+          <span class="previous_cabinet cabinet">
+            <div class="non-existent icon"></div>
+          </span>
+          <span class="cabinet divider">&rarr;</span>
+          <span class="proposed_cabinet cabinet">
+            <img src="4princeoftheworld_1_prince.png" class="icon"/>
+            <img src="4princeoftheworld_2_prince.png" class="icon"/>
+          </span>
+          <span class="trophy_end"></span>
+        </div>
+        <div class="trophy" data-label="trophy">
+          <h3> King of the World </h3>
+          <span class="previous_cabinet cabinet">
+            <img src="../old-king.png" class="non-existent icon"/>
+          </span>
+          <span class="cabinet divider">&rarr;</span>
+          <span class="proposed_cabinet cabinet">
+            <img src="../old-king.png" class="non-existent icon"/>
+            <img src="4princeoftheworld_1_king.png" class="icon"/>
+            <img src="4princeoftheworld_2_king.png" class="icon"/>
+          </span>
+          <span class="trophy_end"></span>
+        </div>
+      </article>
+    </div>
+  </body>
+</html>
