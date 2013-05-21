@@ -443,7 +443,8 @@ def score_clans
             if c.value == 0 then
               c.points = 0.0
             else
-              c.points = (c.value.to_f*100 / best_value.to_f).round.to_f / 100
+              # round to 2 significant figures after decimal point
+              c.points = (c.value.to_f / best_value.to_f).round(2)
             end
         end
         c.save
@@ -456,7 +457,8 @@ def score_clans
         c = ClanScoreEntry.first_or_new(:clan_name => clan_score.clan_name,
                                         :trophy  => "clan_winner")
         c.value = (clan_score.sum_points*100).to_i
-        c.points = clan_score.sum_points
+        # round to 2 significant figures after decimal point
+        c.points = clan_score.sum_points.round(2)
         c.save
     end
 
