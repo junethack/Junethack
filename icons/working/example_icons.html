@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="view_compact" xmlns:og='http://ogp.me/ns#'>
+<html class="" xmlns:og='http://ogp.me/ns#'>
   <head>
     <meta content='application/xhtml+xml;charset=utf-8' http-equiv='content-type'>
     <title>Junethack - 629 players registered - 8840 games played!</title>
@@ -13,20 +13,16 @@
   margin: 0;
   padding: 0;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 16px;
   color: #444;
 }
 h1 {
   margin-top: 40px;
-  font-size:200%;
 }
 h2 {
   margin-top: 25px;
-  font-size: 150%;
 }
 h3 {
   margin-top: 15px;
-  font-size: 120%;
 }
 a {
   color: #999;
@@ -52,30 +48,27 @@ body {
   width: auto;
 }
 #controls a:hover:after,
-#controls a:active:after {
-  content: "";
-  display:block;
-  position: absolute;
-  top: 0;
-  right: -20px;
-  height: 0;
-  width: 0;
-  border-left:20px solid #eee;
-  border-bottom: 20px solid transparent;
-  border-top: 20px solid transparent;
-}
+#controls a:active:after,
 #controls a:hover:before,
 #controls a:active:before {
   content: "";
   display:block;
   position: absolute;
   top: 0;
-  left: -20px;
   height: 0;
   width: 0;
-  border-right:20px solid #eee;
   border-bottom: 20px solid transparent;
   border-top: 20px solid transparent;
+}
+#controls a:hover:after,
+#controls a:active:after {
+  right: -20px;
+  border-left:20px solid #eee;
+}
+#controls a:hover:before,
+#controls a:active:before {
+  left: -20px;
+  border-right:20px solid #eee;
 }
 #controls a:hover,
 #controls a:active {
@@ -84,10 +77,6 @@ body {
 #container {
   width: 800px;
   margin-left: 150px;
-}
-.trophy {
-  display: block;
-  clear: both;
 }
 .trophy_end {
   display: block;
@@ -109,6 +98,11 @@ body {
   height: 54px;
   width: 54px;
   margin-top: 5px;
+}
+.non-existent {
+  background-image: url("../undefined_light.png");
+  background-color: #aef;
+  display: inline-block;
 }
 .view_compact .icon,
 .view_wide .icon {
@@ -136,11 +130,6 @@ body {
   line-height: 25px;
   font-family: monospace;
   color: #ddd;
-}
-.non-existent {
-  background-image: url("../undefined_light.png");
-  background-color: #aef;
-  display: inline-block;
 }
 </style>
 <script>
@@ -174,7 +163,7 @@ function change_class(link){
         <h2>
           Cross-variant trophies
         </h2>
-        <div class="trophy" data-label="trophy">
+        <div class="trophy">
           <h3> Walk in the Park </h3>
           <span class="previous_cabinet cabinet">
             <div class="non-existent icon"></div>
@@ -187,7 +176,7 @@ function change_class(link){
           </span>
           <span class="trophy_end"></span>
         </div>
-        <div class="trophy" data-label="trophy">
+        <div class="trophy">
           <h3> Sightseeing Tour </h3>
           <span class="previous_cabinet cabinet">
             <img src="../sightseeing.png" class="icon"/>
@@ -199,7 +188,7 @@ function change_class(link){
           </span>
           <span class="trophy_end"></span>
         </div>
-        <div class="trophy" data-label="trophy">
+        <div class="trophy">
           <h3> Backpacking Tourist </h3>
           <span class="previous_cabinet cabinet">
             <div class="non-existent icon"></div>
@@ -214,7 +203,7 @@ function change_class(link){
           </span>
           <span class="trophy_end"></span>
         </div>
-        <div class="trophy" data-label="trophy">
+        <div class="trophy">
           <h3> Globetrotter </h3>
           <span class="previous_cabinet cabinet">
             <img src="../globetrotter.png" class="icon"/>
@@ -225,7 +214,7 @@ function change_class(link){
           </span>
           <span class="trophy_end"></span>
         </div>
-        <div class="trophy" data-label="trophy">
+        <div class="trophy">
           <h3> Hemi-stoner </h3>
           <span class="previous_cabinet cabinet">
             <div class="non-existent icon"></div>
@@ -242,7 +231,7 @@ function change_class(link){
           </span>
           <span class="trophy_end"></span>
         </div>
-        <div class="trophy" data-label="trophy">
+        <div class="trophy">
           <h3> Anti-stoner </h3>
           <span class="previous_cabinet cabinet">
             <img src="../anti-stoner.png" class="icon"/>
@@ -253,7 +242,7 @@ function change_class(link){
           </span>
           <span class="trophy_end"></span>
         </div>
-        <div class="trophy" data-label="trophy">
+        <div class="trophy">
           <h3> Prince of the World </h3>
           <span class="previous_cabinet cabinet">
             <div class="non-existent icon"></div>
@@ -265,16 +254,17 @@ function change_class(link){
           </span>
           <span class="trophy_end"></span>
         </div>
-        <div class="trophy" data-label="trophy">
+        <div class="trophy">
           <h3> King of the World </h3>
           <span class="previous_cabinet cabinet">
-            <img src="../old-king.png" class="non-existent icon"/>
+            <img src="../old-king.png" class="icon"/>
           </span>
           <span class="cabinet divider">&rarr;</span>
           <span class="proposed_cabinet cabinet">
-            <img src="../old-king.png" class="non-existent icon"/>
+            <img src="../old-king.png" class="icon"/>
             <img src="4princeoftheworld_1_king.png" class="icon"/>
             <img src="4princeoftheworld_2_king.png" class="icon"/>
+            <img src="4princeoftheworld_3_king.png" class="icon"/>
           </span>
           <span class="trophy_end"></span>
         </div>
