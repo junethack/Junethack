@@ -3,15 +3,17 @@
 %rss{:version => "2.0", "xmlns:atom" => "http://www.w3.org/2005/Atom"}
   %channel
     %title Notable events in the Junethack tournament event
-    %link http://junethack.rawrnix.com/
+    %link http://junethack.de/
     %description Junethack - NetHack Cross-Variant Summer Tournament
-    <atom:link href="http://junethack.rawrnix.com/junethack_event.rss" rel="self" type="application/rss+xml" />
-    - events = Event.all(:order => [ :created_at.desc ])
-    - events.each do |event|
+    <atom:link href="http://junethack.de/junethack.rss" rel="self" type="application/rss+xml" />
+    - events = Event.all(:order => [ :created_at.desc ], :limit => 5)
+    - news = News.all(:order => [ :created_at.desc ])
+    - entries = (news.to_a  + events.to_a).sort_by {|e| !['created_at'] }
+    - entries.each do |event|
       %item
-        %title= event.text
+        %title= event.text || event.html
         -if event.url
           %link= event.url
         %pubDate= event.created_at.strftime("%a, %d %b %Y %H:%M:%S %z")
-        %guid{:isPermaLink => "false"}= event.id
+        %guid{:isPermaLink => "false"}= "#{event.class.to_s.downcase}_#{event.id}"
 

@@ -1,9 +1,6 @@
-require 'normalize_death'
+require 'spec_helper'
 
-# Game mock object
-class Game
-  attr_accessor :death
-end
+require 'normalize_death'
 
 describe Game,"normalization of death strings" do
   before(:all) do

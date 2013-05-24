@@ -2,8 +2,7 @@
 %html{"xmlns:og" => "http://ogp.me/ns#"}
   %head
     %meta{:content => "application/xhtml+xml;charset=utf-8", "http-equiv" => "content-type"}/
-    %link{:href => "/style-xiella.css", :rel => "stylesheet", :type => "text/css"}/
-    %script{:src => "/analytics.js"}
+    %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}/
     - games_count = Game.count :conditions => [ 'user_id > 0' ]
     - if games_count == 0 then
       %title= "Junethack - #{User.count} players already registered!"
@@ -11,9 +10,10 @@
       %title= "Junethack - #{User.count} players registered - #{games_count} games played!"
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Junethack" />
-    <meta property="og:url" content="http://junethack.rawrnix.com/" />
+    <meta property="og:url" content="http://junethack.de/" />
     <meta property="og:description" content="The NetHack Cross-Variant Summer Tournament" />
-    <meta property="og:image" content="http://junethack.rawrnix.com/vivid_divider.png" />
+    <meta property="og:image" content="http://junethack.de/apple-touch-icon.png" />
+    <link rel="alternate" type="application/rss+xml" title="Junethack" href="http://junethack.de/junethack.rss" />
 
   %body
     #container

@@ -1,7 +1,7 @@
 .content_bulk
   .title_text
     %p
-      Running from 1 June until the end of 30 June 2012
+      Running from 1 June until the end of 30 June 2013
   - now = Time.new.to_i
   - if now < $tournament_starttime
     -# show a (static) countdown to tournament start
@@ -19,7 +19,7 @@
     - if now < $tournament_signupstarttime
       .title_text
         %p
-          Registration opens in May
+          =haml :registrationdate
   .text_content_wrapper
     .text_content
       %h2
@@ -39,8 +39,11 @@
       =haml :news
     .text_content.non_top_post
       %p
-        You can view the results of the 2011 tournament at the
-        %a{:href => "http://junethack-2011.rawrnix.com/"} Junethack 2011 site.
+        You can view the results of the 
+        %a{:href => "/archive/2011/index.html"} Junethack 2011
+        and
+        %a{:href => "/archive/2012/index.html"} Junethack 2012
+        tournaments.
       %p
         You can view the tournament rules at the 
         %a{:href => "/rules"} Rules page.
@@ -59,8 +62,5 @@
         %a{:href => "http://en.wikipedia.org/wiki/NetHack"} NetHack?
         What's
         %a{:href => "about"} this all about?
-      %p
-        The tournament starts 1 June 2012 at UTC midnight and runs until
-        the end of 30 June 2012.
     %span#end_of_content_spacer.clear
 / end of container

@@ -1,0 +1,8 @@
+AUTHORS
+
+Junethack developers:
+    Edoardo Spadolini (AKA kerio)
+    Christian Stegen <c.stegen@jungundwillich.de> (AKA stenno)
+    Cheryl Chong <cheryl@chongsworship.com> (AKA xiella)
+    Ryan Karl <rawrnix@rawrnix.com> (AKA rawrmage)
+    Mikko Juola <mikjuo@gmail.com> (AKA Adeon)

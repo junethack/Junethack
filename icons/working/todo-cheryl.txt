@@ -1,0 +1,61 @@
+cheryl = xiella
+
+############
+#
+# 2011
+#
+# focus: front-end design/development
+#
+# JAVASCRIPT
+#* login: validation
+#    * prevent form submission if invalid
+#    * check password matches confirm
+#    * prevent certain characters
+#    Completed:
+#        * show messages
+#        * check nonempty
+# HTML/CSS
+#* 10:55 < rawrmage> xiella: /clan/*name.
+#    Needs:
+#        * clanname
+#        * admin
+#        * members
+#        * clan trophies
+#        * link to clan members
+#    Maybe:
+#        * personal trophies
+#        * join this clan
+#        * invite someone else to this clan
+## completed
+#* 08:21 < stenno> xiella, if you want to do something, you could make the server page, where statistics about the server like, played games, ascension rate and so on are displayed
+# ISSUES
+#* user home page tr#cell1 and tr#cell2 should be tr.cell1 and tr.cell2 (id's should be unique per page)
+
+############
+#
+# 2013
+#
+# focus:
+#
+# IMAGES
+
+* Design new trophy images
+#	- do not need to exactly match previous icons.
+#	- should match overall design.
+#	- simple geometric shapes sufficient (bhaak)
+#	- consider inverting colours of existing icons to create a new set.
+#	- backpacking tourist:
+#		- should be a backpack, but avoid combined lines (ie varying line weights)
+#		- looks a bit like a face - maybe straps taller (stenno)
+#	- walk in the park:
+#		- humanist a, big @ relative to legs, polished/even lines.
+#	- hemi-stoner:
+#		- don't go with cigarette - maybe just recolour the existing anti-stoner. (bhaak)
+#		- brighter red please (bhaak)
+#	- prince of the world:
+#		- prince, king of the world looks good.
+		- king: magenta (bhaak)
+
+# META
+
+Clear outdated folders

@@ -1,0 +1,687 @@
+/* MEYER RESET
+http://meyerweb.com/eric/tools/css/reset/ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+nav,
+table, caption, tbody, tfoot, thead, tr, th, td,
+input, label {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    color: #222;
+    color: inherit;
+    vertical-align: baseline;
+    background: transparent;
+}
+body {
+    line-height: 1;
+    font-family: Arial, sans-serif;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/**************************
+**                       **
+**     project styles    **
+**                       **
+**************************/
+
+body {
+    color: #222;
+    overflow-y: scroll;
+    background-color: #eee;
+    background-image: url('background.jpg');
+    background-repeat: repeat;
+    background-position: top center;
+    text-shadow: none;
+}
+a {
+    text-decoration: none;
+    color: #34f;
+}
+a.active, a.active:hover,
+a:hover {
+    color: #800;
+    text-decoration: underline;
+}
+a.active.imagelink, a.active.imagelink:hover,
+a.imagelink:hover {
+    text-decoration: none;
+}
+/* misc */
+#container {
+    width: 99%;
+    margin: 0 auto;
+}
+
+/*****************************************
+**                                      **
+**         fiddly css3 properties       **
+**                                      **
+*****************************************/
+#footer,
+/* topnav */
+.text_content_wrapper, #topnav {
+    background-color: #ddd;
+
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+/* typical inset rounding and shadowing */
+#topnav,
+#footer,
+.text_content_wrapper {
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+/* elements on the page that need rounding/shadowing */
+/* these don't
+#clan_trophies,
+#clan_header > div */ {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+/* slightly larger and darker rounding/shadowing, eg error messages...? */
+#errors,
+#messages {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+/* massive bigred rounding */
+input[type=submit].bigred,
+form#login_form > fieldset > input[type=submit],
+.signup_text a {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+}
+
+::-moz-selection{ background: #aaa; color:#fff; text-shadow: none; }
+::-webkit-selection{ background: #aaa; color:#fff; text-shadow: none; }
+::selection { background:#aaa; color:#fff; text-shadow: none; }
+
+
+/**************************
+**                       **
+**      title styles     **
+**                       **
+**************************/
+
+.hcenter {
+    clear: both;
+    text-align: center;
+}
+
+/* The texts around the logo itself */
+.logotitles
+{
+	color: #000;
+}
+
+.logotitles h1 {
+	font-size: 120%;
+}
+.logotitles h2 {
+	font-size: 120%;
+}
+.logoimage img {
+	max-width: 100%;
+	height : auto;
+}$
+
+/**************************
+**                       **
+**     signup styles     **
+**                       **
+**************************/
+
+/* space between title and rest of content */
+/*  locate space here to avoid future margin collapse */
+.content_bulk {
+  /* not sure if position is needed for z-index, but ie would probably complain anyway */
+    position: relative;
+    z-index: 1;
+    margin-top: 1em;
+}
+
+.signup_text {
+    text-align: center;
+    width: 170px;
+    margin: 0 auto;
+}
+.signup_text p {
+    height: 60px;
+    line-height: 60px;
+}
+.signup_text a {
+    font-size: 1.4em;
+    display: block;
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    background-color: #a00;
+}
+.signup_text a:hover,
+.signup_text a.active,
+.signup_text a.active:hover {
+    color: #fff;
+    background-color: #c22;
+}
+
+/**
+ Messages and errors
+ (those that come, e.g. when you fail to log in
+ */
+
+#errors
+{
+    margin: 5px;
+    padding: 5px;
+    background-color: #f55;
+}
+#messages
+{
+    margin: 5px;
+    padding: 5px;
+    background-color: #5ff;
+}
+
+/**************************
+**                       **
+**    body text styles   **
+**                       **
+**************************/
+
+.text_content_wrapper {
+    /* space between the main content and the element before - eg signup button */
+    padding-top: 1px;
+    padding-bottom: 30px;
+}
+.text_content {
+    margin: 1ex 1ex 0 1ex;
+    line-height: 1.5em;
+}
+.text_content p {
+    margin-bottom: 10px;
+}
+.text_content h1 {
+    font-size: 200%;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+}
+.text_content h2 {
+    font-size: 150%;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+}
+.text_content.non_top_post {
+    margin-top: 3;
+    margin-bottom: 3;
+    display: block;
+    border-style: inset;
+    border-top: 1px solid #AAA;
+}
+.text_content.non_top_post:before {
+    /*content: url(divider.png);
+    width: 114px; */
+    display: block;
+    margin: 0 auto;
+    /*margin-top: 10px; */
+}
+
+/**************************
+**                       **
+**      scoreboard       **
+**                       **
+**************************/
+
+.greytable { /* replaces .scorelisting table and #accountlist */
+    font-size: 85%;
+    border-collapse: collapse;
+    width: 100%; /* there's an inline style here.. */
+    text-align: left;
+    vertical-align: middle;
+}
+table.misc,
+.greytable.misc { /* override width:100% */
+    width: auto;
+}
+.greytable th {
+    text-align: left;
+    padding-right: 1em;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid black;
+}
+.greytable #cell1 td,
+.greytable #cell2 td
+{
+    border-top: 1px solid black;
+    /*padding-left: 0.15em;
+    padding-right: 0.15em;*/
+    vertical-align: middle;
+}
+.greytable #cell1 td
+{
+    background-color: #ccc;
+}
+.greytable #cell2 td
+{
+    background-color: #bbb;
+}
+
+/* next two declarations are probably deprecated */
+.greytable input[type="text"]
+{
+    width: 6em;
+    margin: 3px 3px 3px 3px;
+    padding: 0;
+}
+.greytable select
+{
+    font-size: 100%;
+}
+
+/**************************
+**                       **
+**      small forms      **
+**                       **
+**************************/
+
+.smallform {
+  margin-bottom: 10px;
+}
+.smallform label,
+.smallform input,
+.smallform select {
+    margin-right: 10px;
+    float:left;
+}
+.smallform input,
+.smallform select,
+.smallform label,
+.smallform input[type=submit] {
+  margin-top: 10px;
+  height: 30px;
+}
+.smallform select {
+  padding: 0;
+}
+
+.smallform input {
+  padding: 5px 5px 5px 5px;
+  height: 20px;
+}
+
+.smallform input[type=submit] {
+  padding: 5px 10px;
+  margin-left: 0;
+}
+/* cascading from label...maybe? or maybe i should make label into #login label and #register label */
+.smallform label {
+  margin-left: 0;
+  width: auto;
+  line-height: 30px;
+  clear: none;
+}
+
+
+/**************************
+**                       **
+**      /home styles     **
+**                       **
+**************************/
+
+.account-clan {
+  margin-top: 10px;
+}
+
+
+/**************************
+**                       **
+**      form styles      **
+**                       **
+**************************/
+/* add form#login_form (>) in front of each line and you're set */
+fieldset {
+    width: 400px;
+    margin: 0 auto;
+    /* to avoid margin collaspe with submit button below */
+    padding-bottom: 1px;
+}
+/* not needed
+fieldset > div {
+    overflow: hidden;
+}
+*/
+.form_msg,
+input,
+label {
+    margin-top: 5px;
+    margin-left: 10px;
+    display: block;
+    float: left;
+    height: 20px;
+    line-height: 20px;
+}
+label {
+    width: 120px;
+    clear: both;
+    text-align: right;
+}
+input {
+    padding: 1px;
+    width: 120px;
+    background-color: #fff;
+    border: 1px inset #eee;
+}
+.form_msg {
+    width: 120px;
+    color: red;
+    font-size: 85%;
+}
+input[type=submit] {
+    padding: 5px 10px;
+    height: auto;
+    line-height: auto;
+    width: auto;
+    background-color: #bbb;
+    border: 1px outset #eee;
+}
+/* use this class on a submit button if you would like it to be big and red. */
+input[type=submit].bigred,
+form#login_form > fieldset > input[type=submit] {
+    padding: 0;
+    height: 50px;
+    width: 120px;
+    float: none;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 0;
+    font-size: 1.4em;
+    text-decoration: none;
+    color: #fff;
+    background-color: #a00;
+}
+input[type=submit].bigred:hover,
+input[type=submit].bigred.active:hover,
+input[type=submit].bigred.active:hover,
+form#login_form > fieldset > input[type=submit]:hover,
+form#login_form > fieldset > input[type=submit].active,
+form#login_form > fieldset > input[type=submit].active:hover {
+    cursor: pointer;
+    color: #fff;
+    background-color: #c22;
+}
+
+/**************************
+**                       **
+**     footer styles     **
+**                       **
+**************************/
+
+#footer {
+    font-size: 80%;
+    line-height: 1.25em;
+    text-align: center;
+    margin: 1em 0;
+}
+#flattr img,
+a#flattr {
+    vertical-align: baseline;
+    margin-bottom: -5px;
+}
+
+
+/**************************
+**                       **
+**      tabular data     **
+**    (currently only    **
+**      table#clans      **
+**   and table#servers)  **
+**                       **
+**************************/
+.prettytable,
+/* /clans */
+#clans,
+/* /servers */
+#servers {
+    width:100%;
+    font-size: .9em;
+}
+table.prettytable th,
+/* specificity override for padding */
+#clan_page table.clan_members tr/*<--extraspecific*/ th,
+table#clans th,
+table#servers th {
+    text-align: left;
+    border-bottom: 4px double #aaa;
+    padding: 8px;
+}
+.prettytable th,
+.prettytable td,
+#clans th,
+#clans td,
+#servers th,
+#servers td {
+    padding: 5px 8px;
+}
+.prettytable tr,
+#clans tr,
+#servers tr {
+    border-bottom: 1px solid #ccc;
+}
+
+/* tables for competition score entries */
+th.competition_value {
+    width: 10em;
+}
+th.competition_placing {
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 3em;
+}
+
+/**************************
+**                       **
+**   clan page display   **
+**                       **
+**************************/
+
+#clan_header {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+#clan_header > div,
+#clan_header > h1 {
+    margin-bottom: 0;
+    height: 50px;
+    line-height: 50px;
+}
+
+#clan_header > h1 {
+    line-height: 50px;
+    width: auto;
+    text-align: center;
+    float: left;
+}
+/* the group of right hand things */
+#clan_header > div {
+    border-left: 1px solid #ccc;
+    float: right;
+    padding: 0 20px;
+    text-align: center;
+}
+/* links only - no spans here please */
+#clan_header > div a {
+    display: block;
+}
+#clan_header > div a:hover {
+    background-color: #dadada;
+    text-decoration: none;
+}
+/**************************
+**                       **
+** Display trophy images **
+** (everywhere, not just **
+**    on trophy page)    **
+**                       **
+**************************/
+
+/* 
+structure for a trophy cabinet:
+
+.trophy_cabinet
+  h3
+  ul
+    li
+      .trophyleft
+      .trophyright
+- all a's to have .imagelink
+- all img's to have no inline styles
+*/
+.trophycabinet {
+    padding-top: 1px;/* for margin collapse */
+    margin-bottom: 30px;
+}
+
+ul.trophypage > li > img,
+.trophycabinet img {
+    height: 35px;
+    width: 35px;
+}
+
+/* exception for clan page trophies */
+#clan_trophies .trophyicon {
+    margin-left: 5px;
+    margin-top: 5px;
+    background: #eee;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+
+
+/* vertically align text and images */
+.trophycabinet .trophyleft {
+    vertical-align: middle;
+}
+.trophycabinet .trophyright {
+    width: 90%;
+}
+/* exception for /user/name..bleh */
+/* text cabinet, as in the text is the fixed info and the images are expandable */
+.text_cabinet.trophycabinet .trophyleft {
+    width: 20%;
+}
+.text_cabinet.trophycabinet .trophyright {
+  /* quick fix for i dunno what's happening with that a height */
+    margin-bottom: 0px;
+    width: 75%;
+}
+.trophycabinet .trophyleft,
+.trophycabinet .trophyright {
+    display: inline-block;
+    vertical-align: middle;
+}
+/* finer-grained display styles */
+.trophycabinet .trophyright, .trophycabinet .trophyleft {
+    margin: 5px 0px 5px 5px;
+}
+.trophycabinet h2,
+.trophycabinet h3 {
+    line-height: 2.5em;
+}
+.trophycabinet h2,
+.trophycabinet h3 {
+    margin-bottom: 0;
+    border-bottom: 3px double #bbb;
+}
+.trophycabinet .endofcabinetrow,
+.trophycabinet > ul li {
+    border-bottom: 1px solid #ccc;
+}
+
+/**************************
+**                       **
+**      trophy page      **
+** (partially obsolete   **
+**     - please use      **
+** .trophy_cabinet where **
+**        possible)      **
+**                       **
+**************************/
+
+/* give dots to trophy lists */
+ul.trophypage {
+    list-style: disc;
+}
+ul.trophypage > li {
+    margin-top: 5px;
+}
+/* vertically align text and images */
+li.multiline > img {
+    vertical-align: middle;
+}
+li.multiline > span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 500px;
+}
+
+/**************************
+**                       **
+**     helper styles     **
+**                       **
+**************************/
+
+.clear {
+    display: block;
+    clear: both;
+}
+#end_of_content_spacer {
+    height: 30px;
+}
+#small_content_spacer {
+    height: 15px;
+}
+#tiny_content_spacer {
+    height: 5px;
+}
+.center {
+    text-align: center;
+}
+.flat {
+    height: 0;
+}
+
+.small_print {
+    font-size: 0.9em;
+}
+
