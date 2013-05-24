@@ -247,10 +247,9 @@ post "/create" do
     errors.push("Username already exists.") if User.first(:login => params[:username])
     session['errors'] << errors
     puts "session errors are #{session['errors'].inspect}"
-    redirect "/register" and return unless session['errors'].empty?
+    redirect "/register" and return unless session['errors'].flatten.empty?
     user = User.new(:login => params["username"])
     user.password = params["password"]
-    puts "CREATED USER LOL" # o'rly
     begin
         if user.save
             session['messages'] << "Registration successful. Please log in."

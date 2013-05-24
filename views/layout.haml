@@ -67,7 +67,7 @@
           %div
           - for message in @messages
             %div.message= message
-      - if !@errors.empty? then
+      - if !@errors.flatten.empty? then
         #errors
           - for error in @errors
             %div.error= error
