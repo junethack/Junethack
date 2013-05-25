@@ -1,4 +1,4 @@
-- cache_fragment(Game.max_endtime) do
+- cache_fragment("#{Game.max_endtime}_#{User.count}") do
   .content_bulk
     .text_content_wrapper
       .text_content
