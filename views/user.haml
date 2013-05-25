@@ -1,4 +1,4 @@
-- cache_fragment(Game.max :endtime, :user_id => @player.id) do
+- cache_fragment("#{Game.max :endtime, :user_id => @player.id}_#{@player.updated_at}_#{@player.accounts.count}") do
     .content_bulk
         .text_content_wrapper
             .text_content
