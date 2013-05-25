@@ -9,7 +9,6 @@ class Clan
     def get_invitation_response invitation
         if index = self.invitations.index{|i| i['token'] == invitation['token'] and i['account'] == invitation['account']}
             if acc = Account.get(invitation['user'], invitation['server'])
-                
                 if invitation['status'] == 'accept'
                     puts "clan: accepted invitation!"
                     self.accounts.push acc
@@ -25,5 +24,4 @@ class Clan
     def get_admin
         return User.get(self.admin[0])
     end
-end        
-                
+end

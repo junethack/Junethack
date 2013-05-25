@@ -245,7 +245,7 @@ post "/create" do
     errors = []
     errors.push("Password and confirmation do not match.") if params["confirm"] != params["password"]
     errors.push("Username already exists.") if User.first(:login => params[:username])
-    session['errors'] << errors
+    session['errors'] = errors
     puts "session errors are #{session['errors'].inspect}"
     redirect "/register" and return unless session['errors'].flatten.empty?
     user = User.new(:login => params["username"])
@@ -336,7 +336,6 @@ post "/clan" do
             redirect "/clan/" + CGI.escape(acc.clan.name) and return
         else
             session['errors'] << "Could not create clan"
-            
         end
     else 
         session['errors'] << "Could not find your account on this server"
@@ -347,17 +346,19 @@ end
 post "/clan/invite" do
   $db_access.synchronize {
     clan = Clan.get(params[:clan])
-    
+
+    # verify that clan admin is inviting other users
     if clan.admin[0] == @user.id
-        acc = Account.first(:name => params[:accountname], :server_id => params[:server])
-        if acc
+        invited_user = User.first(:login => params[:accountname])
+        acc = invited_user.accounts.first
+        if acc then
             chars = ('a'..'z').to_a
             invitation = {'clan_id' => clan.name, 'status' => 'open', 'user' => acc.user.id, 'server' => params[:server], 'token' => (0..30).map{ chars[rand 26] }.join}
             clan.update(:invitations => (clan.invitations.push(invitation)).to_json)
             acc.update(:invitations => (acc.invitations.push(invitation)).to_json)
-            session['messages'] << "Successfully invited #{acc.name} to #{clan.name}"
+            session['messages'] << "Successfully invited #{invited_user.login} to #{clan.name}"
         else
-            session['errors'] << "Could not invite #{params[:accountname]} on #{Server.get(params[:server]).display_name}"
+            session['errors'] << "Could not invite #{params[:accountname]}"
         end
     else
         sessions['errors'] << "You are not the clan admin"
