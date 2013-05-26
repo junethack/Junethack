@@ -11,7 +11,7 @@
     - entries = (news.to_a  + events.to_a).sort {|e1, e2| e2['created_at'] <=> e1['created_at']}
     - entries.each do |event|
       %item
-        %title= event.text || event.html
+        %title= event.text || Sanitize.clean(event.html)
         -if event.url
           %link= event.url
         %pubDate= event.created_at.strftime("%a, %d %b %Y %H:%M:%S %z")

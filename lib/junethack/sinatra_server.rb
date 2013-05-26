@@ -14,6 +14,7 @@ require 'time'
 require 'logger'
 require 'sync'
 require 'tournament_times'
+require 'sanitize'
 
 require 'graph'
 
