@@ -18,8 +18,9 @@ nohup.out
 xlogfile
 logs
 trace
-# ignore tmp directories
+# ignore tmp stuff
 public/tmp
 temp
 coverage
 tmp
+junethack.pid
