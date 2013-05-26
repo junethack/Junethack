@@ -58,3 +58,9 @@ light_me "streak-races.png"
 light_me "streak-roles.png"
 light_me "clan-variant-trophies.png"
 
+light_me "walk_in_the_park.png"
+light_me "backpacking_tourist.png"
+light_me "hemi-stoner.png"
+light_me "prince.png"
+light_me "king.png"
+
