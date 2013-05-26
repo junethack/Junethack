@@ -147,6 +147,11 @@ namespace :run do
     desc "start server"
     task :server do
         require 'sinatra_server'
+
+        # write the current process id to a file
+        File.open("junethack.pid", "w") {|f| f.puts(Process.pid) }
+        Signal.trap(0, proc { File.delete "junethack.pid" })
+
         Sinatra::Application.run!
     end
 end
