@@ -8,7 +8,7 @@
     <atom:link href="http://junethack.de/junethack.rss" rel="self" type="application/rss+xml" />
     - events = Event.all(:order => [ :created_at.desc ], :limit => 30)
     - news = News.all(:order => [ :created_at.desc ])
-    - entries = (news.to_a  + events.to_a).sort_by {|e| e['created_at'] }
+    - entries = (news.to_a  + events.to_a).sort {|e1, e2| e2['created_at'] <=> e1['created_at']}
     - entries.each do |event|
       %item
         %title= event.text || event.html
