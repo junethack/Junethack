@@ -1,10 +1,7 @@
 # Dynamic information:
 
-<<<<<<< HEAD
-Dynamic data is, as expected, pulled from a database.  Markup types include single tables, sections of tables, sections of tables and charts, lists of icons, sections of icons and tables, or single lines of text.
+Dynamic data is, as expected, pulled from the database.  Markup types include single tables, sections of tables, sections of tables and charts, lists of icons, sections of icons and tables, or single lines of text.
 
-=======
->>>>>>> f8be89ca8b5c4118a0e07a7ad61c2d51503ea1ad
 - user actions
   - register/sign up here
   - login/profile
@@ -33,15 +30,14 @@ Dynamic data is, as expected, pulled from a database.  Markup types include sing
       - clan admin
       - # members
 - results
-  - scoreboard (?)
-    - user achievements (called 'trophies', confusingly)
+  - scoreboard
+    - user achievements (called 'trophies')
     - user competitions
     - clan competitions
   - clan scores
     - for each competition trophy
       - top x number of clans
   - statistics
-<<<<<<< HEAD
     - finished games per day and variant
     - ascensions per day
     - finished games per day
@@ -51,15 +47,6 @@ Dynamic data is, as expected, pulled from a database.  Markup types include sing
 # Static information
 
 Static information serves as a reference point for people learning about junethack.  Examples of markup for static pages include sections of text, lists of icons, or single lines of text.
-=======
-    - finished games per day and variant (?)
-    - ascensions per day
-    - finished games per day
-    - new users per day (?)
-- days remaining
-
-# Static information:
->>>>>>> f8be89ca8b5c4118a0e07a7ad61c2d51503ea1ad
 
 - tournament
   - rules
@@ -75,13 +62,8 @@ Static information serves as a reference point for people learning about junetha
       - user competitions
       - clan competitions
   - duration, runs from x to y
-<<<<<<< HEAD
-  - previous tournament links
 - project junethack
-=======
-- previous tournament links
-  - project junethack
->>>>>>> f8be89ca8b5c4118a0e07a7ad61c2d51503ea1ad
+  - previous tournament links
   - developers
   - about
   - what is nethack?
