@@ -1,0 +1,127 @@
+/*.nav-button { display: none; } /* hide the navigation button by default */
+
+/*@media only screen and (min-width: 0px) {*/
+
+	/* Navigation Button
+	-------------------------------------------------------- */
+
+  .primary-nav {
+    position:fixed;
+/* for Junethack's design, the topnav (and footer) are quite important
+for navigation, and on a mobile screen more scrolling would have to
+take place to get to them. */
+  }
+	.mobile-logo {
+		position: absolute;/* relative creates large gap at top when .open */
+    top: 0px; left: 0px;
+	}
+
+	.nav-button {
+		display: block;
+		position: fixed; /*not contained in .primary-nav*/
+		top: 7px;
+		right: 7px;
+		width: 50px;
+		height: 35px;
+		background: url('menu-icon-large.png'), -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background: url('menu-icon-large.png'),    -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background: url('menu-icon-large.png'),     -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background: url('menu-icon-large.png'),      -o-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: 21px, 100%;
+		cursor: pointer;
+		border: 0 none;
+		border-bottom: 1px solid rgba(255,255,255,.1);
+		box-shadow: 0 0 4px rgba(0,0,0,.7) inset;
+		border-radius: 5px;
+		z-index: 999;
+		text-indent: -9999px;
+	}
+	.nav-button:hover {
+		background-color: rgba(0,0,0,.1);
+	}
+	.nav-button.open {
+		background: url('close-icon-large.png'), -webkit-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background: url('close-icon-large.png'),    -moz-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background: url('close-icon-large.png'),     -ms-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background: url('close-icon-large.png'),      -o-linear-gradient(top, rgba(0,0,0,0), rgba(0,0,0,.2));
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: 21px, 100%;
+	}
+
+	/* Navigation Bar
+	-------------------------------------------------------- */
+
+	body { padding-top: 50px; }
+
+	.primary-nav {
+    width: 100%;
+    position: fixed;
+		background-color: #444;
+    height: 50px;
+    top:0; overflow: hidden;
+}
+	.primary-nav li {
+		display: none;
+	}
+	.primary-nav li a {
+		display: block; text-decoration: none; color: #eee; width: 90%;
+		padding: 10px 5%;
+		font-size: 14px;
+		text-shadow: -1px -1px 0 #222;
+		border-bottom: 1px solid #333;
+		border-top: 1px solid #555;
+	}
+	.primary-nav li a:hover {
+		background-color: rgba(0,0,0,.5);
+		border-top-color: transparent;
+	}
+	.primary-nav > li:first-child {
+		border-top: 1px solid rgba(0,0,0,.2);
+	}
+
+	/* Toggle the navigation bar open  */
+
+	.primary-nav.open {
+		height: auto;
+		padding-top: 50px;
+	}
+	.primary-nav.open li {
+		display: block;
+	}
+  .primary-nav.open .parent li {/*indent children*/
+    text-indent: 20px;
+  }
+
+	/* Submenus – optional .parent class indicates dropdowns */
+
+	.primary-nav > li:hover > a {
+		background: rgba(0,0,0,.5);
+		border-bottom-color: transparent;
+	}
+	.primary-nav li.parent > a:after {
+		content: "▼";
+		color: rgba(255,255,255,.5);
+		float: right;
+	}
+	.primary-nav li.parent > a:hover {
+		background: rgba(0,0,0,.75);
+	}
+	.primary-nav li ul {
+		display: none;
+		background: rgba(0,0,0,.3);
+	}
+	.primary-nav li ul a {
+		border: 0;
+    color: #ddd;
+		font-size: 12px;
+		font-weight: normal;
+	}
+	.primary-nav li:hover ul {
+		display: block;
+		border-top: 0 none;
+	}
+
+/*} /* End Mobile Styles */
