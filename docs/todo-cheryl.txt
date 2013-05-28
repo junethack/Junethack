@@ -54,7 +54,7 @@ cheryl = xiella
 #		- brighter red please (bhaak)
 #	- prince of the world:
 #		- prince, king of the world looks good.
-		- king: magenta (bhaak)
+#		- king: magenta (bhaak)
 
 # META
 
