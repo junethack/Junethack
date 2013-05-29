@@ -4,72 +4,72 @@
 
 ### top nav text
 
-4.5.2. description
-4.5.3. logo
+- 4.5.2. description
+- 4.5.3. logo
 
 ### front page text
 
-4.5.2. description
-4.5.3. logo
-6.1. days remaining
-4.5.4. introduction text
-4.5.1. name
-6.2. registrations are open
+- 4.5.2. description
+- 4.5.3. logo
+- 6.1. days remaining
+- 4.5.4. introduction text
+- 4.5.1. name
+- 6.2. registrations are open
 
 ### footer text
 
-4.5.1. name
-4.5.3. logo
+- 4.5.1. name
+- 4.5.3. logo
 
 ## ONE CLICK
 
 ### top nav link
 
-1.2. login/profile
-1.3. logout
-3.1. scoreboard
-2.1.3. games
-2.1.1. ascensions
-2.1.2. deaths
-2.3. users
-2.4. clans
-3.2. clan scores
+- 1.2. login/profile
+- 1.3. logout
+- 3.1. scoreboard
+- 2.1.3. games
+- 2.1.1. ascensions
+- 2.1.2. deaths
+- 2.3. users
+- 2.4. clans
+- 3.2. clan scores
 
 ### front page link
 
-1.1. register
-4.4. previous tournament links
-4.1. rules
-4.2. trophies
-2.2. servers
-5.2. about
-5.3. what is nethack?
+- 1.1. register
+- 4.4. previous tournament links
+- 4.1. rules
+- 4.2. trophies
+- 2.2. servers
+- 5.2. about
+- 5.3. what is nethack?
 
 ### footer link
 
-5.1. developers
-5.2. about
-4.1. rules
-4.2. trophies
-2.1.4. generated statistics
-2.2. servers
-3.1. scoreboard
-3.2. clan scores
+- 5.1. developers
+- 5.2. about
+- 4.1. rules
+- 4.2. trophies
+- 2.1.4. generated statistics
+- 2.2. servers
+- 3.1. scoreboard
+- 3.2. clan scores
 
 ## TWO CLICKS
 
 ### about
 
-5.3. contact
-5.3.1. github
-5.3.2. #junethack irc
-5.3.3. rgrn
+- 5.3. contact
+- 5.3.1. github
+- 5.3.2. #junethack irc
+- 5.3.3. rgrn
 
 ## THREE CLICKS
 
 ### 4.1. rules
 
-4.1.3. definition of start scumming
+- 4.1.3. definition of start scumming
 
 # Observations:
 
