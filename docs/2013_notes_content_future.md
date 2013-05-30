@@ -37,20 +37,20 @@
 
 - 1.2. login/profile
 - 2. (tournament) activity
-  2.3. users
-  2.4. clans
-  2.2. servers
-  2.1.1. ascensions
-  2.1.2. deaths
-  2.1.3. games
-  2.1.4. generated statistics
+  - 2.3. users
+  - 2.4. clans
+  - 2.2. servers
+  - 2.1.1. ascensions
+  - 2.1.2. deaths
+  - 2.1.3. games
+  - 2.1.4. generated statistics
 - 3. (tournament) results
-  3.1. scoreboard
-  3.2. clan scores
+  - 3.1. scoreboard
+  - 3.2. clan scores
 - 4. about the tournament
-  4.1. rules
-  4.2. trophies
-  4.4. previous tournament links
+  - 4.1. rules
+  - 4.2. trophies
+  - 4.4. previous tournament links
 - 1.3. logout
 
 ### front page link
