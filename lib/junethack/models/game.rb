@@ -179,6 +179,7 @@ class Game
     property :xplevel, Integer, :default => 0
     property :exp,     Integer, :default => 0
     property :mode,    String
+    property :gold,    Integer, :default => -1
 
     # nethack4-specific properties
     property :charname, String
