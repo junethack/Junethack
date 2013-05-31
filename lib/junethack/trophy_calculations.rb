@@ -415,6 +415,18 @@ def update_clan_scores(game)
                                         :icon => "clan-variant-trophies.png")
         c.value = most_variant_trophy_combinations
         c.save
+
+        # new clan trophies for 2013
+        # Most Medusa kills
+        clanGames = Game.all(:user_id => User.all(:clan => clan_name))
+        most_medusa_kills = 0
+        clanGames.each {|game| most_medusa_kills +=1 if game.defeated_medusa? }
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_medusa_kills",
+                                        :icon => "clan-medusa-kills.png")
+        c.value = most_medusa_kills
+        c.save
+
     end
 
     rank_clans
@@ -429,6 +441,7 @@ def rank_clans
     rank_collection(ClanScoreEntry.all(:trophy  => "most_unique_deaths", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascensions_in_a_24_hour_period", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_variant_trophy_combinations", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_medusa_kills", :order => [ :value.desc ]))
 end
 
 def score_clans
