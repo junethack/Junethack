@@ -380,11 +380,11 @@ def update_clan_scores(game)
     # Clan competition
     clan_name = (User.get game.user_id).clan
     if clan_name then
-        points = (repository.adapter.select "SELECT SUM(points) FROM games WHERE user_id in (SELECT id FROM users WHERE clan = ?);", clan_name)[0]
+        log_points = (repository.adapter.select "SELECT SUM(length(points)-1) FROM games WHERE user_id in (SELECT id FROM users WHERE clan = ?);", clan_name)[0]
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
-                                        :trophy  => "most_points",
+                                        :trophy  => "most_log_points",
                                         :icon => "clan-points.png")
-        c.value = points
+        c.value = log_points
         c.save
 
         most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+ascended_combinations_sql+");", clan_name)[0]
@@ -444,7 +444,7 @@ def update_clan_scores(game)
 end
 
 def rank_clans
-    rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_log_points", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_unique_deaths", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascensions_in_a_24_hour_period", :order => [ :value.desc ]))

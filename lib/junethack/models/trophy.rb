@@ -269,7 +269,12 @@ end
 
 DataMapper::MigrationRunner.migration( 6, :clan_trophies_2013 ) do
   up do
+    # delete old most_points clan trophy
+    Trophy.first(:trophy => "most_points").destroy
+
+    # new clan trophies
     Trophy.create :variant => "clan", :trophy => "most_medusa_kills", :text => "Most Medusa kills", :icon => "clan-medusa-kills.png"
     Trophy.create :variant => "clan", :trophy => "most_full_conducts_broken", :text => "Most games with all conducts broken", :icon => "clan-full-conducts-broken.png"
+    Trophy.create :variant => "clan", :trophy => "most_log_points", :text => "Most logarithmic points", :icon => "clan-points.png"
   end
 end
