@@ -427,6 +427,14 @@ def update_clan_scores(game)
         c.value = most_medusa_kills
         c.save
 
+        # Most games with all conducts broken
+        most_full_conducts_broken = (repository.adapter.select "SELECT count(1) FROM games WHERE nconducts = 0 and user_id in (SELECT id FROM users WHERE clan = ?);", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_full_conducts_broken",
+                                        :icon => "clan-full-conducts-broken.png")
+        c.value = most_full_conducts_broken
+        c.save
+
     end
 
     rank_clans
@@ -442,6 +450,7 @@ def rank_clans
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascensions_in_a_24_hour_period", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_variant_trophy_combinations", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_medusa_kills", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_full_conducts_broken", :order => [ :value.desc ]))
 end
 
 def score_clans

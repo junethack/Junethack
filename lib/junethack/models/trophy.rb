@@ -270,5 +270,6 @@ end
 DataMapper::MigrationRunner.migration( 6, :clan_trophies_2013 ) do
   up do
     Trophy.create :variant => "clan", :trophy => "most_medusa_kills", :text => "Most Medusa kills", :icon => "clan-medusa-kills.png"
+    Trophy.create :variant => "clan", :trophy => "most_full_conducts_broken", :text => "Most games with all conducts broken", :icon => "clan-full-conducts-broken.png"
   end
 end
