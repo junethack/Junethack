@@ -254,6 +254,11 @@ def update_scores(game)
                 :variant => game.version,
                 :trophy => :defeated_one_eyed_sam,
                 :icon => "m-sam.png").save if game.defeated_one_eyed_sam?
+            # Heaven or Hell
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :heaven_or_hell,
+                :icon => "heaven-or-hell.png").save if game.ascended_heaven_or_hell?
         end
 
         # AceHack and NetHack4 specific trophies

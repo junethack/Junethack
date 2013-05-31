@@ -258,3 +258,10 @@ DataMapper::MigrationRunner.migration( 6, :fix_acehack_trophies ) do
     execute "update scoreentries set trophy = 'entered_astral_plane' where variant = '3.6.0' and trophy = 'entered_astral';"
   end
 end
+
+DataMapper::MigrationRunner.migration( 6, :heaven_or_hell_trophies ) do
+  up do
+    Trophy.create :variant => helper_get_variant_for("acehack"), :trophy => "heaven_or_hell", :text => "heaven or hell", :icon => "heaven-or-hell.png"
+    Trophy.create :variant => helper_get_variant_for("unnethack"), :trophy => "heaven_or_hell", :text => "heaven or hell", :icon => "heaven-or-hell.png"
+  end
+end

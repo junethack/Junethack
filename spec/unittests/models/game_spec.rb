@@ -51,3 +51,19 @@ describe Game, ".defeated_medusa?" do
     g.defeated_medusa?.should be_false
   end
 end
+
+describe Game, ".ascended_heaven_or_hell?" do
+  it "returns correct result if ascended in Heaven or Hell" do
+    g = Game.new(:version => '3.4.3', :death => 'ascended', :mode => "debug")
+    g.ascended_heaven_or_hell?.should be_false
+
+    g = Game.new(:version => '3.4.3', :death => 'killed', :mode => "hoh")
+    g.ascended_heaven_or_hell?.should be_false
+
+    g = Game.new(:version => '3.4.3', :death => 'ascended', :mode => "hoh")
+    g.ascended_heaven_or_hell?.should be_true
+
+    g = Game.new(:version => '3.4.3', :death => 'defied the gods', :mode => "hoh")
+    g.ascended_heaven_or_hell?.should be_true
+  end
+end

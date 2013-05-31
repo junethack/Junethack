@@ -216,6 +216,10 @@ class Game
     def ascended_with_all_invocation_items?
         ascended and carried and carried.to_i & 14 > 0
     end
+    # Heaven or Hell
+    def ascended_heaven_or_hell?
+        ascended and mode and mode == "hoh"
+    end
 
     ## NetHack 1.3d specific
     # ascension / escaped (with the amulet)
