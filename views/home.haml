@@ -28,7 +28,7 @@
                     %select{:name => "server"}
                         - server_accounts.each do |s|
                             %option{:value => s.id}= s.display_name
-                    %input{:type => "text", :name => "user"}
+                    %input{:type => "text", :name => "user", :placeholder => "public server username", :style => "width: 22ex;"}
                     %input{:type => "submit", :value => "add account"}
                     %span.clear
         .text_content.non_top_post
@@ -89,7 +89,7 @@
                 %form#create_clan_form.smallform{:method => "POST", :action => "/clan"}
                     %input{:type => "hidden", :value => clanless_accs.first.server.id, :name => "server"}
                     %label{:for => "clanname"} Clan name
-                    %input#clanname{:name => "clanname", :type => "text"}
+                    %input#clanname{:name => "clanname", :type => "text", :placeholder => "clan name"}
                     %input{:type => "submit", :value => "Create clan"}
                     %span#end_of_content_spacer.clear
 
