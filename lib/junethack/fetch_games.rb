@@ -47,6 +47,7 @@ def fetch_all
                 games = gamesIO.readlines
                 @fetch_logger.info "#{games.length} new game#{'s' if games.length != 1} on #{server.name}."
                 i = 0
+                    #repository.adapter.execute("BEGIN IMMEDIATE TRANSACTION");
                     games.each do |line|
                       begin
                         $db_access.lock :EX
@@ -64,7 +65,7 @@ def fetch_all
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "start scummed game"
                                 count_scummed_games += 1
-                            elsif hgame['mode'] == 'explore' or hgame['mode'] == 'multiplayer' then
+                            elsif ['explore','multiplayer','debug'].include? hgame['mode'] then
                                 game = JunkGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "junk game"
                                 count_junk_games += 1
@@ -109,6 +110,7 @@ def fetch_all
                         #@fetch_logger.debug $db_access.inspect
                       end
                     end
+                    #repository.adapter.execute("COMMIT");
                 raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['Content-Length'].to_i}" if server.xlogcurrentoffset != header['Content-Length'].to_i
                 @fetch_logger.info "Inserted #{count_games} tournament, #{count_non_tournament_games} non tournament, #{count_scummed_games} start scummed, and #{count_junk_games} junk games on #{server.name}."
             else
