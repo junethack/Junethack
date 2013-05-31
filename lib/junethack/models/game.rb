@@ -183,6 +183,10 @@ class Game
     # nethack4-specific properties
     property :charname, String
 
+    def defeated_medusa?
+        (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)
+    end
+
     ## AceHack and UnNetHack specific
     # Assault on Fort Knox
     def defeated_croesus?
