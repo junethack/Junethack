@@ -351,15 +351,23 @@ post "/clan/invite" do
     # verify that clan admin is inviting other users
     if clan.admin[0] == @user.id
         invited_user = User.first(:login => params[:accountname])
-        acc = invited_user.accounts.first
+        acc = nil
+        if not invited_user then
+            session['errors'] << "Could not find Junethack username #{params[:accountname]}"
+        else
+            accounts = invited_user.accounts
+            if accounts and accounts.first then
+                acc = accounts.first
+            else
+                session['errors'] << "Player #{invited_user.login} has not yet connected any accounts."
+            end
+        end
         if acc then
             chars = ('a'..'z').to_a
             invitation = {'clan_id' => clan.name, 'status' => 'open', 'user' => acc.user.id, 'server' => params[:server], 'token' => (0..30).map{ chars[rand 26] }.join}
             clan.update(:invitations => (clan.invitations.push(invitation)).to_json)
             acc.update(:invitations => (acc.invitations.push(invitation)).to_json)
             session['messages'] << "Successfully invited #{invited_user.login} to #{clan.name}"
-        else
-            session['errors'] << "Could not invite #{params[:accountname]}"
         end
     else
         sessions['errors'] << "You are not the clan admin"
