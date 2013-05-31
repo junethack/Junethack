@@ -16,7 +16,7 @@
       - count += 1
       %tr{:id => style}
         %td
-          #{h $trophy_names[entry.trophy]}
+          #{h Trophy.first(:trophy => entry.trophy).text}
         %td.table_number
           #{h entry.value}
         %td.table_number

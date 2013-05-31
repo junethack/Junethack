@@ -179,9 +179,14 @@ class Game
     property :xplevel, Integer, :default => 0
     property :exp,     Integer, :default => 0
     property :mode,    String
+    property :gold,    Integer, :default => -1
 
     # nethack4-specific properties
     property :charname, String
+
+    def defeated_medusa?
+        (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)
+    end
 
     ## AceHack and UnNetHack specific
     # Assault on Fort Knox
@@ -211,6 +216,10 @@ class Game
     # Hoarder (ascended carrying all the invocation items)
     def ascended_with_all_invocation_items?
         ascended and carried and carried.to_i & 14 > 0
+    end
+    # Heaven or Hell
+    def ascended_heaven_or_hell?
+        ascended and mode and mode == "hoh"
     end
 
     ## NetHack 1.3d specific

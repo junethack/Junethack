@@ -54,7 +54,11 @@ cheryl = xiella
 #		- brighter red please (bhaak)
 #	- prince of the world:
 #		- prince, king of the world looks good.
-		- king: magenta (bhaak)
+#		- king: magenta (bhaak)
+- most medusa killS
+- sum of maximum dungeon levels reached
+- most logarithmic points
+- sum of all conducts broken
 
 # META
 

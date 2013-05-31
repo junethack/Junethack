@@ -93,12 +93,7 @@
           %h2
             Invite
           %form#invite_account.smallform{:method => "POST", :action => "/clan/invite"}
-            %input#accountname{:name => 'accountname', :type => 'text'}
-            %label{:for => 'invite_server'}
-              on
-            %select#invite_server{:name => 'server'}
-              - for server in Server.all
-                %option{:name => server.id, :value => server.id}= server.display_name
+            %input#accountname{:name => 'accountname', :type => 'text', :placeholder => "junethack username", :style => "width: 20ex;"}
             %input{:type => 'hidden', :name => :clan, :value => @clan.name}
             %input{:type => 'submit', :value => "Invite Account"}
             %span.clear

@@ -258,3 +258,23 @@ DataMapper::MigrationRunner.migration( 6, :fix_acehack_trophies ) do
     execute "update scoreentries set trophy = 'entered_astral_plane' where variant = '3.6.0' and trophy = 'entered_astral';"
   end
 end
+
+DataMapper::MigrationRunner.migration( 6, :heaven_or_hell_trophies ) do
+  up do
+    Trophy.create :variant => helper_get_variant_for("acehack"), :trophy => "heaven_or_hell", :text => "heaven or hell", :icon => "heaven-or-hell.png"
+    Trophy.create :variant => helper_get_variant_for("unnethack"), :trophy => "heaven_or_hell", :text => "heaven or hell", :icon => "heaven-or-hell.png"
+  end
+end
+
+
+DataMapper::MigrationRunner.migration( 6, :clan_trophies_2013 ) do
+  up do
+    # delete old most_points clan trophy
+    Trophy.first(:trophy => "most_points").destroy
+
+    # new clan trophies
+    Trophy.create :variant => "clan", :trophy => "most_medusa_kills", :text => "Most Medusa kills", :icon => "clan-medusa-kills.png"
+    Trophy.create :variant => "clan", :trophy => "most_full_conducts_broken", :text => "Most games with all conducts broken", :icon => "clan-full-conducts-broken.png"
+    Trophy.create :variant => "clan", :trophy => "most_log_points", :text => "Most logarithmic points", :icon => "clan-points.png"
+  end
+end

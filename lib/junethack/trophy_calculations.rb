@@ -254,6 +254,11 @@ def update_scores(game)
                 :variant => game.version,
                 :trophy => :defeated_one_eyed_sam,
                 :icon => "m-sam.png").save if game.defeated_one_eyed_sam?
+            # Heaven or Hell
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :heaven_or_hell,
+                :icon => "heaven-or-hell.png").save if game.ascended_heaven_or_hell?
         end
 
         # AceHack and NetHack4 specific trophies
@@ -375,11 +380,11 @@ def update_clan_scores(game)
     # Clan competition
     clan_name = (User.get game.user_id).clan
     if clan_name then
-        points = (repository.adapter.select "SELECT SUM(points) FROM games WHERE user_id in (SELECT id FROM users WHERE clan = ?);", clan_name)[0]
+        log_points = (repository.adapter.select "SELECT SUM(length(points)-1) FROM games WHERE user_id in (SELECT id FROM users WHERE clan = ?);", clan_name)[0]
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
-                                        :trophy  => "most_points",
+                                        :trophy  => "most_log_points",
                                         :icon => "clan-points.png")
-        c.value = points
+        c.value = log_points
         c.save
 
         most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+ascended_combinations_sql+");", clan_name)[0]
@@ -410,6 +415,26 @@ def update_clan_scores(game)
                                         :icon => "clan-variant-trophies.png")
         c.value = most_variant_trophy_combinations
         c.save
+
+        # new clan trophies for 2013
+        # Most Medusa kills
+        clanGames = Game.all(:user_id => User.all(:clan => clan_name))
+        most_medusa_kills = 0
+        clanGames.each {|game| most_medusa_kills +=1 if game.defeated_medusa? }
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_medusa_kills",
+                                        :icon => "clan-medusa-kills.png")
+        c.value = most_medusa_kills
+        c.save
+
+        # Most games with all conducts broken
+        most_full_conducts_broken = (repository.adapter.select "SELECT count(1) FROM games WHERE nconducts = 0 and user_id in (SELECT id FROM users WHERE clan = ?);", clan_name)[0]
+        c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
+                                        :trophy  => "most_full_conducts_broken",
+                                        :icon => "clan-full-conducts-broken.png")
+        c.value = most_full_conducts_broken
+        c.save
+
     end
 
     rank_clans
@@ -419,11 +444,13 @@ def update_clan_scores(game)
 end
 
 def rank_clans
-    rank_collection(ClanScoreEntry.all(:trophy  => "most_points", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_log_points", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascended_combinations", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_unique_deaths", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_ascensions_in_a_24_hour_period", :order => [ :value.desc ]))
     rank_collection(ClanScoreEntry.all(:trophy  => "most_variant_trophy_combinations", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_medusa_kills", :order => [ :value.desc ]))
+    rank_collection(ClanScoreEntry.all(:trophy  => "most_full_conducts_broken", :order => [ :value.desc ]))
 end
 
 def score_clans
@@ -452,7 +479,7 @@ def score_clans
     end
 
     # calculate clan points
-    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_points','most_unique_deaths','most_ascensions_in_a_24_hour_period','most_variant_trophy_combinations') group by clan_name"
+    clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_log_points','most_unique_deaths','most_ascensions_in_a_24_hour_period','most_variant_trophy_combinations','most_full_conducts_broken','most_medusa_kills') group by clan_name"
     clan_scores.each do |clan_score|
         c = ClanScoreEntry.first_or_new(:clan_name => clan_score.clan_name,
                                         :trophy  => "clan_winner")
