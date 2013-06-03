@@ -72,6 +72,9 @@
       - @ascended_combinations_value = @clan.name
       =haml :ascended_combinations
 
+    .text_content.non_top_post
+      =haml :clan_games
+
     - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
     .text_content.non_top_post
       %h2= "#{unique_deaths.count} unique death#{'s' if unique_deaths.count != 1}"

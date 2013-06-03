@@ -1,0 +1,35 @@
+%h2= "Clan Games"
+.scorelisting#no-more-tables
+  %table.greytable.cf
+    %thead.cf
+      %tr
+        %th Name
+        %th Variant
+        %th Server
+        %th Points
+        %th log
+        %th Conducts
+        %th Medusa
+        -# download column
+        %th
+        %th Time (UTC)
+    - games = Game.all(:user_id => User.all(:clan => @clan.name))
+    - count = 0
+    - games.each do |game|
+      - style = (count % 2) == 0 ? "cell1" : "cell2"
+      - count += 1
+      %tr{:id => style}
+        %td{:id => "game-#{game.id}"}
+          %a{:href => "/user_id/#{game.user_id}"}= h game.name
+        %td{"data-title" => "Name"}= h game.variant_name
+        %td{"data-title" => "Server"}= h game.server.url
+        %td.table_number{"data-title" => "Points"}= game.points
+        %td.table_number{"data-title" => "log"}= game.points.to_s.length-1
+        %td.small_number{"data-title" => "Conducts"}= game.nconducts == 0 ? "yes" : "no"
+        %td.small_cell{"data-title" => "Medusa"}= h game.defeated_medusa? ? "yes" : "no"
+        %td.dllink
+          -# link to the dumplog of the game if possible
+          - link = game.server.dumplog_link(game)
+          - if link then
+            (<a href="#{link}">d</a>)
+        %td.table_date{"data-title" => "Time"}= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
