@@ -1,43 +1,6 @@
-cheryl = xiella
+focus:
 
-############
-#
-# 2011
-#
-# focus: front-end design/development
-#
-# JAVASCRIPT
-#* login: validation
-#    * prevent form submission if invalid
-#    * check password matches confirm
-#    * prevent certain characters
-#    Completed:
-#        * show messages
-#        * check nonempty
-# HTML/CSS
-#* 10:55 < rawrmage> xiella: /clan/*name.
-#    Needs:
-#        * clanname
-#        * admin
-#        * members
-#        * clan trophies
-#        * link to clan members
-#    Maybe:
-#        * personal trophies
-#        * join this clan
-#        * invite someone else to this clan
-## completed
-#* 08:21 < stenno> xiella, if you want to do something, you could make the server page, where statistics about the server like, played games, ascension rate and so on are displayed
-# ISSUES
-#* user home page tr#cell1 and tr#cell2 should be tr.cell1 and tr.cell2 (id's should be unique per page)
-
-############
-#
-# 2013
-#
-# focus:
-#
-# IMAGES
+IMAGES
 
 * Design new trophy images
 #	- do not need to exactly match previous icons.
@@ -55,11 +18,15 @@ cheryl = xiella
 #	- prince of the world:
 #		- prince, king of the world looks good.
 #		- king: magenta (bhaak)
-- most medusa killS
-- sum of maximum dungeon levels reached
-- most logarithmic points
-- sum of all conducts broken
+  - most medusa killS
+  - most games with all conducts broken
+  - heaven or hell (1hp mode)
 
-# META
+* Other icon images that are not trophies
+  - gold, silver and bronze candelabra next to 1st/2nd/3rd clan places
+
+META
 
 Clear outdated folders
+ - Move documentation for this year's development to docs/2013
+ - clear webmocks
