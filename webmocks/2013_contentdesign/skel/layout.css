@@ -21,15 +21,37 @@
   margin-top: 20px;
 }
 
-.logo {
-  width: 110px;
+a.logo {
+  display:block;
+  width: 120px;
   height: 46px;
-  background-image: url("../img/logo.png");
-  background-position: center center;
+  background-image: url("../img/logo_sprite.png");
+  background-position: center -5px;
+  background-repeat: no-repeat;
 }
 
-/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
-.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+a.logo:hover {
+  background-position: center -56px;
+}
+
+a.logo img {
+  display:none;
+}
+
+div.logo {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+div.logo img, div.logo h1 {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+div.logo h1 {
+  position: relative;
+  top: -15px;
+}
 
 
 nav ul ul {
@@ -40,6 +62,7 @@ nav {
   width: 100%;
   font-family: 'PT Sans', Arial, sans-serif;
   position: relative;
+  z-index: 1;
 }
 nav ul {
   padding: 0;
@@ -123,12 +146,39 @@ nav ul li:hover ul {
 nav li li a:hover, nav li li a:active {
 }
 
+#page_content {
+  clear: both;
+}
+
+footer h3,
+footer h4,
+footer {
+  color: #444;
+}
+footer {
+  margin-top: 40px;
+  background-color: #eee;
+}
+
+h3 {
+  line-height: 250%;
+}
+
+footer h4 {
+  line-height: 200%;
+}
+
 
 
 
 
 /* #Page Styles
 ================================================== */
+
+#page_content h3 {
+  border-top: 1px solid #eee;
+}
+
 
 /* #Media Queries
 ================================================== */
@@ -140,13 +190,63 @@ nav li li a:hover, nav li li a:active {
 	@media only screen and (min-width: 768px) and (max-width: 959px) {}
 
 	/* All Mobile Sizes (devices and browser) */
-	@media only screen and (max-width: 767px) {}
+	@media only screen and (max-width: 767px) {
+    nav {
+      height: auto;
+    }
+
+    nav ul {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    nav li {
+      width: 50%;
+      float: left;
+      position: relative;
+    }
+
+    nav li a {
+      border-bottom: 1px solid #eee;
+      border-right: 1px solid #eee;
+    }
+
+    nav a {
+      text-align: left;
+      width: 100%;
+      text-indent: 25px;
+    }
+  }
 
 	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
 	@media only screen and (min-width: 480px) and (max-width: 767px) {}
 
 	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-	@media only screen and (max-width: 479px) {}
+	@media only screen and (max-width: 479px) {
+    nav {
+    }
+    nav ul {
+      display: none;
+      height: auto;
+    }
+    nav a#navpull {
+      display: block;
+      width: 100%;
+      position: relative;
+    }
+    nav a#navpull:after {
+      content:"";
+      background: url("../img/nav.png") no-repeat;
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      position: absolute;
+      right: 15px;
+      top: 10px;
+    }
+
+  }
 
 
 /* #Font-Face
