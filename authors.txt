@@ -9,3 +9,6 @@ The following people have contributed to the development of Junethack.
     Mikko Juola        'Adeon'    <mikjuo@gmail.com>
     Patric Mueller     'bhaak'    <bhaak@gmx.net>
 
+Junethack follows the spirit of June NetHack Tournament that was organized by
+Shawn M Moore during the years 2006 and 2007 on nethack.alt.org.
+
