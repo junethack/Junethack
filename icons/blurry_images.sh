@@ -64,3 +64,4 @@ light_me "hemi-stoner.png"
 light_me "prince.png"
 light_me "king.png"
 
+light_me "heaven-or-hell.png"

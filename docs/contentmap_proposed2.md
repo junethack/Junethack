@@ -41,23 +41,21 @@ Basic structure of site:
   - 2.3. users
   - 2.4. clans
   - 2.2. servers
-  - --- 2.1. statistics ---
-  - 2.1.1. ascensions
-  - 2.1.2. deaths
-  - 2.1.3. games
-  - 2.1.4. generated statistics
+- 2.1.3. games
+- 2.1.4. (generated) statistics
 - 3. tournament results
   - 3.1. scoreboard
   - 3.2. clan scores
-- 4. about the tournament
+- 4. about
   - 4.1. rules
   - 4.2. trophies
   - 4.4. previous tournament links
-  - 5. about the project behind the tournament
+  - 5. get involved/community/junethack
 
 ### front page link (ie featured link)
 
 - 1.1. register
+- 4.2. trophies
 
 ### footer link
 
@@ -71,11 +69,8 @@ Basic structure of site:
 - 2.2. servers
 - 2.3. users
 - 2.4. clans
-- 2.1. statistics
-- 2.1.1. ascensions
-- 2.1.2. deaths
 - 2.1.3. games
-- 2.1.4. generated statistics
+- 2.1.4. (generated) statistics
 
 ### 3. tournament results page
 
@@ -87,10 +82,15 @@ Basic structure of site:
 - 4.1. rules
 - 4.2. trophies
 - 4.4. previous tournament links
-- --- 5. about the project behind the tournament ---
+- --- 5. Get involved/Community/Junethack ---
 - 5.1. developers
 - 5.2. contact
 - 5.2.1. github
 - 5.2.2. #junethack irc
 - 5.2.3. rgrn
 
+# THREE CLICKS
+
+### - 2.1.3. games
+
+(ykkie and Adeon: implement a nethack.eu-like interface for filtering games)

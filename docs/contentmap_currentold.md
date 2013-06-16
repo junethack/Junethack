@@ -1,5 +1,7 @@
 # Our current content structure
 
+NB: This is based on a previous version of the content map - indices may have changed slightly, though the broad structure is the same.
+
 ## NO CLICKS
 
 ### top nav text

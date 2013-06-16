@@ -5,9 +5,12 @@ Markup for dynamic data include single tables, sections of tables, sections of t
 
 ## 1. user actions
 
-- 1.1. register/sign up here
-- 1.2. login/profile
-- 1.3. logout
+- 1.1. register/profile (ie create user/view user)
+- 1.2. login/logout
+- 1.3. give feedback
+- 1.3.1. report a bug or issue
+- 1.3.2. propose a new trophy
+- 1.3.3. vote on proposed trophies
 
 ## 2. tournament activity
 
@@ -25,7 +28,7 @@ Markup for dynamic data include single tables, sections of tables, sections of t
 - 3.1. scoreboard
 - 3.1.1. user achievements (called 'trophies')
 - 3.1.2. user competitions
-- 3.2. clan scores
+- 3.2. clan scoreboard
 - 3.2.1. clan competition trophies
 - 3.2.1.1. top x number of clans
 
@@ -55,15 +58,15 @@ Static information serves as a reference point for people learning about junetha
 - 4.5.2. description
 - 4.5.3. logo
 - 4.5.4. introduction text
+- 4.6. what is nethack?
 
 ## 5. about the project behind the tournament
 
 - 5.1. developers
-- 5.2. what is nethack?
-- 5.3. contact
-- 5.3.1. github
-- 5.3.2. #junethack irc
-- 5.3.3. rgrn
+- 5.2. contact
+- 5.2.1. github
+- 5.2.2. #junethack irc
+- 5.2.3. rgrn
 
 ## 6. news.
 

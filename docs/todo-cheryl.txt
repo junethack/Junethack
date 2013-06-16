@@ -19,7 +19,8 @@ IMAGES
 #		- prince, king of the world looks good.
 #		- king: magenta (bhaak)
   - most medusa killS
-  - most games with all conducts broken
+#  - most games with all conducts broken
+    - 12 conducts, not 13.  Idea of a fading-away number.
   - heaven or hell (1hp mode)
 
 * Other icon images that are not trophies
