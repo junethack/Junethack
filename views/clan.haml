@@ -73,6 +73,11 @@
       =haml :ascended_combinations
 
     .text_content.non_top_post
+      - @games_played = Game.all(:user_id => User.all(:clan => @clan.name), :conditions => [ "ascended='t'" ], :order => [ :endtime.desc ])
+      - @games_played_title = "Ascended Clan Games"
+      =haml :games_played
+
+    .text_content.non_top_post
       =haml :clan_games
 
     - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
