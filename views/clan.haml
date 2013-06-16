@@ -75,6 +75,7 @@
     .text_content.non_top_post
       - @games_played = Game.all(:user_id => User.all(:clan => @clan.name), :conditions => [ "ascended='t'" ], :order => [ :endtime.desc ])
       - @games_played_title = "Ascended Clan Games"
+      - @games_played_user_links = true
       =haml :games_played
 
     .text_content.non_top_post
