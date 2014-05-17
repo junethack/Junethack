@@ -292,6 +292,10 @@ class Game
         Game.max :endtime, :conditions => [ 'user_id is not null' ]
     end
 
+    def mini_croesus?
+        gold >= 100_000
+    end
+
     after :update do
         update_scores(self)
     end

@@ -67,3 +67,19 @@ describe Game, ".ascended_heaven_or_hell?" do
     g.ascended_heaven_or_hell?.should be_true
   end
 end
+
+describe Game, ".mini_croesus?" do
+  it "returns correct result if ascended in Heaven or Hell" do
+    g = Game.new(:version => '3.4.3', :death => 'ascended', :gold => "99999")
+    g.mini_croesus?.should be_false
+
+    g = Game.new(:version => '3.4.3', :death => 'ascended', :gold => "100001")
+    g.mini_croesus?.should be_true
+
+    g = Game.new(:version => '3.4.3', :death => 'killed', :gold => "100001")
+    g.mini_croesus?.should be_true
+
+    g = Game.new(:version => '3.4.3', :death => 'escaped', :gold => "100000")
+    g.mini_croesus?.should be_true
+  end
+end

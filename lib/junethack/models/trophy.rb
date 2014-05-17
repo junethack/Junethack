@@ -169,6 +169,7 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create :variant => variant, :trophy => "defeated_croesus", :text => "Assault on Fort Knox (defeated Croesus)", :icon => "m-croesus.png"
       Trophy.create :variant => variant, :trophy => "defeated_one_eyed_sam", :text => "No membership card (defeated One-Eyed Sam)", :icon => "m-sam.png" if variant == unnethack
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_cthulhu", :text => "Too good for a brain (ascended without defeating Cthulhu)", :icon => "m-no-cthulhu.png" if variant == unnethack
+      Trophy.create :variant => variant, :trophy => "mini_croesus", :text => "Mini-Croesus (finish a game with at least 100,000 gold pieces)", :icon => "m-mini-croesus.png" if variant == unnethack
     end
 
     # user competition trophies
