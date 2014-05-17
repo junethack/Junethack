@@ -61,6 +61,11 @@ class StartScummedGame
 
     # nethack4-specific properties
     property :charname, String
+    property :extrinsic, String
+    property :intrinsic, String
+    property :temporary, String
+    property :starttimeus, Integer
+    property :endtimeus,   Integer
 end
 
 
