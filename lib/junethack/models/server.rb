@@ -54,7 +54,7 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
     Server.create :name => 'nao', :variant => 'vanilla', :url => 'nethack.alt.org', :xlogurl => 'http://alt.org/nethack/xlogfile.full.txt', :configfileurl => 'http://alt.org/nethack/userdata/random_user/random_user.nh343rc'
     Server.create :name => 'eun', :variant => 'unnethack', :url => 'un.nethack.nu', :xlogurl => 'http://un.nethack.nu/logs/xlogfile', :configfileurl => 'http://un.nethack.nu/rcfiles/random_user.nethackrc'
     Server.create :name => 'shc', :variant => 'sporkhack', :url => 'sporkhack.com', :xlogurl => 'http://sporkhack.com/xlogfile', :configfileurl => 'http://sporkhack.com/rcfiles/random_user.nethackrc'
-    Server.create :name => 'neu', :variant => 'vanilla', :url => 'nethack.eu', :xlogurl => 'file:///home/junethack/neu/xlogfile', :configfileurl => 'http://nethack.eu:8000/junethack/raw-file/tip/rcfiles/random_user.nh343rc'
+    #Server.create :name => 'neu', :variant => 'vanilla', :url => 'nethack.eu', :xlogurl => 'file:///home/junethack/neu/xlogfile', :configfileurl => 'http://nethack.eu:8000/junethack/raw-file/tip/rcfiles/random_user.nh343rc'
     Server.create :name => 'gho', :variant => 'grunthack', :url => 'grunthack.org', :xlogurl => 'http://grunthack.org/xlogfile', :configfileurl => 'http://grunthack.org/userdata/random_user/random_user.gh020rc'
     Server.create :name => 'nh4', :variant => 'nethack4', :url => 'nethack4.org', :xlogurl => 'http://nethack4.org/xlogfile.txt', :configfileurl => 'http://nethack4.org/junethack-rc/random_user.rc'
     Server.create :name => 'ade', :variant => 'acehack', :url => 'acehack.de', :xlogurl => 'http://acehack.de/xlogfile', :configfileurl => 'http://acehack.de/userdata/random_user/acehackrc'
