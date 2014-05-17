@@ -183,6 +183,11 @@ class Game
 
     # nethack4-specific properties
     property :charname, String
+    property :extrinsic, String
+    property :intrinsic, String
+    property :temporary, String
+    property :starttimeus, Integer
+    property :endtimeus,   Integer
 
     def defeated_medusa?
         (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)
