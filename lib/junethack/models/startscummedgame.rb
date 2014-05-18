@@ -67,15 +67,3 @@ class StartScummedGame
     property :starttimeus, Integer
     property :endtimeus,   Integer
 end
-
-
-DataMapper::MigrationRunner.migration( 1, :transfer_start_scummed_games ) do
-  up do
-    execute "insert into start_scummed_games select * from games where turns <= 10 and death in ('escaped', 'quit');"
-    execute "delete from games where turns <= 10 and death in ('escaped', 'quit');"
-    execute "reindex;"
-    execute "vacuum;"
-  end
-  down do
-  end
-end

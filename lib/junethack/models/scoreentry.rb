@@ -61,9 +61,3 @@ class CompetitionScoreEntry
     property :icon,      String
     property :rank,      Integer, :default => -1
 end
-
-DataMapper::MigrationRunner.migration( 1, :junethack2012_int_max_ascension ) do
-  up do
-    execute "update clan_score_entries set value = 9223372036854775807 where trophy = 'most_points' and clan_name = 'ItExplodes';"
-  end
-end

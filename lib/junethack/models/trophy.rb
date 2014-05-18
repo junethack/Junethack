@@ -170,6 +170,7 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create :variant => variant, :trophy => "defeated_one_eyed_sam", :text => "No membership card (defeated One-Eyed Sam)", :icon => "m-sam.png" if variant == unnethack
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_cthulhu", :text => "Too good for a brain (ascended without defeating Cthulhu)", :icon => "m-no-cthulhu.png" if variant == unnethack
       Trophy.create :variant => variant, :trophy => "mini_croesus", :text => "Mini-Croesus (finish a game with at least 100,000 gold pieces)", :icon => "m-mini-croesus.png" if variant == unnethack
+      Trophy.create :variant => variant, :trophy => "heaven_or_hell", :text => "heaven or hell (ascend in 1 HP mode)", :icon => "heaven-or-hell.png" if variant != nethack4
     end
 
     # user competition trophies
@@ -183,15 +184,10 @@ def Trophy.check_trophies_for_variant variant_description
 
     # multiple ascension trophies
     Trophy.create :variant => variant, :trophy => "all_conducts", :text => "All conducts: follow each conduct in at least one ascension", :icon => "all-conducts.png"
-    #Trophy.create :variant => variant, :trophy => "all_conducts_streak", :text => "All conducts (in a streak): follow each conduct in at least one ascension, with all the ascensions belonging to the same streak", :icon => "streak-conducts.png"
     Trophy.create :variant => variant, :trophy => "all_roles", :text => "All roles: ascend a character for each role", :icon => "all-roles.png"
-    #Trophy.create :variant => variant, :trophy => "all_roles_streak", :text => "All roles (in a streak): ascend a character for each role in the same streak", :icon => "streak-roles.png"
     Trophy.create :variant => variant, :trophy => "all_races", :text => "All races: ascend a character of every race", :icon => "all-races.png"
-    #Trophy.create :variant => variant, :trophy => "all_races_streak", :text => "All races (in a streak): ascend a character of every race in the same streak", :icon => "streak-races.png"
     Trophy.create :variant => variant, :trophy => "all_alignments", :text => "All alignments: ascend a character of every alignment (the starting alignment is considered)", :icon => "all-alignments.png"
-    #Trophy.create :variant => variant, :trophy => "all_alignments_streak", :text => "All alignments (in a streak): ascend a character of every alignment in the same streak (the starting alignment is considered)", :icon => "streak-alignments.png"
     Trophy.create :variant => variant, :trophy => "all_genders", :text => "All genders: ascend a character of each gender (the starting gender is considered)", :icon => "all-genders.png"
-    #Trophy.create :variant => variant, :trophy => "all_genders_streak", :text => "All genders (in a streak): ascend a character of each gender (the starting gender is considered)", :icon => "streak-genders.png"
 
   end
 end
@@ -226,14 +222,16 @@ DataMapper::MigrationRunner.migration( 2, :create_clan_trophies ) do
     Trophy.create :variant => "clan", :trophy => "most_points", :text => "Most points", :icon => "clan-points.png"
     Trophy.create :variant => "clan", :trophy => "most_unique_deaths", :text => "Most unique deaths", :icon => "clan-deaths.png"
     Trophy.create :variant => "clan", :trophy => "most_variant_trophy_combinations", :text => "Most variant/trophy combinations", :icon => "clan-variant-trophies.png"
+
+    # new clan trophies since 2013
+    Trophy.create :variant => "clan", :trophy => "most_medusa_kills", :text => "Most Medusa kills", :icon => "clan-medusa-kills.png"
+    Trophy.create :variant => "clan", :trophy => "most_full_conducts_broken", :text => "Most games with all conducts broken", :icon => "clan-full-conducts-broken.png"
+    Trophy.create :variant => "clan", :trophy => "most_log_points", :text => "Most logarithmic points", :icon => "clan-points.png"
   end
 end
 
-DataMapper::MigrationRunner.migration( 4, :delete_variant_trophies ) do
+DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
   up do
-    # delete all variant trophies
-    execute "delete from trophies where variant is not null and variant != 'clan';"
-
     # add all already existing variants
     Trophy.check_trophies_for_variant "vanilla"
     Trophy.check_trophies_for_variant "sporkhack"
@@ -241,41 +239,5 @@ DataMapper::MigrationRunner.migration( 4, :delete_variant_trophies ) do
     Trophy.check_trophies_for_variant "acehack"
     Trophy.check_trophies_for_variant "grunthack"
     Trophy.check_trophies_for_variant "nethack4"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 5, :delete_streak_trophies ) do
-  up do
-    # delete all variant trophies
-    execute "delete from trophies where trophy like 'all%streak';"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 6, :fix_acehack_trophies ) do
-  up do
-    # delete all variant trophies
-    execute "update scoreentries set trophy = 'performed_the_invocation_ritual' where variant = '3.6.0' and trophy = 'did_invocation';"
-    execute "update scoreentries set trophy = 'entered_elemental_planes' where variant = '3.6.0' and trophy = 'entered_planes';"
-    execute "update scoreentries set trophy = 'entered_astral_plane' where variant = '3.6.0' and trophy = 'entered_astral';"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 6, :heaven_or_hell_trophies ) do
-  up do
-    Trophy.create :variant => helper_get_variant_for("acehack"), :trophy => "heaven_or_hell", :text => "heaven or hell", :icon => "heaven-or-hell.png"
-    Trophy.create :variant => helper_get_variant_for("unnethack"), :trophy => "heaven_or_hell", :text => "heaven or hell", :icon => "heaven-or-hell.png"
-  end
-end
-
-
-DataMapper::MigrationRunner.migration( 6, :clan_trophies_2013 ) do
-  up do
-    # delete old most_points clan trophy
-    Trophy.first(:trophy => "most_points").destroy
-
-    # new clan trophies
-    Trophy.create :variant => "clan", :trophy => "most_medusa_kills", :text => "Most Medusa kills", :icon => "clan-medusa-kills.png"
-    Trophy.create :variant => "clan", :trophy => "most_full_conducts_broken", :text => "Most games with all conducts broken", :icon => "clan-full-conducts-broken.png"
-    Trophy.create :variant => "clan", :trophy => "most_log_points", :text => "Most logarithmic points", :icon => "clan-points.png"
   end
 end
