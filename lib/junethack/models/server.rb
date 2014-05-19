@@ -30,7 +30,7 @@ class Server
     end
 
     def display_name
-        url+" ("+name+")"
+        url+" ("+variant+")"
     end
 
     def dumplog_link(game)
