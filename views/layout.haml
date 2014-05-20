@@ -10,10 +10,10 @@
       %title= "Junethack - #{User.count} players registered - #{games_count} games played!"
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Junethack" />
-    <meta property="og:url" content="http://junethack.de/" />
+    <meta property="og:url" content="#{request.scheme}://junethack.de/" />
     <meta property="og:description" content="The NetHack Cross-Variant Summer Tournament" />
-    <meta property="og:image" content="http://junethack.de/apple-touch-icon.png" />
-    <link rel="alternate" type="application/rss+xml" title="Junethack" href="http://junethack.de/junethack.rss" />
+    <meta property="og:image" content="#{request.scheme}://junethack.de/apple-touch-icon.png" />
+    <link rel="alternate" type="application/rss+xml" title="Junethack" href="#{request.scheme}://junethack.de/junethack.rss" />
 
   %body
     #container
