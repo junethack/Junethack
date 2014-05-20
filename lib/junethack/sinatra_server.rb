@@ -333,6 +333,7 @@ post "/clan" do
             @user.clan = clan.name
             @user.save
             session['messages'] << "Successfully created clan #{params[:clanname]}"
+            Event.new(:text => "New clan #{clan.name} created!", :url => "#{base_url}/clan/#{clan.name}").save
             puts CGI.escape(acc.clan.name)
             redirect "/clan/" + CGI.escape(acc.clan.name) and return
         else
