@@ -17,7 +17,7 @@ June came to Casmith789 "Let's have a tournament in June!", only, it wasn't
 that original as others had that idea before.
 
 The only original bit of allowing NetHack Variants into the tournament
-caught Kerio's eyes and he began using exquisit marketing techniques usually
+caught Kerio's eyes and he began using exquisite marketing techniques usually
 commonly known as "trolling" to gather likewise minded people. Despite that Stenno made the
 first commit in May 2011 and Adeon provided first design sketches, shortly
 after that joined by Xiella, while Rawrmage provided server space.
