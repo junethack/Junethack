@@ -11,13 +11,13 @@
           %fieldset
             #username_row
               %label{:for => "username"} Username:
-              %input#username{:name => "username", :type => "textbox", :value => "", :autofocus => "", :placeholder => "username", :required}/
+              %input#username{:name => "username", :type => "textbox", :value => "", :autofocus => "", :placeholder => "username", :required => "required"}/
               .form_msg
                 Field required
               %span.clear
             #password_row
               %label{:for => "password"} Password:
-              %input#password{:name => "password", :type => "password", :value => "", :placeholder => "password", :required}/
+              %input#password{:name => "password", :type => "password", :value => "", :placeholder => "password", :required => "required"}/
               .form_msg
                 Field required
               %span.clear
