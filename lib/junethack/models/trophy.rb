@@ -241,3 +241,9 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "nethack4"
   end
 end
+
+DataMapper::MigrationRunner.migration( 5, :create_oldhack_achievements ) do
+  up do
+    Trophy.check_trophies_for_variant "oldhack"
+  end
+end
