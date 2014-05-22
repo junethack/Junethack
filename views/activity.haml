@@ -97,8 +97,12 @@
           - graph.write("finished_games_per_day")
 
     - cache_fragment("users_#{User.max_created_at}") do
-      // same comment as for @ascensions_per_day applies
-      - @new_users_per_day = repository.adapter.select "select days.date, endtime, count from (select endtime, date(endtime, 'unixepoch') as date from games group by date) days left join (select date, count(1) as count from (select date(created_at) as date from users where created_at is not null) group by date) counts on counts.date = days.date;"
+      - @new_users_per_day = repository.adapter.select "select date(created_at) as date, count(1) as count from users group by date(created_at);"
+
+      - signupstarttime = Time.at($tournament_signupstarttime).to_date
+      - endtime = Time.at([$tournament_endtime, Time.now.to_i].min).to_date
+      - @days = (signupstarttime..endtime).collect {|d| d.to_s}
+
       .text_content.non_top_post
         %h2 New Users per Day
         .scorelisting
@@ -108,7 +112,9 @@
               %th
             - graph = Graph.new
             - count = 0
-            - @new_users_per_day.each do |game|
+            - @days.each do |day|
+              - game = @new_users_per_day.select{|g| g.date == day}.first || (Struct.new :date, :count).new(day, 0)
+
               - graph.add_data_point(game.date, game.count)
               - style = (count % 2) == 0 ? "cell1" : "cell2"
               - count += 1
@@ -116,7 +122,7 @@
                 %td.table_date= h game.date
                 %td.table_number= game.count ? game.count : 0
                 - if count == 1
-                  %td.chart{:rowspan => @new_users_per_day.size}
+                  %td.chart{:rowspan => @days.size}
                     %div{:id => "chart_new_users_per_day"}
             -# Total number of registered users
             - style = (count % 2) == 0 ? "cell1" : "cell2"
