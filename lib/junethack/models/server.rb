@@ -42,8 +42,11 @@ class Server
       when "grunthack.org"
         return "http://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"
       when "acehack.de"
-        if game.version == '3.4.3' then
+        case game.version
+        when '3.4.3'
           return "http://acehack.de/userdata/#{game.name}/nethack/dumplog/#{game.starttime}"
+        when 'NH-1.3d'
+          return "http://acehack.de/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
         else
           return "http://acehack.de/userdata/#{game.name}/dumplog/#{game.starttime}"
         end
@@ -70,9 +73,18 @@ end
 
 DataMapper::MigrationRunner.migration( 2, :add_naohack_acehack_de ) do
   up do
-    Server.create :name => 'nde', :variant => 'vanilla', :url => 'acehack.de', :xlogurl => 'http://acehack.de/nethackxlogfile', :configfileurl => 'http://acehack.de/userdata/random_user/nethack/nethackrc'
+    Server.create :name => 'nde', :variant => 'acehack', :url => 'acehack.de', :xlogurl => 'http://acehack.de/nethackxlogfile', :configfileurl => 'http://acehack.de/userdata/random_user/nethack/nethackrc'
   end
   down do
     Server.all(:name => "nde").destroy
+  end
+end
+
+DataMapper::MigrationRunner.migration( 3, :add_oldhack_acehack_de ) do
+  up do
+    Server.create :name => 'n13', :variant => 'oldhack', :url => 'acehack.de', :xlogurl => 'https://acehack.de/oldhackxlogfile', :configfileurl => 'http://acehack.de/userdata/random_user/acehackrc'
+  end
+  down do
+    Server.all(:name => "n13").destroy
   end
 end
