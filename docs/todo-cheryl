@@ -8,11 +8,12 @@ IMAGES
 #	- simple geometric shapes sufficient (bhaak)
 #	- consider inverting colours of existing icons to create a new set.
   - most medusa killS
-  - heaven or hell (1hp mode)
-    - halo over trident? Example in icons/working
-
 * Other icon images that are not trophies
   - gold, silver and bronze candelabra next to 1st/2nd/3rd clan places
+
+CSS/HTML
+
+* Usability: Rules page is confusing to read, some people don't realise there are two lists.
 
 META
 
@@ -20,4 +21,4 @@ Clear outdated folders
  - Move documentation for this year's development to docs/2013
  - clear webmocks
  - remove old icons?
- - what are we doing with the content map?  I made an example located in webmocks/2013_contentdesign - see from an information architecture perspective
+ - what are we doing with the new info architecture (contentmap)
