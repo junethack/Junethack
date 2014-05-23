@@ -61,15 +61,6 @@ a {
 /* RULES STYLES */
 /****************/
 
-/* Notes
- *
- * 'Rules are needed' line redundant?
- * We don't need ALL three "Rules", "Cheating" and "Startscumming" as headings.
- * We do need clarity between the two main sections.  What is allowed, not allowed.
- * Putting startscumming in its own section doesn't make the text easier to read.  Put it back in the list of 'this is not cheating/this is allowed'.
- *
- */
-
 /* For some reason this is in the stylesheet...aah! : */
 /** /
 body {
@@ -88,11 +79,6 @@ h2 { /* do/don't subheadings */
 }
 .description {/* description before subheadings */
   margin-top:20px;
-}
-
-/*the rules list */
-ol {
-  list-style-type: decimal;
 }
 
 /* the cheating/not cheating lists */
