@@ -3,64 +3,48 @@
     .text_content
       %h1
         Rules
-      %p
-        Some rules are needed so that everyone can play nice with each other.
+      %p.description
+        Rule violations will be met with dire consequences!  Dire!  And consequential!
+        (Yeah, it doesn't happen much.)
+        Staff make the final decision if it's not clear.  Here's what Junethack thinks is cheating.
       %h2
-        Cheating
-      %p
-        %p
-          Don't cheat.
-        %p
-          What exactly is cheating and what is not is not always clear.
-          The tournament staff makes the final decision. Here is a list of
-          some things we consider cheating.
-        %p
-          %li
-            Cracking into one of the game servers and adding fake games or bones.
-          %li
-            Exploiting vulnerabilities in a weak random number generator in 
-            order to attain achievements in the tournament.
-          %li
-            Exploiting memory corrupting bugs for the same goal.
-          %li
-            Using disconnection at critical spots to hide a death from logs.
-        %p
-          Here are some things that we don't consider cheating (although some
-          of them may be against the spirit of the game).
-        %p
-          %li
-            Pudding farming.
-          %li
-            Start scumming. (look <a href="#startscumming">here for the definition</a> of a start scummed game)
-          %li
-            Looking at player dumplogs to see what items a bones pile has.
-          %li
-            Similarly, examining ttyrecs to find items or to recover memory 
-            from amnesia.
-          %li
-            Using NetHack playing bots or so called "augmentation" tools 
+        Don't:
+      %ul
+        %li
+          crack into one of the game servers and adding fake games or bones.
+        %li
+          exploit vulnerabilities in a weak random number generator.
+        %li
+          exploit memory corrupting bugs.
+        %li
+          use disconnection at critical spots to hide a death from logs.
+      %p.description
+        And here's what officially isn't cheating.
+        Fellow adventurers may disapprove mightily but Junethack doesn't care.
+      %h2
+        Do:
+      %ul
+        %li
+          <a href='http://nethackwiki.com/wiki/Pudding_farming'>pudding farm</a>.
+        %li
+          <a href='http://nethackwiki.com/wiki/Start_scumming'>start scum</a>:
+          Escaping or quitting within the first 10 turns. These games are hidden on the games tables, though.
+        %li
+            look at player 
+          <a href='http://nethackwiki.com/wiki/Dumplog'>dumplogs</a>.
+        %li
+            watch 
+            <a href='http://nethackwiki.com/wiki/Ttyrec'>ttyrecs</a>
+            of previous or current games.
+        %li
+            use NetHack playing bots or so called "augmentation" tools
             like Interhack.
-          %li
-            Exploiting well known game bugs (such as Astral call, floating
+        %li
+            exploit well known game bugs (eg, Astral call bug, floating
             wand wresting trick, gold duplication bug, artifact naming trick,
-            etc.) Some of these may be fixed on some servers.
-          %li
-            In general we don't consider cheating any things you do within the
-            "rules" of the game.
-        %p
-          If we catch you cheating, expect some form of punishment.
-        %p
-          We haven't had any blatant cheating incidents in the past. Just use 
-          common sense and you will be fine.
-        .text_content.non_top_post
-      %h2
-        Startscumming
-      %p
-        %p{:id => "startscumming"}
-          For this tournament,
-          %a{:href => "http://nethackwiki.com/wiki/Start_scumming"}start scumming games
-          are defined as games where the player escapes or quits within the first 10
-          turns. Such games are hidden on the games tables but are otherwise treated like
-          normal games.
+            etc). Some of these may be fixed on some servers.
+        %li
+            in general, anything the game says you can do. (whew!)
+
       .text_content.non_top_post
     %span#end_of_content_spacer.clear
