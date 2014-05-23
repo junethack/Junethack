@@ -14,6 +14,14 @@ IMAGES
 CSS/HTML
 
 * Usability: Rules page is confusing to read, some people don't realise there are two lists.
+  log:
+  - Made one main header with a subheading for each list
+  - Made verbs at start of lists imperatives instead of gerunds.
+  - No redundant byline explaining the header.
+  - Removed or rephrased other redundant or obvious text
+  - Moved 'punishments' line to top paragraph
+  - Took out explanations of each cheating/not cheating item: this is not a tutorial!
+  - Used more conversational writing style
 
 META
 
