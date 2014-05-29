@@ -107,6 +107,17 @@ namespace :db do
         Server.create(:name => args[:name], :variant => args[:variant], :url => args[:url], :xlogurl => args[:xlogurl], :configfileurl => args[:configfileurl])
         Trophy.check_trophies_for_variant args[:variant]
     end
+
+    desc "change a user's password"
+    task :change_password, :user, :password do |t, args|
+        user = User.first(:login => args[:user])
+        puts "User #{args[:user]} not found!" if not user
+        puts "No password given!" if not args[:password]
+        if user and args[:password] then
+            user.password = args[:password]
+            user.save
+        end
+    end
 end
 
 namespace :news do
