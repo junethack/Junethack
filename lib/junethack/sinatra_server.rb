@@ -583,6 +583,6 @@ helpers do
   end
 
   def base_url
-    @base_url ||= "http://junethack.de"
+    @base_url ||= "https://junethack.de"
   end
 end
