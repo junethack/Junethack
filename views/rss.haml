@@ -3,9 +3,9 @@
 %rss{:version => "2.0", "xmlns:atom" => "http://www.w3.org/2005/Atom"}
   %channel
     %title Notable events in the Junethack tournament event
-    %link http://junethack.de/
+    %link= "#{request.scheme}://junethack.de/"
     %description Junethack - NetHack Cross-Variant Summer Tournament
-    <atom:link href="http://junethack.de/junethack.rss" rel="self" type="application/rss+xml" />
+    <atom:link href="#{request.scheme}://junethack.de/junethack.rss" rel="self" type="application/rss+xml" />
     - events = Event.all(:order => [ :created_at.desc ], :limit => 30)
     - news = News.all(:order => [ :created_at.desc ])
     - entries = (news.to_a  + events.to_a).sort {|e1, e2| e2['created_at'] <=> e1['created_at']}

@@ -61,16 +61,9 @@ class StartScummedGame
 
     # nethack4-specific properties
     property :charname, String
-end
-
-
-DataMapper::MigrationRunner.migration( 1, :transfer_start_scummed_games ) do
-  up do
-    execute "insert into start_scummed_games select * from games where turns <= 10 and death in ('escaped', 'quit');"
-    execute "delete from games where turns <= 10 and death in ('escaped', 'quit');"
-    execute "reindex;"
-    execute "vacuum;"
-  end
-  down do
-  end
+    property :extrinsic, String
+    property :intrinsic, String
+    property :temporary, String
+    property :starttimeus, Integer
+    property :endtimeus,   Integer
 end

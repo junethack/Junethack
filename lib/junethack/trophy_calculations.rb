@@ -259,6 +259,11 @@ def update_scores(game)
                 :variant => game.version,
                 :trophy => :heaven_or_hell,
                 :icon => "heaven-or-hell.png").save if game.ascended_heaven_or_hell?
+            # Mini-Croesus
+            Scoreentry.first_or_create(:user_id => game.user_id,
+                :variant => game.version,
+                :trophy => :mini_croesus,
+                :icon => "m-mini-croesus.png").save if game.mini_croesus?
         end
 
         # AceHack and NetHack4 specific trophies

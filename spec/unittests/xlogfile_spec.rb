@@ -18,4 +18,11 @@ describe XLog do
     parsed['points'].should == "0"
     parsed['death'].should == "killed by a monster called something = something"
   end
+
+  it "should split HTTP headers into a Hash" do
+    headers = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n"
+    hash = XLog.parse_header headers
+    hash.size.should == 2
+    hash["Content-Type"].should == 'text/plain'
+  end
 end

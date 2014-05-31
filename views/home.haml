@@ -40,6 +40,8 @@
                     =haml :user_cross_variant_trophies
                     - for @variant in $variants
                         =haml :user_trophies
+                    - @variant = "NH-1.3d"
+                    =haml :user_trophies
 
         .text_content.non_top_post
             =haml :_user_games
@@ -83,7 +85,7 @@
                             %p
                                 No invitations for this account
         - clanless_accs = @user.accounts.select{|a| a.clan.nil?}
-        - unless clanless_accs.empty?
+        - if not @user.clan
             %div.text_content.non_top_post
                 %h2 Create a new clan
                 %form#create_clan_form.smallform{:method => "POST", :action => "/clan"}

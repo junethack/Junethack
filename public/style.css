@@ -908,3 +908,33 @@ li.multiline > span {
 .small_print {
     font-size: 0.9em;
 }
+
+/*
+ * rules reset and stylesheet
+ */
+
+/* for now, cancel body { font-size: 0.8em;} */
+#page_rules {
+  font-size: 1.25em;
+}
+
+#page_rules ul{
+  list-style-type: disc;
+}
+
+#page_rules h1 {
+  font-size: 1.6em;
+  line-height: 2em;
+}
+#page_rules h2 { /* do/don't subheadings */
+  font-size: 1.3em;
+  line-height: 2em;
+}
+
+#page_rules .text_content {
+  margin: 3em;
+}
+
+#page_rules .description {
+  margin-top:20px;
+}

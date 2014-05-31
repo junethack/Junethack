@@ -1,0 +1,32 @@
+2014
+
+IMAGES
+
+* Design new trophy images
+#	- do not need to exactly match previous icons.
+#	- should match overall design.
+#	- simple geometric shapes sufficient (bhaak)
+#	- consider inverting colours of existing icons to create a new set.
+  - most medusa killS
+* Other icon images that are not trophies
+  - gold, silver and bronze candelabra next to 1st/2nd/3rd clan places
+
+CSS/HTML
+
+* Usability: Rules page is confusing to read, some people don't realise there are two lists.
+  log:
+  - Made one main header with a subheading for each list
+  - Made verbs at start of lists imperatives instead of gerunds.
+  - No redundant byline explaining the header.
+  - Removed or rephrased other redundant or obvious text
+  - Moved 'punishments' line to top paragraph
+  - Took out explanations of each cheating/not cheating item: this is not a tutorial!
+  - Used more conversational writing style
+
+META
+
+Clear outdated folders
+ - Move documentation for this year's development to docs/2013
+ - clear webmocks
+ - remove old icons?
+ - what are we doing with the new info architecture (contentmap)

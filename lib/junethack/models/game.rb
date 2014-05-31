@@ -141,6 +141,8 @@ class Game
     property :version,   String
     def version=(new_version)
       new_version = "UNH" if new_version.start_with? 'UNH-'
+      new_version = "DNH" if new_version.start_with? 'DNH-'
+      new_version = "4.2.1" if new_version == '4.3.0'
       super new_version
     end
 
@@ -183,6 +185,11 @@ class Game
 
     # nethack4-specific properties
     property :charname, String
+    property :extrinsic, String
+    property :intrinsic, String
+    property :temporary, String
+    property :starttimeus, Integer
+    property :endtimeus,   Integer
 
     def defeated_medusa?
         (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)
@@ -290,6 +297,10 @@ class Game
 
     def Game.max_endtime
         Game.max :endtime, :conditions => [ 'user_id is not null' ]
+    end
+
+    def mini_croesus?
+        gold >= 100_000
     end
 
     after :update do
