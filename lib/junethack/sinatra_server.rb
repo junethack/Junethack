@@ -31,6 +31,9 @@ set :root, "#{Dir.pwd}"
 set :cache_enabled, false  # complet
 #set :cache_output_dir, "#{Dir.pwd}/cache"
 
+# Only listen to localhost.
+# Nginx acts as reverse proxy.
+set :bind, "127.0.0.1"
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
