@@ -31,11 +31,13 @@ set :root, "#{Dir.pwd}"
 set :cache_enabled, false  # complet
 #set :cache_output_dir, "#{Dir.pwd}/cache"
 
+# Listen to everything in development.
+set :bind, "0.0.0.0"
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
 use Rack::Deflater
-# Scheduler: fetch game data every15 minutes
+# Scheduler: fetch game data every 5 minutes
 scheduler = Rufus::Scheduler.start_new(:frequency => 1.0)
 #scheduler.cron('*/5 * * * *', :blocking => true) { fetch_all }
 
