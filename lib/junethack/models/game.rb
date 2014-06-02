@@ -141,6 +141,8 @@ class Game
     property :version,   String
     def version=(new_version)
       new_version = "UNH" if new_version.start_with? 'UNH-'
+      new_version = "DNH" if new_version.start_with? 'DNH-'
+      new_version = "4.2.1" if new_version == '4.3.0'
       super new_version
     end
 
