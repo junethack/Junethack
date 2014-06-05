@@ -25,3 +25,15 @@ require './lib/junethack'
 
 ENV['RACK_ENV'] = 'test'
 require 'database'
+
+def clean_database
+  ClanScoreEntry.destroy
+  Individualtrophy.destroy
+  Scoreentry.destroy
+  NormalizedDeath.destroy
+  CompetitionScoreEntry.destroy
+  Event.destroy
+  Game.destroy
+  Clan.destroy
+  User.destroy
+end
