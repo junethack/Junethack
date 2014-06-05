@@ -339,9 +339,9 @@ def update_scores(game)
     Individualtrophy.add(game.user_id, "Backpacking Tourist",
         :backpacking_tourist, "backpacking_tourist.png") if backpacking_tourist? game.user_id
 
-    return false if not update_clan_scores(game)
-
     return false if not local_normalize_death(game)
+
+    return false if not update_clan_scores(game)
 end
 
 def local_normalize_death(game)
@@ -433,7 +433,7 @@ def update_clan_scores(game)
         c.save
 
         # Most games with all conducts broken
-        most_full_conducts_broken = (repository.adapter.select "SELECT count(1) FROM games WHERE nconducts = 0 and user_id in (SELECT id FROM users WHERE clan = ?);", clan_name)[0]
+        most_full_conducts_broken = (repository.adapter.select "SELECT count(1) FROM games WHERE nconducts = 0 and user_id in (SELECT id FROM users WHERE clan = ?) and version != 'NH-1.3d';", clan_name)[0]
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_full_conducts_broken",
                                         :icon => "clan-full-conducts-broken.png")
