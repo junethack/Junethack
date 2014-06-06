@@ -11,8 +11,7 @@ describe 'the Junethack server' do
   end
 
   before :all do
-    # clean out games if there are any
-    Game.destroy
+    clean_database
   end
 
   it "should render empty pages" do

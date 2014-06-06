@@ -85,7 +85,7 @@
                             %p
                                 No invitations for this account
         - clanless_accs = @user.accounts.select{|a| a.clan.nil?}
-        - if not @user.clan
+        - if not @user.clan and not clanless_accs.empty?
             %div.text_content.non_top_post
                 %h2 Create a new clan
                 %form#create_clan_form.smallform{:method => "POST", :action => "/clan"}

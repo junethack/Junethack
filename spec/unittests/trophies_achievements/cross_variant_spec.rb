@@ -3,20 +3,19 @@ require 'spec_helper'
 describe Individualtrophy do
 
   before :each do
-    User.create(:login => "test_user")
-    Event.destroy
-    Individualtrophy.destroy
+    clean_database
+    $user = User.create(:login => "test_user")
   end
 
   it "should add user unique cross variant achievements" do
     Individualtrophy.count.should == 0
 
     # add achievement
-    Individualtrophy.add(1, nil, :test_achievement, "test_achievement.png")
+    Individualtrophy.add($user.id, nil, :test_achievement, "test_achievement.png")
     Individualtrophy.count.should == 1
 
     # only one achievement per user
-    Individualtrophy.add(1, nil, :test_achievement, "test_achievement.png")
+    Individualtrophy.add($user.id, nil, :test_achievement, "test_achievement.png")
     Individualtrophy.count.should == 1
   end
 
@@ -24,11 +23,11 @@ describe Individualtrophy do
     Event.count.should == 0
 
     # add achievement
-    Individualtrophy.add(1, "test_achievement", :test_achievement, "test_achievement.png")
+    Individualtrophy.add($user.id, "test_achievement", :test_achievement, "test_achievement.png")
     Event.count.should == 1
 
     # only one achievement per user
-    Individualtrophy.add(1, "test_achievement", :test_achievement, "test_achievement.png")
+    Individualtrophy.add($user.id, "test_achievement", :test_achievement, "test_achievement.png")
     Event.count.should == 1
 
     Event.first.text.should == 'Achievement "test_achievement" unlocked by test_user!'
@@ -38,17 +37,15 @@ end
 describe Game,"saving of cross variant achievements" do
  
   before :each do
-    User.create(:login => "test_user")
-    Event.destroy
-    Game.destroy
-    Individualtrophy.destroy
+    clean_database
+    $user = User.create(:login => "test_user")
   end
 
   # Games are saved first without user_id, the scoring calculation only triggers
   # on updates
   def update_games
     Game.all.each {|g|
-      g.user_id = 1
+      g.user_id = $user.id
       g.save
     }
   end
