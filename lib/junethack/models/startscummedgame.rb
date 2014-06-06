@@ -1,5 +1,6 @@
 require 'dm-migrations'
 require 'dm-migrations/migration_runner'
+require 'pry'
 
 class StartScummedGame
     include DataMapper::Resource
@@ -13,7 +14,7 @@ class StartScummedGame
     property :realtime,  Integer
     property :turns,     Integer
     property :birthdate, String
-    property :conduct,   String
+    property :conduct,   String, :default => 0
     property :nconducts, Integer,
      :default => lambda { |r, p| (Integer r.conduct).to_s(2).count("1") } # count the number of bits set in conduct
     property :role,      String
