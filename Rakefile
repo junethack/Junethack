@@ -123,9 +123,10 @@ end
 namespace :news do
 
     desc "add a new news entry"
-    task :add, :html_snippet do |t, args|
+    task :add, :html_snippet, :url do |t, args|
         news = News.new
         news.html = args[:html_snippet]
+        news.url = args[:url] if args[:url]
         news.save
     end
 
@@ -135,9 +136,10 @@ namespace :news do
     end
 
     desc "update a new news entry"
-    task :update, :id, :html_snippet do |t, args|
+    task :update, :id, :html_snippet, :url do |t, args|
         news = News.get(args[:id])
         news.html = args[:html_snippet]
+        news.url = args[:url] if args[:url]
         news.save
     end
 
