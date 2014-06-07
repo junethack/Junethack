@@ -72,6 +72,7 @@ describe Game,"saving of cross variant achievements" do
     Event.count.should == 4
 
     Game.create(:version => 'v6', :server_id => 1, :achieve => "0x800", :endtime => 1000, :death => 'ascended', :turns => 1023)
+    Game.create(:version => 'v7', :server_id => 1, :achieve => "0x800", :endtime => 1000, :death => 'ascended', :turns => 1023)
     update_games # full and 1/2 cross variant achievements
     Individualtrophy.count.should == 8
     Event.count.should == 8
