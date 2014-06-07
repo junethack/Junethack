@@ -50,6 +50,8 @@ class Server
         else
           return "http://acehack.de/userdata/#{game.name}/dumplog/#{game.starttime}"
         end
+      when "dnethack.ilbelkyr.de"
+        return "http://dnethack.ilbelkyr.de/userdata/#{game.name}/dumplog/#{game.starttime}.dnao.txt"
       else
         return nil
       end
@@ -86,5 +88,14 @@ DataMapper::MigrationRunner.migration( 3, :add_oldhack_acehack_de ) do
   end
   down do
     Server.all(:name => "n13").destroy
+  end
+end
+
+DataMapper::MigrationRunner.migration( 4, :add_dnethack ) do
+  up do
+    Server.create :name => 'dnh', :variant => 'dnethack', :url => 'dnethack.ilbelkyr.de', :xlogurl => 'http://dnethack.ilbelkyr.de/xlogfile.txt', :configfileurl => 'http://dnethack.ilbelkyr.de/userdata/random_user/random_user.dnaorc'
+  end
+  down do
+    Server.all(:name => "dnh").destroy
   end
 end
