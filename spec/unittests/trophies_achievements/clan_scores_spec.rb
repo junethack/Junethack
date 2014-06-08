@@ -51,4 +51,11 @@ describe Game,"update_clan_scores" do
     ClanScoreEntry.first(:trophy => "most_unique_deaths").value.should == 2
     ClanScoreEntry.first(:trophy => "most_variant_trophy_combinations").value.should == 9
   end
+
+  it "creates clan score history entries" do
+    Game.create(:version => 'v1', :server_id => 1, :achieve => "0x800", :points => 9000, :endtime => 1000, :death => 'ascended', :turns => 1023)
+    update_games
+    ClanScoreEntry.first(:trophy => :most_medusa_kills).value.should == 1
+    ClanScoreHistory.all(:trophy => :most_medusa_kills).count.should == 1
+  end
 end
