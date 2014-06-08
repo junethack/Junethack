@@ -444,8 +444,19 @@ def update_clan_scores(game)
 
     rank_clans
     score_clans
+    history_clans
 
     return true
+end
+
+def history_clans
+    ClanScoreEntry.all.each {|e|
+        h = ClanScoreHistory.first(:trophy => e.trophy, :clan_name => e.clan_name, :order => :created_at.desc)
+        # only record when points or rank has changed
+        if not h or h.points != e.points or h.rank != e.rank
+            c = ClanScoreHistory.create(e.attributes)
+        end
+    }
 end
 
 def rank_clans

@@ -50,6 +50,20 @@ class ClanScoreEntry
     property :points,    Float, :default => 0.0
 end
 
+# competition clan trophies history
+class ClanScoreHistory
+    include DataMapper::Resource
+    belongs_to :clan
+
+    property :id,        Serial, :key => true
+    property :trophy,    String
+    property :value,     Integer
+    property :icon,      String
+    property :rank,      Integer, :default => -1
+    property :points,    Float, :default => 0.0
+    property :created_at, DateTime
+end
+
 # variant-specific competition user trophies
 class CompetitionScoreEntry
     include DataMapper::Resource
