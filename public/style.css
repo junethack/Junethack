@@ -454,18 +454,31 @@ table.misc,
 .greytable #cell1 td,
 .greytable #cell2 td
 {
-    border: 1px solid black;
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
     padding-right: 10px;
-    padding-left: 3px;
+    padding-left: 4px;
     vertical-align: middle;
 }
-.greytable #cell1 td
+.greytable #cell1 td,
+.greytable #cell2 td
+{
+    padding-left: 10px;
+}
+.greytable #cell1
 {
     background-color: #ccc;
 }
-.greytable #cell2 td
+.greytable #cell2
 {
     background-color: #bbb;
+}
+
+.greytable #cell1:hover,
+.greytable #cell2:hover
+{
+    background-color: #9f9f9f;
+    color: #000;
 }
 
 .greytable #cell1 td.chart,
@@ -479,15 +492,15 @@ table.misc,
 .greytable #cell2 td.table_number
 {
     text-align: right;
-    padding-right: 0.25em;
+    padding-right: 0.5em;
     padding-left: 0.5em;
 }
 .greytable #cell1 td.table_date,
 .greytable #cell2 td.table_date
 {
     text-align: center;
-    padding-right: 0.5em;
-    padding-left: 0.5em;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .greytable td.variant,
@@ -511,8 +524,8 @@ table.misc,
 {
     text-align: center;
     width: 1em;
-    padding-right: 0.25em;
-    padding-left: 0.25em;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 /**************************
