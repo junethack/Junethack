@@ -191,6 +191,9 @@ class Game
     property :starttimeus, Integer
     property :endtimeus,   Integer
 
+    # dnethack-specific properties
+    property :dnetachieve, String
+
     def defeated_medusa?
         (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)
     end
