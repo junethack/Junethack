@@ -317,6 +317,29 @@ def update_scores(game)
                 :icon => "m-astral.png").save if game.entered_astral?
         end
 
+        # DNetHack specific trophies
+        dnethack = helper_get_variant_for 'dnethack'
+        if dnethack == game.version then
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :one_key,
+                :icon => "m-one-key.png").save if game.got_one_key?
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :three_keys,
+                :icon => "m-three-keys.png").save if game.got_three_keys?
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :nine_keys,
+                :icon => "m-nine-keys.png").save if game.got_nine_keys?
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :killed_lucifer,
+                :icon => "m-killed-lucifer.png").save if game.killed_lucifer?
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :killed_asmodeus,
+                :icon => "m-killed-asmodeus.png").save if game.killed_asmodeus?
+            Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
+                :trophy => :killed_demogorgon,
+                :icon => "m-killed-demogorgon.png").save if game.killed_demogorgon?
+        end
+
     ## Non-Ascension cross-variant trophies
     # Sightseeing tour: finish a game in all variants
     Individualtrophy.add(game.user_id, "Sightseeing Tour",

@@ -97,6 +97,12 @@ $trophy_names = {
     "defeated_croesus" => "Assault on Fort Knox (defeated Croesus)",
     "defeated_one_eyed_sam" => "No membership card (defeated One-Eyed Sam)",
 
+    "three_keys" => "Through the gates of Gehennom (obtained at least three alignment keys)",
+    "nine_keys" => "Those were for replay value... (obtained all nine alignment keys)",
+    "killed_lucifer" => "Round two goes to you (killed Lucifer on the Astral Plane)",
+    "killed_asmodeus" => "No budget for bribes (killed Asmodeus)",
+    "killed_demogorgon" => "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))",
+
     # Cross-Variant
     "walk_in_the_park"    => "Walk in the Park: finish a game in half of the variants",
     "sightseeing_tour"    => "Sightseeing Tour: finish a game in all variants",
@@ -304,6 +310,31 @@ class Game
 
     def mini_croesus?
         gold >= 100_000
+    end
+
+    # DNetHack
+    def killed_lucifer?
+        (dnetachieve and dnetachieve.hex & 0x00001 > 0)
+    end
+
+    def killed_asmodeus?
+        (dnetachieve and dnetachieve.hex & 0x00002 > 0)
+    end
+
+    def killed_demogorgon?
+        (dnetachieve and dnetachieve.hex & 0x00004 > 0)
+    end
+
+    def got_one_key?
+        (dnetachieve and dnetachieve.hex & 0x00008 > 0)
+    end
+
+    def got_three_keys?
+        (dnetachieve and dnetachieve.hex & 0x00010 > 0)
+    end
+
+    def got_nine_keys?
+        (dnetachieve and dnetachieve.hex & 0x00020 > 0)
     end
 
     after :update do

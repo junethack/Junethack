@@ -131,6 +131,7 @@ def Trophy.check_trophies_for_variant variant_description
     acehack = helper_get_variant_for 'acehack'
     nethack4 = helper_get_variant_for 'nethack4'
     unnethack = helper_get_variant_for 'unnethack'
+    dnethack = helper_get_variant_for 'dnethack'
     if [acehack, nethack4].include? variant then
       # these variants don't have standard xlogfile achievement flags
       broken_xlogfile = true
@@ -171,6 +172,16 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_cthulhu", :text => "Too good for a brain (ascended without defeating Cthulhu)", :icon => "m-no-cthulhu.png" if variant == unnethack
       Trophy.create :variant => variant, :trophy => "mini_croesus", :text => "Mini-Croesus (finish a game with at least 100,000 gold pieces)", :icon => "m-mini-croesus.png" if variant == unnethack
       Trophy.create :variant => variant, :trophy => "heaven_or_hell", :text => "heaven or hell (ascend in 1 HP mode)", :icon => "heaven-or-hell.png" if variant != nethack4
+    end
+
+    # DNetHack specific achievements
+    if dnethack == variant then
+      Trophy.create :variant => variant, :trophy => "one_key", :text => "That was the easy one (obtained at least one alignment key)", :icon => "m-one-key.png"
+      Trophy.create :variant => variant, :trophy => "three_keys", :text => "Through the gates of Gehennom (obtained at least three alignment keys)", :icon => "m-three-keys.png"
+      Trophy.create :variant => variant, :trophy => "nine_keys", :text => "Those were for replay value... (obtained all nine alignment keys)", :icon => "m-nine-keys.png"
+      Trophy.create :variant => variant, :trophy => "killed_lucifer", :text => "Round two goes to you (killed Lucifer on the Astral Plane)", :icon => "m-killed-lucifer.png"
+      Trophy.create :variant => variant, :trophy => "killed_asmodeus", :text => "No budget for bribes (killed Asmodeus)", :icon => "m-killed-asmodeus.png"
+      Trophy.create :variant => variant, :trophy => "killed_demogorgon", :text => "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))", :icon => "m-killed-demogorgon.png"
     end
 
     # user competition trophies
@@ -252,4 +263,16 @@ DataMapper::MigrationRunner.migration( 6, :create_dnethack_achievements ) do
   up do
     Trophy.check_trophies_for_variant "dnethack"
   end
+end
+
+DataMapper::MigrationRunner.migration( 7, :create_new_dnethack_achievements ) do
+    variant = helper_get_variant_for 'dnethack'
+    if Trophy.count(:variant => variant) == 25 then
+      Trophy.create :variant => variant, :trophy => "one_key", :text => "That was the easy one (obtained at least one alignment key)", :icon => "m-one-key.png"
+      Trophy.create :variant => variant, :trophy => "three_keys", :text => "Through the gates of Gehennom (obtained at least three alignment keys)", :icon => "m-three-keys.png"
+      Trophy.create :variant => variant, :trophy => "nine_keys", :text => "Those were for replay value... (obtained all nine alignment keys)", :icon => "m-nine-keys.png"
+      Trophy.create :variant => variant, :trophy => "killed_lucifer", :text => "Round two goes to you (killed Lucifer on the Astral Plane)", :icon => "m-killed-lucifer.png"
+      Trophy.create :variant => variant, :trophy => "killed_asmodeus", :text => "No budget for bribes (killed Asmodeus)", :icon => "m-killed-asmodeus.png"
+      Trophy.create :variant => variant, :trophy => "killed_demogorgon", :text => "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))", :icon => "m-killed-demogorgon.png"
+    end
 end
