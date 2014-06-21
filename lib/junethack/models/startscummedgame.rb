@@ -1,6 +1,5 @@
 require 'dm-migrations'
 require 'dm-migrations/migration_runner'
-require 'pry'
 
 class StartScummedGame
     include DataMapper::Resource
@@ -67,4 +66,7 @@ class StartScummedGame
     property :temporary, String
     property :starttimeus, Integer
     property :endtimeus,   Integer
+
+    # dnethack-specific properties
+    property :dnetachieve, String
 end

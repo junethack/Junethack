@@ -66,3 +66,11 @@ light_me "prince.png"
 light_me "king.png"
 
 light_me "heaven-or-hell.png"
+
+light_me "m-asmodeus.png"
+light_me "m-demogorgon.png"
+light_me "m-lucifer.png"
+light_me "m-nine-keys.png"
+light_me "m-one-key.png"
+light_me "m-three-keys.png"
+
