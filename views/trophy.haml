@@ -1,0 +1,5 @@
+- icon = achieved ? trophy.icon : trophy.light_icon
+- text = achieved ? trophy.text : ""
+
+%a.imagelink{:title => trophy.text, :href => "/trophies##{trophy.anchor}" }
+  %img{:src => "/icons/#{icon}", :alt => text}
