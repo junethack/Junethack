@@ -43,7 +43,7 @@
           %th
             Role
           %th
-            User trophies 
+            User trophies
           %th
             Last game played (UTC)
         - (User.all :clan => @clan.name, :order => [:login.asc]).each do |user|
@@ -57,7 +57,7 @@
               - else
                 member
             %td.table_number
-              #{h user.most_variant_trophies_count}
+              #{h user.scoreentries.count}
             %td
               - if user.games.length != 0
                 #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
