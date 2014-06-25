@@ -33,6 +33,7 @@
           %a.imagelink{:href => "/trophies#" + trophy.anchor, :title => trophy.text}
             %img.trophyicon{:src => "/icons/" + trophy.icon}
         %span.clear.endofcabinetrow
+
     .text_content.non_top_post#clan_members
       %h2
         Clan members
@@ -43,7 +44,7 @@
           %th
             Role
           %th
-            User trophies 
+            User trophies
           %th
             Last game played (UTC)
         - (User.all :clan => @clan.name, :order => [:login.asc]).each do |user|
@@ -57,7 +58,7 @@
               - else
                 member
             %td.table_number
-              #{h user.most_variant_trophies_count}
+              #{h user.scoreentries.count}
             %td
               - if user.games.length != 0
                 #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
@@ -71,6 +72,16 @@
       - @ascended_combinations_sql = ascended_combinations_sql
       - @ascended_combinations_value = @clan.name
       =haml :ascended_combinations
+
+    .text_content.non_top_post#clan_variant_trophy
+      .trophycabinet.text_cabinet
+        %h2
+          Clan variant/trophy combinations
+        %ul
+          - user_ids = Clan.first(:name => @clan.name).accounts.collect {|a| a.user_id}.uniq
+          - for variant in $variants
+            =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
+          =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => "NH-1.3d"}
 
     .text_content.non_top_post
       - @games_played = Game.all(:user_id => User.all(:clan => @clan.name), :conditions => [ "ascended='t'" ], :order => [ :endtime.desc ])

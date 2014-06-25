@@ -1,9 +1,9 @@
 %li
-    .trophyleft= "#{$variants_mapping[@variant]}"
+    .trophyleft= "#{$variants_mapping[variant]}"
     .trophyright
         / user competition trophies
-        - trophies = Trophy.user_competition_trophies @variant
-        - user_competition_trophies = repository.adapter.select "select trophy from competition_score_entries where user_id = ? and variant = ? and rank = 1", @player.id, @variant
+        - trophies = Trophy.user_competition_trophies variant
+        - user_competition_trophies = repository.adapter.select "select trophy from competition_score_entries where user_id in (#{user_ids.join(',')}) and variant = ? and rank = 1", variant
         / only show if there are any
         - if user_competition_trophies.size > 0 then
             - for trophy in trophies
@@ -11,8 +11,8 @@
             %br
 
         / user "All Conducts/Roles/Races/Alignments/Genders" trophies
-        - trophies = Trophy.user_all_stuff_trophies @variant
-        - user_all_stuff_trophies = repository.adapter.select "select trophy from scoreentries where user_id = ? and variant = ? and trophy like 'all_%'", @player.id, @variant
+        - trophies = Trophy.user_all_stuff_trophies variant
+        - user_all_stuff_trophies = repository.adapter.select "select trophy from scoreentries where user_id in (#{user_ids.join(',')}) and variant = ? and trophy like 'all_%'", variant
         / only show if there are any
         - if user_all_stuff_trophies.size > 0 then
             - for trophy in trophies
@@ -20,7 +20,7 @@
             %br
 
         / user trophies
-        - trophies = Trophy.user_trophies @variant
-        - user_trophies = repository.adapter.select "select trophy from scoreentries where user_id = ? and variant = ?", @player.id, @variant
+        - trophies = Trophy.user_trophies variant
+        - user_trophies = repository.adapter.select "select trophy from scoreentries where user_id in (#{user_ids.join(',')}) and variant = ?", variant
         - for trophy in trophies
             =haml :trophy, :locals => {:trophy => trophy, :achieved => (user_trophies.include? trophy.trophy)}
