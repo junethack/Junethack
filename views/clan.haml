@@ -33,6 +33,7 @@
           %a.imagelink{:href => "/trophies#" + trophy.anchor, :title => trophy.text}
             %img.trophyicon{:src => "/icons/" + trophy.icon}
         %span.clear.endofcabinetrow
+
     .text_content.non_top_post#clan_members
       %h2
         Clan members
@@ -71,6 +72,16 @@
       - @ascended_combinations_sql = ascended_combinations_sql
       - @ascended_combinations_value = @clan.name
       =haml :ascended_combinations
+
+    .text_content.non_top_post#clan_variant_trophy
+      .trophycabinet.text_cabinet
+        %h2
+          Clan variant/trophy combinations
+        %ul
+          - user_ids = Clan.first(:name => @clan.name).accounts.collect {|a| a.user_id}.uniq
+          - for variant in $variants
+            =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
+          =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => "NH-1.3d"}
 
     .text_content.non_top_post
       - @games_played = Game.all(:user_id => User.all(:clan => @clan.name), :conditions => [ "ascended='t'" ], :order => [ :endtime.desc ])

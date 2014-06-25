@@ -1,0 +1,32 @@
+%li
+    .trophyleft= "#{$variants_mapping[variant]}"
+    .trophyright
+        / user competition trophies
+        - trophies = Trophy.user_competition_trophies variant
+        - user_competition_trophies = repository.adapter.select "select trophy from competition_score_entries where user_id in (#{user_ids.join(',')}) and variant = ? and rank = 1", variant
+        / only show if there are any
+        - if user_competition_trophies.size > 0 then
+            - for trophy in trophies
+                - icon = (user_competition_trophies.include? trophy.trophy) ? trophy.icon : trophy.light_icon
+                %a.imagelink{:title => trophy.text, :href => "/trophies#" + trophy.anchor}
+                    %img{:src => "/icons/" + icon, :alt => trophy.text}
+            %br
+
+        / user "All Conducts/Roles/Races/Alignments/Genders" trophies
+        - trophies = Trophy.user_all_stuff_trophies variant
+        - user_all_stuff_trophies = repository.adapter.select "select trophy from scoreentries where user_id in (#{user_ids.join(',')}) and variant = ? and trophy like 'all_%'", variant
+        / only show if there are any
+        - if user_all_stuff_trophies.size > 0 then
+            - for trophy in trophies
+                - icon = (user_all_stuff_trophies.include? trophy.trophy) ? trophy.icon : trophy.light_icon
+                %a.imagelink{:title => trophy.text, :href => "/trophies#" + trophy.anchor}
+                    %img{:src => "/icons/" + icon, :alt => trophy.text}
+            %br
+
+        / user trophies
+        - trophies = Trophy.user_trophies variant
+        - user_trophies = repository.adapter.select "select trophy from scoreentries where user_id in (#{user_ids.join(',')}) and variant = ?", variant
+        - for trophy in trophies
+            - icon = (user_trophies.include? trophy.trophy) ? trophy.icon : trophy.light_icon
+            %a.imagelink{:title => trophy.text, :href => "/trophies#" + trophy.anchor}
+                %img{:src => "/icons/" + icon, :alt => trophy.text}
