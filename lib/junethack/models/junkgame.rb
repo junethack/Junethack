@@ -15,7 +15,7 @@ class JunkGame
     property :birthdate, String
     property :conduct,   String
     property :nconducts, Integer,
-     :default => lambda { |r, p| (Integer r.conduct).to_s(2).count("1") } # count the number of bits set in conduct
+     :default => lambda { |r, p| (Integer(r.conduct) & 4095).to_s(2).count("1") } # count the number of bits set in conduct
     property :role,      String
     property :deathdnum, Integer
     property :gender,    String

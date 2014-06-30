@@ -65,7 +65,7 @@ describe TrophyScore do
     user_id3 = 3
     version = 'conduct'
     # followed all conducts
-    Game.new(:version => version, :user_id => user_id1, :server_id => 1, :conduct => 4094, :death => 'ascended').save!
+    Game.new(:version => version, :user_id => user_id1, :server_id => 1, :conduct => 8190, :death => 'ascended').save!
     Game.new(:version => version, :user_id => user_id1, :server_id => 1, :conduct =>    1, :death => 'ascended').save!
 
     # followed all conducts but not in ascended games
