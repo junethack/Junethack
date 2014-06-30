@@ -631,6 +631,8 @@ def all_conducts?(user_id, variant)
     aggregated_conducts = 0
     conducts.each { |c| aggregated_conducts |= (Integer c) }
 
+    aggregated_conducts &= 2**12-1; # limit to vanilla conducts
+
     return aggregated_conducts == 2**12-1 # Vegetarian, Vegan, Foodless, Atheist, Weaponless, Pacifist, Literate, Polypiles, Polyself, Wishing, Wishing for Artifacts, Genocide
 end
 def all_conducts_streak?(user_id, variant)

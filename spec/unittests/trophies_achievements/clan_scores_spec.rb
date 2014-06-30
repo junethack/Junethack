@@ -38,7 +38,7 @@ describe Game,"update_clan_scores" do
 
     Game.create(:version => 'NH-1.3d', :server_id => 1, :maxlvl => 10, :points => 900, :endtime => 1000, :death => 'escaped (with amulet)', :turns => 1023)
     Game.create(:version => 'v1', :server_id => 1, :achieve => "0x800", :points => 9000, :endtime => 1000, :death => 'ascended', :turns => 1023)
-    Game.create(:version => 'v1', :server_id => 1, :achieve => "0x800", :points => 9000, :endtime => 1000, :death => 'ascended', :turns => 1023)
+    Game.create(:version => 'v1', :server_id => 1, :achieve => "0x800", :conduct => 4096, :points => 9000, :endtime => 1000, :death => 'ascended', :turns => 1023)
     update_games
 
     ClanScoreEntry.count.should == 8 # including clan_winner

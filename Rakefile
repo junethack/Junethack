@@ -43,7 +43,7 @@ namespace :update do
     task :nconducts do
         i = 0
         Game.all.each do |game|
-            game.nconducts = (Integer game.conduct).to_s(2).count("1")
+            game.nconducts = (Integer(game.conduct) & 4095).to_s(2).count("1")
             i += 1
             puts i
             game.save! # only change field and don't call hooks
