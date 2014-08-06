@@ -118,6 +118,27 @@ namespace :db do
             user.save
         end
     end
+
+    desc "post-mortem statistics"
+    task :statistics do
+        puts "Some boring statistics:"
+        puts
+        puts "#{User.count} players registered on the server,"
+        puts "#{User.all(:accounts.not => nil).count} linked their account with the public servers,"
+        puts "and #{Game.all(:fields => [:user_id]).map {|g| g.user_id}.uniq.count} actually played at least one game."
+        puts
+        puts "#{Game.all(:user_id.not => nil).count} games were played on all #{Server.count} public servers during the tournament by registered users,"
+        puts "#{Game.count} were played by all players including those not taking part in the tournament."
+        puts
+        games_ascended = Game.all(:conditions => [ "user_id is not null and ascended='t'" ])
+        puts "#{games_ascended.collect {|g| g.user_id}.uniq.count} different players ascended a total of #{games_ascended.count} games."
+
+        puts
+        puts "Tournament games by variant"
+        $variants.each do |v|
+            puts "#{$variants_mapping[v]}: #{Game.all(:conditions => [ "user_id > 0 and version = '#{v}'" ]).count}"
+        end
+    end
 end
 
 namespace :news do
