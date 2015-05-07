@@ -421,7 +421,7 @@ submenus
     margin-top: 0;
 }
 .text_content.non_top_post:before {
-    content: url(divider.png);
+    content: url(pale_logo.png);
     width: 114px;
     display: block;
     margin: 0 auto;
