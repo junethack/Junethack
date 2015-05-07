@@ -1,27 +1,28 @@
 .content_bulk
-  .title_text
-    %p
-      Running from 1 June until the end of 30 June 2014
-  - now = Time.new.to_i
-  - if now < $tournament_starttime
-    -# show a (static) countdown to tournament start
+  %section.branding
     .title_text
-      %p= parse_seconds $tournament_starttime - now
-  - elsif now+86400*7 > $tournament_endtime and now < $tournament_endtime
-    -# show informational text if there is only one week left in the tournament
-    .title_text
-      %p= "Only #{parse_seconds $tournament_endtime - now} until the tournament ends!"
-  - if @logged_in 
-    - if now > $tournament_signupstarttime and now < $tournament_endtime
-      .signup_text
-        %p
-          %a{:href => "register"} Sign up now!
-    - if now < $tournament_signupstarttime
+      %p
+        Running from 1 June until the end of 30 June 2014
+    - now = Time.new.to_i
+    - if now < $tournament_starttime
+      -# show a (static) countdown to tournament start
       .title_text
-        %p
-          =haml :registrationdate
+        %p= parse_seconds $tournament_starttime - now
+    - elsif now+86400*7 > $tournament_endtime and now < $tournament_endtime
+      -# show informational text if there is only one week left in the tournament
+      .title_text
+        %p= "Only #{parse_seconds $tournament_endtime - now} until the tournament ends!"
+    - if @logged_in 
+      - if now > $tournament_signupstarttime and now < $tournament_endtime
+        .signup_text
+          %p
+            %a{:href => "register"} Sign up now!
+      - if now < $tournament_signupstarttime
+        .title_text
+          %p
+            =haml :registrationdate
   .text_content_wrapper
-    .text_content
+    %section.text_content
       %h2
         Welcome to Junethack!
       %p
@@ -38,9 +39,9 @@
       %p
         And also play in Junethack,
         the NetHack Cross-Variant Summer Tournament (mostly) held in June.
-    .text_content
+    %section#news.text_content
       =haml :news
-    .text_content
+    %section.text_content
       %p
         You can view the results of the
         %a{:href => "/archive/2013/index.html"} Junethack 2013,
@@ -58,7 +59,7 @@
         Games played on the servers listed on the
         %a{:href => "/servers"} Servers page
         are eligible for the tournament.
-    .text_content
+    %section.text_content
       %h2
         Huh?
       %p
