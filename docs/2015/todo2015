@@ -1,0 +1,49 @@
+---------------------
+1. Frontend: Responsive layout
+
+- Requires markup which is compatible with responsive frameworks.  I have not yet seen a responsive navigation that provides easy support for secondary menus.
+- Requires a suitable responsive framework.  Enough structure without interfering too much with our existing code.
+
+---------------------
+2. Frontend: more maintainable code
+
+- Framework :)
+
+---------------------
+3. Information architecture: Display large tables of information more usefully
+
+Tournament stats
+- Users.  I think this is a database dump of users.  What do people actually want to know?  Structure the data according to that instead.
+- Clans.  Ditto.
+- Games.  A dump (as in NAO) of the details of each game.
+- Ascensions.  The same as Games, with a filter for 'ascended' - lots of overlap.  The same information could be obtained by highlighting every "ascended" row in the Games list.
+- Deaths.  A tally of the types of deaths (not the same as games/ascensions).
+
+Results
+- Scoreboard
+  - clan competition with scores and ranking compared
+  - Trophies section
+    - Cross-variant, nh3.4.3, etc...
+      - trophies...
+        - Users...
+  - Competition (what?)
+  (oh, it means competing with others as opposed to independently awarded trophies.  Got it.)
+    - Variants...
+      - Competitive categories
+        - All users qualifying for top 3 places in those categories
+  -> this page is attempting to display relatively complex data:
+  1. Clan competition.
+    - (besides this section.)
+  2. Independently awarded trophy listings
+    - Answers the question: "In each variant, what trophies are there, and who are all the users who have qualified for each one?"
+    - People are more likely to ask "What trophies does UserX have?" or even "Have I qualified for X trophy?"
+    - if a name qualifies for the trophy in that variant, they will be listed.  If one person played one game that qualifies for all the trophies, their name will be listed as many times as there are trophies in the variant.  If that person then plays an equally qualifying second game in another variant, their name will be listed again that many times under that variant.
+  3. Competitive categories.
+    - Answers the question: "In each variant, who is winning each competitive category, and what was their score?"
+    - This answer seems to meet the question's requirements pretty well.
+    - However, as with section 2, with rarely-played variants that only one person has ascended, the person's name is merely listed repeatedly in every competitive category.
+      - The question could also be answered with just the person's name.
+    - For variants where there is no 4th place ascension, perhaps all players could be tabled against competitive categories and 1st/2nd/3rd could be marked in the contents of the table for each category.
+
+- Clan scoreboard
+  
