@@ -43,7 +43,16 @@ Results
     - This answer seems to meet the question's requirements pretty well.
     - However, as with section 2, with rarely-played variants that only one person has ascended, the person's name is merely listed repeatedly in every competitive category.
       - The question could also be answered with just the person's name.
-    - For variants where there is no 4th place ascension, perhaps all players could be tabled against competitive categories and 1st/2nd/3rd could be marked in the contents of the table for each category.
+    - For variants where there is no 4th place ascension, a 2-dimensional table with all players vs competitive categories could allow 1st/2nd/3rd to be marked in less space.
+      - this might not work for major variants like nh3.4.3 with many player names.
 
 - Clan scoreboard
-  
+  - same clan competition as on main scoreboard
+  - competitive categories
+    - all groups in their placings, with their scores and points
+    -> I also feel this is verbose and could be summarised more efficiently in a 2-dimensional table.
+
+Proposed solution:
+1. remove clan scoreboard from user scoreboard.
+2. attempt to answer the question people are trying to find the answer to.
+3. consider merging tables or using 2-dimensional tables to express data more efficiently.
