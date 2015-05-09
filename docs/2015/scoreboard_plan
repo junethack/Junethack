@@ -1,0 +1,41 @@
+User objectives (presumed, since we can't do any actual user research right now) (hm, maybe we should implement that for this year)
+- trophies:
+  - what trophies do I have? (this info should be on own user page)
+  - who else has the same trophies?
+    - given a trophy, who has achieved it across all variants?
+    - given a trophy, who has achieved it in this variant?
+  - what trophies does UserX have? (UserX's page)
+  - how do I compare with them?
+  - how does UserX's trophies compare with UserY's trophies?
+  - what variants should I try to obtain more trophies?
+- competitive categories
+  - who is/are winning the competitive category for this variant?
+  - what was their score?
+- clan scoreboard
+  - what are the placings and scores of the clan competition?
+  - what are the placings and scores of clans within each competitive category?
+
+v2
+- user pages: what trophies does UserX have, across which variants?
+- trophies:
+  - Given a trophy, who has achieved it, in which variants?
+  - How does UserX's trophies compare with UserY's trophies? (feature request)
+  - what variants should UserX try to get more trophies? (feature request)
+- competitive categories
+  - who is/are winning the competitive category for this variant?
+  - what was their score?
+- clan scoreboard
+  - what are the placings and scores of the clan competition?
+  - what are the placings and scores of clans within each competitive category?
+
+v3
+trophies - these questions could be answered by merging trophy information into the user list, eg 2d table players x trophy names, and variants listed in each spot where the trophy has been achieved.  OR players x variants, and trophies listed where it was achieved in that variant.
+For bonus points, the user list could then be moved to the results section and named trophies.  We'd then have less noise in the stats list, and more structure in the results list without actually adding content.
+
+player scoreboard
+- comparing within variants, who is winning the competitive category?
+  - existing structure is mostly appropriate: variant > category > user
+  - variants with less than 4 ascensions in total: compact version starting with user > category
+- comparing across variants, who is winning the competitive category?
+  - just one comparison: category > user (also appropriate)
+clan scoreboard
