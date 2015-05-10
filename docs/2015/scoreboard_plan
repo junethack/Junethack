@@ -7,6 +7,7 @@ User objectives (presumed, since we can't do any actual user research right now)
   - what variants should UserX try to get more trophies? (feature request)
 - competitive categories
   - who is/are winning category X for variant Y?
+  - who is/are winning category X across variants?
   - what was their score?
 - clan scoreboard
   - what are the placings and scores of the clan competition?
@@ -17,11 +18,57 @@ Proposed structure:
 - trophies
   - merge trophy information into the user list, eg 2d table players x trophy names (content: variants), or players x variants (content: trophies)
   - user list moved to the results section and named "trophies".  Less noise in the stats list, more scaffolding in the results list.
+  - later maybe include in /scoreboard a competitive trophy section, eg:
+    - How do your trophies compare with everyone else's? (eg number)
+    - What variants should you try to get more trophies?
 - player scoreboard
-  - comparing within variants, who is winning the competitive category?
-    - existing structure is mostly appropriate: variant > category > user
-    - variants with fewer than 4 ascensions in total: compact version starting with user > category
-  - comparing within competitive categories, who is winning 
-  - comparing across variants, who is winning the competitive category?
-    - just one comparison: category > user (also appropriate)
+  - Example structures
+    - Variants are generally static, so are categories.  Placings are what change during the course of the tournament.
+    - Exception markup:
+      - no ascensions:
+        - don't give an empty table.
+        - eg "No one's ascended [this variant] yet!  Take the gold now!"
+      - 1 ascension (and placing) in the whole variant:
+        - eg "User X made the only ascension and wins all the categories a, b, c..."
+    - General case markup (eg a number of different users take out all the categories)
+      - List by variants, category x placings
+        - Variantname Table: Placing (1st | 2nd | 3rd)
+          - Category a: User X | User Z | User Y
+          - category b: User X | User Y | User Z
+          - category c: User Z | User X | User Y
+        --> A compact form of the existing structure.  This allows us to compare within each variant.
+        - Responsive design will use single axis:
+          - Variantname Table: User
+            - Categoryname a 1st: User X
+            -                2nd: User Y
+            -                3rd: User Z
+            - Categoryname b 1st: User Y
+            -                2nd: User Z
+            -                3rd: User X
+      - FEATURE REQUEST: List by categories, placing x variant
+        - Categoryname Table: Placing (1st | 2nd | 3rd)
+          - Variant A: User X | User Y | User Z
+          - Variant B: User Y | User Z | User X
+          - Variant C: User Z | User X | User Y
+        --> This structure would give us a picture of who was good at the competitive category generally, regardless of variant.  It doesn't limit us to comparing within the variant (which is more in line with Junethack's stated aims, to encourage playing other variants).
 - clan scoreboard
+  - Summary as per existing table
+  - Breakdown of clan points
+    - Variants are generally static, so are categories.  Placings are what change during the course of the tournament.
+    - Markup options:
+      - no games by any clan qualify for this category:
+        - don't give an empty table.
+        - eg "No clans have qualified for this category yet! Take the first place now!"
+      - Wider screens can use two axes:
+        - Categoryname Table: Clan name | Points
+          - Place 1:
+          - Place 2:
+          - Place 3:
+      - Responsive screens:
+        - Categoryname Table
+          - Placing 1:
+          - Placing 1 Clanname:
+          - Placing 1 Points:
+          - Placing 2:
+          - Placing 2 Clanname:
+          - Placing 2 Points:
