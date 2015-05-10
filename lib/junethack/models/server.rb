@@ -36,7 +36,8 @@ class Server
     def dumplog_link(game)
       case @url
       when "un.nethack.nu"
-        return "http://un.nethack.nu/user/#{game.name}/dumps/#{game.name}.#{game.endtime}.txt.html"
+        tld = (@name == "eun") ? "eu" : "us"
+        return "https://un.nethack.nu/user/#{game.name}/dumps/#{tld}/#{game.name}.#{game.endtime}.txt.html"
       when "nethack.alt.org"
         return "http://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
       when "grunthack.org"
@@ -60,42 +61,14 @@ end
 
 DataMapper::MigrationRunner.migration( 1, :create_servers ) do
   up do
-    Server.create :name => 'nao', :variant => 'vanilla', :url => 'nethack.alt.org', :xlogurl => 'http://alt.org/nethack/xlogfile.full.txt', :configfileurl => 'http://alt.org/nethack/userdata/random_user/random_user.nh343rc'
-    Server.create :name => 'eun', :variant => 'unnethack', :url => 'un.nethack.nu', :xlogurl => 'http://un.nethack.nu/logs/xlogfile', :configfileurl => 'http://un.nethack.nu/rcfiles/random_user.nethackrc'
-    Server.create :name => 'shc', :variant => 'sporkhack', :url => 'sporkhack.com', :xlogurl => 'http://sporkhack.com/xlogfile', :configfileurl => 'http://sporkhack.com/rcfiles/random_user.nethackrc'
-    #Server.create :name => 'neu', :variant => 'vanilla', :url => 'nethack.eu', :xlogurl => 'file:///home/junethack/neu/xlogfile', :configfileurl => 'http://nethack.eu:8000/junethack/raw-file/tip/rcfiles/random_user.nh343rc'
-    Server.create :name => 'gho', :variant => 'grunthack', :url => 'grunthack.org', :xlogurl => 'http://grunthack.org/xlogfile', :configfileurl => 'http://grunthack.org/userdata/random_user/random_user.gh020rc'
-    Server.create :name => 'nh4', :variant => 'nethack4', :url => 'nethack4.org', :xlogurl => 'http://nethack4.org/xlogfile.txt', :configfileurl => 'http://nethack4.org/junethack-rc/random_user.rc'
-    Server.create :name => 'ade', :variant => 'acehack', :url => 'acehack.de', :xlogurl => 'http://acehack.de/xlogfile', :configfileurl => 'http://acehack.de/userdata/random_user/acehackrc'
+    Server.create name: 'nao', variant: 'vanilla', url: 'nethack.alt.org', xlogurl: 'http://alt.org/nethack/xlogfile.full.txt', configfileurl: 'http://alt.org/nethack/userdata/random_user/random_user.nh343rc'
+    Server.create name: 'eun', variant: 'unnethack', url: 'un.nethack.nu', xlogurl: 'https://un.nethack.nu/logs/xlogfile-eu', configfileurl: 'https://un.nethack.nu/rcfiles/random_user.nethackrc'
+    Server.create name: 'uun', variant: 'unnethack', url: 'un.nethack.nu', xlogurl: 'https://un.nethack.nu/logs/xlogfile-us', configfileurl: 'https://un.nethack.nu/rcfiles/random_user.nethackrc'
+    #Server.create name: 'shc', variant: 'sporkhack', url: 'sporkhack.com', xlogurl: 'http://sporkhack.com/xlogfile', configfileurl: 'http://sporkhack.com/rcfiles/random_user.nethackrc'
+    Server.create name: 'gho', variant: 'grunthack', url: 'grunthack.org', xlogurl: 'http://grunthack.org/xlogfile', configfileurl: 'http://grunthack.org/userdata/random_user/random_user.gh020rc'
+    Server.create name: 'nh4', variant: 'nethack4', url: 'nethack4.org', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
   end
   down do
     Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 2, :add_naohack_acehack_de ) do
-  up do
-    Server.create :name => 'nde', :variant => 'acehack', :url => 'acehack.de', :xlogurl => 'http://acehack.de/nethackxlogfile', :configfileurl => 'http://acehack.de/userdata/random_user/nethack/nethackrc'
-  end
-  down do
-    Server.all(:name => "nde").destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 3, :add_oldhack_acehack_de ) do
-  up do
-    Server.create :name => 'n13', :variant => 'oldhack', :url => 'acehack.de', :xlogurl => 'https://acehack.de/oldhackxlogfile', :configfileurl => 'http://acehack.de/userdata/random_user/acehackrc'
-  end
-  down do
-    Server.all(:name => "n13").destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 4, :add_dnethack ) do
-  up do
-    Server.create :name => 'dnh', :variant => 'dnethack', :url => 'dnethack.ilbelkyr.de', :xlogurl => 'http://dnethack.ilbelkyr.de/xlogfile.txt', :configfileurl => 'http://dnethack.ilbelkyr.de/userdata/random_user/random_user.dnaorc'
-  end
-  down do
-    Server.all(:name => "dnh").destroy
   end
 end
