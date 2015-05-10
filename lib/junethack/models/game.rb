@@ -194,6 +194,9 @@ class Game
     property :extrinsic, String
     property :intrinsic, String
     property :temporary, String
+    property :rngseed,   String
+    property :dumplog,   String
+    property :birthoption, String
     property :starttimeus, Integer
     property :endtimeus,   Integer
 
