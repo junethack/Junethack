@@ -18,9 +18,9 @@ class XLog
 
     def self.fetch_header xlog_url
         if ENV['JUNETHACK_TRACE']
-            %x{ curl --trace-time --trace-ascii "trace/#{Time.new.iso8601}_trace_head.log" -I -s #{xlog_url}}
+            %x{ curl -L --trace-time --trace-ascii "trace/#{Time.new.iso8601}_trace_head.log" -I -s #{xlog_url}}
         else
-            %x{ curl -I -s #{xlog_url}}
+            %x{ curl -L -I -s #{xlog_url}}
         end
     end
 
@@ -32,10 +32,10 @@ class XLog
         return false if startp.to_i >= endp.to_i-1
         if ENV['JUNETHACK_TRACE']
             time = Time.new.iso8601
-            xlogdiff = %x{ curl --trace-time --trace-ascii "trace/#{time}_trace.log" -s -r #{startp}-#{endp.to_i-1} #{xlog_url}}
+            xlogdiff = %x{ curl -L --trace-time --trace-ascii "trace/#{time}_trace.log" -s -r #{startp}-#{endp.to_i-1} #{xlog_url}}
             File.open("trace/#{time}_xlogfile.txt", 'w') {|f| f.write(xlogdiff) }
         else
-            xlogdiff = %x{ curl -s -r #{startp}-#{endp.to_i-1} #{xlog_url}}
+            xlogdiff = %x{ curl -L -s -r #{startp}-#{endp.to_i-1} #{xlog_url}}
         end
         StringIO.new xlogdiff
     end
