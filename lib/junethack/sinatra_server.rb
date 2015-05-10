@@ -33,6 +33,7 @@ set :cache_enabled, false  # complet
 
 # Listen to everything in development.
 set :bind, "0.0.0.0"
+set :port, ENV['JUNETHACK_PORT']||4567
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
