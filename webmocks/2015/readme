@@ -1,6 +1,5 @@
-Design objectives
-
-- Cheryl
+Redesign objectives
+===================
 
 1. provide a bare-bones improved content hierarchy.
 2. do not address accessibility or aesthetic issues.*
@@ -12,3 +11,11 @@ Design objectives
 8. if unnecessary markup can't be removed without optimising css, leave a comment suggesting future improvements.
 
 * Except the 'back to top' link, but this is just a test feature and easily removed.
+
+Redesigns
+=========
+
+Navigation - index.html
+
+Scoreboard - user.html, scoreboard.html, clan_competition.html
+
