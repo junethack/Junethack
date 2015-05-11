@@ -37,14 +37,24 @@ Proposed structure:
           - category b: User X | User Y | User Z
           - category c: User Z | User X | User Y
         --> A compact form of the existing structure.  This allows us to compare within each variant.
-        - Responsive design will use single axis:
-          - Variantname Table: User
-            - Categoryname a 1st: User X
-            -                2nd: User Y
-            -                3rd: User Z
-            - Categoryname b 1st: User Y
-            -                2nd: User Z
-            -                3rd: User X
+        - Responsive: Variant Category tables:
+          - Variant a Category A: (Place, User, Score)
+            - 1 | User X | 2039849
+            - 2 | User Y | 390298
+            - 3 | User Z | 29039
+          - (etc through the categories, then through the variants.
+        - Or, if necessary, Variant Category tables using single axis:
+          - Variant a Category A
+            - Place: 1
+            - Score: 2308923
+            - Player: User X
+            - Place: 2
+            - Score: 283859
+            - Player: User Y
+            - Place: 3
+            - Score: 50398
+            - Player: User Z
+        --> https://github.com/johnpolacek/stacktable.js/ - use this!!
       - FEATURE REQUEST: List by categories, placing x variant
         - Categoryname Table: Placing (1st | 2nd | 3rd)
           - Variant A: User X | User Y | User Z
