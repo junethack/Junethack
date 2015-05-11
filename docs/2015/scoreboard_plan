@@ -54,7 +54,7 @@ Proposed structure:
             - Place: 3
             - Score: 50398
             - Player: User Z
-        --> https://github.com/johnpolacek/stacktable.js/ - use this!!
+          - Though we really need something between single axis and table-per-variant.  Ideally still table per variant with row groups as categories.
       - FEATURE REQUEST: List by categories, placing x variant
         - Categoryname Table: Placing (1st | 2nd | 3rd)
           - Variant A: User X | User Y | User Z
