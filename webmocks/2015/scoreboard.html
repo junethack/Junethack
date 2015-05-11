@@ -23,6 +23,7 @@
     <!-- our styles -->
     <link rel="stylesheet" href="../../public/style.css">
     <link rel="stylesheet" href="../../public/back-to-top.css">
+    <link rel="stylesheet" href="scoreboard.css">
 
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -200,18 +201,18 @@
           <div class="text_content_wrapper">
             <section id="page_outline" class="text_content">
               <p>
-                <a href="#scoreboard_by_variant">
+                <a href="#scores_by_variant">
                   Scores by variant (traditional view)
                 </a>
               </p>
               <p>
-                <a href="#scoreboard_by_category">
+                <a href="#scores_by_category">
                   Scores by category
                 </a>
               </p>
             </section>
-            <section class="text_content scoreboard_by_variant"><!-- semantic -->
-              <h3 id="#scoreboard_by_variant">
+            <section class="text_content scores_by_variant"><!-- semantic -->
+              <h3 id="scores_by_variant">
                 Scores by variant (traditional view)
               </h3>
               <article class="scoreboard_table">
@@ -219,6 +220,12 @@
                   <caption>
                     Nethack 3.4.3
                   </caption>
+                  <colgroup>
+                    <col>
+                    <col span="2">
+                    <col span="2">
+                    <col span="2">
+                  </colgroup>
                   <thead>
                     <tr>
                       <th>
@@ -228,10 +235,22 @@
                         First place
                       </th>
                       <th>
+                        Score
+                      </th>
+                      <th>
                         Second place
                       </th>
                       <th>
+                        Score
+                      </th>
+                      <th>
                         Third place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                      <th>
+                        #{@player.login}'s best score
                       </th>
                     </tr>
                   </thead>
@@ -244,10 +263,22 @@
                         codehappy
                       </td>
                       <td>
+                        15
+                      </td>
+                      <td>
                         MrSnide
                       </td>
                       <td>
+                        14
+                      </td>
+                      <td>
                         Stroller
+                      </td>
+                      <td>
+                        9
+                      </td>
+                      <td>
+                        0+
                       </td>
                     </tr>
                     <tr>
@@ -258,6 +289,9 @@
                         codehappy
                       </td>
                       <td>
+                        9
+                      </td>
+                      <td>
                         <ul>
                           <li> rschaff </li>
                           <li> MrSnide </li>
@@ -265,7 +299,16 @@
                         </ul>
                       </td>
                       <td>
+                        7
+                      </td>
+                      <td>
                         DredNicolson
+                      </td>
+                      <td>
+                        4
+                      </td>
+                      <td>
+                        0+
                       </td>
                     </tr>
                     <tr>
@@ -276,10 +319,22 @@
                         stenno
                       </td>
                       <td>
+                        17791
+                      </td>
+                      <td>
                         Wooble
                       </td>
                       <td>
+                        20818
+                      </td>
+                      <td>
                         codehappy
+                      </td>
+                      <td>
+                        21604
+                      </td>
+                      <td>
+                        You haven't ascended yet.
                       </td>
                     </tr>
                     <tr>
@@ -290,10 +345,22 @@
                         I_Won_Wars
                       </td>
                       <td>
+                        3 h 13 m 15 s
+                      </td>
+                      <td>
                         scorchgeek
                       </td>
                       <td>
+                        5 h 48 m 57 s
+                      </td>
+                      <td>
                         codehappy
+                      </td>
+                      <td>
+                        7 h 27 m 30 s
+                      </td>
+                      <td>
+                        You haven't ascended yet.
                       </td>
                     </tr>
                     <tr>
@@ -304,10 +371,22 @@
                         Raisse
                       </td>
                       <td>
+                        14078004
+                      </td>
+                      <td>
                         rschaff
                       </td>
                       <td>
+                        5839570
+                      </td>
+                      <td>
                         zHz
+                      </td>
+                      <td>
+                        4899672
+                      </td>
+                      <td>
+                        You haven't ascended yet.
                       </td>
                     </tr>
                     <tr>
@@ -318,10 +397,22 @@
                         DeuceofJune
                       </td>
                       <td>
+                        94490
+                      </td>
+                      <td>
                         codehappy
                       </td>
                       <td>
+                        841826
+                      </td>
+                      <td>
                         Wooble
+                      </td>
+                      <td>
+                        1087340
+                      </td>
+                      <td>
+                        You haven't ascended yet.
                       </td>
                     </tr>
                     <tr>
@@ -332,22 +423,354 @@
                         DeuceofJune
                       </td>
                       <td>
+                        10
+                      </td>
+                      <td>
+                        DredNicolson
+                      </td>
+                      <td>
+                        5
+                      </td>
+                      <td>
                         <ul>
-                          <li> DredNicolson </li>
                           <li> codehappy </li>
                           <li> allihaveismymind </li>
+                          <li> Mortuis </li>
+                          <li> schistosomatic </li>
+                          <li> bose </li>
+                          <li> scorchgeek </li>
                         </ul>
                       </td>
                       <td>
-                        Wooble
+                        4
+                      </td>
+                      <td>
+                        You haven't ascended yet. <br />
+                        OR 0+ if ascensions exist
                       </td>
                     </tr>
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="5">
+                        42 games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    SporkHack
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    UnNetHack
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    AceHack
+                  </caption>
+                  <colgroup>
+                    <col>
+                    <col span="2">
+                    <col span="2">
+                    <col span="2">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>
+                        Category
+                      </th>
+                      <th>
+                        First place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                      <th>
+                        Second place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                      <th>
+                        Third place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                      <th>
+                        Xiella's best score
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>
+                        Most ascensions
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        1
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        0+
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Longest ascension streak
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        1
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        0+
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Fastest ascension (turns)
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        29817791
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        You haven't ascended yet.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Fastest ascension (wall-clock time)
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        9 h 52 m 41 s
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        You haven't ascended yet.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Highest scoring ascension
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        4078004
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        You haven't ascended yet.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Lowest scoring ascension
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        4078004
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        You haven't ascended yet.
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Most conducts in a single ascension
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        3
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        You haven't ascended yet. <br />
+                        OR 0+ if ascensions exist
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        1 game has been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    GruntHack
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    NetHack4
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    DNetHack
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
                 </table>
               </article>
             </section>
             <section class="text_content"><!-- semantic -->
-              <h3 id="#scoreboard_by_category">
+              <h3 id="scores_by_category">
                 Scores by category
               </h3>
             </section>
