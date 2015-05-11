@@ -2,20 +2,19 @@ Redesign objectives
 ===================
 
 1. provide a bare-bones improved content hierarchy.
-2. do not address accessibility or aesthetic issues.*
-3. begin from webmocks/2013/content_design and docs/2013/contentmap_proposed2.md.
-4. final html design will integrate into current layout.haml
-5. complete within 1 week.
-6. remove unnecessary markup.
-7. don't optimise css.
-8. if unnecessary markup can't be removed without optimising css, leave a comment suggesting future improvements.
-
-* Except the 'back to top' link, but this is just a test feature and easily removed.
+2. focus on usability.
+3. do not solve aesthetic issues.  make note of them if necessary.
+4. remove unnecessary markup.
+5. don't optimise css.
+6. if unnecessary markup can't be removed without optimising css, leave it there and make note.
 
 Redesigns
 =========
 
 Navigation - index.html
+- begin from webmocks/2013/content_design and docs/2013/contentmap_proposed2.md.
+- final output in layout.haml
 
-Scoreboard - user.html, scoreboard.html, clan_competition.html
+Scoreboard - user.html, scoreboard.html
+
 
