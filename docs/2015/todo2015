@@ -5,9 +5,9 @@
 - Requires a suitable responsive framework.  Enough structure without interfering too much with our existing code.
 
 ---------------------
-2. Frontend: more maintainable code
+2. Content: writing style
 
-- Framework :)
+- Rules page is too informal and chatty.  Make it more in line with rest of site.
 
 ---------------------
 3. Information architecture: Display large tables of information more usefully
@@ -57,3 +57,9 @@ Results
 Proposed solution:
 1. rename /clan_competition to /scoreboard and move non-clan sections of current scoreboard to their own individual pages.
 2. consider how to provide the single piece of information people want on a single screen rather than fragmented pieces that require scrolling.
+
+---------------------
+4. Frontend: Semantic markup
+
+- mockup specifies %section.content_bulk instead of .content_bulk for splash.haml
+- mockup specifies #page_content and its descendants %section#welcome.hcenter %h1 for new/revised pages such as current trophy standings, but this is defined in layout.haml with an exception only for the front page.  Either all pages need this exception separately, or these tags should be specified in individual haml files rather than layout.haml.
