@@ -1,20 +1,19 @@
-- cache_fragment(Game.max_endtime) do
-  - @most_ascended_users = most_ascensions_users
-
-  - @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 50)
-  - @games_played_user_links = true
-  - @games_played_title = "Last #{@games_played.size} games played"
-
-  .content_bulk
-    .text_content_wrapper
-      .text_content
-        %h1
-          Scoreboard
-      .text_content
-        =haml :_clan_trophies
-      .text_content.non_top_post
-        =haml :_trophy_scores
-      .text_content.non_top_post
-        =haml :competition_scores
-      %span#end_of_content_spacer.clear
-/ end of container
+.content_bulk
+  .text_content_wrapper
+    .text_content
+      %h1 Clan Competition Overview
+      =haml :_clan_trophies
+      - @trophy = "most_log_points"
+      =haml :clan_competition_trophy
+      - @trophy = "most_ascended_combinations"
+      =haml :clan_competition_trophy
+      - @trophy = "most_unique_deaths"
+      =haml :clan_competition_trophy
+      - @trophy = "most_ascensions_in_a_24_hour_period"
+      =haml :clan_competition_trophy
+      - @trophy = "most_variant_trophy_combinations"
+      =haml :clan_competition_trophy
+      - @trophy = "most_medusa_kills"
+      =haml :clan_competition_trophy
+      - @trophy = "most_full_conducts_broken"
+      =haml :clan_competition_trophy
