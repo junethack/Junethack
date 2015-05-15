@@ -5,12 +5,7 @@
 - Requires a suitable responsive framework.  Enough structure without interfering too much with our existing code.
 
 ---------------------
-2. Content: writing style
-
-- Rules page is too informal and chatty.  Make it more in line with rest of site.
-
----------------------
-3. Information architecture: Display large tables of information more usefully
+2. Information architecture: Display large tables of information more usefully
 
 Tournament stats
 - Users.  I think this is a dump of users.  What do people actually want to know?  Structure the data according to that instead.
