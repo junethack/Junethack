@@ -3,7 +3,7 @@
     / This h2 should be in the branding section
     %section.text_content
       %h2
-        Player competition
+        Player scoreboard
     %section#page_outline.text_content
       - $variants.each do |variant|
         - variant_name = $variants_mapping[variant]
@@ -11,8 +11,8 @@
           %a{:href => "##{variant}"}= variant_name
     %section.text_content
       - $variants.each do |variant|
-        - @variant = variant
-        %h4= $variants_mapping[variant]
+        - variant_name = $variants_mapping[variant]
+        %h3{:id => variant}= variant_name
         - if (CompetitionScoreEntry.count :variant => @variant) == 0
           %div
             No ascensions yet

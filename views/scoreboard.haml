@@ -1,7 +1,9 @@
-.content_bulk
+%section.content_bulk
   .text_content_wrapper
-    .text_content
-      %h1 Clan Competition Overview
+    / This h2 should be in the branding section
+    %section.text_content
+      %h2 Scoreboard
+    %section.text_content
       =haml :_clan_trophies
       - @trophy = "most_log_points"
       =haml :clan_competition_trophy
