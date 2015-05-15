@@ -479,12 +479,6 @@ get "/scores/:name" do |name|
     haml :user_scores, :layout => @layout
 end
 
-get "/scoreboard" do
-    caching_check_last_played_game
-
-    haml :scoreboard, :layout => @layout
-end
-
 get "/servers" do
     caching_check_application_start_time
 
@@ -548,10 +542,22 @@ get "/deaths" do
     haml :deaths, :layout => @layout
 end
 
-get "/clan_competition" do
+get "/scoreboard" do
     caching_check_last_played_game
 
-    haml :clan_competition, :layout => @layout
+    haml :scoreboard, :layout => @layout
+end
+
+get "/trophy_scoreboard" do
+    caching_check_last_played_game
+
+    haml :trophy_scoreboard, :layout => @layout
+end
+
+get "/player_scoreboard" do
+    caching_check_last_played_game
+
+    haml :player_scoreboard, :layout => @layout
 end
 
 get "/junethack.rss" do
