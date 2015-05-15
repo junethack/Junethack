@@ -1,6 +1,6 @@
 %h3
   Competition
-- $variants_mapping.each do |variant|
+- $variants.each do |variant|
   - @variant = variant
   - entries = repository.adapter.select "select * from competition_score_entries where variant = ? and user_id = ?", variant, @user_id
   %h4= $variants_mapping[variant]

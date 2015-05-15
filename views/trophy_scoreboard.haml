@@ -7,7 +7,8 @@
     %section#page_outline.text_content
       %p
         %a{:href => "#cross-variant"} Cross-Variant
-      - $variants_mapping).each do |variant|
+      / ideally we would use the names already described in /servers
+      - ($variants+["NH-1.3d"]).each do |variant|
         - variant_name = $variants_mapping[variant]
         %p
           %a{:href => "##{variant}"}= variant_name
@@ -25,7 +26,7 @@
                 %span
                   %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
 
-    - $variants_mapping).each do |variant|
+    - ($variants+["NH-1.3d"]).each do |variant|
       - variant_name = $variants_mapping[variant]
       %section.text_content.trophycabinet
         %h3{:id => variant}= variant_name
