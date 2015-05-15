@@ -14,7 +14,7 @@
                         %span
                             %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
 
-- ($variants+["NH-1.3d"]).each do |variant|
+- $variants_mapping).each do |variant|
     - variant_name = $variants_mapping[variant]
     .trophycabinet
         %h3{:id => variant}= variant_name

@@ -10,7 +10,7 @@
         %th Medusa
         %th Ascended
     - count = 0
-    - $variants.each do |variant|
+    - $variants_mapping.each do |variant|
       - style = (count % 2) == 0 ? "cell1" : "cell2"
       - count += 1
       %tr{:id => style}
