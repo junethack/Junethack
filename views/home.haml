@@ -1,6 +1,6 @@
-.content_bulk
+%section.content_bulk
     .text_content_wrapper
-        .text_content
+        %section.text_content
             %h2
                 Manage your accounts
             -# determine which servers have no account linked
@@ -31,7 +31,7 @@
                     %input{:type => "text", :name => "user", :placeholder => "public server username", :style => "width: 22ex;"}
                     %input{:type => "submit", :value => "add account"}
                     %span.clear
-        .text_content.non_top_post
+        %section.text_content.non_top_post
             .trophycabinet.text_cabinet
                 %h3
                     Trophies
@@ -43,17 +43,17 @@
                     - @variant = "NH-1.3d"
                     =haml :user_trophies
 
-        .text_content.non_top_post
+        %section.text_content.non_top_post
             =haml :_user_games
-        .text_content.non_top_post
+        %section.text_content.non_top_post
             =haml :games_played
-        .text_content.non_top_post
+        %section.text_content.non_top_post
             =haml :cross_variant_games
-        .text_content.non_top_post
+        %section.text_content.non_top_post
             - @ascended_combinations_sql = ascended_combinations_user_sql
             - @ascended_combinations_value = @user.id
             =haml :ascended_combinations
-        #clanmanager.text_content.non_top_post
+        %section#clanmanager.text_content.non_top_post
             %h2
                 Manage your clan
             - for account in @user.accounts
@@ -88,7 +88,7 @@
                                 No invitations for this account
         - clanless_accs = @user.accounts.select{|a| a.clan.nil?}
         - if not @user.clan and not clanless_accs.empty?
-            %div.text_content.non_top_post
+            %section.text_content.non_top_post
                 %h2 Create a new clan
                 %form#create_clan_form.smallform{:method => "POST", :action => "/clan"}
                     %input{:type => "hidden", :value => clanless_accs.first.server.id, :name => "server"}

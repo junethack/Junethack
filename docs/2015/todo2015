@@ -5,12 +5,7 @@
 - Requires a suitable responsive framework.  Enough structure without interfering too much with our existing code.
 
 ---------------------
-2. Content: writing style
-
-- Rules page is too informal and chatty.  Make it more in line with rest of site.
-
----------------------
-3. Information architecture: Display large tables of information more usefully
+2. Information architecture: Display large tables of information more usefully
 
 Tournament stats
 - Users.  I think this is a dump of users.  What do people actually want to know?  Structure the data according to that instead.
@@ -18,6 +13,8 @@ Tournament stats
 - Games.  A dump (as in NAO) of the details of each game.
 - Ascensions.  The same as Games, with a filter for 'ascended' - lots of overlap.  The same information could be obtained by highlighting every "ascended" row in the Games list.
 - Deaths.  A tally of the types of deaths (not the same as games/ascensions).
+
+ANALYSIS OF 2014 SCOREBOARD
 
 Results
 - Scoreboard
@@ -42,9 +39,7 @@ Results
     - if a name qualifies for the trophy in that variant, they will be listed.  If one person played one game that qualifies for all the trophies, their name will be listed as many times as there are trophies in the variant.  If that person then plays an equally qualifying second game in another variant, their name will be listed again that many times under that variant.
   3. Competitive categories.
     - Answers the question: "In each variant, who is winning each competitive category, and what was their score?"
-    - This answer seems to meet the question's requirements pretty well.
     - However, as with section 2, with rarely-played variants that only one person has ascended, the person's name is merely listed repeatedly in every competitive category.
-      - The question could also be answered with just the person's name.
     - For variants where there is no 4th place ascension, a 2-dimensional table with all players vs competitive categories could allow 1st/2nd/3rd to be marked in less space.
       - this might not work for major variants like nh3.4.3 with many player names.
 
@@ -61,5 +56,4 @@ Proposed solution:
 ---------------------
 4. Frontend: Semantic markup
 
-- mockup specifies %section.content_bulk instead of .content_bulk for splash.haml
 - mockup specifies #page_content and its descendants %section#welcome.hcenter %h1 for new/revised pages such as current trophy standings, but this is defined in layout.haml with an exception only for the front page.  Either all pages need this exception separately, or these tags should be specified in individual haml files rather than layout.haml.
