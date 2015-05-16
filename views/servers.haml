@@ -1,9 +1,6 @@
 .content_bulk
   .text_content_wrapper
     .text_content
-      %p
-        These are our servers.
-    .text_content
       %table.prettytable
         %tr
           %th
@@ -13,126 +10,15 @@
           %th
             Variant name
           %th
-            Status
-          %th
             Administrator
-          %th
-            Issues/notes
-        %tr
-          %td
-            nethack.alt.org
-          %td
-            %a{:href => "/server/nao"} NAO
-          %td
-            vanilla
-          %td
-            &nbsp;
-          %td
-            paxed
-          %td
-            &nbsp;
-        %tr
-          %td
-            sporkhack.com
-          %td
-            %a{:href => "/server/shc"} SHC
-          %td
-            sporkhack
-          %td
-            &nbsp;
-          %td
-            lorimer
-          %td
-            &nbsp;
-        %tr
-          %td
-            un.nethack.nu
-          %td
-            %a{:href => "/server/eun"} EUN
-          %td
-            unnethack
-          %td
-            &nbsp;
-          %td
-            octe
-          %td
-            &nbsp;
-        %tr
-          %td
-            grunthack.org
-          %td
-            %a{:href => "/server/gho"} GHO
-          %td
-            grunthack
-          %td
-            &nbsp;
-          %td
-            Grunt
-          %td
-            &nbsp;
-        %tr
-          %td
-            nethack4.org
-          %td
-            %a{:href => "/server/nh4"} NH4
-          %td
-            nethack4
-          %td
-            &nbsp;
-          %td
-            ais523
-          %td
-            &nbsp;
-        %tr
-          %td
-            acehack.de
-          %td
-            %a{:href => "/server/ade"} ADE
-          %td
-            acehack
-          %td
-            &nbsp;
-          %td
-            kerio
-          %td
-            &nbsp;
-        %tr
-          %td
-            acehack.de
-          %td
-            %a{:href => "/server/nde"} NDE
-          %td
-            vanilla
-          %td
-            &nbsp;
-          %td
-            kerio
-          %td
-            &nbsp;
-        %tr
-          %td
-            acehack.de
-          %td
-            %a{:href => "/server/n13"} N13
-          %td
-            oldhack
-          %td
-            &nbsp;
-          %td
-            kerio
-          %td
-            &nbsp;
-        %tr
-          %td
-            dnethack.ilbelkyr.de
-          %td
-            %a{:href => "/server/dnh"} DNH
-          %td
-            dnethack
-          %td
-            &nbsp;
-          %td
-            bcode
-          %td
-            &nbsp;
+        - Server.all.each do |server|
+          %tr
+            %td
+              %a{href: "#{server.url}"}="#{server.hostname}"
+            %td
+              %a{href: "/server/#{server.name}"}="#{server.name.upcase}"
+            %td
+              vanilla
+            %td
+              paxed
       %span#end_of_content_spacer.clear

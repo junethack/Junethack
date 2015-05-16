@@ -36,4 +36,5 @@ def clean_database
   Game.destroy
   Clan.destroy
   User.destroy
+  Server.destroy
 end
