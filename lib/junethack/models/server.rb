@@ -38,7 +38,7 @@ class Server
     end
 
     def dumplog_link(game)
-      case @url
+      case hostname
       when "un.nethack.nu"
         tld = (@name == "eun") ? "eu" : "us"
         return "https://un.nethack.nu/user/#{game.name}/dumps/#{tld}/#{game.name}.#{game.endtime}.txt.html"
@@ -46,17 +46,15 @@ class Server
         return "http://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
       when "grunthack.org"
         return "http://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"
-      when "acehack.de"
+      when "nethack.xd.cm"
         case game.version
-        when '3.4.3'
-          return "http://acehack.de/userdata/#{game.name}/nethack/dumplog/#{game.starttime}"
-        when 'NH-1.3d'
-          return "http://acehack.de/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
-        else
-          return "http://acehack.de/userdata/#{game.name}/dumplog/#{game.starttime}"
+        when "3.4.3"
+            return "https://nethack.xd.cm/userdata/#{game.name}/nethack/dumplog/#{game.starttime}"
+        when "DNH"
+            return "https://nethack.xd.cm/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
+        when "3.0.1"
+            return "https://nethack.xd.cm/userdata/#{game.name}/nh4k/4.3.0.1/dumps/#{game.dumplog.tr("_",":")}"
         end
-      when "dnethack.ilbelkyr.de"
-        return "http://dnethack.ilbelkyr.de/userdata/#{game.name}/dumplog/#{game.starttime}.dnao.txt"
       else
         return nil
       end
