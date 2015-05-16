@@ -130,9 +130,10 @@ def Trophy.check_trophies_for_variant variant_description
     # get current versions
     acehack = helper_get_variant_for 'acehack'
     nethack4 = helper_get_variant_for 'nethack4'
+    nh4k = helper_get_variant_for 'nethack fourk'
     unnethack = helper_get_variant_for 'unnethack'
     dnethack = helper_get_variant_for 'dnethack'
-    if [acehack, nethack4].include? variant then
+    if [acehack, nethack4, nh4k].include? variant then
       # these variants don't have standard xlogfile achievement flags
       broken_xlogfile = true
     else
@@ -162,7 +163,7 @@ def Trophy.check_trophies_for_variant variant_description
     Trophy.create :variant => variant, :trophy => "bought_oracle_consultation", :text => "got an Oracle consultation", :icon => "m-soko.png" if broken_xlogfile
 
     # AceHack, NetHack4 and UnNetHack specific achievements
-    if [acehack, nethack4, unnethack].include? variant then
+    if [acehack, nethack4, unnethack, nh4k].include? variant then
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_nemesis", :text => "Too good for quests (ascended without defeating the quest nemesis)", :icon => "m-no-nemesis.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_vlad", :text => "Too good for Vladbanes (ascended without defeating Vlad)", :icon => "m-no-vlad.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_rodney", :text => "Too good for... wait, what? How? (ascended without defeating Rodney)", :icon => "m-no-wizard.png"
@@ -171,7 +172,7 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create :variant => variant, :trophy => "defeated_one_eyed_sam", :text => "No membership card (defeated One-Eyed Sam)", :icon => "m-sam.png" if variant == unnethack
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_cthulhu", :text => "Too good for a brain (ascended without defeating Cthulhu)", :icon => "m-no-cthulhu.png" if variant == unnethack
       Trophy.create :variant => variant, :trophy => "mini_croesus", :text => "Mini-Croesus (finish a game with at least 100,000 gold pieces)", :icon => "m-mini-croesus.png" if variant == unnethack
-      Trophy.create :variant => variant, :trophy => "heaven_or_hell", :text => "heaven or hell (ascend in 1 HP mode)", :icon => "heaven-or-hell.png" if variant != nethack4
+      Trophy.create :variant => variant, :trophy => "heaven_or_hell", :text => "heaven or hell (ascend in 1 HP mode)", :icon => "heaven-or-hell.png" if variant != nethack4 && variant != nh4k
     end
 
     # DNetHack specific achievements
@@ -247,20 +248,9 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "vanilla"
     Trophy.check_trophies_for_variant "sporkhack"
     Trophy.check_trophies_for_variant "unnethack"
-    Trophy.check_trophies_for_variant "acehack"
     Trophy.check_trophies_for_variant "grunthack"
     Trophy.check_trophies_for_variant "nethack4"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 5, :create_oldhack_achievements ) do
-  up do
-    Trophy.check_trophies_for_variant "oldhack"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 6, :create_dnethack_achievements ) do
-  up do
     Trophy.check_trophies_for_variant "dnethack"
+    Trophy.check_trophies_for_variant "nethack fourk"
   end
 end

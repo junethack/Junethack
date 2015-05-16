@@ -148,7 +148,6 @@ class Game
     def version=(new_version)
       new_version = "UNH" if new_version.start_with? 'UNH-'
       new_version = "DNH" if new_version.start_with? 'DNH-'
-      new_version = "4.2.1" if new_version == '4.3.0'
       super new_version
     end
 
@@ -202,6 +201,9 @@ class Game
 
     # dnethack-specific properties
     property :dnetachieve, String
+
+    # nh4k-specific properties
+    property :variant, String
 
     def defeated_medusa?
         (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)

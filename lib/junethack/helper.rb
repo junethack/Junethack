@@ -21,12 +21,12 @@ $trophies_name = [
 $variants_mapping = {}
 $variants_mapping["3.4.3"]     = "NetHack 3.4.3"
 $variants_mapping["UNH"]       = "UnNetHack"
-$variants_mapping["3.6.0"]     = "AceHack"
 $variants_mapping["0.6.3"]     = "SporkHack"
 $variants_mapping["0.2.0"]     = "GruntHack"
-$variants_mapping["4.2.1"]     = "NetHack4"
+$variants_mapping["4.3.0"]     = "NetHack4"
 $variants_mapping["NH-1.3d"]   = "NetHack 1.3d"
-$variants_mapping["DNH"]       = "DNetHack"
+$variants_mapping["DNH"]       = "dNetHack"
+$variants_mapping["3.0.1"]     = "NetHack Fourk"
 
 # hard coded ordering of variants with competition score entries
 # order by release date
@@ -36,8 +36,9 @@ $variants << "0.6.3"
 $variants << "UNH"
 $variants << "3.6.0"
 $variants << "0.2.0"
-$variants << "4.2.1"
+$variants << "4.3.0"
 $variants << "DNH"
+$variants << "3.0.1"
 
 def helper_get_variant_for(description)
     # hard coded descriptions for some variants
