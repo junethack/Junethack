@@ -22,7 +22,7 @@
           - else
             = h game.name
         %td{"data-title" => "Name"}= h game.variant_name
-        %td{"data-title" => "Server"}= h game.server.url
+        %td{"data-title" => "Server"}= h game.server.hostname
         %td.table_number{"data-title" => "Points"}= game.points
         %td{"data-title" => "Killer"}= h game.death
         %td.dllink

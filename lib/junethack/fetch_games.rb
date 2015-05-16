@@ -80,7 +80,7 @@ def fetch_all
                               game.user_id = acc.user_id
 
                               if regular_game then
-                                Event.new(:text => "#{game.user.login} ascended a game of #{$variants_mapping[game.version]} on #{game.server.url}!").save if game.ascended
+                                Event.new(:text => "#{game.user.login} ascended a game of #{$variants_mapping[game.version]} on #{game.server.hostname}!").save if game.ascended
 
                                 # record some gaming milestones
                                 games_count = (Game.count :conditions => [ 'user_id > 0' ])+1

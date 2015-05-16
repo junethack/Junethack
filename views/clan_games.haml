@@ -22,7 +22,7 @@
         %td{:id => "game-#{game.id}"}
           %a{:href => "/user_id/#{game.user_id}"}= h game.name
         %td{"data-title" => "Name"}= h game.variant_name
-        %td{"data-title" => "Server"}= h game.server.url
+        %td{"data-title" => "Server"}= h game.server.hostname
         %td.table_number{"data-title" => "Points"}= game.points
         %td.table_number{"data-title" => "log"}= game.points.to_s.length-1
         %td.small_number{"data-title" => "Conducts"}= game.version != "NH-1.3d" && game.nconducts == 0 ? "yes" : "no"
