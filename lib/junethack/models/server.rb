@@ -61,12 +61,23 @@ end
 
 DataMapper::MigrationRunner.migration( 1, :create_servers ) do
   up do
-    Server.create name: 'nao', variant: 'vanilla', url: 'nethack.alt.org', xlogurl: 'http://alt.org/nethack/xlogfile.full.txt', configfileurl: 'http://alt.org/nethack/userdata/random_user/random_user.nh343rc'
-    Server.create name: 'eun', variant: 'unnethack', url: 'un.nethack.nu', xlogurl: 'https://un.nethack.nu/logs/xlogfile-eu', configfileurl: 'https://un.nethack.nu/rcfiles/random_user.nethackrc'
-    Server.create name: 'uun', variant: 'unnethack', url: 'un.nethack.nu', xlogurl: 'https://un.nethack.nu/logs/xlogfile-us', configfileurl: 'https://un.nethack.nu/rcfiles/random_user.nethackrc'
+    Server.create name: 'nao', variant: 'NetHack 3.4.3-NAO', url: 'nethack.alt.org', xlogurl: 'http://alt.org/nethack/xlogfile.full.txt', configfileurl: 'http://alt.org/nethack/userdata/random_user/random_user.nh343rc'
+    Server.create name: 'eun', variant: 'UnNetHack 5.3.0', url: 'un.nethack.nu', xlogurl: 'https://un.nethack.nu/logs/xlogfile-eu', configfileurl: 'https://un.nethack.nu/rcfiles/random_user.nethackrc'
+    Server.create name: 'uun', variant: 'UnNetHack 5.3.0', url: 'un.nethack.nu', xlogurl: 'https://un.nethack.nu/logs/xlogfile-us', configfileurl: 'https://un.nethack.nu/rcfiles/random_user.nethackrc'
     #Server.create name: 'shc', variant: 'sporkhack', url: 'sporkhack.com', xlogurl: 'http://sporkhack.com/xlogfile', configfileurl: 'http://sporkhack.com/rcfiles/random_user.nethackrc'
-    Server.create name: 'gho', variant: 'grunthack', url: 'grunthack.org', xlogurl: 'http://grunthack.org/xlogfile', configfileurl: 'http://grunthack.org/userdata/random_user/random_user.gh020rc'
-    Server.create name: 'nh4', variant: 'nethack4', url: 'nethack4.org', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
+    Server.create name: 'gho', variant: 'GruntHack 0.2.0', url: 'grunthack.org', xlogurl: 'http://grunthack.org/xlogfile', configfileurl: 'http://grunthack.org/userdata/random_user/random_user.gh020rc'
+    Server.create name: 'nh4', variant: 'NetHack4 4.3.0', url: 'nethack4.org', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
+  end
+  down do
+    Server.destroy
+  end
+end
+
+DataMapper::MigrationRunner.migration( 2, :nethack_xd_cm_server ) do
+  up do
+      Server.create name: 'nxc_nao', variant: 'NetHack 3.4.3-NAO', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/nethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+      Server.create name: 'nxc_dnh', variant: 'dNetHack 3.9.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/dnethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+      Server.create name: 'nxc_nh4k', variant: 'NetHack Fourk 4.3.0.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/nh4k', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
   end
   down do
     Server.destroy
