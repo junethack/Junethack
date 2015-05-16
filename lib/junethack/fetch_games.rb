@@ -65,7 +65,7 @@ def fetch_all
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "start scummed game"
                                 count_scummed_games += 1
-                            elsif ['explore','multiplayer','debug','polyinit','setseed'].include? hgame['mode'] then
+                            elsif ['explore','multiplayer','debug','polyinit','setseed','abnormal'].include? hgame['mode'] then
                                 game = JunkGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "junk game"
                                 count_junk_games += 1

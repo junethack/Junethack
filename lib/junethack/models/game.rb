@@ -148,6 +148,7 @@ class Game
     def version=(new_version)
       new_version = "UNH" if new_version.start_with? 'UNH-'
       new_version = "DNH" if new_version.start_with? 'DNH-'
+      new_version = "slth" if new_version.start_with? 'slth-'
       super new_version
     end
 
@@ -204,6 +205,9 @@ class Game
 
     # nh4k-specific properties
     property :variant, String
+
+    # SlashTHEM-specific properties
+    property :modes, String
 
     def defeated_medusa?
         (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)

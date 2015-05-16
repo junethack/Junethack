@@ -27,6 +27,7 @@ $variants_mapping["4.3.0"]     = "NetHack4"
 $variants_mapping["NH-1.3d"]   = "NetHack 1.3d"
 $variants_mapping["DNH"]       = "dNetHack"
 $variants_mapping["3.0.1"]     = "NetHack Fourk"
+$variants_mapping["slth"]      = "SlashTHEM"
 
 # hard coded ordering of variants with competition score entries
 # order by release date
@@ -39,6 +40,7 @@ $variants << "0.2.0"
 $variants << "4.3.0"
 $variants << "DNH"
 $variants << "3.0.1"
+$variants << "slth"
 
 def helper_get_variant_for(description)
     # hard coded descriptions for some variants

@@ -254,3 +254,10 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "nethack fourk"
   end
 end
+
+DataMapper::MigrationRunner.migration( 5, :create_slashthem_trophies ) do
+  up do
+    # add all already existing variants
+    Trophy.check_trophies_for_variant "slashthem"
+  end
+end

@@ -94,3 +94,12 @@ DataMapper::MigrationRunner.migration( 3, :update_urls_public_server ) do
     Server.destroy
   end
 end
+
+DataMapper::MigrationRunner.migration( 2, :slashthem ) do
+  up do
+      Server.create name: 'nxc_slth', variant: "SlashTHEM 0.6.0", url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/slashthem', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+  end
+  down do
+    Server.destroy
+  end
+end
