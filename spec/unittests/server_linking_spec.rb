@@ -17,7 +17,7 @@ describe 'server linking helper methods' do
 
       game = Game.new(:name => 'player', :endtime => 123456)
       un_nethack_nu = Server.new(:url => 'un.nethack.nu')
-      un_nethack_nu.dumplog_link(game).should == "http://un.nethack.nu/user/player/dumps/player.123456.txt.html"
+      un_nethack_nu.dumplog_link(game).should == "https://un.nethack.nu/user/player/dumps/us/player.123456.txt.html"
 
       game = Game.new(:name => 'player', :starttime => 123456)
       grunthack = Server.new(:url => 'grunthack.org')
