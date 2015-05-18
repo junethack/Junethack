@@ -1,6 +1,6 @@
 %h3
   Competition
-- $variants.each do |variant|
+- $variant_order.each do |variant|
   - @variant = variant
   %h4= $variants_mapping[variant]
   - if (CompetitionScoreEntry.count :variant => @variant) == 0

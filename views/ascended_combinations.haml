@@ -8,7 +8,7 @@
       %th Alignment
       %th Gender
     - count = 0
-    - $variants.each do |variant|
+    - $variant_order.each do |variant|
       - combinations = repository.adapter.select @ascended_combinations_sql+" and version = ?", @ascended_combinations_value, variant
       - combinations.each do |c|
         - style = (count % 2) == 0 ? "cell1" : "cell2"

@@ -27,7 +27,7 @@
                         Trophies
                     %ul
                         =haml :user_cross_variant_trophies
-                        - for @variant in $variants
+                        - for @variant in $variant_order
                             =haml :user_trophies
                         - @variant = "NH-1.3d"
                         =haml :user_trophies

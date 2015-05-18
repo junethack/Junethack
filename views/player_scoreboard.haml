@@ -5,11 +5,11 @@
       %h2
         Player scoreboard
     %section#page_outline.text_content
-      - $variants.each do |variant|
+      - $variant_order.each do |variant|
         - variant_name = $variants_mapping[variant]
         %p
           %a{:href => "##{variant}"}= variant_name
-    - $variants.each do |variant|
+    - $variant_order.each do |variant|
       - variant_name = $variants_mapping[variant]
       %section.text_content
         %h3{:id => variant}= variant_name

@@ -34,46 +34,46 @@ end
 # King of the world: ascend in all variants
 def king_of_the_world?(user)
     anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and ascended='t';", user
-    return anz[0] == $variants.size
+    return anz[0] == $variant_order.size
 end
 
 def prince_of_the_world?(user)
     anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and ascended='t';", user
-    return anz[0] >= ($variants.size/2)
+    return anz[0] >= ($variant_order.size/2)
 end
 
 # Sightseeing tour: finish a game in all variants (die after at least 1000 turns or ascend)
 def sightseeing_tour?(user)
     anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and turns >= 1000;", user
-    return anz[0] == $variants.size
+    return anz[0] == $variant_order.size
 end
 # Walk In The Park: finish a game in half of the variants
 def walk_in_the_park?(user)
     anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and turns >= 1000;", user
-    return anz[0] >= ($variants.size/2)
+    return anz[0] >= ($variant_order.size/2)
 end
 
 
 #  Globetrotter: get a trophy for each variant
 def globetrotter?(user)
     anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d';", user
-    return anz[0] == $variants.size
+    return anz[0] == $variant_order.size
 end
 # Backpacking tourist: get a trophy for half of the variants
 def backpacking_tourist?(user)
     anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d';", user
-    return anz[0] >= ($variants.size/2)
+    return anz[0] >= ($variant_order.size/2)
 end
 
 # Anti-Stoner: defeat Medusa in each variant
 def anti_stoner?(user)
     anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d' and trophy='defeated_medusa';", user
-    return anz[0] == $variants.size
+    return anz[0] == $variant_order.size
 end
 # Hemi-Stoner: defeat Medusa in half of the variants
 def hemi_stoner?(user)
     anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d' and trophy='defeated_medusa';", user
-    return anz[0] >= ($variants.size/2)
+    return anz[0] >= ($variant_order.size/2)
 end
 
 
