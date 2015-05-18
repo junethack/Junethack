@@ -72,4 +72,10 @@ class StartScummedGame
 
     # dnethack-specific properties
     property :dnetachieve, String
+
+    # nh4k-specific properties
+    property :variant, String
+
+    # SlashTHEM-specific properties
+    property :modes, String
 end
