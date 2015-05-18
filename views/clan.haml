@@ -79,7 +79,7 @@
           Clan variant/trophy combinations
         %ul
           - user_ids = Clan.first(:name => @clan.name).accounts.collect {|a| a.user_id}.uniq
-          - for variant in $variants
+          - for variant in $variant_order
             =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
           =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => "NH-1.3d"}
 

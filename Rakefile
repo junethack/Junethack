@@ -135,7 +135,7 @@ namespace :db do
 
         puts
         puts "Tournament games by variant"
-        $variants.each do |v|
+        $variant_order.each do |v|
             puts "#{$variants_mapping[v]}: #{Game.all(:conditions => [ "user_id > 0 and version = '#{v}'" ]).count}"
         end
     end
