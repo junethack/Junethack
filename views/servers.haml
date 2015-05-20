@@ -9,8 +9,6 @@
             Abbreviation
           %th
             Variant name
-          %th
-            Administrator
         - Server.all.each do |server|
           %tr
             %td
@@ -18,7 +16,5 @@
             %td
               %a{href: "/server/#{server.name}"}="#{server.name.upcase}"
             %td
-              vanilla
-            %td
-              paxed
+              #{server.variant}
       %span#end_of_content_spacer.clear
