@@ -38,9 +38,9 @@
                 %ul
                     - @player = @user
                     =haml :user_cross_variant_trophies
+                    - @variant = "NH-1.3d"
                     - for @variant in $variant_order
                         =haml :user_trophies
-                    - @variant = "NH-1.3d"
                     =haml :user_trophies
 
         %section.text_content.non_top_post

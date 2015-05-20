@@ -54,6 +54,8 @@ class Server
             return "https://nethack.xd.cm/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
         when "3.0.1"
             return "https://nethack.xd.cm/userdata/#{game.name}/nh4k/4.3.0.1/dumps/#{game.dumplog.tr("_",":")}"
+        when "NH-1.3d"
+            return "https://nethack.xd.cm/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
         end
       else
         return nil
@@ -98,6 +100,15 @@ end
 DataMapper::MigrationRunner.migration( 2, :slashthem ) do
   up do
       Server.create name: 'nxc_slth', variant: "SlashTHEM 0.6.0", url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/slashthem', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+  end
+  down do
+    Server.destroy
+  end
+end
+
+DataMapper::MigrationRunner.migration( 4, :oldhack ) do
+  up do
+      Server.create name: 'nxc_n13', variant: "NetHack 1.3d", url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/oldhack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
   end
   down do
     Server.destroy
