@@ -246,7 +246,6 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
   up do
     # add all already existing variants
     Trophy.check_trophies_for_variant "vanilla"
-    Trophy.check_trophies_for_variant "sporkhack"
     Trophy.check_trophies_for_variant "unnethack"
     Trophy.check_trophies_for_variant "grunthack"
     Trophy.check_trophies_for_variant "nethack4"
