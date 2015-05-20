@@ -2,12 +2,8 @@
   .text_content_wrapper
     .text_content
       %h2
-        #{h @server.name} - #{h @server.variant} server @ #{h @server.url}
-      %h3
-        Url: #{h @server.url}
-      %h3
-        Variant: #{h @server.variant}
-    .text_content.non_top_post
+        <a href="#{h @server.url}">#{h @server.hostname}</a> - #{h @server.variant}
+    .text_content
       %h3= "Last #{@games.size} Games played"
       .scorelisting#no-more-tables
         %table.greytable.cf
