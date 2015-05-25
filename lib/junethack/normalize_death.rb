@@ -47,6 +47,17 @@ class Game
     # poisoned by a rotted {monster} corpse -> poisoned by a rotted corpse
     death = death.gsub(/poisoned by a rotted .* corpse/, "poisoned by a rotted corpse")
 
+    # wrath of dieties
+    death = death.gsub(/wrath of .+/, "wrath of a diety")
+
+    # consolidate priest & priestess gender; strip the diety.
+    death = death.gsub(/priest(ess)?/, "priest(ess)")
+    death = death.gsub(/priest\(ess\) of .+/, "priest(ess) of a diety")
+
+    # killed by the {minion} of {diety} -> 'killed by the minion of a diety'.
+    # minion list is from vanilla...
+    death = death.gsub(/\w+ elemental|Aleax|couatl|Angel|\w+ demon|\w+ devil|(suc|in)cubus|balrog|pit fiend|nalfeshnee|hezrou|vrock|marilith|erinyes) of .+/, "minion of a diety")
+
     death
   end
 end
