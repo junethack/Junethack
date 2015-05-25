@@ -56,42 +56,36 @@
         %section#clanmanager.text_content.non_top_post
             %h2
                 Manage your clan
-            - for account in @user.accounts
-                .account-clan
-                    %h3= account.name
-                    - if account.clan
-                        %a{:href => "/clan/#{CGI::escape account.clan.name}"}= account.clan.name
-                        %a{:href => "/leaveclan/#{account.server.id}"} Leave
-                        - if account != @user.accounts.last
-                            %span#small_content_spacer.clear
+            .account-clan
+                - if @user.clan
+                    %a{:href => "/clan/#{CGI::escape @user.clan.name}"}= @user.clan.name
+                    %a{:href => "/leaveclan"} Leave
+                - else
+                    - unless @user.invitations and @user.invitations.empty?
+                        %p
+                            You have
+                            = @user.invitations.length
+                            invitation(s)
+                        .scorelisting
+                            %table
+                                %tr
+                                    %th Clan
+                                    %th Accept
+                                    %th Decline
+                                    - for invitation in @user.invitations
+                                        %tr
+                                            %td= invitation['clan_id']
+                                            %td
+                                                %a{:href => "/respond/#{invitation['token']}?accept=true"} Accept
+                                            %td
+                                                %a{:href => "/respond/#{invitation['token']}?accept=false"} Decline
                     - else
-                        - unless account.invitations and account.invitations.empty?
-                            %p
-                                You have
-                                = account.invitations.length
-                                invitation(s)
-                            .scorelisting
-                                %table
-                                    %tr
-                                        %th Clan
-                                        %th Accept
-                                        %th Decline
-                                        - for invitation in account.invitations
-                                            %tr
-                                                %td= invitation['clan_id']
-                                                %td
-                                                    %a{:href => "/respond/#{account.server.id}/#{invitation['token']}?accept=true"} Accept
-                                                %td
-                                                    %a{:href => "/respond/#{account.server.id}/#{invitation['token']}?accept=false"} Decline
-                        - else
-                            %p
-                                No invitations for this account
-        - clanless_accs = @user.accounts.select{|a| a.clan.nil?}
-        - if not @user.clan and not clanless_accs.empty?
+                        %p
+                            No invitations for this user
+        - if not @user.clan
             %section.text_content.non_top_post
                 %h2 Create a new clan
                 %form#create_clan_form.smallform{:method => "POST", :action => "/clan"}
-                    %input{:type => "hidden", :value => clanless_accs.first.server.id, :name => "server"}
                     %label{:for => "clanname"} Clan name
                     %input#clanname{:name => "clanname", :type => "text", :placeholder => "clan name"}
                     %input{:type => "submit", :value => "Create clan"}

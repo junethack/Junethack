@@ -379,25 +379,25 @@ def ascended_combinations_user_sql
     "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id = ?"
 end
 def ascended_combinations_sql
-    "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT id FROM users WHERE clan = ?)"
+    "SELECT DISTINCT version, role, race, align0, gender0 from games where ascended = 't' and user_id in (SELECT id FROM users WHERE clan_name = ?)"
 end
 def unique_deaths_sql
-    "SELECT DISTINCT death from normalized_deaths where user_id in (SELECT id FROM users WHERE clan = ?)"
+    "SELECT DISTINCT death from normalized_deaths where user_id in (SELECT id FROM users WHERE clan_name = ?)"
 end
 
 def variant_trophy_combinations_sql
-    "SELECT DISTINCT variant, trophy from (SELECT user_id, variant, trophy from scoreentries UNION SELECT user_id, variant, trophy from competition_score_entries where rank = 1) where user_id in (SELECT id FROM users WHERE clan = ?)"
+    "SELECT DISTINCT variant, trophy from (SELECT user_id, variant, trophy from scoreentries UNION SELECT user_id, variant, trophy from competition_score_entries where rank = 1) where user_id in (SELECT id FROM users WHERE clan_name = ?)"
 end
 def variant_trophy_combinations_user_sql
     "SELECT DISTINCT variant, trophy from (SELECT user_id, variant, trophy from scoreentries UNION SELECT user_id, variant, trophy from competition_score_entries = 1) where user_id = ?"
 end
 
 def most_ascensions_in_a_24_hour_period(clan)
-    clan_endtimes = repository.adapter.select "select * from (select (select clan from users where user_id = id) as clan, endtime, endtime+86400 as endtime_end from games where ascended='t' and clan = ? and user_id is not null order by endtime)", clan
+    clan_endtimes = repository.adapter.select "select * from (select (select clan_name from users where user_id = id) as clan, endtime, endtime+86400 as endtime_end from games where ascended='t' and clan = ? and user_id is not null order by endtime)", clan
 
     max_ascensions = 0
     clan_endtimes.each do |e|
-        ascensions = (repository.adapter.select "select count(1) from games where (select clan from users where user_id = id) = ? and ascended='t' and endtime >= ? and endtime <= ?", e.clan, e.endtime, e.endtime_end)[0]
+        ascensions = (repository.adapter.select "select count(1) from games where (select clan_name from users where user_id = id) = ? and ascended='t' and endtime >= ? and endtime <= ?", e.clan, e.endtime, e.endtime_end)[0]
         max_ascensions = ascensions if ascensions > max_ascensions
     end
     return max_ascensions
@@ -407,9 +407,9 @@ def update_clan_scores(game)
     return true if not game.user_id
 
     # Clan competition
-    clan_name = (User.get game.user_id).clan
+    clan_name = (User.get game.user_id).clan_name
     if clan_name then
-        log_points = (repository.adapter.select "SELECT SUM(length(points)-1) FROM games WHERE user_id in (SELECT id FROM users WHERE clan = ?);", clan_name)[0]
+        log_points = (repository.adapter.select "SELECT SUM(length(points)-1) FROM games WHERE user_id in (SELECT id FROM users WHERE clan_name = ?);", clan_name)[0]
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_log_points",
                                         :icon => "clan-points.png")
@@ -447,7 +447,7 @@ def update_clan_scores(game)
 
         # new clan trophies for 2013
         # Most Medusa kills
-        clanGames = Game.all(:user_id => User.all(:clan => clan_name))
+        clanGames = Game.all(:user_id => User.all(:clan_name => clan_name))
         most_medusa_kills = 0
         clanGames.each {|game| most_medusa_kills +=1 if game.defeated_medusa? }
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
@@ -457,7 +457,7 @@ def update_clan_scores(game)
         c.save
 
         # Most games with all conducts broken
-        most_full_conducts_broken = (repository.adapter.select "SELECT count(1) FROM games WHERE nconducts = 0 and user_id in (SELECT id FROM users WHERE clan = ?) and version != 'NH-1.3d';", clan_name)[0]
+        most_full_conducts_broken = (repository.adapter.select "SELECT count(1) FROM games WHERE nconducts = 0 and user_id in (SELECT id FROM users WHERE clan_name = ?) and version != 'NH-1.3d';", clan_name)[0]
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_full_conducts_broken",
                                         :icon => "clan-full-conducts-broken.png")

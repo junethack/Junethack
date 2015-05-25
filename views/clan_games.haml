@@ -13,7 +13,7 @@
         -# download column
         %th
         %th Time (UTC)
-    - games = Game.all(:user_id => User.all(:clan => @clan.name))
+    - games = Game.all(:user_id => User.all(clan_name: @clan.name))
     - count = 0
     - games.each do |game|
       - style = (count % 2) == 0 ? "cell1" : "cell2"

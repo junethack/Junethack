@@ -44,8 +44,7 @@
             #clanmanager.text_content.non_top_post
                 %h2 Clan
                 - if @player.clan
-                    - clan = Clan.get @player.clan
-                    %a{:href => "/clan/#{CGI::escape clan.name}"}= clan.name
+                    %a{:href => "/clan/#{CGI::escape @player.clan.name}"}= @player.clan.name
                     %span#small_content_spacer.clear
                 - else
                     No clan
