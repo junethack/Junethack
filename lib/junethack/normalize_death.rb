@@ -2,7 +2,7 @@ require 'pry'
 class Game
   def normalize_death
     # no need to be grammatical correct
-    death = self.death.gsub /^killey by an /, "killed by a "
+    death = self.death.gsub /^killed by an /, "killed by a "
 
     death = death.gsub /, while .*/, ""
 
@@ -34,6 +34,10 @@ class Game
     else
       death = death.gsub(/killed by kicking .*/, "killed by kicking something")
     end
+
+    # killed by a falling {foo} -> killed by a falling object (except for rock from a rock trap).
+    deaths = death.gsub(/killed by a falling (?!rock).*$/, "killed by a falling object")
+
     death
   end
 end
