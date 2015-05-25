@@ -1,0 +1,59 @@
+%section.content_bulk
+  .text_content_wrapper
+    / This h2 should be in the branding section
+    %section.text_content
+      %h2
+        Trophy scoreboard
+    %section#page_outline.text_content
+      %p
+        %a{:href => "#cross-variant"} Cross-Variant
+      / ideally we would use the names already described in /servers
+      - (["NH-1.3d"]+$variant_order).each do |variant|
+        - variant_name = $variants_mapping[variant]
+        %p
+          %a{:href => "##{variant}"}= variant_name
+    %section.text_content.trophycabinet
+      %h3{:id => "cross-variant"} Cross-Variant
+      %ul
+        - Trophy.cross_variant_trophies.each do |trophy|
+          %li
+            - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id, icon from individualtrophies where trophy = ? order by upper(user);", trophy.trophy
+            - icon = (users.size > 0) ? trophy.icon : trophy.light_icon
+            %a.imagelink{:title => trophy.text, :href => "/trophies##{trophy.anchor}"}
+              %img.trophyleft{:src => "/icons/#{icon}", :alt => trophy.text}
+            .trophyright
+              - users.each do |u|
+                %span
+                  %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
+
+    - (["NH-1.3d"]+$variant_order).each do |variant|
+      - variant_name = $variants_mapping[variant]
+      %section.text_content.trophycabinet
+        %h3{:id => variant}= variant_name
+        %ul
+          - count = Trophy.achieved_user_all_stuff_trophies_count variant
+          - if count > 0
+            - trophies = Trophy.user_all_stuff_trophies variant
+            - trophies.each do |trophy|
+              %li
+                - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id from scoreentries where variant = ? and trophy = ? order by upper(user);", variant, trophy.trophy
+                - icon = (users.size > 0) ? trophy.icon : trophy.light_icon
+                %a.imagelink{:title => trophy.text, :href => "/trophies##{trophy.anchor}"}
+                  %img.trophyleft{:src => "/icons/#{icon}", :alt => trophy.text}
+                .trophyright
+                  - users.each do |u|
+                    %span
+                      %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
+
+          - trophies = Trophy.user_trophies variant
+          - trophies.each do |trophy|
+            %li
+              - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id from scoreentries where variant = ? and trophy = ? order by upper(user);", variant, trophy.trophy
+              - icon = (users.size > 0) ? trophy.icon : trophy.light_icon
+              %a.imagelink{:title => trophy.text, :href => "/trophies##{trophy.anchor}"}
+                %img.trophyleft{:src => "/icons/#{icon}", :alt => trophy.text}
+              .trophyright
+                - users.each do |u|
+                  %span
+                    %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
+

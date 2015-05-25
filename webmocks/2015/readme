@@ -1,0 +1,20 @@
+Redesign objectives
+===================
+
+1. provide a bare-bones improved content hierarchy.
+2. focus on usability.
+3. do not solve aesthetic issues.  make note of them if necessary.
+4. remove unnecessary markup.
+5. don't optimise css.
+6. if unnecessary markup can't be removed without optimising css, leave it there and make note.
+
+Redesigns
+=========
+
+Navigation - index.html
+- begin from webmocks/2013/content_design and docs/2013/contentmap_proposed2.md.
+- final output in layout.haml
+
+Scoreboard - user.html, scoreboard.html
+
+

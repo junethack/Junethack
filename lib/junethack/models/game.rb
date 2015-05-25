@@ -148,7 +148,7 @@ class Game
     def version=(new_version)
       new_version = "UNH" if new_version.start_with? 'UNH-'
       new_version = "DNH" if new_version.start_with? 'DNH-'
-      new_version = "4.2.1" if new_version == '4.3.0'
+      new_version = "slth" if new_version.start_with? 'slth-'
       super new_version
     end
 
@@ -194,11 +194,20 @@ class Game
     property :extrinsic, String
     property :intrinsic, String
     property :temporary, String
+    property :rngseed,   String
+    property :dumplog,   String
+    property :birthoption, String
     property :starttimeus, Integer
     property :endtimeus,   Integer
 
     # dnethack-specific properties
     property :dnetachieve, String
+
+    # nh4k-specific properties
+    property :variant, String
+
+    # SlashTHEM-specific properties
+    property :modes, String
 
     def defeated_medusa?
         (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)

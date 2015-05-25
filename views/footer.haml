@@ -1,47 +1,8 @@
-.footer
-  %footer
-    %ul
-      %li
-        .footer_column
-          %ul
-            %li
-              %h3 Junethack
-            %li
-              %a{:href => "/authors.txt"} Junethack developers
-            %li
-              %a{:href => "/about"} About
-      %li
-        .footer_column
-          %ul
-            %li
-              %h3 Tournament
-            %li
-              %a{:href => "/rules"} Rules
-            %li
-              %a{:href => "/trophies"} Trophies
-      %li
-        .footer_column
-          %ul
-            %li
-              %h3 Activity
-            %li
-              %a{:href => "/activity"} Statistics
-            %li
-              %a{:href => "/servers"} Servers
-      %li
-        .footer_column
-          %ul
-            %li
-              %h3 Scoreboards
-            %li
-              %a{:href => "/scoreboard"} Scoreboard
-            %li
-              %a{:href => "/clan_competition"} Clan scores
-      .footer_column
-        %ul
-          %li
-            .center
-              %img{:alt => "Junethack logo", :src =>"/vivid_divider.png"}
-          %li
-            .center
-              &copy; 2011-2014 Junethack developers
+/ This footer is using the minimum markup using current css.  In future, footer css should be optimised to match existing conventions, eg declarations based on clasess.
+%footer.footer
+  %ul
+    %li
+      .center
+        %img.logo{:alt => "logo", :src =>"/logo.png"}
+      .center
+        &copy; 2011-2015 Junethack developers

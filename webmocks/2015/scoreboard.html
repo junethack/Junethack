@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html xmlns:og="http://ogp.me/ns#">
+  <head>
+    <meta content="application/xhtml+xml;charset=utf-8" http-equiv="content-type">
+    <title> Junethack - 195 players registered - 6416 games played! </title>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Junethack" />
+    <meta property="og:url" content="https://junethack.de/" />
+    <meta property="og:description" content="The NetHack Cross-Variant Summer Tournament" />
+    <meta property="og:image" content="https://junethack.de/apple-touch-icon.png" />
+    <link rel="alternate" type="application/rss+xml" title="Junethack" href="https://junethack.de/junethack.rss" />
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+
+    <!-- purecss.io -->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/base-min.css">
+
+    <!-- our styles -->
+    <link rel="stylesheet" href="../../public/style.css">
+    <link rel="stylesheet" href="../../public/back-to-top.css">
+    <link rel="stylesheet" href="scoreboard.css">
+
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="../../public/favicon.ico">
+    <link rel="apple-touch-icon" href="../../public/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../../public/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../../public/apple-touch-icon-114x114.png">
+
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p>
+    <![endif]-->
+
+
+    <!-- Primary Page Layout
+    ================================================== -->
+
+    <div id="container">
+      <a href="#" id="back_to_top">Back to top</a>
+      <div class="navigation" id="topnav">
+
+        <!-- the preferred position for logo, but requires changing css
+        <header>
+          <a href="#" class="logo">
+            <img src="../../public/logo.png" class="logo" />
+          </a>
+        </header>
+        -->
+
+        <nav>
+          <ul class="main">
+
+            <li class="first">
+              <a href="/" class="logo">
+                <img src="../../public/logo.png" class="logo" />
+              </a>
+            </li>
+
+            <li>
+              <a href="register_or_profile">
+                Register/Profile
+              </a>
+            </li>
+
+            <li>
+              <a href="/scoreboard">
+                Results
+              </a>
+            </li>
+
+            <li>
+              <a href="activity">
+                Tournament stats
+              </a>
+              <ul class="nested">
+                <li>
+                  <a href="activity">
+                    Summary
+                  </a>
+                </li>
+                <li>
+                  <a href="/clans">
+                    Clans
+                  </a>
+                </li>
+                <li>
+                  <a href="/users">
+                    Users
+                  </a>
+                </li>
+                <li>
+                  <a href="/games">
+                    Games
+                  </a>
+                </li>
+                <li>
+                  <a href="/servers">
+                    Servers
+                  </a>
+                </li>
+                <li>
+                  <a href="/ascensions">
+                    Ascensions
+                  </a>
+                </li>
+                <li>
+                  <a href="/deaths">
+                    Deaths
+                  </a>
+                </li>
+                <li>
+                  <a href="/player_scoreboard">
+                    Player scoreboard
+                  </a>
+                </li>
+                <li>
+                  <a href="/trophy_scoreboard">
+                    Trophy scoreboard
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="/about">
+                About
+              </a>
+              <ul class="nested">
+                <li>
+                  <a href="/rules">
+                    Rules
+                  </a>
+                </li>
+                <li>
+                  <a href="/trophies">
+                    Trophies
+                  </a>
+                </li>
+                <li>
+                  <a href="/archive/2013/index.html">
+                    2013 tournament
+                  </a>
+                </li>
+                <li>
+                  <a href="/archive/2012/index.html">
+                    2012 tournament
+                  </a>
+                </li>
+                <li>
+                  <a href="/archive/2011/index.html">
+                    2011 tournament
+                  </a>
+                </li>
+                <li>
+                  <a href="/authors.txt">
+                    The project
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="login_or_logout">
+                Login/out
+              </a>
+            </li>
+
+          </ul>
+          <span class="clear"></span>
+        </nav>
+      </div>
+
+      <div id="page_content">
+        <section id="welcome" class="hcenter">
+          <h1>
+            Player scoreboard
+          </h1>
+        </section>
+
+        <!--
+        We make new pages for the trophy section and the between-players
+        competition to their own individual pages under tournament stats,
+        and substitute the contents of clan_competition for this entire
+        page.
+        -->
+
+        <section class="content_bulk">
+          <div class="text_content_wrapper">
+            <section id="page_outline" class="text_content">
+              <p>
+                <a href="#scores_by_variant">
+                  Scores by variant (wide screen view)
+                </a>
+              </p>
+              <p>
+                <a href="#scores_by_category">
+                  Scores by category
+                </a>
+              </p>
+            </section>
+            <section class="text_content"><!-- semantic -->
+              <h3 id="scores_by_variant">
+                Scores by variant (Wide screen view)
+              </h3>
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    Nethack 3.4.3
+                  </caption>
+                  <colgroup>
+                    <col>
+                    <col span="2">
+                    <col span="2">
+                    <col span="2">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>
+                        Category
+                      </th>
+                      <th>
+                        First place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                      <th>
+                        Second place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                      <th>
+                        Third place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>
+                        Most ascensions
+                      </th>
+                      <td>
+                        codehappy
+                      </td>
+                      <td>
+                        15
+                      </td>
+                      <td>
+                        MrSnide
+                      </td>
+                      <td>
+                        14
+                      </td>
+                      <td>
+                        Stroller
+                      </td>
+                      <td>
+                        9
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Longest ascension streak
+                      </th>
+                      <td>
+                        codehappy
+                      </td>
+                      <td>
+                        9
+                      </td>
+                      <td>
+                        <ul>
+                          <li> rschaff </li>
+                          <li> MrSnide </li>
+                          <li> Stroller </li>
+                        </ul>
+                      </td>
+                      <td>
+                        7
+                      </td>
+                      <td>
+                        DredNicolson
+                      </td>
+                      <td>
+                        4
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Fastest ascension (turns)
+                      </th>
+                      <td>
+                        stenno
+                      </td>
+                      <td>
+                        17791
+                      </td>
+                      <td>
+                        Wooble
+                      </td>
+                      <td>
+                        20818
+                      </td>
+                      <td>
+                        codehappy
+                      </td>
+                      <td>
+                        21604
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Fastest ascension (wall-clock time)
+                      </th>
+                      <td>
+                        I_Won_Wars
+                      </td>
+                      <td>
+                        3 h 13 m 15 s
+                      </td>
+                      <td>
+                        scorchgeek
+                      </td>
+                      <td>
+                        5 h 48 m 57 s
+                      </td>
+                      <td>
+                        codehappy
+                      </td>
+                      <td>
+                        7 h 27 m 30 s
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Highest scoring ascension
+                      </th>
+                      <td>
+                        Raisse
+                      </td>
+                      <td>
+                        14078004
+                      </td>
+                      <td>
+                        rschaff
+                      </td>
+                      <td>
+                        5839570
+                      </td>
+                      <td>
+                        zHz
+                      </td>
+                      <td>
+                        4899672
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Lowest scoring ascension
+                      </th>
+                      <td>
+                        DeuceofJune
+                      </td>
+                      <td>
+                        94490
+                      </td>
+                      <td>
+                        codehappy
+                      </td>
+                      <td>
+                        841826
+                      </td>
+                      <td>
+                        Wooble
+                      </td>
+                      <td>
+                        1087340
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Most conducts in a single ascension
+                      </th>
+                      <td>
+                        DeuceofJune
+                      </td>
+                      <td>
+                        10
+                      </td>
+                      <td>
+                        DredNicolson
+                      </td>
+                      <td>
+                        5
+                      </td>
+                      <td>
+                        <ul>
+                          <li> codehappy </li>
+                          <li> allihaveismymind </li>
+                          <li> Mortuis </li>
+                          <li> schistosomatic </li>
+                          <li> bose </li>
+                          <li> scorchgeek </li>
+                        </ul>
+                      </td>
+                      <td>
+                        4
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="5">
+                        42 games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    SporkHack
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    UnNetHack
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    AceHack
+                  </caption>
+                  <colgroup>
+                    <col>
+                    <col span="2">
+                    <col span="2">
+                    <col span="2">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>
+                        Category
+                      </th>
+                      <th>
+                        First place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                      <th>
+                        Second place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                      <th>
+                        Third place
+                      </th>
+                      <th>
+                        Score
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>
+                        Most ascensions
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        1
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Longest ascension streak
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        1
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Fastest ascension (turns)
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        29817791
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Fastest ascension (wall-clock time)
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        9 h 52 m 41 s
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Highest scoring ascension
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        4078004
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Lowest scoring ascension
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        4078004
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>
+                        Most conducts in a single ascension
+                      </th>
+                      <td>
+                        bhaak
+                      </td>
+                      <td>
+                        3
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                      <td>
+                        &nbsp;
+                      </td>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        1 game has been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    GruntHack
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    NetHack4
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+              <!-- next variant -->
+              <article class="scoreboard_table">
+                <table>
+                  <caption>
+                    DNetHack
+                  </caption>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        No games have been played in this variant.
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </article>
+            </section>
+            <section class="text_content"><!-- semantic -->
+              <h3 id="scores_by_category">
+                Scores by category
+              </h3>
+            </section>
+          </div>
+
+        </section>
+      </div>
+
+      <!-- this footer is using the minimum markup to display
+      an acceptable solution using the current css.  footer css
+      should be optimised to match existing conventions, eg
+      declarations based on classes. -->
+      <footer class="footer">
+        <ul>
+          <li>
+            <div class="center">
+              <img src="../../public/logo.png" class="logo" />
+            </div>
+            <p class="center">&copy; 2011-2014 Junethack developers</p>
+          </li>
+        </ul>
+      </footer>
+
+    </div><!-- container -->
+
+
+  <!-- End Document
+  ================================================== -->
+    <script>
+      var nav = responsiveNav(".nav-collapse");
+    </script>
+  </body>
+</html>

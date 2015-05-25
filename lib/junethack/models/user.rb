@@ -8,16 +8,21 @@ class User
     has n, :servers, :through => :accounts
     has n, :games, :through => :servers
 
+    belongs_to :clan,   :required => false
+
     property :id,       Serial
     property :login,    String
     property :hashed,   String, :length => 64
     property :salt,     String, :length => 64
-   
-    property :clan,     String
+
+    property :invitations, Json
+    before :save do
+        self.invitations ||= []
+    end
 
     property :created_at, DateTime
     property :updated_at, DateTime
- 
+
     validates_format_of :login, :with => /^\w*$/, :message => "login name may only contain a-z, A-Z, 0-9 and _"
 
     def password=(pw)
@@ -83,4 +88,10 @@ class User
         return game
     end
 
+    def respond_invite invitation, accept
+        if clan = Clan.first(:name => invitation['clan_id'])
+            invitation['status'] = accept ? 'accept' : 'decline'
+            return clan.get_invitation_response invitation
+        end
+    end
 end

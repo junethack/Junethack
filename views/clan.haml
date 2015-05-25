@@ -47,7 +47,7 @@
             User trophies
           %th
             Last game played (UTC)
-        - (User.all :clan => @clan.name, :order => [:login.asc]).each do |user|
+        - (User.all clan_name: @clan.name, order: [:login.asc]).each do |user|
           %tr
             %td
               %a{:href => "/user/" + user.login}
@@ -78,13 +78,13 @@
         %h2
           Clan variant/trophy combinations
         %ul
-          - user_ids = Clan.first(:name => @clan.name).accounts.collect {|a| a.user_id}.uniq
-          - for variant in $variants
-            =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
+          - user_ids = Clan.first(name: @clan.name).users.map {|user| user.id }.uniq
           =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => "NH-1.3d"}
+          - for variant in $variant_order
+            =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
 
     .text_content.non_top_post
-      - @games_played = Game.all(:user_id => User.all(:clan => @clan.name), :conditions => [ "ascended='t'" ], :order => [ :endtime.desc ])
+      - @games_played = Game.all(user_id: User.all(clan_name: @clan.name), conditions: [ "ascended='t'" ], order: [ :endtime.desc ])
       - @games_played_title = "Ascended Clan Games"
       - @games_played_user_links = true
       =haml :games_played

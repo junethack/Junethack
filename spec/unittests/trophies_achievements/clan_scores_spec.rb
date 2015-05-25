@@ -6,7 +6,7 @@ describe Game,"update_clan_scores" do
     clean_database
 
     clan = Clan.create(:name => "clan", :admin => [1,1])
-    $user = User.create(:login => "test_user", :clan => clan.name)
+    $user = User.create(:login => "test_user", :clan => clan)
   end
 
   # Games are saved first without user_id, the scoring calculation only triggers

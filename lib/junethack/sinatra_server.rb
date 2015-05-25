@@ -34,6 +34,7 @@ set :cache_enabled, false  # complet
 # Only listen to localhost.
 # Nginx acts as reverse proxy.
 set :bind, "127.0.0.1"
+set :port, ENV['JUNETHACK_PORT']||4567
 
 #enable :sessions
 use Rack::Session::Pool #fix 4kb session dropping
@@ -216,7 +217,7 @@ post "/add_server_account" do
         redirect "/home" and return
     end
     begin
-        account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true, :clan => Clan.get(@user.clan))
+        account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
         bot.say "#{@user.login} added account #{account.name} on #{server.name}"
     rescue
         session['errors'].push(*account.errors)
@@ -322,29 +323,20 @@ end
 
 post "/clan" do
   $db_access.synchronize {
-    acc = Account.first(:user_id => @user.id, :server_id => params[:server].to_i)
-    if acc
-        begin
-            clan = Clan.create(:name => params[:clanname], :admin => [acc.user.id, acc.server.id])
-        rescue
-            session['errors'] << "There was an error creating the clan"
-            redirect "/home" and return
-        end
-        if clan
-            acc.clan = clan
-            acc.save
-            @user.clan = clan.name
-            @user.save
-            session['messages'] << "Successfully created clan #{params[:clanname]}"
-            Event.new(:text => "New clan #{clan.name} created!", :url => "#{base_url}/clan/#{clan.name}").save
-            puts CGI.escape(acc.clan.name)
-            redirect "/clan/" + CGI.escape(acc.clan.name) and return
-        else
-            session['errors'] << "Could not create clan"
-        end
-    else 
-        session['errors'] << "Could not find your account on this server"
-        redirect "/home"
+    begin
+      clan = Clan.create(:name => params[:clanname], :admin => [@user.id, 1])
+    rescue
+      session['errors'] << "There was an error creating the clan"
+      redirect "/home" and return
+    end
+    if clan
+      @user.clan = clan
+      @user.save
+      session['messages'] << "Successfully created clan #{params[:clanname]}"
+      Event.new(:text => "New clan #{clan.name} created!", :url => "#{base_url}/clan/#{clan.name}").save
+      redirect "/clan/" + CGI.escape(clan.name) and return
+    else
+      session['errors'] << "Could not create clan"
     end
   }
 end
@@ -355,22 +347,13 @@ post "/clan/invite" do
     # verify that clan admin is inviting other users
     if clan.admin[0] == @user.id
         invited_user = User.first(:login => params[:accountname])
-        acc = nil
         if not invited_user then
             session['errors'] << "Could not find Junethack username #{params[:accountname]}"
         else
-            accounts = invited_user.accounts
-            if accounts and accounts.first then
-                acc = accounts.first
-            else
-                session['errors'] << "Player #{invited_user.login} has not yet connected any accounts."
-            end
-        end
-        if acc then
             chars = ('a'..'z').to_a
-            invitation = {'clan_id' => clan.name, 'status' => 'open', 'user' => acc.user.id, 'server' => params[:server], 'token' => (0..30).map{ chars[rand 26] }.join}
+            invitation = {'clan_id' => clan.name, 'status' => 'open', 'user' => @user.id, 'token' => (0..30).map{ chars[rand 26] }.join}
             clan.update(:invitations => (clan.invitations.push(invitation)).to_json)
-            acc.update(:invitations => (acc.invitations.push(invitation)).to_json)
+            invited_user.update(:invitations => (invited_user.invitations.push(invitation)).to_json)
             session['messages'] << "Successfully invited #{invited_user.login} to #{clan.name}"
         end
     else
@@ -379,38 +362,28 @@ post "/clan/invite" do
     redirect "/clan/#{CGI.escape(params[:clan])}"
   }
 end
-get "/respond/:server_id/:token" do #respond to invitation
+get "/respond/:token" do #respond to invitation
   $db_access.synchronize {
     puts "respond invite with params #{params.inspect}"
-    acc = @user.accounts.get(@user.id, params[:server_id].to_i)
-    if acc
-        invitation = acc.invitations.find{|inv| inv['token'] == params[:token]}
-        if invitation
-            accept = (params[:accept] == "true")
-            if acc.respond_invite invitation, accept
-                session['messages'] << "Successfully #{accept ? "accepted" : "declined"} invitation"
-                acc.invitations.reject!{|inv| inv['token'] == params[:token]}
-                if accept
-                    clan = Clan.first(:name => invitation['clan_id'])
-                    if clan
-                        for account in @user.accounts
-                            if account.clan.nil?
-                                account.clan = clan
-                                account.save
-                            end
-                        end
-                    end     
-                    @user.clan = acc.clan.name
-                    @user.save
-                end
-                acc.invitations = acc.invitations.to_json
-                acc.save
-            end
-        else
-            session['errors'] << "Could not find invitation"
+    invitation = @user.invitations.find{|inv| inv['token'] == params[:token]}
+    if invitation
+      accept = (params[:accept] == "true")
+      if @user.respond_invite invitation, accept
+        session['messages'] << "Successfully #{accept ? "accepted" : "declined"} invitation"
+        @user.invitations.reject!{|inv| inv['token'] == params[:token]}
+        if accept
+          clan = Clan.first(:name => invitation['clan_id'])
+          if clan
+            @user.clan_name = clan.name
+            @user.invitations = []
+            @user.save
+          end
         end
+        @user.invitations = @user.invitations.to_json
+        @user.save
+      end
     else
-        session['errors'] << "Could not find account"
+      session['errors'] << "Could not find invitation"
     end
     redirect "/home"
   }
@@ -439,26 +412,21 @@ get "/clan/disband/:name" do
   }
 end
 
-get "/leaveclan/:server" do  #leave a clan
+get "/leaveclan" do  #leave a clan
   $db_access.synchronize {
     redirect "/" and return unless @user
-    if account = Account.get(@user.id, params[:server])
-
-        puts "found account #{account.name}"
-        if account.clan.admin == [account.user.id, account.server.id]
-            session['errors'] << "The clan admin can not leave the clan."
-            redirect "/clan/#{CGI.escape(account.clan.name)}" and return
-        else
-
-            clanname = account.clan.name
-            account.clan = nil
-            account.save
-            @user.clan = nil
-            @user.save
-            session['messages'] << "Successfully left clan #{clanname}"
-        end
+    if @user.clan
+      if @user.clan.admin == [@user.id, 1]
+        session['errors'] << "The clan admin can not leave the clan."
+        redirect "/clan/#{CGI.escape(account.clan.name)}" and return
+      else
+        clan_name = @user.clan.name
+        @user.clan = nil
+        @user.save
+        session['messages'] << "Successfully left clan #{clan_name}"
+      end
     else
-        session['errors'] << "No account on this server"
+      session['errors'] << "User has no clan"
     end
     redirect "/home"
   }
@@ -477,12 +445,6 @@ get "/scores/:name" do |name|
     @last_10_games = get_last_games(user_id)
     @most_ascended_users = most_ascensions_users(@u.id)
     haml :user_scores, :layout => @layout
-end
-
-get "/scoreboard" do
-    caching_check_last_played_game
-
-    haml :scoreboard, :layout => @layout
 end
 
 get "/servers" do
@@ -548,10 +510,22 @@ get "/deaths" do
     haml :deaths, :layout => @layout
 end
 
-get "/clan_competition" do
+get "/scoreboard" do
     caching_check_last_played_game
 
-    haml :clan_competition, :layout => @layout
+    haml :scoreboard, :layout => @layout
+end
+
+get "/trophy_scoreboard" do
+    caching_check_last_played_game
+
+    haml :trophy_scoreboard, :layout => @layout
+end
+
+get "/player_scoreboard" do
+    caching_check_last_played_game
+
+    haml :player_scoreboard, :layout => @layout
 end
 
 get "/junethack.rss" do

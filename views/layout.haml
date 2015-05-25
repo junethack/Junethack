@@ -1,8 +1,7 @@
-<!doctype html>
-%html{"xmlns:og" => "http://ogp.me/ns#"}
+!!! 5
+%html.no-js{"xmlns:og" => "http://ogp.me/ns#"}
   %head
     %meta{:content => "application/xhtml+xml;charset=utf-8", "http-equiv" => "content-type"}/
-    %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}/
     - games_count = Game.count :conditions => [ 'user_id > 0' ]
     - if games_count == 0 then
       %title= "Junethack - #{User.count} players already registered!"
@@ -14,54 +13,86 @@
     <meta property="og:description" content="The NetHack Cross-Variant Summer Tournament" />
     <meta property="og:image" content="#{request.scheme}://junethack.de/apple-touch-icon.png" />
     <link rel="alternate" type="application/rss+xml" title="Junethack" href="#{request.scheme}://junethack.de/junethack.rss" />
+    %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "/back-to-top.css", :rel => "stylesheet", :type => "text/css"}/
+    /[if lt IE 9] %script {:src => "http://html5shim.googlecode.com/svn/trunk/html5.js"}
 
   %body
+    /[if lt IE 7] <p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p>
     #container
+      %a#back_to_top{:href => "#"} Back to top
       #topnav.navigation
+        /
+          Preferred position and markup for logo.
+          %header
+            %a.logo{:href => "#"}
+              %img.logo{:src => "logo.png"}/
         %nav
-          / use of the nav element: http://www.webteacher.ws/2009/07/09/html5-the-nav-element
-          %h1
-            Navigation
           %ul.main
             %li.first
-              %a{:href => "/"} 
-                %img{:alt => "Home", :src => "/vivid_divider.png"}/
+              %a.logo{:href => "/"} 
+                %img.logo{:alt => "Home", :src => "/logo.png"}/
             %li
               - if !@logged_in then
-                %a{:href => "/home"} #{h @user.login}
+                %a{:href => "/home"} #{h @user.login}'s profile
               - if @logged_in then
-                %a{:href => "/login"} Login
+                %a{:href => "/register"} Register
             %li
-              %a{:href => "/scoreboard"} Scoreboard
-            %li.longer1
-              %a{:href => "/games"} Games
-              %ul
-                %li.first
+              %a{:href => "/scoreboard"} Results
+            %li
+              %a{:href => "/activity"} Tournament stats
+              %ul.nested
+                %li
+                  %a{:href => "/activity"} Summary
+                %li
+                  %a{:href => "/clans"} Clans
+                %li
+                  %a{:href => "/users"} Users
+                %li
+                  %a{:href => "/games"} Games
+                %li
+                  %a{:href => "/servers"} Servers
+                %li
                   %a{:href => "/ascensions"} Ascensions
                 %li
                   %a{:href => "/deaths"} Deaths
+                %li
+                  %a{:href => "/player_scoreboard"} Player scoreboard
+                %li
+                  %a{:href => "/trophy_scoreboard"} Trophy scoreboard
             %li
-              %a{:href => "/users"} Users
-            %li.shorter1
-              %a{:href => "/clans"} Clans
-              %ul
-                %li.first
-                  %a{:href => "/clan_competition"} Clan Competition
+              %a{:href => "/about"} About
+              %ul.nested
+                %li
+                  %a{:href => "/rules"} Rules
+                %li
+                  %a{:href => "/trophies"} Trophies
+                %li
+                  %a{:href => "/archive/2014/index.html"} 2014 tournament
+                %li
+                  %a{:href => "/archive/2013/index.html"} 2013 tournament
+                %li
+                  %a{:href => "/archive/2012/index.html"} 2012 tournament
+                %li
+                  %a{:href => "/archive/2011/index.html"} 2011 tournament
+                %li
+                  %a{:href => "/authors.txt"} The project
             %li
               - if !@logged_in then
                 %a{:href => "/logout"} Logout
               - if @logged_in then
-                %a{:href => "/about"} Help
+                %a{:href => "/login"} Login
           %span.clear
-      .hcenter
-        - if @show_banner
-          .logotitles
-            %h1 NetHack Cross-Variant
-          .logoimage
-            %p
-              %img{:alt => "Logo", :src => "/banner_at2.png"}/
-          .logotitles
-            %h2 Summer Tournament
+      #page_content
+        %section#welcome.hcenter
+          - if @show_banner
+            .logotitles
+              %h1 NetHack Cross-Variant
+            .logoimage
+              %p
+                %img{:alt => "Logo", :src => "/logo-large.png"}/
+            .logotitles
+              %h2 Summer Tournament
       - if !@messages.empty? then
         #messages
           %div

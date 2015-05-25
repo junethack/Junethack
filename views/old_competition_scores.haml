@@ -1,0 +1,29 @@
+%h3
+  Competition
+- $variant_order.each do |variant|
+  - @variant = variant
+  %h4= $variants_mapping[variant]
+  - if (CompetitionScoreEntry.count :variant => @variant) == 0
+    %div
+      No ascensions yet
+  - else
+    - for i in 0..$trophies.size-1 do
+      .scorelisting
+        %table.greytable
+          %tr
+            %th= $trophies_name[i]
+            %th.competition_value
+            %th.competition_placing Placing
+          / only show the first 3 places
+          - c = CompetitionScoreEntry.all :variant => @variant, :trophy => $trophies[i], :order => [ :rank.asc ], :conditions => [ 'rank <= 3' ]
+          - for j in 0..c.size-1 do
+            - style = (j % 2) == 0 ? "cell1" : "cell2"
+            %tr{:id => style}
+              - user = User.get(c[j].user_id).login
+              %td
+                %a{:href => "/user/" + CGI::escape(user)}=h user
+              - if $trophies[i] == 'fastest_ascension_realtime'
+                %td.table_number= h parse_seconds(c[j].value)
+              - else
+                %td.table_number= h c[j].value
+              %td.table_number= h c[j].rank

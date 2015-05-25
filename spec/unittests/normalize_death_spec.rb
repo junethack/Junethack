@@ -115,8 +115,6 @@ describe Game,"normalization of death strings" do
     @game.death = "killed by a gnome called killer"
     @game.normalize_death.should == "killed by a gnome"
 
-    
-    
     @game.death = "killed by a war hammer named Mjollnir"
     @game.normalize_death.should == "killed by a war hammer"
   end
@@ -126,16 +124,30 @@ describe Game,"normalization of death strings" do
   end
 
   it "should substitute everything after killed by kicking with something" do
-    result = "killed by kicking something"
-    @game.death = "killed by kicking 23 gold pieces"
-    @game.normalize_death.should == result
-
     @game.death = "killed by kicking a slime mold"
-    @game.normalize_death.should == result
+    @game.normalize_death.should == "killed by kicking something"
   end
-  
+
+  describe "if killed by kicking gold pieces" do
+    it "should not change the death if it's just one gold piece" do
+      @game.death = "killed by kicking a gold piece"
+      @game.normalize_death.should == "killed by kicking a gold piece"
+    end
+    it "should " do
+      @game.death = "killed by kicking 0 gold pieces"
+      @game.normalize_death.should == "killed by kicking 0 gold pieces"
+    end
+    it "should " do
+      @game.death = "killed by kicking 1234 gold pieces"
+      @game.normalize_death.should == "killed by kicking gold pieces"
+    end
+    it "should " do
+      @game.death = "killed by kicking -1234 gold pieces"
+      @game.normalize_death.should == "killed by kicking a negative amount of gold pieces"
+    end
+  end
+
   it "should substitute everything after chocked on with something" do
-    
     result = "choked on something"
     @game.death = "choked on the blessed Excalibur"
     @game.normalize_death.should == result 

@@ -210,7 +210,7 @@ form#login_form > fieldset > input[type=submit],
     margin-top: 5px;
 }
 #topnav .main > li.first > a {
-    background: url(vivid_divider2.png) no-repeat top left;
+    background: url(logo-sprite.png) no-repeat top left;
     display: block;
     width: 100px;
     height: 51px;
@@ -243,7 +243,7 @@ form#login_form > fieldset > input[type=submit],
 /* if we don't want the home to have a highlight */
     background-color: #ddd;
     background-color: transparent;
-    background: url(vivid_divider2.png) no-repeat bottom left;
+    background: url(logo-sprite.png) no-repeat bottom left;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
@@ -421,7 +421,7 @@ submenus
     margin-top: 0;
 }
 .text_content.non_top_post:before {
-    content: url(divider.png);
+    content: url(pale-logo.png);
     width: 114px;
     display: block;
     margin: 0 auto;

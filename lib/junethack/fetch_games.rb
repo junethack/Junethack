@@ -65,20 +65,22 @@ def fetch_all
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "start scummed game"
                                 count_scummed_games += 1
-                            elsif ['explore','multiplayer','debug','polyinit'].include? hgame['mode'] then
+                            elsif ['explore','multiplayer','debug','polyinit','setseed','abnormal'].include? hgame['mode'] then
                                 game = JunkGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "junk game"
                                 count_junk_games += 1
-                            else
+                            elsif [nil, 'hah', 'hoh', 'normal', 'solo'].include? hgame['mode'] then
                                 game = Game.create(hgame.merge({"server" => server}))
                                 count_games += 1
                                 regular_game = true
+                            else
+                                raise "Unknown 'mode' value: #{hgame['mode']}"
                             end
                             if acc then
                               game.user_id = acc.user_id
 
                               if regular_game then
-                                Event.new(:text => "#{game.user.login} ascended a game of #{$variants_mapping[game.version]} on #{game.server.url}!").save if game.ascended
+                                Event.new(:text => "#{game.user.login} ascended a game of #{$variants_mapping[game.version]} on #{game.server.hostname}!").save if game.ascended
 
                                 # record some gaming milestones
                                 games_count = (Game.count :conditions => [ 'user_id > 0' ])+1

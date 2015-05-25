@@ -36,7 +36,7 @@
       #topnav.navigation
         %nav.primary-nav
           %a.mobile-logo{:href => "/"}
-            %img{:alt => "", :src => "/vivid_divider.png"}/
+            %img{:alt => "", :src => "/logo.png"}/
           %ul.main
             %li.first
               - if !@logged_in then
@@ -56,9 +56,6 @@
               %a{:href => "/users"} Users
             %li.shorter1.parent
               %a{:href => "/clans"} Clans
-              %ul
-                %li.first
-                  %a{:href => "/clan_competition"} Clan Competition
             %li
               - if !@logged_in then
                 %a{:href => "/logout"} Logout
@@ -71,7 +68,7 @@
             %h1 NetHack Cross-Variant
           .logoimage
             %p
-              %img{:alt => "Logo", :src => "/banner_at2.png"}/
+              %img{:alt => "Logo", :src => "/logo-large.png"}/
           .logotitles
             %h2 Summer Tournament
       %hr

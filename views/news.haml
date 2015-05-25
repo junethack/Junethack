@@ -1,6 +1,5 @@
 %h2
-  News and Info
-%ul
-  - news = News.all(:order => [ :updated_at.desc ])
-  - for n in news
-    %li= "<b>#{n.created_at.strftime("%Y-%m-%d")}</b>: #{n.html}"
+  News and Announcements
+- news = News.all(:order => [ :updated_at.desc ])
+- for n in news
+  %article= "<b>#{n.created_at.strftime("%Y-%m-%d")}</b>: #{n.html}"

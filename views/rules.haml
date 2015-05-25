@@ -1,52 +1,49 @@
-#page_rules.content_bulk
+%section#page_rules.content_bulk
   .text_content_wrapper
-    .text_content
-      %h1
+    / This h2 should be in the branding section
+    %section.text_content
+      %h2
         Rules
       %p.description
-        Rule violations will be met with dire consequences! Both dire and consequential!
-        Seriously, rules here are sensible and even generous;
-        if you decide to cheat, it'll be seen as extremely rude.
+        Rules here are sensible and even generous.
         Staff make the final decision if something's not clear.
-        Here's what Junethack thinks is cheating.
-      %h2
-        Please don't:
-      %ul
-        %li
-          crack into a game server and add fake games or bones.
-        %li
-          exploit vulnerabilities in a weak random number generator.
-        %li
-          exploit memory corrupting bugs.
-        %li
-          use disconnection at critical spots to hide a death from logs.
-      %p.description
-        And here's what officially isn't cheating.
-        Fellow adventurers may disapprove mightily but as long as it's fun and doesn't hurt other players, Junethack doesn't care.
-      %h2
-        Just go ahead:
-      %ul
-        %li
-          %a{:href => "http://nethackwiki.com/wiki/Pudding_farming"}pudding farm.
-        %li
-          %a{:href => "http://nethackwiki.com/wiki/Start_scumming"}start scum.
-          All games escaped or quit within the first 10 turns are hidden on the games tables.
-        %li
-          look at player 
-          %a{:href => "http://nethackwiki.com/wiki/Dumplog"}dumplogs.
-        %li
-          watch 
-          %a{:href => "http://nethackwiki.com/wiki/Ttyrec"}ttyrecs
-          of previous or current games.
-        %li
-          use NetHack playing bots or so called "augmentation" tools
-          like Interhack.
-        %li
-          exploit well known game bugs (eg, Astral call bug, floating
-          wand wresting trick, gold duplication bug, artifact naming trick,
-          etc). Some of these may be fixed on some servers.
-        %li
-          make multiple accounts.
-        %li
-          in general, anything the game says you can do. (whew!)
-    %span#end_of_content_spacer.clear
+      %section.text_content
+        %h3
+          Please don't:
+        %ul
+          %li
+            crack into a game server and add fake games or bones.
+          %li
+            exploit vulnerabilities in a weak random number generator.
+          %li
+            exploit memory corrupting bugs.
+          %li
+            use disconnection at critical spots to hide a death from logs.
+      %section.text_content
+        %h3
+          Feel free to:
+        %ul
+          %li
+            %a{:href => "http://nethackwiki.com/wiki/Pudding_farming"}pudding farm.
+          %li
+            %a{:href => "http://nethackwiki.com/wiki/Start_scumming"}start scum.
+            All games escaped or quit within the first 10 turns are hidden on the games tables.
+          %li
+            look at player 
+            %a{:href => "http://nethackwiki.com/wiki/Dumplog"}dumplogs.
+          %li
+            watch 
+            %a{:href => "http://nethackwiki.com/wiki/Ttyrec"}ttyrecs
+            of previous or current games.
+          %li
+            use NetHack playing bots or so called "augmentation" tools
+            like Interhack.
+          %li
+            exploit well known game bugs (eg, Astral call bug, floating
+            wand wresting trick, gold duplication bug, artifact naming trick,
+            etc). Some of these may be fixed on some servers.
+          %li
+            make multiple accounts.
+          %li
+            in general, anything the game says you can do.
+      %span#end_of_content_spacer.clear
