@@ -114,3 +114,9 @@ DataMapper::MigrationRunner.migration( 4, :oldhack ) do
     Server.destroy
   end
 end
+
+DataMapper::MigrationRunner.migration( 5, :sporkhack ) do
+  up do
+      Server.create name: 'nxc_shc', variant: 'SporkHack 0.6.3', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/sporkhack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+  end
+end
