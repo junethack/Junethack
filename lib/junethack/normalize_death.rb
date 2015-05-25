@@ -36,13 +36,16 @@ class Game
     end
 
     # killed by a falling {foo} -> killed by a falling object (except for rock from a rock trap).
-    death = death.gsub(/killed by a falling (?!rock).*$/, "killed by a falling object")
+    death = death.gsub(/killed by a falling (?!rock).+$/, "killed by a falling object")
 
     # consolidate shopkeepers
     death = death.gsub(/M[rs]\. [A-Z].*, the shopkeeper/, "a shopkeeper")
 
     # consolidate ghosts
-    death = death.gsub(/ ghost of .*/, " ghost")
+    death = death.gsub(/ ghost of .+/, " ghost")
+
+    # poisoned by a rotted {monster} corpse -> poisoned by a rotted corpse
+    death = death.gsub(/poisoned by a rotted .* corpse/, "poisoned by a rotted corpse")
 
     death
   end
