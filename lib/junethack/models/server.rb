@@ -70,52 +70,14 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
     #Server.create name: 'shc', variant: 'sporkhack', url: 'sporkhack.com', xlogurl: 'http://sporkhack.com/xlogfile', configfileurl: 'http://sporkhack.com/rcfiles/random_user.nethackrc'
     Server.create name: 'gho', variant: 'GruntHack 0.2.0', url: 'http://grunthack.org/', xlogurl: 'http://grunthack.org/xlogfile', configfileurl: 'http://grunthack.org/userdata/random_user/random_user.gh020rc'
     Server.create name: 'nh4', variant: 'NetHack4 4.3.0', url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
+    Server.create name: 'nxc_nao', variant: 'NetHack 3.4.3-NAO', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/nethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'nxc_dnh', variant: 'dNetHack 3.9.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/dnethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'nxc_nh4k', variant: 'NetHack Fourk 4.3.0.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/nh4k', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'nxc_slth', variant: "SlashTHEM 0.7.0", url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/slashthem', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'nxc_shc', variant: 'SporkHack 0.6.3', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/sporkhack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'nxc_n13', variant: "NetHack 1.3d", url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/oldhack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
   end
   down do
     Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 2, :nethack_xd_cm_server ) do
-  up do
-      Server.create name: 'nxc_nao', variant: 'NetHack 3.4.3-NAO', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/nethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-      Server.create name: 'nxc_dnh', variant: 'dNetHack 3.9.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/dnethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-      Server.create name: 'nxc_nh4k', variant: 'NetHack Fourk 4.3.0.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/nh4k', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-  end
-  down do
-    Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 3, :update_urls_public_server ) do
-  up do
-    execute "UPDATE servers set url='http://'||url where url not like 'http%'"
-  end
-  down do
-    Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 2, :slashthem ) do
-  up do
-      Server.create name: 'nxc_slth', variant: "SlashTHEM 0.6.0", url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/slashthem', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-  end
-  down do
-    Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 4, :oldhack ) do
-  up do
-      Server.create name: 'nxc_n13', variant: "NetHack 1.3d", url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/oldhack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-  end
-  down do
-    Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 5, :sporkhack ) do
-  up do
-      Server.create name: 'nxc_shc', variant: 'SporkHack 0.6.3', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/sporkhack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
   end
 end
