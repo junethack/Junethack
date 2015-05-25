@@ -1,3 +1,4 @@
+require 'pry'
 class Game
   def normalize_death
     # no need to be grammatical correct
@@ -21,6 +22,18 @@ class Game
     # no lookbehind in 1.8.7
     death = death.gsub(/choked on .*/, "choked on something")
 
-    death = death.gsub(/killed by kicking .*/, "killed by kicking something")
+    gold_pieces_regexp = /killed by kicking (-)?([0-9]+) gold pieces?/
+    if death =~ gold_pieces_regexp
+      if $1.nil? && $2 != "0"
+        death = death.gsub(gold_pieces_regexp, "killed by kicking gold pieces")
+      elsif $1 == "-"
+        death = death.gsub(gold_pieces_regexp, "killed by kicking a negative amount of gold pieces")
+      end
+    elsif death == "killed by kicking a gold piece"
+      # do nothing
+    else
+      death = death.gsub(/killed by kicking .*/, "killed by kicking something")
+    end
+    death
   end
 end
