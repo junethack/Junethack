@@ -39,10 +39,10 @@ class Game
     death = death.gsub(/killed by a falling (?!rock).+$/, "killed by a falling object")
 
     # consolidate shopkeepers
-    death = death.gsub(/M[rs]\. [A-Z].*, the shopkeeper/, "a shopkeeper")
+    death = death.gsub(/ (an? )?M[rs]\. [A-Z].*, the shopkeeper/, " a shopkeeper")
 
     # consolidate ghosts
-    death = death.gsub(/ ghost of .+/, " ghost")
+    death = death.gsub(/ (an?|the) ghost of .+/, " a ghost")
 
     # poisoned by a rotted {monster} corpse -> poisoned by a rotted corpse
     death = death.gsub(/poisoned by a rotted .* corpse/, "poisoned by a rotted corpse")
@@ -56,7 +56,7 @@ class Game
 
     # killed by the {minion} of {deity} -> 'killed by the minion of a deity'.
     # minion list is from vanilla...
-    death = death.gsub(/\w+ elemental|Aleax|couatl|Angel|\w+ demon|\w+ devil|(suc|in)cubus|balrog|pit fiend|nalfeshnee|hezrou|vrock|marilith|erinyes) of .+/, "minion of a deity")
+    death = death.gsub(/(\w+ elemental|Aleax|couatl|Angel|\w+ demon|\w+ devil|(suc|in)cubus|balrog|pit fiend|nalfeshnee|hezrou|vrock|marilith|erinyes) of .+/, "minion of a deity")
 
     death
   end
