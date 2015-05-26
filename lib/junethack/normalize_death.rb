@@ -2,7 +2,7 @@ require 'pry'
 class Game
   def normalize_death
     # no need to be grammatical correct
-    death = self.death.gsub /^killey by an /, "killed by a "
+    death = self.death.gsub /^killed by an /, "killed by a "
 
     death = death.gsub /, while .*/, ""
 
@@ -34,6 +34,30 @@ class Game
     else
       death = death.gsub(/killed by kicking .*/, "killed by kicking something")
     end
+
+    # killed by a falling {foo} -> killed by a falling object (except for rock from a rock trap).
+    death = death.gsub(/killed by a falling (?!rock).+$/, "killed by a falling object")
+
+    # consolidate shopkeepers
+    death = death.gsub(/ (an? )?M[rs]\. [A-Z].*, the shopkeeper/, " a shopkeeper")
+
+    # consolidate ghosts
+    death = death.gsub(/ (an?|the) ghost of .+/, " a ghost")
+
+    # poisoned by a rotted {monster} corpse -> poisoned by a rotted corpse
+    death = death.gsub(/poisoned by a rotted .* corpse/, "poisoned by a rotted corpse")
+
+    # wrath of deities
+    death = death.gsub(/wrath of .+/, "wrath of a deity")
+
+    # consolidate priest & priestess gender; strip the deity.
+    death = death.gsub(/priest(ess)?/, "priest(ess)")
+    death = death.gsub(/priest\(ess\) of .+/, "priest(ess) of a deity")
+
+    # killed by the {minion} of {deity} -> 'killed by the minion of a deity'.
+    # minion list is from vanilla...
+    death = death.gsub(/(\w+ elemental|Aleax|couatl|Angel|\w+ demon|\w+ devil|(suc|in)cubus|balrog|pit fiend|nalfeshnee|hezrou|vrock|marilith|erinyes) of .+/, "minion of a deity")
+
     death
   end
 end
