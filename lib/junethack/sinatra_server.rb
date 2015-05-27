@@ -417,7 +417,7 @@ get "/leaveclan" do  #leave a clan
     if @user.clan
       if @user.clan.admin == [@user.id, 1]
         session['errors'] << "The clan admin can not leave the clan."
-        redirect "/clan/#{CGI.escape(account.clan.name)}" and return
+        redirect "/clan/#{CGI.escape(@user.clan.name)}" and return
       else
         clan_name = @user.clan.name
         @user.clan = nil
