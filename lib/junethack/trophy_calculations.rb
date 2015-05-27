@@ -76,6 +76,21 @@ def hemi_stoner?(user)
     return anz[0] >= ($variant_order.size/2)
 end
 
+# dNetHack
+def dnethack_tour?(user)
+    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and turns >= 1000 and (race in ('Inc','Clo','Dro','Hlf) or role in ('Nob','Pir','Bin','Brd');", user
+    return (anz[0]+anz[1]) == 8
+end
+
+def dnethack_king?(user)
+    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf) or role in ('Nob','Pir','Bin','Brd');", user
+    return (anz[0]+anz[1]) == 8
+end
+
+def dnethack_prince?(user)
+    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf) or role in ('Nob','Pir','Bin','Brd');", user
+    return (anz[0]+anz[1]) >= 4
+end
 
 def update_scores(game)
     return true if not game.user_id
@@ -331,14 +346,14 @@ def update_scores(game)
                 :trophy => :nine_keys,
                 :icon => "m-nine-keys.png").save if game.got_nine_keys?
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :killed_lucifer,
-                :icon => "m-killed-lucifer.png").save if game.killed_lucifer?
+                :trophy => :dn_king,
+                :icon => "m-dn-king.png").save if game.dnethack_king?
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :killed_asmodeus,
-                :icon => "m-killed-asmodeus.png").save if game.killed_asmodeus?
+                :trophy => :dn_prince,
+                :icon => "m-dn-prince.png").save if game.dnethack_prince?
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
-                :trophy => :killed_demogorgon,
-                :icon => "m-killed-demogorgon.png").save if game.killed_demogorgon?
+                :trophy => :dn_tour,
+                :icon => "m-dn-tour.png").save if game.dnethack_tour?
         end
 
     ## Non-Ascension cross-variant trophies
