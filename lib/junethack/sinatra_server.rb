@@ -395,10 +395,9 @@ get "/clan/disband/:name" do
         admin = clan.get_admin
         if clan.admin[0] == @user.id
             ClanScoreEntry.all(:clan_name => clan.name).destroy
+            User.all(clan_name: clan.name).update(clan_name: nil)
             if clan.destroy
                 session['messages'] << "Successfully disbanded #{params[:name]}"
-                @user.clan = nil
-                @user.save
             else
                 session['errors'] << "Could not destroy clan"
             end
@@ -418,7 +417,7 @@ get "/leaveclan" do  #leave a clan
     if @user.clan
       if @user.clan.admin == [@user.id, 1]
         session['errors'] << "The clan admin can not leave the clan."
-        redirect "/clan/#{CGI.escape(account.clan.name)}" and return
+        redirect "/clan/#{CGI.escape(@user.clan.name)}" and return
       else
         clan_name = @user.clan.name
         @user.clan = nil

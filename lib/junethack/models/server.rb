@@ -81,3 +81,10 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
     Server.destroy
   end
 end
+
+
+DataMapper::MigrationRunner.migration( 2, :update_dnethack_name ) do
+  up do
+    execute "update servers set variant = 'dNetHack 3.9.3' where name = 'nxc_dnh'"
+  end
+end
