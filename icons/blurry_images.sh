@@ -74,3 +74,6 @@ light_me "m-nine-keys.png"
 light_me "m-one-key.png"
 light_me "m-three-keys.png"
 
+light_me "m-dn-king.png"
+light_me "m-dn-prince.png"
+light_me "m-dn-tour.png"

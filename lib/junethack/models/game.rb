@@ -99,9 +99,10 @@ $trophy_names = {
 
     "three_keys" => "Through the gates of Gehennom (obtained at least three alignment keys)",
     "nine_keys" => "Those were for replay value... (obtained all nine alignment keys)",
-    "killed_lucifer" => "Round two goes to you (killed Lucifer on the Astral Plane)",
-    "killed_asmodeus" => "No budget for bribes (killed Asmodeus)",
-    "killed_demogorgon" => "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))",
+
+    "dn_king" => "King of dNethack: Ascend a game with all the new races/roles in dNethack",
+    "dn_prince" => "Prince of dNethack: Ascend a game with half the new races/roles in dNethack",
+    "dn_tour" => "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack",
 
     # Cross-Variant
     "walk_in_the_park"    => "Walk in the Park: finish a game in half of the variants",
@@ -322,18 +323,6 @@ class Game
     end
 
     # DNetHack
-    def killed_lucifer?
-        (dnetachieve and dnetachieve.hex & 0x00001 > 0)
-    end
-
-    def killed_asmodeus?
-        (dnetachieve and dnetachieve.hex & 0x00002 > 0)
-    end
-
-    def killed_demogorgon?
-        (dnetachieve and dnetachieve.hex & 0x00004 > 0)
-    end
-
     def got_one_key?
         (dnetachieve and dnetachieve.hex & 0x00008 > 0)
     end
