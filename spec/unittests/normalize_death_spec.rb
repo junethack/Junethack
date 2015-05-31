@@ -156,4 +156,33 @@ describe Game,"normalization of death strings" do
     @game.normalize_death.should == result
   end
 
+  it "should substitute the name of a deity" do
+    result = "killed by the wrath of a deity"
+    @game.death = "killed by the wrath of Chih Sung-tzu"
+    @game.normalize_death.should == result
+  end
+
+  it "should substitute then name of ghosts" do
+    test = {
+      "killed by the ghost of Kenneth Arnold" => "killed by a ghost",
+      "killed by the ghost of coffeebug" => "killed by a ghost"
+    }
+    test.each {|message, result|
+      @game.death = message
+      @game.normalize_death.should == result
+    }
+  end
+
+  it "should substitute the name of a shopkeeper" do
+    test = {
+      "killed by Ms. Pakka Pakka, the shopkeeper" => "killed by a shopkeeper",
+      "killed by Ms. Pakka Pakka, the shopkeeper's magic missile" => "killed by a shopkeeper's magic missile",
+      "killed by Ms. Sipaliwini, the shopkeeper's wand" => "killed by a shopkeeper's wand"
+    }
+    test.each {|message, result|
+      @game.death = message
+      @game.normalize_death.should == result
+    }
+  end
+
 end
