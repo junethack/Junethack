@@ -78,17 +78,17 @@ end
 
 # dNetHack
 def dnethack_tour?(user)
-    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and turns >= 1000 and (race in ('Inc','Clo','Dro','Hlf) or role in ('Nob','Pir','Bin','Brd');", user
+    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and turns >= 1000 and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd'));", user.id
     return (anz[0]+anz[1]) == 8
 end
 
 def dnethack_king?(user)
-    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf) or role in ('Nob','Pir','Bin','Brd');", user
+    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd'));", user
     return (anz[0]+anz[1]) == 8
 end
 
 def dnethack_prince?(user)
-    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf) or role in ('Nob','Pir','Bin','Brd');", user
+    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd'));", user
     return (anz[0]+anz[1]) >= 4
 end
 
@@ -347,13 +347,13 @@ def update_scores(game)
                 :icon => "m-nine-keys.png").save if game.got_nine_keys?
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
                 :trophy => :dn_king,
-                :icon => "m-dn-king.png").save if game.dnethack_king?
+                :icon => "m-dn-king.png").save if dnethack_king? game.user_id
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
                 :trophy => :dn_prince,
-                :icon => "m-dn-prince.png").save if game.dnethack_prince?
+                :icon => "m-dn-prince.png").save if dnethack_prince? game.user_id
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
                 :trophy => :dn_tour,
-                :icon => "m-dn-tour.png").save if game.dnethack_tour?
+                :icon => "m-dn-tour.png").save if dnethack_tour? game.user_id
         end
 
     ## Non-Ascension cross-variant trophies
