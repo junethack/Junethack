@@ -18,8 +18,6 @@ require 'sanitize'
 
 require 'graph'
 
-require 'irc'
-
 require 'rack/mobile-detect'
 use Rack::MobileDetect
 
@@ -44,10 +42,6 @@ scheduler = Rufus::Scheduler.start_new(:frequency => 1.0)
 scheduler.cron('*/5 * * * *', :blocking => true) { fetch_all }
 
 $application_start = Time.new
-
-#bot = IRC.new('irc.freenode.net', 6667, "junetbot", "#junethack")
-#bot.connect
-#bot.main_loop
 
 # http://groups.google.com/group/rack-devel/browse_frm/thread/ffec93533180e98a
 class WorkaroundLogger < Logger
@@ -218,7 +212,6 @@ post "/add_server_account" do
     end
     begin
         account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
-        bot.say "#{@user.login} added account #{account.name} on #{server.name}"
     rescue => e
         session['errors'].push(e.to_s)
     end
