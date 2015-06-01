@@ -78,17 +78,19 @@ end
 
 # dNetHack
 def dnethack_tour?(user)
-    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and turns >= 1000 and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd'));", user.id
+    anz = repository.adapter.select("select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and turns >= 1000 and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd'));", user)[0]
+    binding.pry
     return (anz[0]+anz[1]) == 8
 end
 
 def dnethack_king?(user)
-    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd'));", user
+    anz = repository.adapter.select("select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd'));", user)[0]
+    binding.pry
     return (anz[0]+anz[1]) == 8
 end
 
 def dnethack_prince?(user)
-    anz = repository.adapter.select "select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd'));", user
+    anz = repository.adapter.select("select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd'));", user)[0]
     return (anz[0]+anz[1]) >= 4
 end
 
