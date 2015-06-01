@@ -58,6 +58,8 @@ class Server
             return "https://nethack.xd.cm/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}"
         when "NH-1.3d"
             return "https://nethack.xd.cm/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
+        when "slth"
+            return "https://nethack.xd.cm/userdata/#{game.name}/slashthem/dumplog/#{game.starttime}"
         end
       else
         return nil
