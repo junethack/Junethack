@@ -7,7 +7,7 @@
             - server_accounts = (Server.all - @user.servers)
             - if server_accounts.size > 0
                 #greeting
-                    = "Hi #{h @user.login}!  To have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># #{h @tournament_identifier}</tt><br/> to your options file on the public server (On nethack.xd.cm, use the \"NetHack 3.4.3-nao\" nethackrc for all hosted variants there. On nethack4.org, set the game option \"comment\") and enter your public server account name (case-sensitive) into the form below."
+                    = "Hi #{h @user.login}!  To have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># #{h @tournament_identifier}</tt><br/> to your options file on the public server (On nethack.xd.cm, use the \"NetHack 3.4.3-nao\" nethackrc for all hosted variants there. On nethack4.org, set the interface option \"comment\") and enter your public server account name (case-sensitive) into the form below."
             %table.greytable
                 %tr
                     %th Server

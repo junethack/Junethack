@@ -219,8 +219,8 @@ post "/add_server_account" do
     begin
         account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
         bot.say "#{@user.login} added account #{account.name} on #{server.name}"
-    rescue
-        session['errors'].push(*account.errors)
+    rescue => e
+        session['errors'].push(e.to_s)
     end
     # set user_id on all already played games
     Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
