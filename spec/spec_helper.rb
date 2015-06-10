@@ -28,6 +28,7 @@ require 'database'
 
 def clean_database
   ClanScoreEntry.destroy!
+  ClanScoreHistory.destroy!
   Individualtrophy.destroy!
   Scoreentry.destroy!
   NormalizedDeath.destroy!

@@ -61,6 +61,8 @@ class Server
         when "slth"
             return "https://nethack.xd.cm/userdata/#{game.name}/slashthem/dumplog/#{game.starttime}"
         end
+      when "nethack4.org"
+        return "http://nethack4.org/dumps/#{game.dumplog.tr("_",":")}"
       else
         return nil
       end

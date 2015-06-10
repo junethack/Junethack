@@ -58,4 +58,19 @@ describe Game,"update_clan_scores" do
     ClanScoreEntry.first(:trophy => :most_medusa_kills).value.should == 1
     ClanScoreHistory.all(:trophy => :most_medusa_kills).count.should == 1
   end
+
+  it "creates clan score history entries if the value of the trophy changes" do
+    attributes = { version: 'v1', server_id: 1, achieve: "0x800", points: 9000, endtime: 1000, death: 'ascended', turns: 1023 }
+    Game.create(attributes)
+    update_games
+    ClanScoreEntry.first(:trophy => :most_medusa_kills).value.should == 1
+    ClanScoreHistory.all(:trophy => :most_medusa_kills).count.should == 1
+
+    Game.create(attributes)
+    update_games
+
+    ClanScoreEntry.first(:trophy => :most_medusa_kills).value.should == 2
+    ClanScoreHistory.all(:trophy => :most_medusa_kills).count.should == 2
+    ClanScoreHistory.all(:trophy => :most_medusa_kills).map(&:value).sort == [1, 2]
+  end
 end
