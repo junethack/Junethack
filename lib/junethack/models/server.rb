@@ -60,6 +60,10 @@ class Server
             return "https://nethack.xd.cm/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
         when "slth"
             return "https://nethack.xd.cm/userdata/#{game.name}/slashthem/dumplog/#{game.starttime}"
+        when "0.2.0"
+            return "https://nethack.xd.cm/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}"
+        when "UNH"
+            return "https://nethack.xd.cm/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}"
         end
       when "nethack4.org"
         return "http://nethack4.org/dumps/#{game.dumplog.tr("_",":")}"
@@ -92,5 +96,18 @@ end
 DataMapper::MigrationRunner.migration( 2, :update_dnethack_name ) do
   up do
     execute "update servers set variant = 'dNetHack 3.9.3' where name = 'nxc_dnh'"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 3, :create_nxc_unh_grh ) do
+  up do
+    Server.create name: 'nxc_unh', variant: 'UnNetHack 5.3.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/unnethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'nxc_grh', variant: 'GruntHack 0.2.0', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/grunthack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+
+    execute "update servers set xlogcurrentoffset = 0 where xlogcurrentoffset IS NULL"
+  end
+
+  down do
+    Server.destroy
   end
 end
