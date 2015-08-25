@@ -53,7 +53,7 @@ class Server
         when "DNH"
             return "https://nethack.xd.cm/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
         when "3.0.1"
-            return "https://nethack.xd.cm/userdata/#{game.name}/nh4k/4.3.0.1/dumps/#{game.dumplog.tr("_",":")}"
+            return "https://nethack.xd.cm/userdata/#{game.name}/nhfourk/dumplog/#{game.dumplog.tr("_",":")}"
         when "0.6.3"
             return "https://nethack.xd.cm/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}"
         when "NH-1.3d"
