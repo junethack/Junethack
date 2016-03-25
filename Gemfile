@@ -1,7 +1,6 @@
 source "http://rubygems.org"
 gem 'dm-sqlite-adapter'
-gem "datamapper", "~> 1.1.0"
-gem "data_mapper", "~> 1.1.0"
+gem "data_mapper", "~> 1.2.0"
 gem 'dm-migrations'
 gem "json"
 gem "haml"
