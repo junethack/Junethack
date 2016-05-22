@@ -3,12 +3,22 @@ require 'spec_helper'
 require 'parse'
 
 describe XLog do
-  it "should parse a single xlogfile line" do
+  it "should parse a single colon separated xlogfile line" do
     parsed = XLog.parse_xlog "version=3.4.3:points=1337:name=bhaak:death=killed by an orc"
     parsed['version'].should == "3.4.3"
     parsed['points'].should == "1337"
     parsed['name'].should == "bhaak"
     parsed['death'].should == "killed by an orc"
+    parsed['does_not_exists'].should be_nil
+  end
+
+  it "should parse a single tab separated xlogfile line" do
+    parsed = XLog.parse_xlog "version=3.6.0	points=1337	name=bhaak	death=killed by a newt	colon=has:colon"
+    parsed['version'].should == "3.6.0"
+    parsed['points'].should == "1337"
+    parsed['name'].should == "bhaak"
+    parsed['death'].should == "killed by a newt"
+    parsed['colon'].should == "has:colon"
     parsed['does_not_exists'].should be_nil
   end
 
