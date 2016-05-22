@@ -46,24 +46,24 @@ class Server
         return "http://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
       when "grunthack.org"
         return "http://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"
-      when "nethack.xd.cm"
+      when "nethack.dank.ninja"
         case game.version
         when "3.4.3"
-            return "https://nethack.xd.cm/userdata/#{game.name}/nethack/dumplog/#{game.starttime}"
+            return "https://nethack.dank.ninja/userdata/#{game.name}/nethack/dumplog/#{game.starttime}"
         when "DNH"
-            return "https://nethack.xd.cm/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
+            return "https://nethack.dank.ninja/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
         when "3.0.1"
-            return "https://nethack.xd.cm/userdata/#{game.name}/nhfourk/dumplog/#{game.dumplog.tr("_",":")}"
+            return "https://nethack.dank.ninja/userdata/#{game.name}/nhfourk/dumplog/#{game.dumplog.tr("_",":")}"
         when "0.6.3"
-            return "https://nethack.xd.cm/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}"
+            return "https://nethack.dank.ninja/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}"
         when "NH-1.3d"
-            return "https://nethack.xd.cm/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
+            return "https://nethack.dank.ninja/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
         when "slth"
-            return "https://nethack.xd.cm/userdata/#{game.name}/slashthem/dumplog/#{game.starttime}"
+            return "https://nethack.dank.ninja/userdata/#{game.name}/slashthem/dumplog/#{game.starttime}"
         when "0.2.0"
-            return "https://nethack.xd.cm/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}"
+            return "https://nethack.dank.ninja/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}"
         when "UNH"
-            return "https://nethack.xd.cm/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}"
+            return "https://nethack.dank.ninja/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}"
         end
       when "nethack4.org"
         return "http://nethack4.org/dumps/#{game.dumplog.tr("_",":")}"
@@ -76,37 +76,25 @@ end
 DataMapper::MigrationRunner.migration( 1, :create_servers ) do
   up do
     Server.create name: 'nao', variant: 'NetHack 3.4.3-NAO', url: 'https://nethack.alt.org/', xlogurl: 'http://alt.org/nethack/xlogfile.full.txt', configfileurl: 'http://alt.org/nethack/userdata/random_user/random_user.nh343rc'
-    Server.create name: 'eun', variant: 'UnNetHack 5.3.0', url: 'https://un.nethack.nu/', xlogurl: 'https://un.nethack.nu/logs/xlogfile-eu', configfileurl: 'https://un.nethack.nu/rcfiles/random_user.nethackrc'
+    Server.create name: 'nao_nh36', variant: 'NetHack 3.6.0-NAO', url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.nh360', configfileurl: 'http://alt.org/nethack/userdata/random_user/random_user.nh360rc'
+    Server.create name: 'eun', variant: 'UnNetHack 5.3.1', url: 'https://un.nethack.nu/', xlogurl: 'https://un.nethack.nu/logs/xlogfile-eu', configfileurl: 'https://un.nethack.nu/rcfiles/random_user.nethackrc'
+    Server.create name: 'ndn_unh', variant: 'UnNetHack 5.3.1', url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/unnethack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'nh4', variant: 'NetHack4 4.3.0', url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
+
     #Server.create name: 'shc', variant: 'sporkhack', url: 'sporkhack.com', xlogurl: 'http://sporkhack.com/xlogfile', configfileurl: 'http://sporkhack.com/rcfiles/random_user.nethackrc'
     Server.create name: 'gho', variant: 'GruntHack 0.2.0', url: 'http://grunthack.org/', xlogurl: 'http://grunthack.org/xlogfile', configfileurl: 'http://grunthack.org/userdata/random_user/random_user.gh020rc'
-    Server.create name: 'nh4', variant: 'NetHack4 4.3.0', url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
-    Server.create name: 'nxc_nao', variant: 'NetHack 3.4.3-NAO', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/nethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'nxc_dnh', variant: 'dNetHack 3.9.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/dnethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'nxc_nh4k', variant: 'NetHack Fourk 4.3.0.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/nh4k', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'nxc_slth', variant: "SlashTHEM 0.7.0", url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/slashthem', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'nxc_shc', variant: 'SporkHack 0.6.3', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/sporkhack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'nxc_n13', variant: "NetHack 1.3d", url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/oldhack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
+
+    Server.create name: 'esm_nh36', variant: "NetHack 3.6.0-ESM", url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/nethack', configfileurl: 'https://em.slashem.me/userdata/$user/nethack/$user.nh360rc'
+    Server.create name: 'esm_slex', variant: "SlashEMExtended 1.6.5", url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/slex', configfileurl: 'https://em.slashem.me/userdata/$user/slex/random_user.slexrc'
+
+    Server.create name: 'ndn_nao', variant: 'NetHack 3.4.3-NAO', url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/nethack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'ndn_dnh', variant: 'dNetHack 3.12.3', url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/dnethack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'ndn_dyn', variant: 'DynaHack 0.6.0', url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/dynahack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'ndn_slth', variant: "SlashTHEM 0.8.0", url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/slashthem', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'ndn_nh4k', variant: 'NetHack Fourk 4.3.0.3', url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/nh4k', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+    Server.create name: 'ndn_fiq', variant: "FIQHack 4.3.0", url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/fiqhack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+    #Server.create name: 'ndn_n13', variant: "NetHack 1.3d", url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/oldhack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
   end
-  down do
-    Server.destroy
-  end
-end
-
-
-DataMapper::MigrationRunner.migration( 2, :update_dnethack_name ) do
-  up do
-    execute "update servers set variant = 'dNetHack 3.9.3' where name = 'nxc_dnh'"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 3, :create_nxc_unh_grh ) do
-  up do
-    Server.create name: 'nxc_unh', variant: 'UnNetHack 5.3.1', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/unnethack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'nxc_grh', variant: 'GruntHack 0.2.0', url: 'https://nethack.xd.cm/', xlogurl: 'https://nethack.xd.cm/xlogfiles/grunthack', configfileurl: 'https://nethack.xd.cm/userdata/random_user/nethack/nethackrc'
-
-    execute "update servers set xlogcurrentoffset = 0 where xlogcurrentoffset IS NULL"
-  end
-
   down do
     Server.destroy
   end
