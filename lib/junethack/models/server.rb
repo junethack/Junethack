@@ -77,7 +77,7 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
   up do
     Server.create name: 'nao', variant: 'NetHack 3.4.3-NAO',
       url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.full.txt', configfileurl: 'http://alt.org/nethack/userdata/random_user/random_user.nh343rc'
-    Server.create name: 'nao_nh36', variant: 'NetHack 3.6.0-NAO',
+    Server.create name: 'nao_nh36', variant: 'NetHack 3.6.0',
       url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.nh360', configfileurl: 'http://alt.org/nethack/userdata/random_user/random_user.nh360rc'
 
     Server.create name: 'eun', variant: 'UnNetHack 5.3.1',
@@ -89,10 +89,10 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
     Server.create name: 'gho', variant: 'GruntHack 0.2.0',
       url: 'http://grunthack.org/', xlogurl: 'http://grunthack.org/xlogfile', configfileurl: 'http://grunthack.org/userdata/random_user/random_user.gh020rc'
 
-    Server.create name: 'esm_nh36', variant: "NetHack 3.6.0-ESM",
-      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/nethack', configfileurl: 'https://em.slashem.me/userdata/$user/nethack/$user.nh360rc'
-    Server.create name: 'esm_slex', variant: "SlashEMExtended 1.6.5",
-      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/slex', configfileurl: 'https://em.slashem.me/userdata/$user/slex/random_user.slexrc'
+    Server.create name: 'esm_nh36', variant: "NetHack 3.6.0",
+      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/nethack', configfileurl: 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
+    Server.create name: 'esm_slex', variant: "SlashEMExtended 1.7.1",
+      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/slex', configfileurl: 'https://em.slashem.me/userdata/random_user/slex/random_user.slexrc'
 
     Server.create name: 'ndn_nao', variant: 'NetHack 3.4.3-NAO',
       url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/nethack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
