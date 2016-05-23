@@ -209,6 +209,10 @@ class Game
 
     # SlashTHEM-specific properties
     property :modes, String
+    property :hybrid, String
+
+    # new in 3.6.0
+    property :while, String
 
     def defeated_medusa?
         (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)
