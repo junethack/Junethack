@@ -69,7 +69,7 @@ def fetch_all
                                 game = JunkGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "junk game"
                                 count_junk_games += 1
-                            elsif [nil, 'hah', 'hoh', 'normal', 'solo'].include? hgame['mode'] then
+                            elsif [nil, 'hah', 'hoh', 'normal', 'solo', 'challenge'].include? hgame['mode'] then
                                 game = Game.create(hgame.merge({"server" => server}))
                                 count_games += 1
                                 regular_game = true
