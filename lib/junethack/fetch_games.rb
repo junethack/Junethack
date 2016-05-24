@@ -57,6 +57,7 @@ def fetch_all
                         #@fetch_logger.debug "#{line.length} #{line}"
                         xlog_add_offset = line.length
                         hgame = XLog.parse_xlog line
+                        hgame['version'] = "fiqhack" if server.variant == "FIQHack 4.3.0"
                         if hgame['starttime'].to_i >= $tournament_starttime and
                             hgame['endtime'].to_i   <= $tournament_endtime
                             acc = Account.first(:name => hgame["name"], :server_id => server.id)
@@ -69,7 +70,7 @@ def fetch_all
                                 game = JunkGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "junk game"
                                 count_junk_games += 1
-                            elsif [nil, 'hah', 'hoh', 'normal', 'solo'].include? hgame['mode'] then
+                            elsif [nil, 'hah', 'hoh', 'normal', 'solo', 'challenge'].include? hgame['mode'] then
                                 game = Game.create(hgame.merge({"server" => server}))
                                 count_games += 1
                                 regular_game = true

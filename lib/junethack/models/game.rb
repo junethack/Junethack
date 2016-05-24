@@ -134,7 +134,7 @@ class Game
     property :realtime,  Integer
     property :turns,     Integer
     property :birthdate, String
-    property :conduct,   String, :default => 0
+    property :conduct,   String, :default => "0"
     property :nconducts, Integer,
      :default => lambda { |r, p| (Integer(r.conduct) & 4095).to_s(2).count("1") } # count the number of bits set in conduct
     property :role,      String
@@ -150,6 +150,8 @@ class Game
       new_version = "UNH" if new_version.start_with? 'UNH-'
       new_version = "DNH" if new_version.start_with? 'DNH-'
       new_version = "slth" if new_version.start_with? 'slth-'
+      new_version = "slex" if new_version.start_with? 'slex-'
+      new_version = "3.6.0" if new_version == '3.6.1'
       super new_version
     end
 
@@ -209,6 +211,10 @@ class Game
 
     # SlashTHEM-specific properties
     property :modes, String
+    property :hybrid, String
+
+    # new in 3.6.0
+    property :while, String
 
     def defeated_medusa?
         (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)

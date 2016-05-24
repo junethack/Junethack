@@ -3,7 +3,7 @@ class Clan
     property :admin,    Json
     has n, :users
     property :name,     String, :key => true, :length => 1...30
-    property :invitations,     Json, :default => "[]"
+    property :invitations,     Json, :default => []
 
     validates_format_of :name, :with => /^\w*$/, :message => "Clan name may only contain a-z, A-Z and 0-9"
     def get_invitation_response invitation

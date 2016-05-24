@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-require 'datamapper'
+require 'data_mapper'
 require 'models/game'
 require 'models/server'
 

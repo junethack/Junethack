@@ -2,7 +2,7 @@
   %section.branding
     .title_text
       %p
-        Running from 1 June until the end of 30 June 2015
+        Running from 1 June until the end of 30 June 2016
     - now = Time.new.to_i
     - if now < $tournament_starttime
       -# show a (static) countdown to tournament start
@@ -22,6 +22,8 @@
           %p
             =haml :registrationdate
   .text_content_wrapper
+    %section#news.text_content
+      =haml :news
     %section.text_content
       %h2
         Welcome to Junethack!
@@ -39,11 +41,10 @@
       %p
         And also play in Junethack,
         the NetHack Cross-Variant Summer Tournament (mostly) held in June.
-    %section#news.text_content
-      =haml :news
     %section.text_content
       %p
         You can view the results of the
+        <a href="/archive/2015/index.html">Junethack 2015</a>,
         <a href="/archive/2014/index.html">Junethack 2014</a>,
         <a href="/archive/2013/index.html">Junethack 2013</a>,
         <a href="/archive/2012/index.html">Junethack 2012</a>,

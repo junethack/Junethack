@@ -78,4 +78,8 @@ class StartScummedGame
 
     # SlashTHEM-specific properties
     property :modes, String
+    property :hybrid, String
+
+    # new in 3.6.0
+    property :while, String
 end

@@ -10,10 +10,13 @@ class XLog
     include Singleton
 
     def self.parse_xlog xlog
-        #puts "#{xlog}"
-        # xlogfiles look like key1=value1:key2=value2:...
-        # there are no : in the value fields but = may appear
-        Hash[xlog.chomp.split(":").map{|e| e.split("=", 2)}]
+      # xlogfiles look like key1=value1:key2=value2:...
+      # xlogfiles from NetHack 3.6.0 are tab separated
+      # there are no : in the value fields but = may appear
+      tabs = xlog.count "\t"
+      colons = xlog.count ":"
+      separator = tabs > colons ? "\t" : ":"
+      Hash[xlog.chomp.split(separator).map{|e| e.split("=", 2)}]
     end
 
     def self.fetch_header xlog_url

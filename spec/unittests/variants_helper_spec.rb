@@ -11,7 +11,7 @@ describe 'variant helper methods' do
     (helper_get_variant_for 'grunthack').should == "0.2.0"
 
     (helper_get_variant_for 'vanilla').should == "3.4.3"
-    (helper_get_variant_for 'oldhack').should == "NH-1.3d"
+    #(helper_get_variant_for 'oldhack').should == "NH-1.3d"
 
     $variant_order.each {|variant|
         expect($variants_mapping[variant]).to_not be_nil, "$variants_mapping(#{variant}) was nil"
