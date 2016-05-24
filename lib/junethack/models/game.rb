@@ -150,6 +150,8 @@ class Game
       new_version = "UNH" if new_version.start_with? 'UNH-'
       new_version = "DNH" if new_version.start_with? 'DNH-'
       new_version = "slth" if new_version.start_with? 'slth-'
+      new_version = "slex" if new_version.start_with? 'slex-'
+      new_version = "3.6.0" if new_version == '3.6.1'
       super new_version
     end
 

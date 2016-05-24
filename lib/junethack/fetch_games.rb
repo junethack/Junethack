@@ -57,6 +57,7 @@ def fetch_all
                         #@fetch_logger.debug "#{line.length} #{line}"
                         xlog_add_offset = line.length
                         hgame = XLog.parse_xlog line
+                        hgame['version'] = "fiqhack" if server.variant == "FIQHack 4.3.0"
                         if hgame['starttime'].to_i >= $tournament_starttime and
                             hgame['endtime'].to_i   <= $tournament_endtime
                             acc = Account.first(:name => hgame["name"], :server_id => server.id)
