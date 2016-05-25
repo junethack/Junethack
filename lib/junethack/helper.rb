@@ -26,7 +26,7 @@ $variants_mapping["0.2.0"]     = "GruntHack"
 $variants_mapping["4.3.0"]     = "NetHack4"
 $variants_mapping["DNH"]       = "dNetHack"
 $variants_mapping["3.0.3"]     = "NetHack Fourk"
-$variants_mapping["fiqhack"]   = "FIQHack 4.3.0"
+$variants_mapping["fiqhack"]   = "FIQHack"
 $variants_mapping["0.6.0"]     = "DynaHack"
 $variants_mapping["slth"]      = "SlashTHEM"
 $variants_mapping["slex"]      = "Slash'EM Extended"
@@ -49,6 +49,7 @@ $variant_order << "slex"
 def helper_get_variant_for(description)
     # hard coded descriptions for some variants
     return '3.4.3' if description.downcase == 'vanilla'
+    return '3.6.0' if description.downcase == '3.6.0'
     return 'NH-1.3d' if description.downcase == 'oldhack'
 
     # find variant by text description
