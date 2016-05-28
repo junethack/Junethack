@@ -145,22 +145,24 @@ namespace :news do
 
     desc "add a new news entry"
     task :add, :html_snippet, :url do |t, args|
+        ARGV.each {|a| task a.to_sym do ; end }
         news = News.new
-        news.html = args[:html_snippet]
-        news.url = args[:url] if args[:url]
+        news.html = args[:html_snippet] || ARGV[1]
+        news.url = args[:url] || ARGV[2]
         news.save
     end
 
     desc "delete a new news entry"
     task :delete, :id do |t, args|
-        news = News.get(args[:id]).destroy
+        News.get(args[:id]).destroy
     end
 
     desc "update a new news entry"
     task :update, :id, :html_snippet, :url do |t, args|
+        ARGV.each {|a| task a.to_sym do ; end }
         news = News.get(args[:id])
-        news.html = args[:html_snippet]
-        news.url = args[:url] if args[:url]
+        news.html = args[:html_snippet] || ARGV[1]
+        news.url = args[:url] || ARGV[2]
         news.save
     end
 
