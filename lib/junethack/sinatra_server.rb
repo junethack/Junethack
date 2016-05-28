@@ -344,8 +344,10 @@ post "/clan/invite" do
         else
             chars = ('a'..'z').to_a
             invitation = {'clan_id' => clan.name, 'status' => 'open', 'user' => @user.id, 'token' => (0..30).map{ chars[rand 26] }.join}
-            clan.update(:invitations => (clan.invitations.push(invitation)).to_json)
-            invited_user.update(:invitations => (invited_user.invitations.push(invitation)).to_json)
+            clan.invitations.push(invitation)
+            clan.save!
+            invited_user.invitations.push(invitation)
+            invited_user.save!
             session['messages'] << "Successfully invited #{invited_user.login} to #{clan.name}"
         end
     else
