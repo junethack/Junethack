@@ -108,6 +108,13 @@ namespace :db do
         Trophy.check_trophies_for_variant args[:variant]
     end
 
+    desc "reset a server's xlogfile modification date"
+    task :reset_server, :name do |t, args|
+        Server.all(name: args[:name]).update(xloglastmodified: "Sat Jan 01 00:00:00 UTC 2000",
+                                             xlogcurrentoffset: 0)
+        puts Server.all(name: args[:name]).inspect
+    end
+
     desc "change a user's password"
     task :change_password, :user, :password do |t, args|
         user = User.first(:login => args[:user])
