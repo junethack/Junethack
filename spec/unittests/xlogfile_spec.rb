@@ -29,10 +29,19 @@ describe XLog do
     parsed['death'].should == "killed by a monster called something = something"
   end
 
-  it "should split HTTP headers into a Hash" do
-    headers = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n"
-    hash = XLog.parse_header headers
-    hash.size.should == 2
-    hash["Content-Type"].should == 'text/plain'
+  describe "#parse_header" do
+    it "splits HTTP headers into a Hash" do
+      headers = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n"
+      hash = XLog.parse_header headers
+      hash.size.should == 2
+      hash["Content-Type"].should == 'text/plain'
+    end
+
+    it "parses HTTP headers with redirects" do
+      headers = "HTTP/1.1 301 Moved Permanently\r\nDate: Mon, 01 Jan 2000 00:00:00 GMT\r\n\r\nHTTP/1.1 200 OK\r\nDate: Mon, 01 Jan 2016 00:00:00 GMT\r\n\r\n"
+      hash = XLog.parse_header headers
+      hash.size.should == 3
+      hash["Date"].should == 'Mon, 01 Jan 2016 00:00:00 GMT'
+    end
   end
 end

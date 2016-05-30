@@ -113,3 +113,13 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
     Server.destroy
   end
 end
+
+DataMapper::MigrationRunner.migration( 2, :update_servers_1 ) do
+  up do
+    Server.create name: 'nao_nh361', variant: 'NetHack 3.6.1-dev',
+      url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.nh361dev', configfileurl: 'http://alt.org/nethack/userdata/random_user/random_user.nh360rc'
+
+    Server.create name: 'ndn_nh4', variant: 'NetHack4 4.3.0',
+      url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/nethack4', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+  end
+end

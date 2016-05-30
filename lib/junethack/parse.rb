@@ -28,9 +28,9 @@ class XLog
     end
 
     def self.parse_header raw_header
-        Hash[raw_header.chomp.split(/\n/).map{|e| e.chomp.split(/\: ?/, 2)}]
+      Hash[raw_header.split(/\n/).map{|e| e.strip.split(/\: ?/, 2)}.reject(&:empty?)]
     end
-    
+
     def self.fetch_from_xlog xlog_url, startp, endp
         return false if startp.to_i >= endp.to_i-1
         if ENV['JUNETHACK_TRACE']

@@ -55,6 +55,35 @@ $achievements = [
      "m-medusa.png"],
 ]
 
+$slash_achievements = [
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [],
+  [:defeated_vecna, "defeated vecna", "s-vecna.png"],
+  [:defeated_beholder, "defeated Beholder", "s-beholder.png"],
+  [:defeated_ruggo, "defeated Ruggo", "s-ruggo.png"],
+  [:defeated_kroo, "defeated Kroo", "s-kroo.png"],
+  [:defeated_grund, "defeated Grund", "s-grund.png"],
+  [:defeated_largestgiant, "defeated Largestgiant", "s-largestgiant.png"],
+  [:defeated_shelob, "defeated Shelob", "s-shelob.png"],
+  [:defeated_girtab, "defeated Girtab", "s-girtab.png"],
+  [:defeated_aphrodite, "defeated Aphrodite", "s-aphrodite.png"],
+  [:defeated_frankenstein, "defeated Frankenstein", "s-frankenstein.png"],
+  [:defeated_croesus, "defeated Croesus", "s-croesus.png"],
+  [:defeated_dagon, "defeated Dagon", "s-dagon.png"],
+  [:defeated_hydra, "defeated Hydra", "s-hydra.png"],
+]
+
 $trophy_names = {
     "ascended" => "ascended",
 

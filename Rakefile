@@ -108,6 +108,13 @@ namespace :db do
         Trophy.check_trophies_for_variant args[:variant]
     end
 
+    desc "reset a server's xlogfile modification date"
+    task :reset_server, :name do |t, args|
+        Server.all(name: args[:name]).update(xloglastmodified: "Sat Jan 01 00:00:00 UTC 2000",
+                                             xlogcurrentoffset: 0)
+        puts Server.all(name: args[:name]).inspect
+    end
+
     desc "change a user's password"
     task :change_password, :user, :password do |t, args|
         user = User.first(:login => args[:user])
@@ -145,22 +152,24 @@ namespace :news do
 
     desc "add a new news entry"
     task :add, :html_snippet, :url do |t, args|
+        ARGV.each {|a| task a.to_sym do ; end }
         news = News.new
-        news.html = args[:html_snippet]
-        news.url = args[:url] if args[:url]
+        news.html = args[:html_snippet] || ARGV[1]
+        news.url = args[:url] || ARGV[2]
         news.save
     end
 
     desc "delete a new news entry"
     task :delete, :id do |t, args|
-        news = News.get(args[:id]).destroy
+        News.get(args[:id]).destroy
     end
 
     desc "update a new news entry"
     task :update, :id, :html_snippet, :url do |t, args|
+        ARGV.each {|a| task a.to_sym do ; end }
         news = News.get(args[:id])
-        news.html = args[:html_snippet]
-        news.url = args[:url] if args[:url]
+        news.html = args[:html_snippet] || ARGV[1]
+        news.url = args[:url] || ARGV[2]
         news.save
     end
 

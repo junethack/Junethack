@@ -137,6 +137,9 @@ def Trophy.check_trophies_for_variant variant_description
     dynahack = helper_get_variant_for 'dynahack'
     dnethack = helper_get_variant_for 'dnethack'
     fiqhack = helper_get_variant_for 'fiqhack'
+    slashthem = helper_get_variant_for 'slashthem'
+    slex = helper_get_variant_for "slash'em extended"
+
     if [acehack, nethack4, nh4k, dynahack, fiqhack].include? variant then
       # these variants don't have standard xlogfile achievement flags
       broken_xlogfile = true
@@ -185,13 +188,19 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create :variant => variant, :trophy => "one_key", :text => "That was the easy one (obtained at least one alignment key)", :icon => "m-one-key.png"
       Trophy.create :variant => variant, :trophy => "three_keys", :text => "Through the gates of Gehennom (obtained at least three alignment keys)", :icon => "m-three-keys.png"
       Trophy.create :variant => variant, :trophy => "nine_keys", :text => "Those were for replay value... (obtained all nine alignment keys)", :icon => "m-nine-keys.png"
-      Trophy.create :variant => variant, :trophy => "killed_lucifer", :text => "Round two goes to you (killed Lucifer on the Astral Plane)", :icon => "m-killed-lucifer.png"
+      #Trophy.create :variant => variant, :trophy => "killed_lucifer", :text => "Round two goes to you (killed Lucifer on the Astral Plane)", :icon => "m-killed-lucifer.png"
       Trophy.create :variant => variant, :trophy => "killed_asmodeus", :text => "No budget for bribes (killed Asmodeus)", :icon => "m-killed-asmodeus.png"
       Trophy.create :variant => variant, :trophy => "killed_demogorgon", :text => "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))", :icon => "m-killed-demogorgon.png"
 
       Trophy.create variant: variant, trophy: "dn_king", text: "King of dNethack: Ascend a game with all the new races/roles in dNethack", icon: "m-dn-king.png"
       Trophy.create variant: variant, trophy: "dn_prince", text: "Prince of dNethack: Ascend a game with half the new races/roles in dNethack", icon: "m-dn-prince.png"
       Trophy.create variant: variant, trophy: "dn_tour", text: "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack", icon: "m-dn-tour.png"
+    end
+
+    if [slashthem, slex].include? variant then
+      $slash_achievements.reject(&:empty?).each {|trophy|
+        Trophy.create variant: variant, trophy: trophy[0], text: trophy[1], icon: trophy[2]
+      }
     end
 
     # user competition trophies
@@ -274,5 +283,17 @@ DataMapper::MigrationRunner.migration( 5, :missing_variant_trophies ) do
     Trophy.check_trophies_for_variant "fiqhack"
     Trophy.check_trophies_for_variant "dynahack"
     Trophy.check_trophies_for_variant "slash'em extended"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 6, :missing_slash_trophies ) do
+  up do
+    slashthem = helper_get_variant_for 'slashthem'
+    slex = helper_get_variant_for "slash'em extended"
+    [slashthem, slex].each {|variant|
+      $slash_achievements.reject(&:empty?).each {|trophy|
+        Trophy.create variant: variant, trophy: trophy[0], text: trophy[1], icon: trophy[2]
+      }
+    }
   end
 end
