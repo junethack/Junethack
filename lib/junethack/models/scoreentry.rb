@@ -75,3 +75,20 @@ class CompetitionScoreEntry
     property :icon,      String
     property :rank,      Integer, :default => -1
 end
+
+DataMapper::MigrationRunner.migration( 1, :fix_unique_indexes ) do
+  up do
+    # belongs_to, :key => true doesn't correctly creates unique indexes
+    execute 'DROP INDEX "unique_scoreentries_key";'
+    execute 'CREATE UNIQUE INDEX "unique_scoreentries_key" ON "scoreentries" ("variant", "trophy", "user_id");'
+
+    execute 'DROP INDEX "unique_individualtrophies_key";'
+    execute 'CREATE UNIQUE INDEX "unique_individualtrophies_key" ON "individualtrophies" ("trophy", "user_id");'
+
+    execute 'DROP INDEX "unique_clan_score_entries_key";'
+    execute 'CREATE UNIQUE INDEX "unique_clan_score_entries_key" ON "clan_score_entries" ("trophy", "clan_name");'
+
+    execute 'DROP INDEX "unique_competition_score_entries_key";'
+    execute 'CREATE UNIQUE INDEX "unique_competition_score_entries_key" ON "competition_score_entries" ("trophy", "variant", "user_id");'
+  end
+end
