@@ -46,24 +46,24 @@ class Server
         return "http://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
       when "grunthack.org"
         return "http://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"
-      when "nethack.dank.ninja"
+      when "nethack.dank.ninja", "ascension.run"
         case game.version
         when "3.4.3"
-            return "https://nethack.dank.ninja/userdata/#{game.name}/nethack/dumplog/#{game.starttime}"
+            return "https://ascension.run/userdata/#{game.name}/nethack/dumplog/#{game.starttime}"
         when "DNH"
-            return "https://nethack.dank.ninja/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
+            return "https://ascension.run/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
         when "3.0.1"
-            return "https://nethack.dank.ninja/userdata/#{game.name}/nhfourk/dumplog/#{game.dumplog.tr("_",":")}"
+            return "https://ascension.run/userdata/#{game.name}/nhfourk/dumplog/#{game.dumplog.tr("_",":")}"
         when "0.6.3"
-            return "https://nethack.dank.ninja/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}"
+            return "https://ascension.run/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}"
         when "NH-1.3d"
-            return "https://nethack.dank.ninja/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
+            return "https://ascension.run/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
         when "slth"
-            return "https://nethack.dank.ninja/userdata/#{game.name}/slashthem/dumplog/#{game.starttime}"
+            return "https://ascension.run/userdata/#{game.name}/slashthem/dumplog/#{game.starttime}"
         when "0.2.0"
-            return "https://nethack.dank.ninja/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}"
+            return "https://ascension.run/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}"
         when "UNH"
-            return "https://nethack.dank.ninja/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}"
+            return "https://ascension.run/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}"
         end
       when "nethack4.org"
         return "http://nethack4.org/dumps/#{game.dumplog.tr("_",":")}"
@@ -95,19 +95,19 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
       url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/slex', configfileurl: 'https://em.slashem.me/userdata/random_user/slex/random_user.slexrc'
 
     Server.create name: 'ndn_nao', variant: 'NetHack 3.4.3-NAO',
-      url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/nethack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
     Server.create name: 'ndn_unh', variant: 'UnNetHack 5.3.1',
-      url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/unnethack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/unnethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
     Server.create name: 'ndn_dnh', variant: 'dNetHack 3.12.3',
-      url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/dnethack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/dnethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
     Server.create name: 'ndn_dyn', variant: 'DynaHack 0.6.0',
-      url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/dynahack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'ndn_slth', variant: "SlashTHEM 0.8.0",
-      url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/slashthem', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/dynahack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
+    #Server.create name: 'ndn_slth', variant: "SlashTHEM 0.8.0",
+    #  url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/slashthem', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
     Server.create name: 'ndn_nh4k', variant: 'NetHack Fourk 4.3.0.3',
-      url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/nhfourk', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nhfourk', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
     Server.create name: 'ndn_fiq', variant: "FIQHack 4.3.0",
-      url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/fiqhack', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/fiqhack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
   end
   down do
     Server.destroy
@@ -117,9 +117,17 @@ end
 DataMapper::MigrationRunner.migration( 2, :update_servers_1 ) do
   up do
     Server.create name: 'nao_nh361', variant: 'NetHack 3.6.1-dev',
-      url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.nh361dev', configfileurl: 'http://alt.org/nethack/userdata/random_user/random_user.nh360rc'
+      url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.nh361dev', configfileurl: 'https://alt.org/nethack/userdata/random_user/random_user.nh360rc'
 
     Server.create name: 'ndn_nh4', variant: 'NetHack4 4.3.0',
-      url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/nethack4', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
+      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nethack4', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
+  end
+end
+
+DataMapper::MigrationRunner.migration( 3, :remove_slth ) do
+  up do
+    server = Server.first(name: 'ndn_slth')
+    Account.all(server_id: server.id).destroy
+    server.destroy
   end
 end
