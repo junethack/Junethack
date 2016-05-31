@@ -28,7 +28,7 @@ $variants_mapping["DNH"]       = "dNetHack"
 $variants_mapping["3.0.3"]     = "NetHack Fourk"
 $variants_mapping["fiqhack"]   = "FIQHack"
 $variants_mapping["0.6.0"]     = "DynaHack"
-$variants_mapping["slth"]      = "SlashTHEM"
+#$variants_mapping["slth"]      = "SlashTHEM"
 $variants_mapping["slex"]      = "Slash'EM Extended"
 
 # hard coded ordering of variants with competition score entries
@@ -43,7 +43,7 @@ $variant_order << "4.3.0"
 $variant_order << "3.0.3"
 $variant_order << "fiqhack"
 $variant_order << "0.6.0"
-$variant_order << "slth"
+#$variant_order << "slth"
 $variant_order << "slex"
 
 def helper_get_variant_for(description)
