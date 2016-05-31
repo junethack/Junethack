@@ -123,3 +123,11 @@ DataMapper::MigrationRunner.migration( 2, :update_servers_1 ) do
       url: 'https://nethack.dank.ninja/', xlogurl: 'https://nethack.dank.ninja/xlogfiles/nethack4', configfileurl: 'https://nethack.dank.ninja/userdata/random_user/nethack/nethackrc'
   end
 end
+
+DataMapper::MigrationRunner.migration( 3, :remove_slth ) do
+  up do
+    server = Server.first(name: 'ndn_slth')
+    Account.all(server_id: server.id).destroy
+    server.destroy
+  end
+end
