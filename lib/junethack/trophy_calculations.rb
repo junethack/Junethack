@@ -286,7 +286,10 @@ def update_scores(game)
         acehack = helper_get_variant_for 'acehack'
         nethack4 = helper_get_variant_for 'nethack4'
         nh4k = helper_get_variant_for 'nethack fourk'
-        if [acehack, nethack4, nh4k].include? game.version then
+        dynahack = helper_get_variant_for 'dynahack'
+        fiqhack = helper_get_variant_for 'fiqhack'
+
+        if [acehack, nethack4, nh4k, dynahack, fiqhack].include? game.version then
             ## specific trophies as they don't track xlogfile achievements
             # bought an Oracle consultation
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
