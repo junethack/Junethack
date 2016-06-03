@@ -5,6 +5,7 @@
       %tr
         %th Name
         %th Variant
+        %th Character
         %th Server
         %th Points
         %th Killer
@@ -21,7 +22,8 @@
             %a{:href => "/user_id/#{game.user_id}"}= h game.name
           - else
             = h game.name
-        %td{"data-title" => "Name"}= h game.variant_name
+        %td.variant{"data-title" => "Name"}= h game.variant_name
+        %td.table_character{"data-title" => "Character"}= h [game.role, game.race, game.gender, game.align].join('-')
         %td{"data-title" => "Server"}= h game.server.hostname
         %td.table_number{"data-title" => "Points"}= game.points
         %td{"data-title" => "Killer"}= h game.death
