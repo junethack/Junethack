@@ -489,6 +489,12 @@ table.misc,
     padding-right: 0.5em;
     padding-left: 0.5em;
 }
+
+.greytable td.variant,
+.greytable td.table_date,
+.greytable td.table_character {
+    white-space: nowrap;
+}
 /* next two declarations are probably deprecated */
 .greytable input[type="text"]
 {
