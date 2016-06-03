@@ -43,7 +43,10 @@ class Server
         tld = (@name == "eun") ? "eu" : "us"
         return "https://un.nethack.nu/user/#{game.name}/dumps/#{tld}/#{game.name}.#{game.endtime}.txt.html"
       when "nethack.alt.org"
-        return "http://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
+        case game.version
+        when "3.4.3"
+          return "http://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
+        end
       when "grunthack.org"
         return "http://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"
       when "nethack.dank.ninja", "ascension.run"
@@ -52,7 +55,7 @@ class Server
             return "https://ascension.run/userdata/#{game.name}/nethack/dumplog/#{game.starttime}"
         when "DNH"
             return "https://ascension.run/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
-        when "3.0.1"
+        when "3.0.1", "3.0.3"
             return "https://ascension.run/userdata/#{game.name}/nhfourk/dumplog/#{game.dumplog.tr("_",":")}"
         when "0.6.3"
             return "https://ascension.run/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}"
@@ -64,6 +67,10 @@ class Server
             return "https://ascension.run/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}"
         when "UNH"
             return "https://ascension.run/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}"
+        when "fiqhack"
+            return "https://ascension.run/userdata/#{game.name}/fiqhack/dumplog/#{game.dumplog.tr("_",":")}"
+        when "0.6.0"
+            return "https://ascension.run/userdata/#{game.name}/dynahack/dumplog/#{game.dumplog}"
         end
       when "nethack4.org"
         return "http://nethack4.org/dumps/#{game.dumplog.tr("_",":")}"
