@@ -256,7 +256,7 @@ class Game
     end
     # No membership card
     def defeated_one_eyed_sam?
-        event and event.to_i & 0x10000 > 0
+        version.start_with? "UNH" and event and event.to_i & 0x10000 > 0
     end
     # Too good for quests
     def ascended_without_defeating_nemesis?
