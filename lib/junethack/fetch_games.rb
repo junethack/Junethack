@@ -62,20 +62,22 @@ def fetch_all
                             hgame['endtime'].to_i   <= $tournament_endtime
                             acc = Account.first(:name => hgame["name"], :server_id => server.id)
                             regular_game = false
+                            modes = [hgame['mode']] + hgame['modes'].split(',')
                             if hgame['turns'].to_i <= 10 and ['escaped','quit'].include? hgame['death'] then
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "start scummed game"
                                 count_scummed_games += 1
-                            elsif ['explore','multiplayer','debug','polyinit','setseed','abnormal'].include? hgame['mode'] then
+                            elsif (['explore','multiplayer','debug','polyinit','setseed','abnormal',
+                                    'lostsoul', 'uberlostsoul'] & modes) != [] then
                                 game = JunkGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "junk game"
                                 count_junk_games += 1
-                            elsif [nil, 'hah', 'hoh', 'normal', 'solo', 'challenge'].include? hgame['mode'] then
+                            elsif ([nil, 'hah', 'hoh', 'normal', 'solo', 'challenge'] & modes) != [] then
                                 game = Game.create(hgame.merge({"server" => server}))
                                 count_games += 1
                                 regular_game = true
                             else
-                                raise "Unknown 'mode' value: #{hgame['mode']}"
+                              raise "Unknown 'mode' value: #{modes.inspect}"
                             end
                             if acc then
                               game.user_id = acc.user_id

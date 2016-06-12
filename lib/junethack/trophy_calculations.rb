@@ -79,17 +79,17 @@ end
 # dNetHack
 def dnethack_tour?(user)
     anz = repository.adapter.select("select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and turns >= 1000 and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd', 'Ana', 'Con'));", user)[0]
-    return (anz[0]+anz[1]) == 8
+    return (anz[0]+anz[1]) == 10
 end
 
 def dnethack_king?(user)
     anz = repository.adapter.select("select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd', 'Ana', 'Con'));", user)[0]
-    return (anz[0]+anz[1]) == 8
+    return (anz[0]+anz[1]) == 10
 end
 
 def dnethack_prince?(user)
     anz = repository.adapter.select("select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd', 'Ana', 'Con'));", user)[0]
-    return (anz[0]+anz[1]) >= 4
+    return (anz[0]+anz[1]) >= 5
 end
 
 def update_scores(game)
@@ -358,6 +358,12 @@ def update_scores(game)
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
                 :trophy => :dn_tour,
                 :icon => "m-dn-tour.png").save if dnethack_tour? game.user_id
+            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
+                trophy: :killed_asmodeus,
+                icon: "m-killed-asmodeus.png").save if game.dnethack_defeated_asmodeus?
+            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
+                trophy: :killed_demogorgon,
+                icon: "m-killed-demogorgon.png").save if game.dnethack_defeated_demogorgon?
         end
 
         slashthem = helper_get_variant_for 'slashthem'
@@ -365,7 +371,7 @@ def update_scores(game)
         if [slex, slashthem].include? game.version then
           achievements = game.achieve.hex if game.achieve
           if achievements and achievements > 0 then
-            for i in 12..$slash_achievements.size-1 do
+            for i in 11..$slash_achievements.size-1 do
               if achievements & 2**i > 0 then
                 entry = Scoreentry.first(:user_id => game.user_id,
                                          :variant => game.version,

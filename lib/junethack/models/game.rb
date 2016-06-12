@@ -68,8 +68,8 @@ $slash_achievements = [
   [],
   [],
   [],
-  [],
-  [:defeated_vecna, "defeated vecna", "s-vecna.png"],
+  [:defeated_nightmare, "defeated Nightmare", "s-nightmare.png"],
+  [:defeated_vecna, "defeated Vecna", "s-vecna.png"],
   [:defeated_beholder, "defeated Beholder", "s-beholder.png"],
   [:defeated_ruggo, "defeated Ruggo", "s-ruggo.png"],
   [:defeated_kroo, "defeated Kroo", "s-kroo.png"],
@@ -256,7 +256,7 @@ class Game
     end
     # No membership card
     def defeated_one_eyed_sam?
-        event and event.to_i & 0x10000 > 0
+        version.start_with? "UNH" and event and event.to_i & 0x10000 > 0
     end
     # Too good for quests
     def ascended_without_defeating_nemesis?
@@ -358,6 +358,14 @@ class Game
     end
 
     # DNetHack
+    def dnethack_defeated_asmodeus?
+        (dnetachieve and dnetachieve.hex & 0x00002 > 0)
+    end
+
+    def dnethack_defeated_demogorgon?
+        (dnetachieve and dnetachieve.hex & 0x00004 > 0)
+    end
+
     def got_one_key?
         (dnetachieve and dnetachieve.hex & 0x00008 > 0)
     end

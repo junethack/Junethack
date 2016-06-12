@@ -11,7 +11,7 @@ describe 'server linking helper methods' do
       dumplog_less_server = Server.new(id: '1', url: "http://example.ignore/")
       dumplog_less_server.dumplog_link(game).should be_nil
 
-      game = Game.new(:name => 'player', :starttime => 123456)
+      game = Game.new(name: 'player', starttime: 123456, version: '3.4.3')
       nao = Server.new(url: 'http://nethack.alt.org/')
       nao.dumplog_link(game).should == "http://alt.org/nethack/userdata/p/player/dumplog/123456.nh343.txt"
 
