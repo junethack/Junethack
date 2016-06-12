@@ -358,6 +358,14 @@ class Game
     end
 
     # DNetHack
+    def dnethack_defeated_asmodeus?
+        (dnetachieve and dnetachieve.hex & 0x00002 > 0)
+    end
+
+    def dnethack_defeated_demogorgon?
+        (dnetachieve and dnetachieve.hex & 0x00004 > 0)
+    end
+
     def got_one_key?
         (dnetachieve and dnetachieve.hex & 0x00008 > 0)
     end

@@ -188,6 +188,7 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create :variant => variant, :trophy => "one_key", :text => "That was the easy one (obtained at least one alignment key)", :icon => "m-one-key.png"
       Trophy.create :variant => variant, :trophy => "three_keys", :text => "Through the gates of Gehennom (obtained at least three alignment keys)", :icon => "m-three-keys.png"
       Trophy.create :variant => variant, :trophy => "nine_keys", :text => "Those were for replay value... (obtained all nine alignment keys)", :icon => "m-nine-keys.png"
+      #
       #Trophy.create :variant => variant, :trophy => "killed_lucifer", :text => "Round two goes to you (killed Lucifer on the Astral Plane)", :icon => "m-killed-lucifer.png"
       Trophy.create :variant => variant, :trophy => "killed_asmodeus", :text => "No budget for bribes (killed Asmodeus)", :icon => "m-killed-asmodeus.png"
       Trophy.create :variant => variant, :trophy => "killed_demogorgon", :text => "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))", :icon => "m-killed-demogorgon.png"

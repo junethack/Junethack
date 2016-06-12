@@ -358,6 +358,12 @@ def update_scores(game)
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
                 :trophy => :dn_tour,
                 :icon => "m-dn-tour.png").save if dnethack_tour? game.user_id
+            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
+                trophy: :killed_asmodeus,
+                icon: "m-killed-asmodeus.png").save if game.dnethack_defeated_asmodeus?
+            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
+                trophy: :killed_demogorgon,
+                icon: "m-killed-demogorgon.png").save if game.dnethack_defeated_demogorgon?
         end
 
         slashthem = helper_get_variant_for 'slashthem'
