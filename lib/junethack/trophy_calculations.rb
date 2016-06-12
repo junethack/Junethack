@@ -371,7 +371,7 @@ def update_scores(game)
         if [slex, slashthem].include? game.version then
           achievements = game.achieve.hex if game.achieve
           if achievements and achievements > 0 then
-            for i in 12..$slash_achievements.size-1 do
+            for i in 11..$slash_achievements.size-1 do
               if achievements & 2**i > 0 then
                 entry = Scoreentry.first(:user_id => game.user_id,
                                          :variant => game.version,
