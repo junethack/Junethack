@@ -23,11 +23,11 @@ namespace :update do
     i = 0
     desc "recalculate scores"
     task :scores do
-        (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
-            i += 1
-            puts "#{i} #{game.version}"
-            update_scores(Game.get(game.id))
-        }
+      (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
+        i += 1
+        puts "#{i} #{game.id} #{game.version}"
+        update_scores(Game.get(game.id))
+      }
     end
 
     desc "recalculate competition scores"
