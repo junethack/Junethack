@@ -7,12 +7,12 @@
     - if now < $tournament_starttime
       -# show a (static) countdown to tournament start
       .title_text
-        %p= parse_seconds $tournament_starttime - now
+        %p= "Only #{parse_seconds $tournament_starttime - now} until the tournament starts!"
     - elsif now+86400*7 > $tournament_endtime and now < $tournament_endtime
       -# show informational text if there is only one week left in the tournament
       .title_text
         %p= "Only #{parse_seconds $tournament_endtime - now} until the tournament ends!"
-    - if @logged_in 
+    - if @logged_in
       - if now > $tournament_signupstarttime and now < $tournament_endtime
         .signup_text
           %p
