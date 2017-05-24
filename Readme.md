@@ -8,7 +8,7 @@ achievements and trophies for the participating players.
 
 ### Needed pre-installed software
 
- - ruby 1.9.3
+ - ruby 2.3.3
  - curl
  - sqlite3
 
@@ -30,7 +30,7 @@ Install all required rubygems:
     cd junethack
     bundle install
 
-Start the server 
+Start the server
 
     rake
 
