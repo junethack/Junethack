@@ -57,6 +57,8 @@ class Server
             return "https://ascension.run/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
         when "3.0.1", "3.0.3"
             return "https://ascension.run/userdata/#{game.name}/nhfourk/dumplog/#{game.dumplog.tr("_",":")}"
+        when "4.3.0"
+            return "https://ascension.run/userdata/#{game.name}/nethack4/dumplog/#{game.dumplog.tr("_",":")}"
         when "0.6.3"
             return "https://ascension.run/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}"
         when "NH-1.3d"
@@ -66,7 +68,7 @@ class Server
         when "0.2.0"
             return "https://ascension.run/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}"
         when "UNH"
-            return "https://ascension.run/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}"
+            return "https://ascension.run/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}.html"
         when "fiqhack"
             return "https://ascension.run/userdata/#{game.name}/fiqhack/dumplog/#{game.dumplog.tr("_",":")}"
         when "0.6.0"
@@ -100,6 +102,10 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
       url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/nethack', configfileurl: 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
     Server.create name: 'esm_slex', variant: "SlashEMExtended 1.7.1",
       url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/slex', configfileurl: 'https://em.slashem.me/userdata/random_user/slex/random_user.slexrc'
+    Server.create name: 'esm_gho', variant: "GruntHack 0.2.1",
+      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/grunthack', configfileurl: 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
+    Server.create name: 'esm_shc', variant: "SporkHack 0.6.3",
+      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/sporkhack', configfileurl: 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
 
     Server.create name: 'ndn_nao', variant: 'NetHack 3.4.3-NAO',
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
@@ -117,9 +123,10 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/fiqhack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
     Server.create name: 'nao_nh361', variant: 'NetHack 3.6.1-dev',
       url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.nh361dev', configfileurl: 'https://alt.org/nethack/userdata/random_user/random_user.nh360rc'
-
     Server.create name: 'ndn_nh4', variant: 'NetHack4 4.3.0',
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nethack4', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
+
+
   end
 
   down do
