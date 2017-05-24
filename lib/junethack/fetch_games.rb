@@ -56,12 +56,13 @@ def fetch_all
                         i += 1
                         #@fetch_logger.debug "#{line.length} #{line}"
                         xlog_add_offset = line.length
-                        hgame = XLog.parse_xlog line
+                        hgame = XLog.parse_xlog line.force_encoding(Encoding::UTF_8)
                         hgame['version'] = "fiqhack" if server.variant == "FIQHack 4.3.0"
                         if hgame['starttime'].to_i >= $tournament_starttime and
                             hgame['endtime'].to_i   <= $tournament_endtime
                             acc = Account.first(:name => hgame["name"], :server_id => server.id)
                             regular_game = false
+                            hgame['modes'] ||= ""
                             modes = [hgame['mode']] + hgame['modes'].split(',')
                             if hgame['turns'].to_i <= 10 and ['escaped','quit'].include? hgame['death'] then
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
