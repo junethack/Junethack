@@ -115,26 +115,14 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nhfourk', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
     Server.create name: 'ndn_fiq', variant: "FIQHack 4.3.0",
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/fiqhack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
-  end
-  down do
-    Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 2, :update_servers_1 ) do
-  up do
     Server.create name: 'nao_nh361', variant: 'NetHack 3.6.1-dev',
       url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.nh361dev', configfileurl: 'https://alt.org/nethack/userdata/random_user/random_user.nh360rc'
 
     Server.create name: 'ndn_nh4', variant: 'NetHack4 4.3.0',
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nethack4', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
   end
-end
 
-DataMapper::MigrationRunner.migration( 3, :remove_slth ) do
-  up do
-    server = Server.first(name: 'ndn_slth')
-    Account.all(server_id: server.id).destroy
-    server.destroy
+  down do
+    Server.destroy
   end
 end

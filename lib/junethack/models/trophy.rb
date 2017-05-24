@@ -271,7 +271,7 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "nethack4"
     Trophy.check_trophies_for_variant "dnethack"
     Trophy.check_trophies_for_variant "nethack fourk"
-    Trophy.check_trophies_for_variant "slashthem"
+    #Trophy.check_trophies_for_variant "slashthem"
     #Trophy.check_trophies_for_variant "oldhack"
   end
 end
@@ -289,9 +289,9 @@ end
 
 DataMapper::MigrationRunner.migration( 6, :missing_slash_trophies ) do
   up do
-    slashthem = helper_get_variant_for 'slashthem'
+    #slashthem = helper_get_variant_for 'slashthem'
     slex = helper_get_variant_for "slash'em extended"
-    [slashthem, slex].each {|variant|
+    [slex].each {|variant|
       $slash_achievements.reject(&:empty?).each {|trophy|
         Trophy.create variant: variant, trophy: trophy[0], text: trophy[1], icon: trophy[2]
       }
