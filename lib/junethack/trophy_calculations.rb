@@ -77,19 +77,21 @@ def hemi_stoner?(user)
 end
 
 # dNetHack
+$dNetHack_races = "race in ('Inc','Clk','Dro','Hlf')"
+$dNetHack_roles = "role in ('Nob','Pir','Bin','Brd', 'Ana', 'Con')"
 def dnethack_tour?(user)
-    anz = repository.adapter.select("select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and turns >= 1000 and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd', 'Ana', 'Con'));", user)[0]
-    return (anz[0]+anz[1]) == 10
+    anz = repository.adapter.select("select count(1) from (select distinct race from games where user_id = ? and version == 'DNH' and turns >= 1000 and #{$dNetHack_races} union select distinct role from games where user_id = ? and version == 'DNH' and turns >= 1000 and #{$dNetHack_roles});", user, user)[0]
+    return anz == 10
 end
 
 def dnethack_king?(user)
-    anz = repository.adapter.select("select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd', 'Ana', 'Con'));", user)[0]
-    return (anz[0]+anz[1]) == 10
+    anz = repository.adapter.select("select count(1) from (select distinct race from games where user_id = ? and version == 'DNH' and ascended='t' and #{$dNetHack_races} union select distinct role from games where user_id = ? and version == 'DNH' and ascended='t' and #{$dNetHack_roles});", user, user)[0]
+    return anz == 10
 end
 
 def dnethack_prince?(user)
-    anz = repository.adapter.select("select count(distinct race), count(distinct role) from games where user_id = ? and version == 'DNH' and ascended='t' and (race in ('Inc','Clo','Dro','Hlf') or role in ('Nob','Pir','Bin','Brd', 'Ana', 'Con'));", user)[0]
-    return (anz[0]+anz[1]) >= 5
+    anz = repository.adapter.select("select count(1) from (select distinct race from games where user_id = ? and version == 'DNH' and ascended='t' and #{$dNetHack_races} union select distinct role from games where user_id = ? and version == 'DNH' and ascended='t' and #{$dNetHack_roles});", user, user)[0]
+    return anz >= 5
 end
 
 def update_scores(game)
