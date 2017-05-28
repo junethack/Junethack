@@ -99,6 +99,18 @@ class Server
         when "3.4.3"
             "https://www.hardfought.org/userdata/#{player}/nh343/dumplog/#{game.starttime}.nh343.txt"
         end
+      when "em.slashem.me"
+        endtime = DateTime.strptime(game.endtime.to_s,"%s").strftime("%Y%m%d%H%M%S")
+        case game.version
+        #when "3.6.0", "3.6.1"
+        #  "https://em.slashem.me/userdata/#{game.name}/nethack/dumplog/#{endtime}.txt"
+        #when "slex"
+        #  "https://em.slashem.me/userdata/#{game.name}/slex/dumplog/#{endtime}.txt"
+        when "0.2.0","0.2.1"
+          "https://em.slashem.me/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}.txt"
+        when "0.6.3"
+          "https://em.slashem.me/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}.txt"
+        end
       else
         return nil
       end
