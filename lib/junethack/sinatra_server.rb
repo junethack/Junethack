@@ -37,7 +37,7 @@ set :port, ENV['JUNETHACK_PORT']||4567
 use Rack::Session::Pool #fix 4kb session dropping
 use Rack::Deflater
 # Scheduler: fetch game data every 5 minutes
-scheduler = Rufus::Scheduler.start_new(:frequency => 1.0)
+scheduler = Rufus::Scheduler.new
 #scheduler.cron('*/5 * * * *', :blocking => true) { fetch_all }
 
 $application_start = Time.new
