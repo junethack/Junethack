@@ -81,15 +81,15 @@ class Server
         player = "#{game.name[0..0]}/#{game.name}"
         case game.version
         when "0.6.0"
-            "https://www.hardfought.org/userdata/#{player}/dynahack/dumplog/#{game.dumplog}.txt"
+            "https://www.hardfought.org/userdata/#{player}/dynahack/dumplog/#{game.dumplog}"
         when "0.2.0","0.2.1"
             "https://www.hardfought.org/userdata/#{player}/gh/dumplog/#{game.starttime}.gh.txt"
         when "3.6.0", "3.6.1"
             "https://www.hardfought.org/userdata/#{player}/nhdev/dumplog/#{game.starttime}.nhdev.txt"
         when "UNH"
             "https://www.hardfought.org/userdata/#{player}/un531/dumplog/#{game.starttime}.un531.txt.html"
-        when "4.3.0"
-            "https://www.hardfought.org/userdata/#{player}/fiqhack/dumplog/#{game.dumplog}"
+        when "fiqhack"
+            "https://www.hardfought.org/userdata/#{player}/fiqhack/dumplog/#{game.dumplog.tr("_",":")}"
         when "3.0.1", "3.0.3", "3.0.4"
             "https://www.hardfought.org/userdata/#{player}/nhfourk/dumps/#{game.dumplog.tr("_",":")}"
         when "4.3.0"
@@ -125,7 +125,7 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
     Server.create name: 'esm_nh36', variant: "NetHack 3.6.0",
       url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/nethack', configfileurl: 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
-    Server.create name: 'esm_slex', variant: "SlashEMExtended 1.7.1",
+    Server.create name: 'esm_slex', variant: "Slash'EM Extended 2.0.0",
       url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/slex', configfileurl: 'https://em.slashem.me/userdata/random_user/slex/random_user.slexrc'
     Server.create name: 'esm_gho', variant: "GruntHack 0.2.1",
       url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/grunthack', configfileurl: 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
@@ -136,7 +136,7 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
     Server.create name: 'asc_unh', variant: 'UnNetHack 5.3.1',
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/unnethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'asc_dnh', variant: 'dNetHack 3.12.3',
+    Server.create name: 'asc_dnh', variant: 'dNetHack 3.14.0',
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/dnethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
     Server.create name: 'asc_dyn', variant: 'DynaHack 0.6.0',
       url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/dynahack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
@@ -151,7 +151,7 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
     Server.create name: 'hdf_nao', variant: 'NetHack 3.4.3-NAO',
       url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/nh343/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
-    Server.create name: 'hdf_nh361', variant: 'NetHack 3.6.1.-dev',
+    Server.create name: 'hdf_nh361', variant: 'NetHack 3.6.1-dev',
       url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/nhdev/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
     Server.create name: 'hdf_gho', variant: 'GruntHack 0.2.1',
       url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/gh/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
@@ -162,7 +162,7 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
     Server.create name: 'hdf_nh4', variant: 'NetHack4 4.3.0',
       url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/nethack4/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
     Server.create name: 'hdf_nh4k', variant: 'NetHack Fourk 4.3.0.4',
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/nethack4/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
+      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/4k/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
     Server.create name: 'hdf_fiq', variant: "FIQHack 4.3.0",
       url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/fh/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
     Server.create name: 'hdf_dyn', variant: 'DynaHack 0.6.0',
