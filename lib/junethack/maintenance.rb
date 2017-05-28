@@ -9,16 +9,22 @@ require 'logger'
 
 set :root, "#{Dir.pwd}"
 
-class User
-def User.count
-    "infinite"
+$not_numbers = ["NaN", "infinite", "\u2135\u2080"]
+
+def not_a_number
+  $not_numbers[Process.pid % $not_numbers.size]
 end
+
+class User
+  def User.count
+    not_a_number
+  end
 end
 
 class Game
-def Game.count(ignore)
-    "infinite"
-end
+  def Game.count(ignore)
+    not_a_number
+  end
 end
 
 get "/*" do
