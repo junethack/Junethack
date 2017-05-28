@@ -53,6 +53,7 @@ def helper_get_variant_for(description)
     return '3.4.3' if description.downcase == 'vanilla'
     return '3.6.0' if description.downcase == '3.6.0'
     return 'NH-1.3d' if description.downcase == 'oldhack'
+    return '0.6.3' if description.downcase == 'sporkhack'
 
     # find variant by text description
     variant = $variants_mapping.find {|v,k| k.downcase == description.downcase}
