@@ -28,7 +28,7 @@ class XLog
     end
 
     def self.parse_header raw_header
-      Hash[raw_header.split(/\n/).map{|e| e.strip.split(/\: ?/, 2)}.reject(&:empty?)]
+      Hash[raw_header.split(/\n/).map{|e| e.strip.split(/\: ?/, 2)}.reject(&:empty?).map {|a,b| [a.downcase,b] }]
     end
 
     def self.fetch_from_xlog xlog_url, startp, endp

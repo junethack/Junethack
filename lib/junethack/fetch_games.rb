@@ -31,19 +31,19 @@ def fetch_all
         @fetch_logger.debug "fetched header #{header.inspect}"
         @fetch_logger.debug "current offset: #{server.xlogcurrentoffset}"
         if server.xlogcurrentoffset == nil
-            server.xlogcurrentoffset = header['Content-Length'].to_i
-            server.xloglastmodified = header['Last-Modified'] || 'Thu, 01 Jan 1970 00:00:00 GMT'
+            server.xlogcurrentoffset = header['content-length'].to_i
+            server.xloglastmodified = header['last-modified'] || 'Thu, 01 Jan 1970 00:00:00 GMT'
             $db_access.synchronize { server.save }
             next
         end
 
         # in case the web server doesn't send Last-Modified, use current time
         # because of byte-range fetching, not much overhead is generated
-        last_modified = header['Last-Modified'] || Time.now.httpdate
+        last_modified = header['last-modified'] || Time.now.httpdate
         @fetch_logger.debug "last-modified #{last_modified}"
         if DateTime.parse(server.xloglastmodified) < DateTime.parse(last_modified)
             @fetch_logger.debug "fetching games ...."
-            if gamesIO = XLog.fetch_from_xlog(server.xlogurl, server.xlogcurrentoffset, header['Content-Length'])
+            if gamesIO = XLog.fetch_from_xlog(server.xlogurl, server.xlogcurrentoffset, header['content-length'])
                 games = gamesIO.readlines
                 @fetch_logger.info "#{games.length} new game#{'s' if games.length != 1} on #{server.name}."
                 i = 0
@@ -56,7 +56,7 @@ def fetch_all
                         i += 1
                         #@fetch_logger.debug "#{line.length} #{line}"
                         xlog_add_offset = line.length
-                        hgame = XLog.parse_xlog line.force_encoding(Encoding::UTF_8)
+                        hgame = XLog.parse_xlog line.force_encoding(Encoding::UTF_8).encode("utf-8", invalid: :replace)
                         hgame['version'] = "fiqhack" if server.variant == "FIQHack 4.3.0"
                         if hgame['starttime'].to_i >= $tournament_starttime and
                             hgame['endtime'].to_i   <= $tournament_endtime
@@ -117,7 +117,7 @@ def fetch_all
                       end
                     end
                     #repository.adapter.execute("COMMIT");
-                raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['Content-Length'].to_i}" if server.xlogcurrentoffset != header['Content-Length'].to_i
+                raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['content-length'].to_i}" if server.xlogcurrentoffset != header['content-length'].to_i
                 @fetch_logger.info "Inserted #{count_games} tournament, #{count_non_tournament_games} non tournament, #{count_scummed_games} start scummed, and #{count_junk_games} junk games on #{server.name}."
             else
                 @fetch_logger.debug "No games at all on #{server.name}!"
