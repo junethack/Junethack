@@ -276,6 +276,11 @@ class Game
     def ascended_with_all_invocation_items?
         ascended and carried and carried.to_i & 14 > 0
     end
+
+    def ascended_without_elbereth?
+        (ascended && Integer(conduct) & 0x01000) || (ascended && elbereths == 0)
+    end
+
     # Heaven or Hell
     def ascended_heaven_or_hell?
         ascended and mode and mode == "hoh"

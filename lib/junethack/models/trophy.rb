@@ -172,6 +172,7 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_nemesis", :text => "Too good for quests (ascended without defeating the quest nemesis)", :icon => "m-no-nemesis.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_vlad", :text => "Too good for Vladbanes (ascended without defeating Vlad)", :icon => "m-no-vlad.png"
       Trophy.create :variant => variant, :trophy => "ascended_without_defeating_rodney", :text => "Too good for... wait, what? How? (ascended without defeating Rodney)", :icon => "m-no-wizard.png"
+      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
       Trophy.create :variant => variant, :trophy => "ascended_with_all_invocation_items", :text => "Hoarder (ascended carrying all the invocation items)", :icon => "m-hoarder.png"
       Trophy.create :variant => variant, :trophy => "defeated_croesus", :text => "Assault on Fort Knox (defeated Croesus)", :icon => "m-croesus.png"
 
@@ -299,5 +300,24 @@ DataMapper::MigrationRunner.migration( 7, :new_nethack4_trophy_icons ) do
     Trophy.create variant: nh4k, trophy: "entered_the_sokoban_zoo", text: "Entered the Sokoban Zoo", icon: "4k-entered-sokoban.png"
     Trophy.create variant: nh4k, trophy: "entered_minetown_temple", text: "Entered the Minetown Temple", icon: "4k-entered-minetown-temple.png"
     Trophy.create variant: nh4k, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 8, :ascended_without_elbereth ) do
+  up do
+    nethack4 = helper_get_variant_for 'nethack4'
+    nh4k = helper_get_variant_for 'nethack fourk'
+    unnethack = helper_get_variant_for 'unnethack'
+    dynahack = helper_get_variant_for 'dynahack'
+    fiqhack = helper_get_variant_for 'fiqhack'
+    grunthack = helper_get_variant_for 'grunthack'
+
+    Trophy.create variant: nethack4, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
+    Trophy.create variant: nh4k, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
+    Trophy.create variant: dynahack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
+    Trophy.create variant: fiqhack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
+    Trophy.create variant: unnethack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
+    Trophy.create variant: grunthack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
+
   end
 end
