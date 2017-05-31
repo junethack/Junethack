@@ -328,7 +328,7 @@ class Game
     def event_defeated_a_high_priest?
         event and event.to_i & 0x08000 > 0
     end
-    def entered_planes?        
+    def entered_planes?
         deathlev < 0 and (not death.start_with?('went to heaven prematurely'))
     end
     def entered_astral?
@@ -374,6 +374,20 @@ class Game
 
     def got_nine_keys?
         (dnetachieve and dnetachieve.hex & 0x00020 > 0)
+    end
+
+    # NetHack Fourk
+    def entered_the_sokoban_zoo?
+        event && event.to_i & 0x00010000 > 0
+    end
+
+    def entered_minetown_temple?
+        event && event.to_i & 0x00020000 > 0
+    end
+
+    def reached_mines_end?
+        event && event.to_i & 0x00040000 > 0
+        (dnetachieve and dnetachieve.hex & 0x00008 > 0)
     end
 
     after :update do

@@ -181,6 +181,12 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create :variant => variant, :trophy => "heaven_or_hell", :text => "heaven or hell (ascend in 1 HP mode)", :icon => "heaven-or-hell.png" if variant == unnethack
     end
 
+    if [nh4k].include? variant then
+      Trophy.create variant: variant, trophy: "entered_the_sokoban_zoo", text: "Entered the Sokoban Zoo", icon: "4k-entered-sokoban.png"
+      Trophy.create variant: variant, trophy: "entered_minetown_temple", text: "Entered the Minetown Temple", icon: "4k-entered-minetown-temple.png"
+      Trophy.create variant: variant, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png"
+    end
+
     # DNetHack specific achievements
     if dnethack == variant then
       Trophy.create :variant => variant, :trophy => "one_key", :text => "That was the easy one (obtained at least one alignment key)", :icon => "m-one-key.png"
@@ -285,14 +291,13 @@ DataMapper::MigrationRunner.migration( 5, :missing_variant_trophies ) do
   end
 end
 
-DataMapper::MigrationRunner.migration( 6, :missing_slash_trophies ) do
+DataMapper::MigrationRunner.migration( 7, :new_nethack4_trophy_icons ) do
   up do
-    #slashthem = helper_get_variant_for 'slashthem'
-    slex = helper_get_variant_for "slash'em extended"
-    [slex].each {|variant|
-      $slash_achievements.reject(&:empty?).each {|trophy|
-        Trophy.create variant: variant, trophy: trophy[0], text: trophy[1], icon: trophy[2]
-      }
-    }
+    execute "UPDATE trophies set icon = '4-oracle-consult.png' WHERE trophy = 'bought_oracle_consultation'"
+
+    nh4k = helper_get_variant_for 'nethack fourk'
+    Trophy.create variant: nh4k, trophy: "entered_the_sokoban_zoo", text: "Entered the Sokoban Zoo", icon: "4k-entered-sokoban.png"
+    Trophy.create variant: nh4k, trophy: "entered_minetown_temple", text: "Entered the Minetown Temple", icon: "4k-entered-minetown-temple.png"
+    Trophy.create variant: nh4k, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png"
   end
 end

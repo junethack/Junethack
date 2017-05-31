@@ -296,7 +296,7 @@ def update_scores(game)
             # bought an Oracle consultation
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
                 :trophy => :bought_oracle_consultation,
-                :icon => "m-soko.png").save if game.event_bought_oracle_consultation?
+                :icon => "4-oracle-consult").save if game.event_bought_oracle_consultation?
             # reached the quest portal level
             Scoreentry.first_or_create(:user_id => game.user_id, :variant => game.version,
                 :trophy => :accepted_for_quest,
@@ -366,6 +366,19 @@ def update_scores(game)
             Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
                 trophy: :killed_demogorgon,
                 icon: "m-killed-demogorgon.png").save if game.dnethack_defeated_demogorgon?
+        end
+
+        # NetHack Fourk specific trophies
+        if nh4k == game.version then
+            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
+                trophy: :entered_the_sokoban_zoo,
+                icon: "4k-entered-sokoban.png").save if game.entered_the_sokoban_zoo?
+            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
+                trophy: :entered_minetown_temple,
+                icon: "4k-entered-minetown-temple.png").save if game.entered_minetown_temple?
+            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
+                trophy: :reached_mines_end,
+                icon: "4k-mines-end.png").save if game.reached_mines_end?
         end
 
         slashthem = helper_get_variant_for 'slashthem'
