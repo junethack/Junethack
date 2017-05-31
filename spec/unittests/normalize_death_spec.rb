@@ -185,4 +185,23 @@ describe Game,"normalization of death strings" do
     }
   end
 
+  it "normalizes SlashEM'Extended monster and item names" do
+    test = {
+       "a monster (%s )":                    "a monster",
+       "unwisely ate the body of a monster (%s)": "unwisely ate the body of a monster",
+       "slipped while mounting a monster (%s)":   "slipped while mounting a monster",
+       "unwisely tried to eat a monster (%s)":    "unwisely tried to eat a monster",
+
+       "kicking a monster corpse (%s) without boots": "kicking a monster corpse without boots",
+       "tasting petrifying meat (%s)": "tasting petrifying meat",
+       "touching an artifact (%s)":    "touching an artifact",
+       "petrifying egg (%s)":          "petrifying egg",
+       "the wrath of a deity (%s)":    "the wrath of a deity",
+    }
+    test.each {|message, result|
+      @game.death = message
+      expect(@game.normalize_death).to eq result
+    }
+  end
+
 end

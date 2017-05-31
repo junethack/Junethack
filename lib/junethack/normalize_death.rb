@@ -58,6 +58,13 @@ class Game
     # minion list is from vanilla...
     death = death.gsub(/(\w+ elemental|Aleax|couatl|Angel|\w+ demon|\w+ devil|(suc|in)cubus|balrog|pit fiend|nalfeshnee|hezrou|vrock|marilith|erinyes) of .+/, "minion of a deity")
 
+    # SlashEM'Extended has a multiplujillion of different monsters and items
+    death = death.gsub(/monster \([^)]+\)/, "monster")
+                 .gsub(/a monster corpse \([^)]+\)/, "a monster corpse")
+                 .gsub(/tasting petrifying meat \([^)]+\)/, "tasting petrifying meat")
+                 .gsub(/touching an artifact \([^)]+\)/, "touching an artifact")
+                 .gsub(/petrifying egg \([^)]+\)/, "petrifying egg")
+
     death
   end
 end
