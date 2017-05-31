@@ -28,58 +28,58 @@ describe Game, ".defeated_medusa?" do
   it "returns true if Medusa was killed" do
     # standard xlogfile method
     g = Game.new(:version => '3.4.3', :death => '', :achieve => "0x800")
-    g.defeated_medusa?.should be_true
+    expect(g.defeated_medusa?).to be true
 
     g = Game.new(:version => '3.4.3', :death => '', :achieve => "0x1802")
-    g.defeated_medusa?.should be_true
+    expect(g.defeated_medusa?).to be true
 
     # event method
     g = Game.new(:version => '3.4.3', :death => '', :event => "4096")
-    g.defeated_medusa?.should be_true
+    expect(g.defeated_medusa?).to be true
 
     g = Game.new(:version => '3.4.3', :death => '', :event => "65535")
-    g.defeated_medusa?.should be_true
+    expect(g.defeated_medusa?).to be true
   end
 
   it "returns false if Medusa was not killed" do
     # standard xlogfile method
     g = Game.new(:version => '3.4.3', :death => '', :achieve => "0x0")
-    g.defeated_medusa?.should be_false
+    expect(g.defeated_medusa?).to be_falsey
 
     # event method
     g = Game.new(:version => '3.4.3', :death => '', :event => "0")
-    g.defeated_medusa?.should be_false
+    expect(g.defeated_medusa?).to be_falsey
   end
 end
 
 describe Game, ".ascended_heaven_or_hell?" do
   it "returns correct result if ascended in Heaven or Hell" do
     g = Game.new(:version => '3.4.3', :death => 'ascended', :mode => "debug")
-    g.ascended_heaven_or_hell?.should be_false
+    expect(g.ascended_heaven_or_hell?).to be false
 
     g = Game.new(:version => '3.4.3', :death => 'killed', :mode => "hoh")
-    g.ascended_heaven_or_hell?.should be_false
+    expect(g.ascended_heaven_or_hell?).to be false
 
     g = Game.new(:version => '3.4.3', :death => 'ascended', :mode => "hoh")
-    g.ascended_heaven_or_hell?.should be_true
+    expect(g.ascended_heaven_or_hell?).to be true
 
     g = Game.new(:version => '3.4.3', :death => 'defied the gods', :mode => "hoh")
-    g.ascended_heaven_or_hell?.should be_true
+    expect(g.ascended_heaven_or_hell?).to be true
   end
 end
 
 describe Game, ".mini_croesus?" do
   it "returns correct result if ascended in Heaven or Hell" do
     g = Game.new(:version => '3.4.3', :death => 'ascended', :gold => "99999")
-    g.mini_croesus?.should be_false
+    expect(g.mini_croesus?).to be false
 
     g = Game.new(:version => '3.4.3', :death => 'ascended', :gold => "100001")
-    g.mini_croesus?.should be_true
+    expect(g.mini_croesus?).to be true
 
     g = Game.new(:version => '3.4.3', :death => 'killed', :gold => "100001")
-    g.mini_croesus?.should be_true
+    expect(g.mini_croesus?).to be true
 
     g = Game.new(:version => '3.4.3', :death => 'escaped', :gold => "100000")
-    g.mini_croesus?.should be_true
+    expect(g.mini_croesus?).to be true
   end
 end

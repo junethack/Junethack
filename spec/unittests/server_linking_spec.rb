@@ -13,7 +13,7 @@ describe 'server linking helper methods' do
 
       game = Game.new(name: 'player', starttime: 123456, version: '3.4.3')
       nao = Server.new(url: 'http://nethack.alt.org/')
-      nao.dumplog_link(game).should == "http://alt.org/nethack/userdata/p/player/dumplog/123456.nh343.txt"
+      expect(nao.dumplog_link(game)).to eq "https://alt.org/nethack/userdata/p/player/dumplog/123456.nh343.txt"
 
       game = Game.new(:name => 'player', :endtime => 123456)
       un_nethack_nu = Server.new(url: 'http://un.nethack.nu/')
@@ -27,7 +27,7 @@ describe 'server linking helper methods' do
 
   context "given a game and a user" do
     it "should return the link to the user's server home page" do
-      pending "not yet implemented"
+      skip "not yet implemented"
     end
   end
 end

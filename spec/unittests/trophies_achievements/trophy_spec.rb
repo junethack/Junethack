@@ -75,8 +75,8 @@ describe TrophyScore do
     # conducts saved as hexadecimal numbers should also work
     Game.new(:version => version, :user_id => user_id3, :server_id => 1, :conduct => '0xfff', :death => 'ascended').save!
 
-    (all_conducts? user_id1, version).should be_true
-    (all_conducts? user_id2, version).should be_false
-    (all_conducts? user_id3, version).should be_true
+    expect(all_conducts? user_id1, version).to be true
+    expect(all_conducts? user_id2, version).to be false
+    expect(all_conducts? user_id3, version).to be true
   end
 end
