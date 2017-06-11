@@ -84,21 +84,9 @@ after do
 end
 
 def caching_check_last_played_game
-    return if @messages.size > 0 or @errors.size > 0
-
-    last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id is not null;")[0]
-
-    etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
-    last_modified Time.at(last_played_game_time.to_i).httpdate if last_played_game_time
 end
 
 def caching_check_last_played_game_by(user)
-    return if @messages.size > 0 or @errors.size > 0
-
-    last_played_game_time = repository.adapter.select("select max(endtime) from games where user_id = (select user_id from users where login = ?);", user)[0]
-
-    etag "#{last_played_game_time}_#{@user.to_i}".hash if last_played_game_time
-    last_modified Time.at(last_played_game_time.to_i).httpdate if last_played_game_time
 end
 
 # TODO: replace this function with something more appropriate
@@ -447,6 +435,11 @@ get "/servers" do
 
     @servers = Server.all
     haml :servers, :layout => @layout
+end
+
+get "/servers/check" do
+    @servers = Server.all
+    haml :servers_check, layout: @layout
 end
 
 get "/server/:name" do

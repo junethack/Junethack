@@ -1,0 +1,30 @@
+.content_bulk
+  .text_content_wrapper
+    .text_content
+      %table.greytable.cf
+        %tr
+          %th
+            Server name
+          %th
+            Abbreviation
+          %th
+            Variant name
+          %th
+            Last modified
+          %th
+            Xlogfile offset
+        - servers = Server.all
+        - servers.each_with_index do |server, index|
+          %tr
+            %td{"data-title": "Server name"}
+              - if index == 0 || (index > 0 && servers[index-1].url != server.url)
+                %a{href: server.url}=server.hostname
+            %td{"data-title": "Abbreviation"}
+              %a{href: "/server/#{server.name}"}="#{server.name.upcase}"
+            %td{"data-title": "Variant name"}
+              #{server.variant}
+            %td{"data-title": "Last modified"}
+              %a{href: server.xlogurl}=server.xloglastmodified
+            %td.table_number{"data-title": "Xlogfile offset"}
+              #{server.xlogcurrentoffset.html_formatted}
+      %span#end_of_content_spacer.clear
