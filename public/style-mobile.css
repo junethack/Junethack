@@ -88,6 +88,7 @@ a.imagelink:hover {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
+    background-image: inherit;
 }
 /* typical inset rounding and shadowing */
 #topnav,
@@ -278,19 +279,16 @@ table.misc,
     border-top: 1px solid #ccc;
     border-right: 1px solid black;
 }
-.greytable #cell1 td,
-.greytable #cell2 td
+.greytable td
 {
     border-top: 1px solid black;
-    /*padding-left: 0.15em;
-    padding-right: 0.15em;*/
     vertical-align: middle;
 }
-.greytable #cell1 td
+.greytable tr:nth-child(odd) td
 {
     background-color: #ccc;
 }
-.greytable #cell2 td
+.greytable tr:nth-child(even) td
 {
     background-color: #bbb;
 }
