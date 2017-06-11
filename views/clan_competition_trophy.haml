@@ -18,8 +18,8 @@
           %a{:href => "/clan/#{CGI::escape entry.clan.name}"}
             #{h entry.clan.name}
         %td.table_number
-          #{h entry.value.html_formatted}
+          #{entry.value.to_i.html_formatted}
         %td.table_number
-          #{h entry.points.html_formatted}
+          #{h entry.points}
         %td.table_number
           #{h entry.rank}
