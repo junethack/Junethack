@@ -380,9 +380,9 @@ def update_scores(game)
             Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
                 trophy: :entered_minetown_temple,
                 icon: "4k-entered-minetown-temple.png").save if game.entered_minetown_temple?
-            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
-                trophy: :reached_mines_end,
-                icon: "4k-mines-end.png").save if game.reached_mines_end?
+            #Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
+            #    trophy: :reached_mines_end,
+            #    icon: "4k-mines-end.png").save if game.reached_mines_end?
         end
 
         slashthem = helper_get_variant_for 'slashthem'

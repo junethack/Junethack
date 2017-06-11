@@ -17,8 +17,7 @@
           / only show the first 3 places
           - c = CompetitionScoreEntry.all :variant => @variant, :trophy => $trophies[i], :order => [ :rank.asc ], :conditions => [ 'rank <= 3' ]
           - for j in 0..c.size-1 do
-            - style = (j % 2) == 0 ? "cell1" : "cell2"
-            %tr{:id => style}
+            %tr
               - user = User.get(c[j].user_id).login
               %td
                 %a{:href => "/user/" + CGI::escape(user)}=h user

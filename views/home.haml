@@ -19,11 +19,8 @@
                     %th Server
                     %th Account
                     %th Variant
-                - count = 0
                 - for account in @user.accounts
-                    - style = (count % 2) == 0 ? "cell1" : "cell2"
-                    - count += 1
-                    %tr.account{:id => style}
+                    %tr.account
                         %td= account.server.display_name
                         %td= account.name
                         %td= account.server.variant

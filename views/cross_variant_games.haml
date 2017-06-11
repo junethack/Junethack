@@ -9,11 +9,8 @@
         %th Trophy
         %th Medusa
         %th Ascended
-    - count = 0
     - $variant_order.each do |variant|
-      - style = (count % 2) == 0 ? "cell1" : "cell2"
-      - count += 1
-      %tr{:id => style}
+      %tr
         %td{"data-title" => "Name"}= h $variants_mapping[variant]
         - if Game.all(:user_id => @user_id, :version => variant).count > 0
           %td.table_number{"data-title" => "Turns"}= (repository.adapter.select "select max(turns) from games where version = ? and user_id = ?", variant, @user_id).first

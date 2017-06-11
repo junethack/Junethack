@@ -2,9 +2,6 @@
   %table.greytable
     %tr
       %th= "Trophies"
-    - bount = 0
     - @scoreentries.select {|s| s.variant == @variant and $trophy_names[s.trophy] }.each do |scoreentry|
-      - style = (bount % 2) == 0 ? "cell1" : "cell2"
-      - bount += 1
-      %tr{:id => style}
+      %tr
         %td= h $trophy_names[scoreentry.trophy]

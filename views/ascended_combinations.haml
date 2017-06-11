@@ -7,13 +7,10 @@
       %th Race
       %th Alignment
       %th Gender
-    - count = 0
     - $variant_order.each do |variant|
       - combinations = repository.adapter.select @ascended_combinations_sql+" and version = ?", @ascended_combinations_value, variant
       - combinations.each do |c|
-        - style = (count % 2) == 0 ? "cell1" : "cell2"
-        - count += 1
-        %tr{:id => style}
+        %tr
           %td= h $variants_mapping[c.version]
           %td= h c.role
           %td= h c.race

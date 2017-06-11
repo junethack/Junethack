@@ -11,11 +11,8 @@
             %tr
               %th Count
               %th Death
-            - count = 0
             - @deaths.each do |death|
-              - style = (count % 2) == 0 ? "cell1" : "cell2"
-              - count += 1
-              %tr{:id => style}
+              %tr
                 %td.table_number= death.count
                 %td= h death.death
       .text_content.non_top_post
@@ -26,10 +23,7 @@
             %tr
               %th Count
               %th Death
-            - count = 0
             - @unique_deaths.each do |death|
-              - style = (count % 2) == 0 ? "cell1" : "cell2"
-              - count += 1
-              %tr{:id => style}
+              %tr
                 %td.table_number= death.count
                 %td= h death.death

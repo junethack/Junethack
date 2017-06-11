@@ -18,20 +18,16 @@
                 %th= $variants_mapping[v]
 
             -# table data
-            - count = 0
             - today = Time.now.to_i
             - $tournament_starttime.step($tournament_endtime,86400).each do |datum|
               - if today > datum then
-                - style = (count % 2) == 0 ? "cell1" : "cell2"
-                - count += 1
-                %tr{:id => style}
+                %tr
                   %td.table_date= h Time.at(datum).getutc.strftime("%Y-%m-%d")
                   - $variant_order.each do |v|
                     - finished_variant_games_per_day = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and endtime >= ? and endtime < ?;", v, datum, datum+86400)[0]
                     %td.table_number= finished_variant_games_per_day
             -# Total number of tournament games per variant
-            - style = (count % 2) == 0 ? "cell1" : "cell2"
-            %tr{:id => style}
+            %tr
               %td.table_date= "Total"
               - $variant_order.each do |v|
                 - finished_variant_games = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ?;", v)[0]
@@ -49,20 +45,16 @@
               %th Date (UTC)
               %th
             - graph = Graph.new
-            - count = 0
-            - @ascensions_per_day.each do |game|
+            - @ascensions_per_day.each_with_index do |game, index|
               - graph.add_data_point(game.datum, game.count)
-              - style = (count % 2) == 0 ? "cell1" : "cell2"
-              - count += 1
-              %tr{:id => style}
+              %tr
                 %td.table_date= h game.datum
                 %td.table_number= game.count ? game.count : 0
-                - if count == 1
+                - if index == 0
                   %td.chart{:rowspan => @ascensions_per_day.size}
                     %div{:id => "chart_ascensions"}
             -# Total number of ascended tournament games
-            - style = (count % 2) == 0 ? "cell1" : "cell2"
-            %tr{:id => style}
+            %tr
               %td.table_date= "Total"
               %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0 and ascended='t';")[0]
           - graph.write("activity")
@@ -78,20 +70,16 @@
               %th Date (UTC)
               %th
             - graph = Graph.new
-            - count = 0
-            - @finished_games_per_day.each do |game|
+            - @finished_games_per_day.each_with_index do |game, index|
               - graph.add_data_point(game.datum, game.count)
-              - style = (count % 2) == 0 ? "cell1" : "cell2"
-              - count += 1
-              %tr{:id => style}
+              %tr
                 %td.table_date= h game.datum
                 %td.table_number= game.count
-                - if count == 1
+                - if index == 0
                   %td.chart{:rowspan => @finished_games_per_day.size}
                     %div{:id => "chart_finished_games_per_day"}
             -# Total number of played tournament games
-            - style = (count % 2) == 0 ? "cell1" : "cell2"
-            %tr{:id => style}
+            %tr
               %td.table_date= "Total"
               %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0;")[0]
           - graph.write("finished_games_per_day")
@@ -111,22 +99,18 @@
               %th Date (UTC)
               %th
             - graph = Graph.new
-            - count = 0
-            - @days.each do |day|
+            - @days.each_with_index do |day, index|
               - game = @new_users_per_day.select{|g| g.date == day}.first || (Struct.new :date, :count).new(day, 0)
 
               - graph.add_data_point(game.date, game.count)
-              - style = (count % 2) == 0 ? "cell1" : "cell2"
-              - count += 1
-              %tr{:id => style}
+              %tr
                 %td.table_date= h game.date
                 %td.table_number= game.count ? game.count : 0
-                - if count == 1
+                - if index == 0
                   %td.chart{:rowspan => @days.size}
                     %div{:id => "chart_new_users_per_day"}
             -# Total number of registered users
-            - style = (count % 2) == 0 ? "cell1" : "cell2"
-            %tr{:id => style}
+            %tr
               %td.table_date= "Total"
               %td.table_number= (repository.adapter.select "select count(1) from users;")[0]
           - graph.write("new_users_per_day")

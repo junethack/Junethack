@@ -12,11 +12,8 @@
         -# download column
         %th
         %th Time (UTC)
-    - count = 0
     - @games_played.each do |game|
-      - style = (count % 2) == 0 ? "cell1" : "cell2"
-      - count += 1
-      %tr{:id => style}
+      %tr
         %td{:id => "game-#{game.id}"}
           - if @games_played_user_links
             %a{:href => "/user_id/#{game.user_id}"}= h game.name

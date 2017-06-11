@@ -3,12 +3,9 @@
 .scorelisting
   %table.greytable
     %tr
-      %th Name 
+      %th Name
       %th Ascensions
-    - count = 0
     - @most_ascended_users.each do |u|
-      - style = (count % 2) == 0 ? "cell1" : "cell2"
-      - count += 1
-      %tr{:id => style}
+      %tr
         %td= h u.name
         %td= u.ascensions

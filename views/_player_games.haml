@@ -14,37 +14,37 @@
           %th Competition
           %th
           %th{:style => "padding-right: 0; width: 3em;" }  Placing
-        %tr#cell1
+        %tr
           - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "most_ascensions"
           %td Most ascensions
           %td.table_number= h c.value
           %td.table_number= h c.rank
-        %tr#cell2
+        %tr
           - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "fastest_ascension_gametime"
           %td Fastest ascension (by turns)
           %td.table_number= h c.value
           %td.table_number= h c.rank
-        %tr#cell1
+        %tr
           - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "fastest_ascension_realtime"
           %td Fastest ascension (by wall-clock time)
           %td.table_number= h parse_seconds c.value
           %td.table_number= h c.rank
-        %tr#cell2
+        %tr
           - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "highest_scoring_ascension"
           %td Highest scoring ascension
           %td.table_number= h c.value
           %td.table_number= h c.rank
-        %tr#cell1
+        %tr
           - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "lowest_scoring_ascension"
           %td Lowest scoring ascension
           %td.table_number= h c.value
           %td.table_number= h c.rank
-        %tr#cell2
+        %tr
           - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "most_conducts_ascension"
           %td Most conducts in a single ascension
           %td.table_number= h c.value
           %td.table_number= h c.rank
-        %tr#cell1
+        %tr
           - c = CompetitionScoreEntry.first :user_id => @user_id, :variant => @variant, :trophy => "longest_ascension_streaks"
           %td Longest ascension streak
           %td.table_number= h c.value

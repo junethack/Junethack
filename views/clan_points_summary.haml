@@ -10,11 +10,8 @@
         Clan Points
       %th.competition_placing
         Rank
-    - count = 0
     - ClanScoreEntry.all(:clan_name => @clan.name, :trophy.not => 'clan_winner').each do |entry|
-      - style = (count % 2) == 0 ? "cell1" : "cell2"
-      - count += 1
-      %tr{:id => style}
+      %tr
         %td
           #{h Trophy.first(:trophy => entry.trophy).text}
         %td.table_number

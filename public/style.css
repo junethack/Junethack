@@ -451,52 +451,42 @@ table.misc,
     padding-right: 20px;
     padding-left: 3px;
 }
-.greytable #cell1 td,
-.greytable #cell2 td
+.greytable td
 {
     border-top: 1px solid #888;
     border-bottom: 1px solid #888;
     padding-right: 10px;
-    padding-left: 4px;
+    padding-left: 10px;
     vertical-align: middle;
 }
-.greytable #cell1 td,
-.greytable #cell2 td
-{
-    padding-left: 10px;
-}
-.greytable #cell1
+.greytable tr:nth-child(odd) td
 {
     background-color: #ccc;
 }
-.greytable #cell2
+.greytable tr:nth-child(even) td
 {
     background-color: #bbb;
 }
 
-.greytable #cell1:hover,
-.greytable #cell2:hover
+.greytable tr:hover td
 {
     background-color: #9f9f9f;
     color: #000;
 }
 
-.greytable #cell1 td.chart,
-.greytable #cell2 td.chart
+.greytable td.chart
 {
     background-color: inherit;
     border: 0;
     padding-left: 1em;
 }
-.greytable #cell1 td.table_number,
-.greytable #cell2 td.table_number
+.greytable td.table_number
 {
     text-align: right;
     padding-right: 0.5em;
     padding-left: 0.5em;
 }
-.greytable #cell1 td.table_date,
-.greytable #cell2 td.table_date
+.greytable td.table_date
 {
     text-align: center;
     padding-right: 0;
@@ -519,8 +509,7 @@ table.misc,
 {
     font-size: 100%;
 }
-.greytable #cell1 td.dllink,
-.greytable #cell2 td.dllink
+.greytable td.dllink
 {
     text-align: center;
     width: 1em;

@@ -14,11 +14,8 @@
         %th
         %th Time (UTC)
     - games = Game.all(:user_id => User.all(clan_name: @clan.name))
-    - count = 0
     - games.each do |game|
-      - style = (count % 2) == 0 ? "cell1" : "cell2"
-      - count += 1
-      %tr{:id => style}
+      %tr
         %td{:id => "game-#{game.id}"}
           %a{:href => "/user_id/#{game.user_id}"}= h game.name
         %td{"data-title" => "Name"}= h game.variant_name

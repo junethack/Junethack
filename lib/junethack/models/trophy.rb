@@ -185,7 +185,7 @@ def Trophy.check_trophies_for_variant variant_description
     if [nh4k].include? variant then
       Trophy.create variant: variant, trophy: "entered_the_sokoban_zoo", text: "Entered the Sokoban Zoo", icon: "4k-entered-sokoban.png"
       Trophy.create variant: variant, trophy: "entered_minetown_temple", text: "Entered the Minetown Temple", icon: "4k-entered-minetown-temple.png"
-      Trophy.create variant: variant, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png"
+      #Trophy.create variant: variant, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png"
     end
 
     # DNetHack specific achievements
@@ -299,7 +299,7 @@ DataMapper::MigrationRunner.migration( 7, :new_nethack4_trophy_icons ) do
     nh4k = helper_get_variant_for 'nethack fourk'
     Trophy.create variant: nh4k, trophy: "entered_the_sokoban_zoo", text: "Entered the Sokoban Zoo", icon: "4k-entered-sokoban.png"
     Trophy.create variant: nh4k, trophy: "entered_minetown_temple", text: "Entered the Minetown Temple", icon: "4k-entered-minetown-temple.png"
-    Trophy.create variant: nh4k, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png"
+    #Trophy.create variant: nh4k, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png"
   end
 end
 
@@ -319,5 +319,12 @@ DataMapper::MigrationRunner.migration( 8, :ascended_without_elbereth ) do
     Trophy.create variant: unnethack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
     Trophy.create variant: grunthack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
 
+  end
+end
+
+DataMapper::MigrationRunner.migration( 8, :remove_nethack4_reached_mines_end ) do
+  up do
+    nh4k = helper_get_variant_for 'nethack fourk'
+    Trophy.all(variant: nh4k, trophy: "reached_mines_end").destroy
   end
 end

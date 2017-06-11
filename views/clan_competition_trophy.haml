@@ -12,11 +12,8 @@
         Clan Points
       %th.competition_placing
         Rank
-    - count = 0
     - ClanScoreEntry.all(:order => [:rank.asc], :trophy => @trophy, :value.gt => 0).each do |entry|
-      - style = (count % 2) == 0 ? "cell1" : "cell2"
-      - count += 1
-      %tr{:id => style}
+      %tr
         %td
           %a{:href => "/clan/#{CGI::escape entry.clan.name}"}
             #{h entry.clan.name}
