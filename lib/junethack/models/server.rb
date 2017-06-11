@@ -100,10 +100,10 @@ class Server
             "https://www.hardfought.org/userdata/#{player}/nh343/dumplog/#{game.starttime}.nh343.txt"
         end
       when "em.slashem.me"
-        endtime = DateTime.strptime(game.endtime.to_s,"%s").strftime("%Y%m%d%H%M%S")
         case game.version
-        #when "3.6.0", "3.6.1"
-        #  "https://em.slashem.me/userdata/#{game.name}/nethack/dumplog/#{endtime}.txt"
+        when "3.6.0", "3.6.1"
+          endtime = DateTime.strptime(game.endtime.to_s,"%s").strftime("%Y%m%d%H%M%S")
+          "https://em.slashem.me/userdata/#{game.name}/nethack/dumplog/#{endtime}.txt"
         #when "slex"
         #  "https://em.slashem.me/userdata/#{game.name}/slex/dumplog/#{endtime}.txt"
         when "0.2.0","0.2.1"
