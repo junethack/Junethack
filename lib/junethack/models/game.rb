@@ -278,7 +278,7 @@ class Game
     end
 
     def ascended_without_elbereth?
-        (ascended && Integer(conduct) & 0x01000) || (ascended && elbereths == 0)
+        (ascended && (Integer(conduct) & 0x01000 > 0)) || (ascended && elbereths == 0)
     end
 
     # Heaven or Hell

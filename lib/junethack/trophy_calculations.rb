@@ -343,6 +343,14 @@ def update_scores(game)
                 icon: "m-elbereth.png").save if game.ascended_without_elbereth?
         end
 
+        unnethack = helper_get_variant_for 'unnethack'
+        grunthack = helper_get_variant_for 'grunthack'
+        if [unnethack, grunthack].include? game.version then
+          Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
+              trophy: :ascended_without_elbereth,
+              icon: "m-elbereth.png").save if game.ascended_without_elbereth?
+        end
+
         # DNetHack specific trophies
         dnethack = helper_get_variant_for 'dnethack'
         if dnethack == game.version then

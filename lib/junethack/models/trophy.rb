@@ -134,6 +134,7 @@ def Trophy.check_trophies_for_variant variant_description
     unnethack = helper_get_variant_for 'unnethack'
     dynahack = helper_get_variant_for 'dynahack'
     dnethack = helper_get_variant_for 'dnethack'
+    grunthack = helper_get_variant_for 'grunthack'
     fiqhack = helper_get_variant_for 'fiqhack'
     slashthem = helper_get_variant_for 'slashthem'
     slex = helper_get_variant_for "slash'em extended"
@@ -207,6 +208,10 @@ def Trophy.check_trophies_for_variant variant_description
       $slash_achievements.reject(&:empty?).each {|trophy|
         Trophy.create variant: variant, trophy: trophy[0], text: trophy[1], icon: trophy[2]
       }
+    end
+
+    if [grunthack].include? variant then
+      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
     end
 
     # user competition trophies
