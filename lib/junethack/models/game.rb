@@ -426,6 +426,12 @@ DataMapper::MigrationRunner.migration( 2, :create_trophy_indexes ) do
   end
 end
 
+DataMapper::MigrationRunner.migration( 3, :start_scummed_games ) do
+  up do
+    execute 'DELETE FROM games WHERE turns > 10 AND endtime-starttime <= 10'
+  end
+end
+
 
 class NormalizedDeath
     include DataMapper::Resource

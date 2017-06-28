@@ -62,10 +62,19 @@ namespace :update do
       end
     end
 
-    desc "recalculate clan scores"
+    desc "re-rank clans"
     task :clan_winner do
-        rank_clans
-        score_clans
+      rank_clans
+      score_clans
+    end
+
+    desc "recalculate clan scores"
+    task :clan_scores do
+      Clan.all.each {|clan|
+        puts clan.name
+        game = Game.all(user_id: clan.users.map(&:id)).last
+        update_clan_scores(game) if game
+      }
     end
 
     task :normalize_deaths do

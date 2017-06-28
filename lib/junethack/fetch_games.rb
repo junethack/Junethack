@@ -64,7 +64,10 @@ def fetch_all
                             regular_game = false
                             hgame['modes'] ||= ""
                             modes = [hgame['mode']] + hgame['modes'].split(',')
-                            if hgame['turns'].to_i <= 10 and ['escaped','quit'].include? hgame['death'] then
+
+                            start_scummed = hgame['turns'].to_i <= 10 && ['escaped','quit'].include?(hgame['death'])
+                            start_scummed ||= hgame['turns'].to_i > 10 && hgame['endtime'].to_i-hgame['starttime'].to_i <= 10
+                            if start_scummed then
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "start scummed game"
                                 count_scummed_games += 1
