@@ -50,6 +50,18 @@ namespace :update do
         end
     end
 
+    task :killed_medusa do
+      i = 0
+      Game.transaction do
+        Game.all.each do |game|
+          game.killed_medusa = game.defeated_medusa? ? 1 : 0
+          i += 1
+          puts i if i % 100 == 0
+          game.save! # only change field and don't call hooks
+        end
+      end
+    end
+
     desc "recalculate clan scores"
     task :clan_winner do
         rank_clans

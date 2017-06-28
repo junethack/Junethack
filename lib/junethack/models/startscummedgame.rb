@@ -82,4 +82,6 @@ class StartScummedGame
 
     # new in 3.6.0
     property :while, String
+
+    property :killed_medusa, Integer
 end

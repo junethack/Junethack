@@ -243,6 +243,9 @@ class Game
     # new in 3.6.0
     property :while, String
 
+    property :killed_medusa, Integer,
+      :default => -> (r,p) { r.defeated_medusa? ? 1 : 0 }
+
     def defeated_medusa?
         (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)
     end

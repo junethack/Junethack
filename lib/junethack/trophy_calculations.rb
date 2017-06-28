@@ -523,9 +523,7 @@ def update_clan_scores(game)
 
         # new clan trophies for 2013
         # Most Medusa kills
-        clanGames = Game.all(:user_id => User.all(:clan_name => clan_name))
-        most_medusa_kills = 0
-        clanGames.each {|game| most_medusa_kills +=1 if game.defeated_medusa? }
+        most_medusa_kills = Game.all(user_id: User.all(clan_name: clan_name)).sum(:killed_medusa)
         c = ClanScoreEntry.first_or_new(:clan_name => clan_name,
                                         :trophy  => "most_medusa_kills",
                                         :icon => "clan-medusa-kills.png")
