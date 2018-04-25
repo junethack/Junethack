@@ -22,5 +22,9 @@
         / user trophies
         - trophies = Trophy.user_trophies @variant
         - user_trophies = repository.adapter.select "select trophy from scoreentries where user_id = ? and variant = ?", @player.id, @variant
+        - row = 1
         - for trophy in trophies
+            - if trophy.row != row
+                - row = trophy.row
+                %br
             =haml :trophy, :locals => {:trophy => trophy, :achieved => (user_trophies.include? trophy.trophy)}

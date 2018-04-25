@@ -400,17 +400,15 @@ def update_scores(game)
           if achievements and achievements > 0 then
             for i in 12..$slash_achievements.size-1 do
               if achievements & 2**i > 0 then
-                entry = Scoreentry.first(:user_id => game.user_id,
-                                         :variant => game.version,
-                                         :trophy => $slash_achievements[i][0],
-                                         :icon => $slash_achievements[i][2])
+                entry = Scoreentry.first(user_id: game.user_id,
+                                         variant: game.version,
+                                         trophy: $slash_achievements[i][1])
                 if not entry then
-                  Scoreentry.create(:user_id => game.user_id,
-                                    :variant => game.version,
-                                    :value   => "1",
-                                    :endtime => game.endtime,
-                                    :trophy  => $slash_achievements[i][0],
-                                    :icon    => $slash_achievements[i][2]).save
+                  Scoreentry.create(user_id: game.user_id,
+                                    variant: game.version,
+                                    value: "1",
+                                    endtime: game.endtime,
+                                    trophy: $slash_achievements[i][1]).save
                 end
               end
             end

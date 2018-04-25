@@ -9,11 +9,12 @@ class Trophy
     include DataMapper::Resource
 
     property :id,        Serial
-    property :variant,   String, :required => false
-    property :trophy,    String, :required => true
-    property :text,      String, :required => true
-    property :icon,      String, :required => true
-    property :user_competition, Boolean, :required => true, :default => false
+    property :variant,   String, required: false
+    property :trophy,    String, required: true
+    property :text,      String, required: true
+    property :icon,      String, required: true
+    property :row,       Integer, default: 1
+    property :user_competition, Boolean, required: true, default: false
 
     # returns all cross variant trophies
     def Trophy.cross_variant_trophies
@@ -22,7 +23,10 @@ class Trophy
 
     # returns all variant-specific user trophies
     def Trophy.user_trophies variant
-        Trophy.all :variant => variant, :user_competition => false, :conditions => [ "trophy not like 'all_%'" ]
+        Trophy.all variant: variant,
+                   user_competition: false,
+                   conditions: [ "trophy not like 'all_%'" ],
+                   order: [ :row, :id ]
     end
 
     # returns all variant-specific user competition trophies
@@ -170,17 +174,19 @@ def Trophy.check_trophies_for_variant variant_description
 
     # AceHack, NetHack4 and UnNetHack specific achievements
     if [acehack, nethack4, unnethack, dynahack, nh4k, fiqhack].include? variant then
-      Trophy.create :variant => variant, :trophy => "ascended_without_defeating_nemesis", :text => "Too good for quests (ascended without defeating the quest nemesis)", :icon => "m-no-nemesis.png"
-      Trophy.create :variant => variant, :trophy => "ascended_without_defeating_vlad", :text => "Too good for Vladbanes (ascended without defeating Vlad)", :icon => "m-no-vlad.png"
-      Trophy.create :variant => variant, :trophy => "ascended_without_defeating_rodney", :text => "Too good for... wait, what? How? (ascended without defeating Rodney)", :icon => "m-no-wizard.png"
-      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
-      Trophy.create :variant => variant, :trophy => "ascended_with_all_invocation_items", :text => "Hoarder (ascended carrying all the invocation items)", :icon => "m-hoarder.png"
-      Trophy.create :variant => variant, :trophy => "defeated_croesus", :text => "Assault on Fort Knox (defeated Croesus)", :icon => "m-croesus.png"
+      Trophy.create variant: variant, trophy: "ascended_without_defeating_nemesis", text: "Too good for quests (ascended without defeating the quest nemesis)", icon: "m-no-nemesis.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_without_defeating_vlad", text: "Too good for Vladbanes (ascended without defeating Vlad)", icon: "m-no-vlad.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_without_defeating_rodney", text: "Too good for... wait, what? How? (ascended without defeating Rodney)", icon: "m-no-wizard.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_with_all_invocation_items", text: "Hoarder (ascended carrying all the invocation items)", icon: "m-hoarder.png", row: 2
+      Trophy.create variant: variant, trophy: "defeated_croesus", text: "Assault on Fort Knox (defeated Croesus)", icon: "m-croesus.png", row: 2
 
-      Trophy.create :variant => variant, :trophy => "defeated_one_eyed_sam", :text => "No membership card (defeated One-Eyed Sam)", :icon => "m-sam.png" if variant == unnethack
-      Trophy.create :variant => variant, :trophy => "ascended_without_defeating_cthulhu", :text => "Too good for a brain (ascended without defeating Cthulhu)", :icon => "m-no-cthulhu.png" if variant == unnethack
-      Trophy.create :variant => variant, :trophy => "mini_croesus", :text => "Mini-Croesus (finish a game with at least 100,000 gold pieces)", :icon => "m-mini-croesus.png" if variant == unnethack
-      Trophy.create :variant => variant, :trophy => "heaven_or_hell", :text => "heaven or hell (ascend in 1 HP mode)", :icon => "heaven-or-hell.png" if variant == unnethack
+      if variant == unnethack
+        Trophy.create variant: variant, trophy: "defeated_one_eyed_sam", text: "No membership card (defeated One-Eyed Sam)", icon: "m-sam.png", row: 3
+        Trophy.create variant: variant, trophy: "ascended_without_defeating_cthulhu", text: "Too good for a brain (ascended without defeating Cthulhu)", icon: "m-no-cthulhu.png", row: 3
+        Trophy.create variant: variant, trophy: "mini_croesus", text: "Mini-Croesus (finish a game with at least 100,000 gold pieces)", icon: "m-mini-croesus.png", row: 3
+        Trophy.create variant: variant, trophy: "heaven_or_hell", text: "heaven or hell (ascend in 1 HP mode)", icon: "heaven-or-hell.png", row: 3
+      end
     end
 
     if [nh4k].include? variant then
@@ -191,28 +197,28 @@ def Trophy.check_trophies_for_variant variant_description
 
     # DNetHack specific achievements
     if dnethack == variant then
-      Trophy.create :variant => variant, :trophy => "one_key", :text => "That was the easy one (obtained at least one alignment key)", :icon => "m-one-key.png"
-      Trophy.create :variant => variant, :trophy => "three_keys", :text => "Through the gates of Gehennom (obtained at least three alignment keys)", :icon => "m-three-keys.png"
-      Trophy.create :variant => variant, :trophy => "nine_keys", :text => "Those were for replay value... (obtained all nine alignment keys)", :icon => "m-nine-keys.png"
+      Trophy.create variant: variant, trophy: "one_key", text: "That was the easy one (obtained at least one alignment key)", icon: "m-one-key.png", row: 2
+      Trophy.create variant: variant, trophy: "three_keys", text: "Through the gates of Gehennom (obtained at least three alignment keys)", icon: "m-three-keys.png", row: 2
+      Trophy.create variant: variant, trophy: "nine_keys", text: "Those were for replay value... (obtained all nine alignment keys)", icon: "m-nine-keys.png", row: 2
       #
-      #Trophy.create :variant => variant, :trophy => "killed_lucifer", :text => "Round two goes to you (killed Lucifer on the Astral Plane)", :icon => "m-killed-lucifer.png"
-      Trophy.create :variant => variant, :trophy => "killed_asmodeus", :text => "No budget for bribes (killed Asmodeus)", :icon => "m-killed-asmodeus.png"
-      Trophy.create :variant => variant, :trophy => "killed_demogorgon", :text => "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))", :icon => "m-killed-demogorgon.png"
+      #Trophy.create variant: variant, trophy: "killed_lucifer", text: "Round two goes to you (killed Lucifer on the Astral Plane)", icon: "m-killed-lucifer.png"
+      Trophy.create variant: variant, trophy: "killed_asmodeus", text: "No budget for bribes (killed Asmodeus)", icon: "m-killed-asmodeus.png", row: 2
+      Trophy.create variant: variant, trophy: "killed_demogorgon", text: "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))", icon: "m-killed-demogorgon.png", row: 2
 
-      Trophy.create variant: variant, trophy: "dn_king", text: "King of dNethack: Ascend a game with all the new races/roles in dNethack", icon: "m-dn-king.png"
-      Trophy.create variant: variant, trophy: "dn_prince", text: "Prince of dNethack: Ascend a game with half the new races/roles in dNethack", icon: "m-dn-prince.png"
-      Trophy.create variant: variant, trophy: "dn_tour", text: "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack", icon: "m-dn-tour.png"
+      Trophy.create variant: variant, trophy: "dn_king", text: "King of dNethack: Ascend a game with all the new races/roles in dNethack", icon: "m-dn-king.png", row: 2
+      Trophy.create variant: variant, trophy: "dn_prince", text: "Prince of dNethack: Ascend a game with half the new races/roles in dNethack", icon: "m-dn-prince.png", row: 2
+      Trophy.create variant: variant, trophy: "dn_tour", text: "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack", icon: "m-dn-tour.png", row: 2
     end
 
     if [slashthem, slex].include? variant then
       $slash_achievements.reject(&:empty?).each {|trophy|
-        Trophy.create variant: variant, trophy: trophy[0], text: trophy[1], icon: trophy[2]
+        Trophy.create variant: variant, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
       }
     end
 
     if [slex].include? variant then
-      $slex_extended_achievements.reject(&:empty?).each {|trophy|
-        Trophy.create variant: variant, trophy: trophy[0], text: trophy[1], icon: trophy[2]
+      $slex_extended_achievements.each {|trophy|
+        Trophy.create variant: variant, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
       }
     end
 
