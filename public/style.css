@@ -837,7 +837,7 @@ ul.trophypage > li > img,
 .trophycabinet .trophyleft,
 .trophycabinet .trophyright {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
 }
 /* finer-grained display styles */
 .trophycabinet .trophyright, .trophycabinet .trophyleft {

@@ -85,16 +85,16 @@ $slash_achievements = [
 ]
 
 $slex_extended_achievements = [
-  [:imbued_amulet,        "imbued the Amulet of Yendor",              "m-slex-amuletimbued.png"],
-  [:imbued_bell,          "imbued the Bell of Opening",               "m-slex-bellimbued.png"],
-  [:killed_bofh,          "killed the BOFH",                          "m-slex-bofh.png"],
-  [:killed_elderpriest,   "killed an elder priest",                   "m-slex-elderpriest.png"],
-  [:killed_glassgolem,    "killed the Motherfucker Glass Golem",      "m-slex-glassgolem.png"],
-  [:killed_katia,         "killed Erogenous Katia",                   "m-slex-katia.png"],
-  [:get_magresstone,      "obtained the stone of magic resistance from the Deep Mines", "m-slex-magresstone.png"],
-  [:swimmingpool_cleared, "reached the bottom of the Swimming Pools", "m-slex-swimmingpool.png"],
-  [:killed_tiksrvzllat,   "killed Tiksrvzllat",                       "m-slex-tiksrvzllat.png"],
-  [:killed_witchking,     "killed the Witch King of Angmar",          "m-slex-witchking.png"],
+  [3, :imbued_amulet,        "imbued the Amulet of Yendor",              "m-slex-amuletimbued.png"],
+  [3, :imbued_bell,          "imbued the Bell of Opening",               "m-slex-bellimbued.png"],
+  [2, :killed_bofh,          "killed the BOFH",                          "m-slex-bofh.png"],
+  [2, :killed_elderpriest,   "killed an elder priest",                   "m-slex-elderpriest.png"],
+  [2, :killed_glassgolem,    "killed the Motherfucker Glass Golem",      "m-slex-glassgolem.png"],
+  [2, :killed_katia,         "killed Erogenous Katia",                   "m-slex-katia.png"],
+  [3, :get_magresstone,      "obtained the stone of magic resistance from the Deep Mines", "m-slex-magresstone.png"],
+  [3, :swimmingpool_cleared, "reached the bottom of the Swimming Pools", "m-slex-swimmingpool.png"],
+  [2, :killed_tiksrvzllat,   "killed Tiksrvzllat",                       "m-slex-tiksrvzllat.png"],
+  [2, :killed_witchking,     "killed the Witch King of Angmar",          "m-slex-witchking.png"],
 ]
 
 $trophy_names = {
