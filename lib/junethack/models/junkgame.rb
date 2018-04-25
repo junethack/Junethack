@@ -87,6 +87,7 @@ class JunkGame
     property :modes, String
     property :hybrid, String
     property :gamemode, String
+    property :achieveX, Text
 
     # new in 3.6.0
     property :while, String

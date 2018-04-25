@@ -415,6 +415,22 @@ def update_scores(game)
               end
             end
           end
+          extended_achievements = game.achieveX.split(',')
+          extended_achievements.each {|achievement|
+            if Trophy.first variant: slex, trophy: achievement
+              entry = Scoreentry.first(user_id: game.user_id,
+                                       variant: game.version,
+                                       trophy:  achievement)
+              if not entry then
+                Scoreentry.create(user_id: game.user_id,
+                                  variant: game.version,
+                                  value:   1,
+                                  endtime: game.endtime,
+                                  trophy:  achievement).save
+              end
+            end
+          }
+
         end
 
     ## Non-Ascension cross-variant trophies

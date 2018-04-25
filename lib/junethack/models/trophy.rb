@@ -210,6 +210,12 @@ def Trophy.check_trophies_for_variant variant_description
       }
     end
 
+    if [slex].include? variant then
+      $slex_extended_achievements.reject(&:empty?).each {|trophy|
+        Trophy.create variant: variant, trophy: trophy[0], text: trophy[1], icon: trophy[2]
+      }
+    end
+
     if [grunthack].include? variant then
       Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
     end
