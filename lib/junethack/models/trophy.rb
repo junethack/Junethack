@@ -170,7 +170,7 @@ def Trophy.check_trophies_for_variant variant_description
     Trophy.create :variant => variant, :trophy => "obtained_the_luckstone_from_the_mines", :text => "obtained the luckstone from the Mines", :icon => "m-luckstone.png" if not broken_xlogfile
     Trophy.create :variant => variant, :trophy => "accepted_for_quest", :text => "get accepted to the Quest", :icon => "m-luckstone.png" if broken_xlogfile
     Trophy.create :variant => variant, :trophy => "obtained_the_sokoban_prize", :text => "obtained the Sokoban Prize", :icon => "m-soko.png" if not broken_xlogfile
-    Trophy.create :variant => variant, :trophy => "bought_oracle_consultation", :text => "got an Oracle consultation", :icon => "m-soko.png" if broken_xlogfile
+    Trophy.create variant: variant, trophy: "bought_oracle_consultation", text: "got an Oracle consultation", icon: "4-oracle-consult.png" if broken_xlogfile
 
     # AceHack, NetHack4 and UnNetHack specific achievements
     if [acehack, nethack4, unnethack, dynahack, nh4k, fiqhack].include? variant then
@@ -191,9 +191,9 @@ def Trophy.check_trophies_for_variant variant_description
     end
 
     if [nh4k].include? variant then
-      Trophy.create variant: variant, trophy: "entered_the_sokoban_zoo", text: "Entered the Sokoban Zoo", icon: "4k-entered-sokoban.png"
-      Trophy.create variant: variant, trophy: "entered_minetown_temple", text: "Entered the Minetown Temple", icon: "4k-entered-minetown-temple.png"
-      #Trophy.create variant: variant, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png"
+      Trophy.create variant: variant, trophy: "entered_the_sokoban_zoo", text: "Entered the Sokoban Zoo", icon: "4k-entered-sokoban.png", row: 2
+      Trophy.create variant: variant, trophy: "entered_minetown_temple", text: "Entered the Minetown Temple", icon: "4k-entered-minetown-temple.png", row: 2
+      Trophy.create variant: variant, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png", row: 2
     end
 
     # DNetHack specific achievements
@@ -246,6 +246,12 @@ def Trophy.check_trophies_for_variant variant_description
   end
 end
 
+DataMapper::MigrationRunner.migration( 1, :create_trophy_achievements_indexes ) do
+  up do
+    execute 'CREATE UNIQUE INDEX "unique_trophy_variant" ON "trophies" ("variant", "trophy");'
+  end
+end
+
 DataMapper::MigrationRunner.migration( 1, :create_cross_variant_achievements ) do
   up do
     # Cross Variant
@@ -288,61 +294,17 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
   up do
     # add all already existing variants
     Trophy.check_trophies_for_variant "vanilla"
+    Trophy.check_trophies_for_variant "3.6.0"
     Trophy.check_trophies_for_variant "sporkhack"
     Trophy.check_trophies_for_variant "unnethack"
     Trophy.check_trophies_for_variant "grunthack"
     Trophy.check_trophies_for_variant "nethack4"
     Trophy.check_trophies_for_variant "dnethack"
     Trophy.check_trophies_for_variant "nethack fourk"
-    #Trophy.check_trophies_for_variant "slashthem"
-    #Trophy.check_trophies_for_variant "oldhack"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 5, :missing_variant_trophies ) do
-  up do
-    # add all already existing variants
-    Trophy.check_trophies_for_variant "3.6.0"
-    Trophy.check_trophies_for_variant "nethack fourk"
     Trophy.check_trophies_for_variant "fiqhack"
     Trophy.check_trophies_for_variant "dynahack"
     Trophy.check_trophies_for_variant "slash'em extended"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 7, :new_nethack4_trophy_icons ) do
-  up do
-    execute "UPDATE trophies set icon = '4-oracle-consult.png' WHERE trophy = 'bought_oracle_consultation'"
-
-    nh4k = helper_get_variant_for 'nethack fourk'
-    Trophy.create variant: nh4k, trophy: "entered_the_sokoban_zoo", text: "Entered the Sokoban Zoo", icon: "4k-entered-sokoban.png"
-    Trophy.create variant: nh4k, trophy: "entered_minetown_temple", text: "Entered the Minetown Temple", icon: "4k-entered-minetown-temple.png"
-    #Trophy.create variant: nh4k, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 8, :ascended_without_elbereth ) do
-  up do
-    nethack4 = helper_get_variant_for 'nethack4'
-    nh4k = helper_get_variant_for 'nethack fourk'
-    unnethack = helper_get_variant_for 'unnethack'
-    dynahack = helper_get_variant_for 'dynahack'
-    fiqhack = helper_get_variant_for 'fiqhack'
-    grunthack = helper_get_variant_for 'grunthack'
-
-    Trophy.create variant: nethack4, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
-    Trophy.create variant: nh4k, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
-    Trophy.create variant: dynahack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
-    Trophy.create variant: fiqhack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
-    Trophy.create variant: unnethack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
-    Trophy.create variant: grunthack, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
-
-  end
-end
-
-DataMapper::MigrationRunner.migration( 8, :remove_nethack4_reached_mines_end ) do
-  up do
-    nh4k = helper_get_variant_for 'nethack fourk'
-    Trophy.all(variant: nh4k, trophy: "reached_mines_end").destroy
+    #Trophy.check_trophies_for_variant "slashthem"
+    #Trophy.check_trophies_for_variant "oldhack"
   end
 end
