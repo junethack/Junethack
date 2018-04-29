@@ -13,6 +13,8 @@ Dir.mkdir('logs') unless File.exists?('logs')
 @stop_fetching_games = "stop_fetching_games"
 
 def fetch_all
+    ignored_game_modes = ['explore','multiplayer','debug','polyinit','setseed','abnormal',
+                          'lostsoul','uberlostsoul','gmmode','supergmmode','wonderland']
     if File.exists? @stop_fetching_games then
       @fetch_logger.info "File #{@stop_fetching_games} exists, don't get new games."
       return
@@ -71,8 +73,7 @@ def fetch_all
                                 game = StartScummedGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "start scummed game"
                                 count_scummed_games += 1
-                            elsif (['explore','multiplayer','debug','polyinit','setseed','abnormal',
-                                    'lostsoul', 'uberlostsoul'] & modes) != [] then
+                            elsif (ignored_game_modes & modes) != [] then
                                 game = JunkGame.create(hgame.merge({"server" => server}))
                                 @fetch_logger.debug "junk game"
                                 count_junk_games += 1
