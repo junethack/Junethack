@@ -236,9 +236,10 @@ class Game
     # nh4k-specific properties
     property :variant, String
 
-    # SlashTHEM-specific properties
+    # SlashTHEM/SlashEm Extended-specific properties
     property :modes, String
     property :hybrid, String
+    property :gamemode, String
 
     # new in 3.6.0
     property :while, String
@@ -395,7 +396,6 @@ class Game
 
     def reached_mines_end?
         event && event.to_i & 0x00040000 > 0
-        (dnetachieve and dnetachieve.hex & 0x00008 > 0)
     end
 
     after :update do

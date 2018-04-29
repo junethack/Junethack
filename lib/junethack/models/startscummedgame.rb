@@ -76,9 +76,10 @@ class StartScummedGame
     # nh4k-specific properties
     property :variant, String
 
-    # SlashTHEM-specific properties
+    # SlashTHEM/SlashEm Extended-specific properties
     property :modes, String
     property :hybrid, String
+    property :gamemode, String
 
     # new in 3.6.0
     property :while, String
