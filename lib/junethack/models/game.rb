@@ -373,7 +373,11 @@ class Game
     end
 
     def mini_croesus?
-        gold >= 100_000
+        gold >= 25_000
+    end
+
+    def better_than_croesus?
+        gold >= 200_000
     end
 
     # DNetHack

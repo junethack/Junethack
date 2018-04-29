@@ -184,8 +184,9 @@ def Trophy.check_trophies_for_variant variant_description
       if variant == unnethack
         Trophy.create variant: variant, trophy: "defeated_one_eyed_sam", text: "No membership card (defeated One-Eyed Sam)", icon: "m-sam.png", row: 3
         Trophy.create variant: variant, trophy: "ascended_without_defeating_cthulhu", text: "Too good for a brain (ascended without defeating Cthulhu)", icon: "m-no-cthulhu.png", row: 3
-        Trophy.create variant: variant, trophy: "mini_croesus", text: "Mini-Croesus (finish a game with at least 100,000 gold pieces)", icon: "m-mini-croesus.png", row: 3
         Trophy.create variant: variant, trophy: "heaven_or_hell", text: "heaven or hell (ascend in 1 HP mode)", icon: "heaven-or-hell.png", row: 3
+        Trophy.create variant: variant, trophy: "mini_croesus", text: "Mini-Croesus (finish a game with at least 25,000 gold pieces)", icon: "m-mini-croesus.png", row: 3
+        Trophy.create variant: variant, trophy: "better_than_croesus", text: "Better than Croesus (finish a game with at least 200,000 gold pieces)", icon: "m-better-than-croesus.png", row: 3
       end
     end
 

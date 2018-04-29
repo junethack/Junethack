@@ -69,17 +69,33 @@ describe Game, ".ascended_heaven_or_hell?" do
 end
 
 describe Game, ".mini_croesus?" do
-  it "returns correct result if ascended in Heaven or Hell" do
-    g = Game.new(:version => '3.4.3', :death => 'ascended', :gold => "99999")
+  it "works in not ascended games" do
+    g = Game.new(version: '3.4.3', death: 'ascended', gold: "24999")
     expect(g.mini_croesus?).to be false
 
-    g = Game.new(:version => '3.4.3', :death => 'ascended', :gold => "100001")
+    g = Game.new(version: '3.4.3', death: 'ascended', gold: "25001")
     expect(g.mini_croesus?).to be true
 
-    g = Game.new(:version => '3.4.3', :death => 'killed', :gold => "100001")
+    g = Game.new(version: '3.4.3', death: 'killed',   gold: "25001")
     expect(g.mini_croesus?).to be true
 
-    g = Game.new(:version => '3.4.3', :death => 'escaped', :gold => "100000")
+    g = Game.new(version: '3.4.3', death: 'escaped',  gold: "25000")
     expect(g.mini_croesus?).to be true
+  end
+end
+
+describe Game, ".better_than_croesus?" do
+  it "works in not ascended games" do
+    g = Game.new(version: '3.4.3', death: 'ascended', gold: "199999")
+    expect(g.better_than_croesus?).to be false
+
+    g = Game.new(version: '3.4.3', death: 'ascended', gold: "200001")
+    expect(g.better_than_croesus?).to be true
+
+    g = Game.new(version: '3.4.3', death: 'killed',   gold: "200001")
+    expect(g.better_than_croesus?).to be true
+
+    g = Game.new(version: '3.4.3', death: 'escaped',  gold: "200000")
+    expect(g.better_than_croesus?).to be true
   end
 end
