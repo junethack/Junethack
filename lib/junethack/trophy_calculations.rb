@@ -382,15 +382,15 @@ def update_scores(game)
 
         # NetHack Fourk specific trophies
         if nh4k == game.version then
-            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
-                trophy: :entered_the_sokoban_zoo,
-                icon: "4k-entered-sokoban.png").save if game.entered_the_sokoban_zoo?
-            Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
-                trophy: :entered_minetown_temple,
-                icon: "4k-entered-minetown-temple.png").save if game.entered_minetown_temple?
-            #Scoreentry.first_or_create(user_id: game.user_id, variant: game.version,
-            #    trophy: :reached_mines_end,
-            #    icon: "4k-mines-end.png").save if game.reached_mines_end?
+          Scoreentry.first_or_create(user_id: game.user_id,
+                                     variant: game.version,
+                                     trophy: :entered_the_sokoban_zoo).save if game.entered_the_sokoban_zoo?
+          Scoreentry.first_or_create(user_id: game.user_id,
+                                     variant: game.version,
+                                     trophy: :entered_minetown_temple).save if game.entered_minetown_temple?
+          Scoreentry.first_or_create(user_id: game.user_id,
+                                     variant: game.version,
+                                     trophy: :reached_mines_end).save if game.reached_mines_end?
         end
 
         slashthem = helper_get_variant_for 'slashthem'
