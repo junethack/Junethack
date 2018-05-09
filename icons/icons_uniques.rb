@@ -35,7 +35,7 @@ def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil,
   if type == 'rider'
     color, _ = color_to_rgb(small_color, dark)
 
-    img = img.color_floodfill(0,0, 'rgb(15,15,15)')
+    img = img.color_floodfill(0,0, 'rgb(13,13,13)')
 
     block = Proc.new {
       self.fill = color
@@ -46,9 +46,13 @@ def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil,
     small_symbol = nil
   end
 
+  if ['leader', 'nemesis'].include?(type)
+    img = img.color_floodfill(0,0, 'rgb(5,5,5)')
+  end
+
   # smaller symbol
 
-  if small_symbol && !small_symbol.empty?
+  if small_symbol && small_symbol.size == 1 && !small_symbol.empty?
     small_fg, _ = color_to_rgb(small_color, dark)
     block = Proc.new {
       self.fill = small_fg
@@ -70,17 +74,73 @@ def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil,
     draw.annotate(img, 0, 0,  15,  14, small_symbol, &block)
   end
 
-  draw.annotate(img, 0, 0, 0, 0, symbol) {
+  # nemesis or leader
+  if small_symbol && small_symbol.size == 3 && !small_symbol.empty?
+    small_fg, _ = color_to_rgb(small_color, dark)
+
+    d = Draw.new
+    d.font_family = 'DejaVu Sans Condensed'
+    d.pointsize = 9
+    d.fill = small_fg
+
+    if type == 'leader'
+      d.gravity = NorthWestGravity
+      d.annotate(img, 0, 0, 1, 0, small_symbol)
+    end
+    if name == 'Master of Thieves'
+      type = 'nemesis'
+      small_symbol = 'Tou'
+    end
+    if type == 'nemesis'
+      d.gravity = SouthWestGravity
+      d.annotate(img, 0, 0, 1, 0, small_symbol)
+    end
+  end
+
+  y_offset = case symbol
+             when '@' then -3
+             when 's' then -3
+             else           0
+             end
+  x_offset = ['leader', 'nemesis'].include?(type) ? 0 : 0
+  draw.annotate(img, 0, 0, x_offset, y_offset, symbol) {
     self.fill = fg
     self.pointsize = 40
   }
 
-  img.border(2, 2, fg).write("#{name.downcase}.png")
+  img.border(2, 2, fg).write("u_defeated_#{name.downcase.gsub(' ', '_')}.png")
 end
 
 write_icon *$_.split(',').map(&:strip) while DATA.gets
 
 __END__
+@,  magenta,   Lord Carnarvon,      leader,  Arc, white
+@,  magenta,   Pelias,              leader,  Bar, white
+@,  magenta,   Shaman Karnov,       leader,  Cav, white
+@,  white,     Robert the Lifer,    leader,  Con, white
+@,  magenta,   Hippocrates,         leader,  Hea, white
+@,  magenta,   King Arthur,         leader,  Kni, white
+@,  gray,      Grand Master,        leader,  Mon, white
+@,  white,     Arch Priest,         leader,  Pri, white
+@,  magenta,   Orion,               leader,  Ran, white
+@,  magenta,   Master of Thieves,   leader,  Rog, white
+@,  magenta,   Lord Sato,           leader,  Sam, white
+@,  white,     Twoflower,           leader,  Tou, white
+@,  magenta,   Norn,                leader,  Val, white
+@,  green,     Neferet the Green,   leader,  Wiz, white
+&,  red,       Minion of Huhetotl,  nemesis, Arc, white, dark
+@,  magenta,   Thoth Amon,          nemesis, Bar, white, dark
+D,  magenta,   Tiamat,              nemesis, Cav, white, dark
+@,  magenta,   Warden Arianna,      nemesis, Con, white, dark
+H,  lgray,     Cyclops,             nemesis, Hea, white, dark
+D,  red,       Ixoth,               nemesis, Kni, white, dark
+@,  magenta,   Master Kaen,         nemesis, Mon, white, dark
+&,  red,       Nalzok,              nemesis, Pri, white, dark
+s,  magenta,   Scorpius,            nemesis, Ran, white, dark
+@,  magenta,   Master Assassin,     nemesis, Rog, white, dark
+@,  magenta,   Ashikaga Takauji,    nemesis, Sam, white, dark
+H,  magenta,   Lord Surtur,         nemesis, Val, white, dark
+@,  gray,      Dark One,            nemesis, Wiz, white, dark
 &,  magenta,   Death,               rider,  †, gray
 &,  magenta,   Pestilence,          rider,  Ψ, gray
 &,  magenta,   Famine,              rider,  %, gray
