@@ -58,6 +58,10 @@ class JunkGame
     property :exp,     Integer, :default => 0
     property :mode,    String
     property :gold,    Integer, :default => -1
+    property :killed_uniques, Text
+    property :killed_nazgul, Integer, default: 0
+    property :killed_erinyes, Integer, default: 0
+    property :killed_weeping_archangels, Integer, default: 0
 
     # nethack4-specific properties
     property :charname, String

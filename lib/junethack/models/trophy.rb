@@ -112,7 +112,6 @@ $trophy_names = {
 
 # create variant specific trophies
 def Trophy.check_trophies_for_variant variant_description
-
   # get variant designator by description
   variant = helper_get_variant_for variant_description
 
@@ -182,11 +181,81 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: "defeated_croesus", text: "Assault on Fort Knox (defeated Croesus)", icon: "m-croesus.png", row: 2
 
       if variant == unnethack
-        Trophy.create variant: variant, trophy: "defeated_one_eyed_sam", text: "No membership card (defeated One-Eyed Sam)", icon: "m-sam.png", row: 3
-        Trophy.create variant: variant, trophy: "ascended_without_defeating_cthulhu", text: "Too good for a brain (ascended without defeating Cthulhu)", icon: "m-no-cthulhu.png", row: 3
-        Trophy.create variant: variant, trophy: "heaven_or_hell", text: "heaven or hell (ascend in 1 HP mode)", icon: "heaven-or-hell.png", row: 3
-        Trophy.create variant: variant, trophy: "mini_croesus", text: "Mini-Croesus (finish a game with at least 25,000 gold pieces)", icon: "m-mini-croesus.png", row: 3
-        Trophy.create variant: variant, trophy: "better_than_croesus", text: "Better than Croesus (finish a game with at least 200,000 gold pieces)", icon: "m-better-than-croesus.png", row: 3
+        achievements = [
+          [:ascended_without_defeating_cthulhu, "Too good for a brain (ascended without defeating Cthulhu)", "m-no-cthulhu.png", 3],
+          [:heaven_or_hell,                     "heaven or hell (ascend in 1 HP mode)",                      "heaven-or-hell.png", 3],
+          [:mini_croesus,                       "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 3],
+          [:better_than_croesus,                "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 3],
+          [:bought_oracle_consultation,         'got an Oracle consultation', '4-oracle-consult.png', 3],
+
+          #[:defeated_all_unique_monsters, ", nil, 4], TODO
+          [:defeated_all_riders,              'You Are War! (defeated Death, Famine, and Pestilence)', 'defeated_all_riders.png', 4],
+          [:defeated_all_quest_leaders,       'You already know the way (defeated all Quest leaders)', 'defeated_all_quest_leaders.png', 4],
+          [:defeated_all_quest_nemeses,       "Viel Feind', viel Ehr' (defeated all Quest nemeses)", 'defeated_all_quest_nemeses.png', 4],
+          [:defeated_all_demon_lords_princes, 'Demonbuster (defeated all demon lords and princes)', 'defeated_all_demon_lords_princes.png', 4],
+          #[:defeated_all_erinyes, ", nil, 4], TODO
+          #[:defeated_all_nazgul, ", nil, 4], TODO
+          #[:defeated_all_weeping_archangels, ", nil, 4], TODO
+
+          # riders
+          [:defeated_death,      'defeated Death', nil, 5],
+          [:defeated_famine,     'defeated Famine', nil, 5],
+          [:defeated_pestilence, 'defeated Pestilence', nil, 5],
+          # uncategorized unique monsters
+          [:defeated_cthulhu,              'defeated Cthulhu', nil, 6],
+          [:defeated_wizard_of_yendor,     'defeated the Wizard of Yendor', nil, 6],
+          [:defeated_one_eyed_sam,         'No membership card (defeated One-Eyed Sam)', 'm-sam.png', 6],
+          [:defeated_aphrodite,            'defeated Aphrodite', nil, 6],
+          [:defeated_vlad_the_impaler,     'defeated Vlad the Impaler', nil, 6],
+          [:defeated_oracle,               'defeated the Oracle', nil, 6],
+          #[:defeated_medusa,               'defeated Medusa', nil, 6],
+          #[:defeated_croesus,              'defeated Croesus', nil, 6],
+          [:defeated_executioner,          'defeated the Executioner', nil, 6],
+          [:defeated_durins_bane,          "defeated Durin's Bane", nil, 6],
+          [:defeated_watcher_in_the_water, 'defeated the Watcher in the Water', nil, 6],
+          # demons
+          [:defeated_asmodeus,   'defeated Asmodeus', nil, 7],
+          [:defeated_baalzebub,  'defeated Baalzebub', nil, 7],
+          [:defeated_demogorgon, 'defeated Demogorgon', nil, 7],
+          [:defeated_dispater,   'defeated Dispater', nil, 7],
+          [:defeated_geryon,     'defeated Geryon', nil, 7],
+          [:defeated_juiblex,    'defeated Juiblex', nil, 7],
+          [:defeated_orcus,      'defeated Orcus', nil, 7],
+          [:defeated_yeenoghu,   'defeated Yeenoghu', nil, 7],
+          # quest leader
+          [:defeated_lord_carnarvon,     'defeated Lord Carnarvon, the Archeologist quest leader', nil, 8],
+          [:defeated_pelias,             'defeated Pelias, the Barbarian quest leader', nil, 8],
+          [:defeated_shaman_karnov,      'defeated Shaman Karnov, the Caveman quest leader', nil, 8],
+          [:defeated_robert_the_lifer,   'defeated Robert the Lifer, the Convict quest leader', nil, 8],
+          [:defeated_hippocrates,        'defeated Hippocrates, the Healer quest leader', nil, 8],
+          [:defeated_king_arthur,        'defeated King Arthur, the Knight quest leader', nil, 8],
+          [:defeated_grand_master,       'defeated Grand Master, the Monk quest leader', nil, 8],
+          [:defeated_arch_priest,        'defeated the Arch Priest, the Priest quest leader', nil, 8],
+          [:defeated_orion,              'defeated Orion, the Ranger quest leader', nil, 8],
+          [:defeated_master_of_thieves,  'defeated the Master of Thieves, the Rogue quest leader and Tourist quest nemesis', nil, 8],
+          [:defeated_lord_sato,          'defeated Lord Sato, the Samurai quest leader', nil, 8],
+          [:defeated_twoflower,          'defeated Twoflower, the Tourist quest leader', nil, 8],
+          [:defeated_norn,               'defeated Norn, the Valkyrie quest leader', nil, 8],
+          [:defeated_neferet_the_green,  'defeated Neferet the Green, the Wizard quest leader', nil, 8],
+          # quest nemesis
+          [:defeated_minion_of_huhetotl, 'defeated the Minion of Huhetotl, the Archeologist quest nemesis', nil, 9],
+          [:defeated_thoth_amon,         'defeated Thoth Amon, the Barbarian quest nemesis', nil, 9],
+          [:defeated_tiamat,             'defeated Tiamat, the Caveman quest nemesis', nil, 9],
+          [:defeated_warden_arianna,     'defeated Warden Arianna, the Convict quest nemesis', nil, 9],
+          [:defeated_cyclops,            'defeated Cyclops, the Healer quest nemesis', nil, 9],
+          [:defeated_ixoth,              'defeated Ixoth, the Knight quest nemesis', nil, 9],
+          [:defeated_master_kaen,        'defeated Master Kaen, the Monk quest nemesis', nil, 9],
+          [:defeated_nalzok,             'defeated Nalzok, the Priest quest nemesis', nil, 9],
+          [:defeated_scorpius,           'defeated Scorpius, the Ranger quest nemesis', nil, 9],
+          [:defeated_master_assassin,    'defeated the Master Assassin, the Rogue quest nemesis', nil, 9],
+          [:defeated_ashikaga_takauji,   'defeated Ashikaga Takauji, the Samurai quest nemesis', nil, 9],
+          [:defeated_lord_surtur,        'defeated Lord Surtur, the Valkyrie quest nemesis', nil, 9],
+          [:defeated_dark_one,           'defeated the Dark One, the Wizard quest nemesis', nil, 9],
+        ]
+        achievements.each {|achievement|
+          icon = achievement[2] || "u-#{achievement[0].to_s.gsub(' ', '_')}.png"
+          Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[3]
+        }
       end
     end
 
@@ -203,12 +272,12 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: "nine_keys", text: "Those were for replay value... (obtained all nine alignment keys)", icon: "m-nine-keys.png", row: 2
       #
       #Trophy.create variant: variant, trophy: "killed_lucifer", text: "Round two goes to you (killed Lucifer on the Astral Plane)", icon: "m-killed-lucifer.png"
-      Trophy.create variant: variant, trophy: "killed_asmodeus", text: "No budget for bribes (killed Asmodeus)", icon: "m-killed-asmodeus.png", row: 2
-      Trophy.create variant: variant, trophy: "killed_demogorgon", text: "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))", icon: "m-killed-demogorgon.png", row: 2
+      Trophy.create variant: variant, trophy: "killed_asmodeus", text: "No budget for bribes (killed Asmodeus)", icon: "m-killed-asmodeus.png", row: 3
+      Trophy.create variant: variant, trophy: "killed_demogorgon", text: "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))", icon: "m-killed-demogorgon.png", row: 3
 
-      Trophy.create variant: variant, trophy: "dn_king", text: "King of dNethack: Ascend a game with all the new races/roles in dNethack", icon: "m-dn-king.png", row: 2
-      Trophy.create variant: variant, trophy: "dn_prince", text: "Prince of dNethack: Ascend a game with half the new races/roles in dNethack", icon: "m-dn-prince.png", row: 2
-      Trophy.create variant: variant, trophy: "dn_tour", text: "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack", icon: "m-dn-tour.png", row: 2
+      Trophy.create variant: variant, trophy: "dn_king", text: "King of dNethack: Ascend a game with all the new races/roles in dNethack", icon: "m-dn-king.png", row: 4
+      Trophy.create variant: variant, trophy: "dn_prince", text: "Prince of dNethack: Ascend a game with half the new races/roles in dNethack", icon: "m-dn-prince.png", row: 4
+      Trophy.create variant: variant, trophy: "dn_tour", text: "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack", icon: "m-dn-tour.png", row: 4
     end
 
     if [slashthem, slex].include? variant then
@@ -244,6 +313,12 @@ def Trophy.check_trophies_for_variant variant_description
     Trophy.create :variant => variant, :trophy => "all_genders", :text => "All genders: ascend a character of each gender (the starting gender is considered)", :icon => "all-genders.png"
 
   end
+
+  # verify that every Trophy has existing icons
+  Trophy.all.each {|trophy|
+    raise "Trophy icon #{trophy.icon} doesn't exist" unless File.exist? "icons/#{trophy.icon}"
+    raise "Trophy icon #{trophy.light_icon} doesn't exist" unless File.exist? "icons/#{trophy.light_icon}"
+  }
 end
 
 DataMapper::MigrationRunner.migration( 1, :create_trophy_achievements_indexes ) do

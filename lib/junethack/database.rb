@@ -25,8 +25,8 @@ configure :development do
 end
 configure :test do
   puts "Configuring test database"
-  DataMapper.setup(:default, "sqlite3::memory:")
   DataMapper::Logger.new("logs/test_db.log", :debug)
+  DataMapper.setup(:default, "sqlite3::memory:")
 
   # suppress migration output.
   # it would be written at every run as we use a in-memory db
