@@ -4,33 +4,15 @@
 require 'rubygems'
 require 'bundler/setup'
 
-require 'rmagick'
-include Magick
-$CGANAMES = %w(black blue green cyan red magenta brown lgray gray lblue lgreen lcyan lred lmagenta yellow white)
-def cga(cname)
-  n = $CGANAMES.index cname
-  c = Array.new(3) {|i| n[2-i] * 0xAA + n[3] * 0x55}
-  c[1] = 0x55 if n == 6
-  c = [30, 30, 255] if cname == "blue"
-  return c
-end
-
-def color_to_rgb(color, dark=false)
-  color = cga(color)
-  color = color.map {|c| c / 4 * 3 } if dark
-  r, g, b = *color
-  fg = "rgb(#{r>>0},#{g>>0},#{b>>0})"
-  bg = "rgb(#{r>>4},#{g>>4},#{b>>4})"
-  [fg, bg]
-end
+require_relative 'icons_utils'
 
 def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil, dark=false)
   puts name
   fg, bg = color_to_rgb(color)
-  img = Image.new(50, 50) {self.background_color = bg}
-  draw = Draw.new
+  img = Magick::Image.new(50, 50) {self.background_color = bg}
+  draw = Magick::Draw.new
   draw.font_family = 'DejaVu Sans Mono'
-  draw.gravity = CenterGravity
+  draw.gravity = Magick::CenterGravity
 
   if type == 'rider'
     color, _ = color_to_rgb(small_color, dark)
@@ -93,13 +75,13 @@ def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil,
   if small_symbol && small_symbol.size == 3 && !small_symbol.empty?
     small_fg, _ = color_to_rgb(small_color, dark)
 
-    d = Draw.new
+    d = Magick::Draw.new
     d.font_family = 'DejaVu Sans Condensed'
     d.pointsize = 9
     d.fill = small_fg
 
     if type == 'leader'
-      d.gravity = NorthWestGravity
+      d.gravity = Magick::NorthWestGravity
       d.annotate(img, 0, 0, 1, 0, small_symbol)
     end
     if name == 'Master of Thieves'
@@ -107,7 +89,7 @@ def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil,
       small_symbol = 'Tou'
     end
     if type == 'nemesis'
-      d.gravity = SouthWestGravity
+      d.gravity = Magick::SouthWestGravity
       d.annotate(img, 0, 0, 1, 0, small_symbol)
     end
   end
