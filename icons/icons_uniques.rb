@@ -40,6 +40,7 @@ def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil,
     block = Proc.new {
       self.fill = color
       self.pointsize = 28
+      self.font_weight = Magick::NormalWeight
     }
     draw.annotate(img, 0, 0,  17.75, 0, small_symbol, &block)
     draw.annotate(img, 0, 0, -17.75, 0, small_symbol, &block)
@@ -51,27 +52,41 @@ def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil,
   end
 
   # smaller symbol
-
   if small_symbol && small_symbol.size == 1 && !small_symbol.empty?
     small_fg, _ = color_to_rgb(small_color, dark)
     block = Proc.new {
       self.fill = small_fg
       self.pointsize = 20
+      self.font_weight = Magick::NormalWeight
     }
 
     neuner = ['≋', '≡', '·'].include? small_symbol
 
-    draw.annotate(img, 0, 0, -15, -16, small_symbol, &block)
-    draw.annotate(img, 0, 0,   0, -16, small_symbol, &block) if neuner
-    draw.annotate(img, 0, 0,  15, -16, small_symbol, &block)
+    if neuner
+      draw.annotate(img, 0, 0, -15, -16, small_symbol, &block)
+      draw.annotate(img, 0, 0,   0, -16, small_symbol, &block) if neuner
+      draw.annotate(img, 0, 0,  15, -16, small_symbol, &block)
 
-    draw.annotate(img, 0, 0, -15,  -1.5, small_symbol, &block) if neuner
-    draw.annotate(img, 0, 0,   0,  -1.5, small_symbol, &block) if neuner
-    draw.annotate(img, 0, 0,  15,  -1.5, small_symbol, &block) if neuner
+      draw.annotate(img, 0, 0, -15,  -1.5, small_symbol, &block) if neuner
+      draw.annotate(img, 0, 0,   0,  -1.5, small_symbol, &block) if neuner
+      draw.annotate(img, 0, 0,  15,  -1.5, small_symbol, &block) if neuner
 
-    draw.annotate(img, 0, 0, -15,  14, small_symbol, &block)
-    draw.annotate(img, 0, 0,   0,  14, small_symbol, &block) if neuner
-    draw.annotate(img, 0, 0,  15,  14, small_symbol, &block)
+      draw.annotate(img, 0, 0, -15,  14, small_symbol, &block)
+      draw.annotate(img, 0, 0,   0,  14, small_symbol, &block) if neuner
+      draw.annotate(img, 0, 0,  15,  14, small_symbol, &block)
+    elsif ['+', '$'].include? small_symbol
+      draw.annotate(img, 0, 0, -18, -16, small_symbol, &block)
+      draw.annotate(img, 0, 0,  18, -16, small_symbol, &block)
+
+      draw.annotate(img, 0, 0, -18,  14, small_symbol, &block)
+      draw.annotate(img, 0, 0,  18,  14, small_symbol, &block)
+    else
+      draw.annotate(img, 0, 0, -17, -16, small_symbol, &block)
+      draw.annotate(img, 0, 0,  17, -16, small_symbol, &block)
+
+      draw.annotate(img, 0, 0, -17,  15, small_symbol, &block)
+      draw.annotate(img, 0, 0,  17,  15, small_symbol, &block)
+    end
   end
 
   # nemesis or leader
@@ -106,6 +121,7 @@ def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil,
   draw.annotate(img, 0, 0, x_offset, y_offset, symbol) {
     self.fill = fg
     self.pointsize = 40
+    self.font_weight = Magick::BoldWeight
   }
 
   img.border(2, 2, fg).write("u_defeated_#{name.downcase.gsub(' ', '_')}.png")
@@ -114,6 +130,16 @@ end
 write_icon *$_.split(',').map(&:strip) while DATA.gets
 
 __END__
+n,  magenta,   Aphrodite           ,      , Ψ, green, dark
+V,  magenta,   Vlad the Impaler    ,      , (, yellow
+@,  gray,      One-eyed Sam        ,      ,
+@,  lblue,     Oracle              ,      , ¶, blue
+@,  lgreen,    Medusa              ,      ,
+@,  magenta,   Wizard of Yendor    ,      , +, white, dark
+@,  magenta,   Croesus             ,      , $, yellow, dark
+@,  magenta,   Executioner         ,      , ), lcyan, dark
+&,  red,       Durins Bane         ,      , ), brown, dark
+;,  magenta,   Watcher in the Water,      , ¶, blue
 @,  magenta,   Lord Carnarvon,      leader,  Arc, white
 @,  magenta,   Pelias,              leader,  Bar, white
 @,  magenta,   Shaman Karnov,       leader,  Cav, white
@@ -146,7 +172,7 @@ H,  magenta,   Lord Surtur,         nemesis, Val, white, dark
 &,  magenta,   Famine,              rider,  %, gray
 h,  lgreen,    Cthulhu,                  ,  ≋, red, dark
 &,  lgreen,    Juiblex,             dlord,  ≋, blue
-&,  magenta,   Yeenoghu,            dlord,  ≡, lcyan, dark
+&,  magenta,   Yeenoghu,            dlord,  ≡, cyan, dark
 &,  magenta,   Orcus,               prince, †, gray
 &,  magenta,   Geryon,              prince, Ψ, green, dark
 &,  magenta,   Dispater,            prince, Ψ, gray,  dark
