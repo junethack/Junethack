@@ -1,7 +1,7 @@
 /* MEYER RESET
 http://meyerweb.com/eric/tools/css/reset/ */
 html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+h1, h2, h3, h4, h5, h6, p, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, font, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var,
@@ -23,17 +23,10 @@ input, label {
 }
 body {
     line-height: 1;
-    font-family: Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
 }
 ol, ul {
     list-style: none;
-}
-blockquote, q {
-    quotes: none;
-}
-blockquote:before, blockquote:after, q:before, q:after {
-    content: '';
-    content: none;
 }
 /* tables still need 'cellspacing="0"' in the markup */
 table {
@@ -54,7 +47,6 @@ body {
     background-image: url('background.jpg');
     background-repeat: repeat;
     background-position: top center;
-    font-size: 0.8em;
 }
 a {
     text-decoration: none;
@@ -71,7 +63,7 @@ a.imagelink:hover {
 }
 /* misc */
 #container {
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
 }
 
@@ -84,21 +76,11 @@ a.imagelink:hover {
 /* topnav */
 .text_content_wrapper, #topnav {
     background-color: #ddd;
-    background-image: linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
-    background-image: -o-linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
-    background-image: -moz-linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
-    background-image: -webkit-linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
-    background-image: -ms-linear-gradient(left , rgb(255,255,255) 0%, rgb(221,221,221) 15%, rgb(221,221,221) 85%, rgb(255,255,255) 100%);
-
-    background-image: -webkit-gradient(
-        linear,
-        left top,
-        right top,
-        color-stop(0.0, rgb(255,255,255)),
-        color-stop(0.15, rgb(221,221,221)),
-        color-stop(0.85, rgb(221,221,221)),
-        color-stop(1.0, rgb(255,255,255))
-    );
+    background-image:         linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
+    background-image:      -o-linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
+    background-image:    -moz-linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
+    background-image: -webkit-linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
+    background-image:     -ms-linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
 
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -173,6 +155,7 @@ form#login_form > fieldset > input[type=submit],
  * Using #topnav not .navigation because of possible 2ndary navigation at a later date, and don't want topnav styles to apply there as well
  * */
 #topnav {
+    font-size: 0.8em;
     width: 100%;
     margin: 0 auto;
     padding: 0;
@@ -300,23 +283,26 @@ submenus
     clear: both;
     text-align: center;
     /* space between nav and title */
-    margin-top: 2.5em;
+    margin-top: 1em;
 }
 
 /* The texts around the logo itself */
-.logotitles
-{
-    color: #000;
+.logotitles:first-child {
+  margin-top: 2.0em;
+}
+.logotitles {
+  color: #000;
+  margin: 0.5em 0em 0.5em 0em;
 }
 
 .logotitles h1 {
-    font-size: 2.6em;
+  font-size: 2.6em;
 }
 .logotitles h2 {
-    font-size: 2em;
+  font-size: 2em;
 }
 .logoimage {
-    margin: -1em;
+  margin: -1em;
 }
 
 /* The text below the logo on the front page. */
@@ -353,8 +339,6 @@ submenus
     line-height: 60px;
 }
 .signup_text a {
-    font-size: 1.4em;
-    display: block;
     display: block;
     text-decoration: none;
     color: #fff;
@@ -393,7 +377,7 @@ submenus
 
 .text_content_wrapper {
     /* space between the main content and the element before - eg signup button */
-    margin-top: 3.0em;
+    margin-top: 1.5em;
     padding-top: 1px;
     padding-bottom: 30px;
 }
@@ -440,13 +424,13 @@ submenus
     margin: 10px 0;
 }
 table.misc,
-.greytable.misc { /* override width:100% */
+.greytable.misc {
     width: auto;
 }
 .greytable th {
     text-align: left;
     padding-right: 20px;
-    padding-left: 3px;
+    padding-left: 8px;
 }
 .greytable td
 {
@@ -630,7 +614,6 @@ form#login_form > fieldset > input[type=submit] {
     margin: 0 auto;
     margin-top: 20px;
     border: 0;
-    font-size: 1.4em;
     text-decoration: none;
     color: #fff;
     background-color: #a00;
@@ -680,12 +663,6 @@ form#login_form > fieldset > input[type=submit].active:hover {
     padding: 0px;
 
 }
-#flattr img,
-a#flattr {
-    vertical-align: baseline;
-    margin-bottom: -5px;
-}
-
 
 /**************************
 **                       **
@@ -802,8 +779,8 @@ structure for a trophy cabinet:
 
 ul.trophypage > li > img,
 .trophycabinet img {
-    height: 35px;
-    width: 35px;
+    height: 2em;
+    width: 2em;
 }
 
 /* exception for clan page trophies */
@@ -819,7 +796,7 @@ ul.trophypage > li > img,
 
 /* vertically align text and images */
 .trophycabinet .trophyleft {
-    vertical-align: middle;
+    vertical-align: top;
 }
 .trophycabinet .trophyright {
     width: 90%;
@@ -917,8 +894,6 @@ li.multiline > span {
 /*
  * rules reset and stylesheet
  */
-
-/* for now, cancel body { font-size: 0.8em;} */
 #page_rules {
   font-size: 1.25em;
 }
