@@ -39,9 +39,21 @@ def defeated_all_demon_lords_princes
   draw_text(image, '&', :magenta, 16,  16,   0, bold: true)
   draw_text(image, '&', :magenta, 16, -16,   0, bold: true)
 
-
   write_image(image, :magenta, 'defeated_all_demon_lords_princes')
+end
+
+def defeated_all_quest_leaders
+  image = setup_image(:magenta)
+
+  image = image.color_floodfill(0,0, 'rgb(6,6,6)')
+
+  draw_text(image, '@',    :magenta, 40,   0,  -3, bold: true)
+  draw_text(image, 'Ω',    :gray,    16, -18, -15, bold: false)
+  draw_text(image, '\\\\', :yellow,  16,  20, -15, bold: false)
+
+  write_image(image, :magenta, 'defeated_all_quest_leaders')
 end
 
 defeated_all_riders
 defeated_all_demon_lords_princes
+defeated_all_quest_leaders
