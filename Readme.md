@@ -34,6 +34,20 @@ Start the server
 
     rake
 
+### Setting up the server for a new year
+
+Update the year in the following files
+ - lib/junethack/tournament_times.rb
+ - public/graph/graph_ascensions.js
+ - public/graph/graph_finished_games_per_day.js
+ - public/graph/graph_new_users_per_day.js
+ - views/footer.haml
+ - views/layout.haml
+ - views/splash.haml
+ - views/user.haml
+
+Go through the list of servers and variants and add new ones and remove old ones.
+
 ### Archival of a finished tournament
 
 Use httrack to make a static copy of the website:
