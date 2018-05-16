@@ -47,9 +47,13 @@ def defeated_all_quest_leaders
 
   image = image.color_floodfill(0,0, 'rgb(6,6,6)')
 
-  draw_text(image, '@',    :magenta, 40,   0,  -3, bold: true)
-  draw_text(image, 'Ω',    :gray,    16, -18, -15, bold: false)
-  draw_text(image, '\\\\', :yellow,  16,  20, -15, bold: false)
+  draw_text(image, 'Ω',    :gray,    16, 0, 0, bold: false)
+#  draw_text(image, '\\\\', :yellow,  16,  20, -15, bold: false)
+
+  draw_text(image, '@', :gray,    16, -13,  12, bold: true)
+  draw_text(image, '@', :green,   16,  13,  12, bold: true)
+  draw_text(image, '@', :magenta, 16,  13, -13, bold: true)
+  draw_text(image, '@', :white,   16, -13, -13, bold: true)
 
   write_image(image, :magenta, 'defeated_all_quest_leaders')
 end
