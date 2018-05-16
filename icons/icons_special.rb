@@ -54,6 +54,24 @@ def defeated_all_quest_leaders
   write_image(image, :magenta, 'defeated_all_quest_leaders')
 end
 
+def defeated_all_quest_nemeses
+  image = setup_image(:magenta)
+
+  image = image.color_floodfill(0,0, 'rgb(6,6,6)')
+
+  draw_text(image, '@', :gray,     16,  -8,  -1, bold: true)
+  draw_text(image, '@', :magenta,  16,   8,  -1, bold: true)
+  draw_text(image, 'D', :magenta,  16,  16, -16, bold: true)
+  draw_text(image, 'D', :red,      16, -16, -16, bold: true)
+  draw_text(image, 's', :magenta,  16,   0, -16, bold: true)
+  draw_text(image, '&', :red,      16,   0,  16, bold: true)
+  draw_text(image, 'H', :lgray,    16,  16,  16, bold: true)
+  draw_text(image, 'H', :magenta,  16, -16,  16, bold: true)
+
+  write_image(image, :magenta, 'defeated_all_quest_nemeses')
+end
+
 defeated_all_riders
 defeated_all_demon_lords_princes
 defeated_all_quest_leaders
+defeated_all_quest_nemeses
