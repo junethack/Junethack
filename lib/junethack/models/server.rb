@@ -40,12 +40,9 @@ class Server
 
     def dumplog_link(game)
       case hostname
-      when "un.nethack.nu"
-        tld = (@name == "eun") ? "eu" : "us"
-        return "https://un.nethack.nu/user/#{game.name}/dumps/#{tld}/#{game.name}.#{game.endtime}.txt.html"
       when "nethack.alt.org"
         case game.version
-        when "3.4.3"
+        when "3.6"
           return "https://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
         end
       when "grunthack.org"
@@ -54,25 +51,25 @@ class Server
         case game.version
         when "3.4.3"
             return "https://ascension.run/userdata/#{game.name}/nethack/dumplog/#{game.starttime}"
-        when "DNH"
+        when "dnh"
             return "https://ascension.run/userdata/#{game.name}/dnethack/dumplog/#{game.starttime}"
-        when "3.0.1", "3.0.3"
+        when "nh4k"
             return "https://ascension.run/userdata/#{game.name}/nhfourk/dumplog/#{game.dumplog.tr("_",":")}"
-        when "4.3.0"
+        when "nh4"
             return "https://ascension.run/userdata/#{game.name}/nethack4/dumplog/#{game.dumplog.tr("_",":")}"
-        when "0.6.3"
+        when "shc"
             return "https://ascension.run/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}"
         when "NH-1.3d"
             return "https://ascension.run/userdata/#{game.name}/oldhack/dumplog/#{game.starttime}"
         when "slth"
             return "https://ascension.run/userdata/#{game.name}/slashthem/dumplog/#{game.starttime}"
-        when "0.2.0"
+        when "gho"
             return "https://ascension.run/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}"
-        when "UNH"
-            return "https://ascension.run/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}.html"
-        when "fiqhack"
+        when "unh"
+          return "https://ascension.run/userdata/#{game.name}/unnethack/dumplog/#{game.starttime}.html"
+        when "fiq"
             return "https://ascension.run/userdata/#{game.name}/fiqhack/dumplog/#{game.dumplog.tr("_",":")}"
-        when "0.6.0"
+        when "dyn"
             return "https://ascension.run/userdata/#{game.name}/dynahack/dumplog/#{game.dumplog}"
         end
       when "nethack4.org"
@@ -80,35 +77,35 @@ class Server
       when "hardfought.org"
         player = "#{game.name[0..0]}/#{game.name}"
         case game.version
-        when "0.6.0"
+        when "dyn"
             "https://www.hardfought.org/userdata/#{player}/dynahack/dumplog/#{game.dumplog}"
-        when "0.2.0","0.2.1"
+        when "gho"
             "https://www.hardfought.org/userdata/#{player}/gh/dumplog/#{game.starttime}.gh.txt"
-        when "3.6.0", "3.6.1"
+        when "3.6"
             "https://www.hardfought.org/userdata/#{player}/nhdev/dumplog/#{game.starttime}.nhdev.txt"
-        when "UNH"
+        when "unh"
             "https://www.hardfought.org/userdata/#{player}/un531/dumplog/#{game.starttime}.un531.txt.html"
-        when "fiqhack"
+        when "fiq"
             "https://www.hardfought.org/userdata/#{player}/fiqhack/dumplog/#{game.dumplog.tr("_",":")}"
-        when "3.0.1", "3.0.3", "3.0.4"
+        when "nh4k"
             "https://www.hardfought.org/userdata/#{player}/nhfourk/dumps/#{game.dumplog.tr("_",":")}"
-        when "4.3.0"
+        when "nh4"
             "https://www.hardfought.org/userdata/#{player}/nethack4/dumplog/#{game.dumplog.tr("_",":")}"
-        when "DNH"
+        when "dnh"
             "https://www.hardfought.org/userdata/#{player}/dnethack/dumplog/#{game.starttime}.dnh.txt"
         when "3.4.3"
             "https://www.hardfought.org/userdata/#{player}/nh343/dumplog/#{game.starttime}.nh343.txt"
         end
       when "em.slashem.me"
         case game.version
-        when "3.6.0", "3.6.1"
+        when "3.6"
           endtime = DateTime.strptime(game.endtime.to_s,"%s").strftime("%Y%m%d%H%M%S")
           "https://em.slashem.me/userdata/#{game.name}/nethack/dumplog/#{endtime}.txt"
         #when "slex"
         #  "https://em.slashem.me/userdata/#{game.name}/slex/dumplog/#{endtime}.txt"
-        when "0.2.0","0.2.1"
+        when "gho"
           "https://em.slashem.me/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}.txt"
-        when "0.6.3"
+        when "sho"
           "https://em.slashem.me/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}.txt"
         end
       else
@@ -119,66 +116,63 @@ end
 
 DataMapper::MigrationRunner.migration( 1, :create_servers ) do
   up do
-    Server.create name: 'nao', variant: 'NetHack 3.4.3-NAO',
-      url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.full.txt', configfileurl: 'https://alt.org/nethack/userdata/random_user/random_user.nh343rc'
-    Server.create name: 'nao_nh36', variant: 'NetHack 3.6.0',
-      url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.nh360', configfileurl: 'https://alt.org/nethack/userdata/random_user/random_user.nh360rc'
-    Server.create name: 'nao_nh361', variant: 'NetHack 3.6.1-dev',
-      url: 'https://nethack.alt.org/', xlogurl: 'https://alt.org/nethack/xlogfile.nh361dev', configfileurl: 'https://alt.org/nethack/userdata/random_user/random_user.nh360rc'
-
-    Server.create name: 'eun', variant: 'UnNetHack 5.3.1',
-      url: 'https://un.nethack.nu/', xlogurl: 'https://un.nethack.nu/logs/xlogfile-eu', configfileurl: 'https://un.nethack.nu/rcfiles/random_user.nethackrc'
+    [
+      [:nao_nh36, 'NetHack 3.6.1', 'https://alt.org/nethack/xlogfile.nh361dev'],
+    ].each {|server|
+      url = 'https://nethack.alt.org/'
+      configfileurl = 'https://alt.org/nethack/userdata/random_user/random_user.nh361rc'
+      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+    }
 
     Server.create name: 'nh4', variant: 'NetHack4 4.3.0',
       url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
 
-    #Server.create name: 'gho', variant: 'GruntHack 0.2.0',
-    #  url: 'http://grunthack.org/', xlogurl: 'http://grunthack.org/xlogfile', configfileurl: 'http://grunthack.org/userdata/random_user/random_user.gh020rc'
+    [
+      [:esm_nh36, 'NetHack 3.6.1',           'https://em.slashem.me/xlogfiles/nethack'],
+      [:esm_slex, "Slash'EM Extended 2.2.2", 'https://em.slashem.me/xlogfiles/slex'],
+      [:esm_gho,  'GruntHack 0.2.1',         'https://em.slashem.me/xlogfiles/grunthack'],
+      [:esm_shc,  'SporkHack 0.6.3',         'https://em.slashem.me/xlogfiles/sporkhack'],
+    ].each {|server|
+      url = 'https://em.slashem.me/'
+      configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
 
-    Server.create name: 'esm_nh36', variant: "NetHack 3.6.0",
-      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/nethack', configfileurl: 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
-    Server.create name: 'esm_slex', variant: "Slash'EM Extended 2.0.0",
-      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/slex', configfileurl: 'https://em.slashem.me/userdata/random_user/slex/random_user.slexrc'
-    Server.create name: 'esm_gho', variant: "GruntHack 0.2.1",
-      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/grunthack', configfileurl: 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
-    Server.create name: 'esm_shc', variant: "SporkHack 0.6.3",
-      url: 'https://em.slashem.me/', xlogurl: 'https://em.slashem.me/xlogfiles/sporkhack', configfileurl: 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
+      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+    }
 
-    Server.create name: 'asc_nao', variant: 'NetHack 3.4.3-NAO',
-      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'asc_unh', variant: 'UnNetHack 5.3.1',
-      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/unnethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'asc_dnh', variant: 'dNetHack 3.14.0',
-      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/dnethack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'asc_dyn', variant: 'DynaHack 0.6.0',
-      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/dynahack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
-    #Server.create name: 'asc_slth', variant: "SlashTHEM 0.8.0",
-    #  url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/slashthem', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'asc_nh4k', variant: 'NetHack Fourk 4.3.0.4',
-      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nhfourk', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'asc_fiq', variant: "FIQHack 4.3.0",
-      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/fiqhack', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
-    Server.create name: 'asc_nh4', variant: 'NetHack4 4.3.0',
-      url: 'https://ascension.run/', xlogurl: 'https://ascension.run/xlogfiles/nethack4', configfileurl: 'https://ascension.run/userdata/random_user/nethack/nethackrc'
+    [
+      [:asc_nao,  'NetHack 3.4.3-nao',     'https://ascension.run/xlogfiles/nethack'],
+      [:asc_unh,  'UnNetHack 5.3.1',       'https://ascension.run/xlogfiles/unnethack'],
+      [:asc_dnh,  'dNetHack 3.15.1',       'https://ascension.run/xlogfiles/dnethack'],
+      [:asc_dyn,  'DynaHack 0.6.0',        'https://ascension.run/xlogfiles/dynahack'],
+      [:asc_nh4k, 'NetHack Fourk 4.3.0.4', 'https://ascension.run/xlogfiles/nhfourk'],
+      [:asc_fiq,  'FIQHack 4.3.0',         'https://ascension.run/xlogfiles/fiqhack'],
+      [:asc_nh4,  'NetHack4 4.3.0',        'https://ascension.run/xlogfiles/nethack4'],
+    ].each {|server|
+      url = 'https://ascension.run/'
+      configfileurl = 'https://ascension.run/userdata/random_user/nethack/nethackrc'
 
-    Server.create name: 'hdf_nao', variant: 'NetHack 3.4.3-NAO',
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/nh343/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
-    Server.create name: 'hdf_nh361', variant: 'NetHack 3.6.1-dev',
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/nhdev/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
-    Server.create name: 'hdf_gho', variant: 'GruntHack 0.2.1',
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/gh/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
-    Server.create name: 'hdf_unh', variant: 'UnNetHack 5.3.1',
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/un531/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
-    Server.create name: 'hdf_dnh', variant: 'dNetHack 3.14.0',
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/dnethack/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
-    Server.create name: 'hdf_nh4', variant: 'NetHack4 4.3.0',
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/nethack4/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
-    Server.create name: 'hdf_nh4k', variant: 'NetHack Fourk 4.3.0.4',
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/4k/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
-    Server.create name: 'hdf_fiq', variant: "FIQHack 4.3.0",
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/fh/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
-    Server.create name: 'hdf_dyn', variant: 'DynaHack 0.6.0',
-      url: 'https://hardfought.org/', xlogurl: 'https://hardfought.org/xlogfiles/dynahack/xlogfile', configfileurl: 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
+      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+    }
+
+    [
+      [:hdf_nao,  'NetHack 3.4.3-nao',       'https://www.hardfought.org/xlogfiles/nh343/xlogfile'],
+      [:hdf_nh36, 'NetHack 3.6.1',           'https://www.hardfought.org/xlogfiles/nhdev/xlogfile'],
+      [:hdf_shc,  'SporkHack 0.6.5',         'https://www.hardfought.org/xlogfiles/sporkhack/xlogfile'],
+      [:hdf_gho,  'GruntHack 0.2.3',         'https://www.hardfought.org/xlogfiles/gh/xlogfile'],
+      [:hdf_unh,  'UnNetHack 5.3.1',         'https://www.hardfought.org/xlogfiles/un531/xlogfile'],
+      [:hdf_dnh,  'dNetHack 3.15.1',         'https://www.hardfought.org/xlogfiles/dnethack/xlogfile'],
+      [:hdf_nh4,  'NetHack4 4.3.0',          'https://www.hardfought.org/xlogfiles/nethack4/xlogfile'],
+      [:hdf_nh4k, 'NetHack Fourk 4.3.0.4',   'https://www.hardfought.org/xlogfiles/4k/xlogfile'],
+      [:hdf_fiq,  'FIQHack 4.3.1',           'https://www.hardfought.org/xlogfiles/fh/xlogfile'],
+      [:hdf_dyn,  'DynaHack 0.6.0',          'https://www.hardfought.org/xlogfiles/dynahack/xlogfile'],
+      [:hdf_slex, "Slash'EM Extended 2.2.2", 'https://www.hardfought.org/xlogfiles/slex/xlogfile'],
+      [:hdf_xnh,  'xNetHack 0.2.0',          'https://www.hardfought.org/xlogfiles/xnethack/xlogfile'],
+      [:hdf_spl,  'SpliceHack 0.2.1',        'https://www.hardfought.org/xlogfiles/splicehack/xlogfile'],
+    ].each {|server|
+      url = 'https://hardfought.org/'
+      configfileurl = 'https://hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
+      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+    }
 
   end
 

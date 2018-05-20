@@ -1,6 +1,7 @@
 require 'dm-migrations'
 require 'dm-migrations/migration_runner'
 require 'trophy_calculations'
+require 'pry'
 
 $conducts = [
     [0x001, "Foodless", "Foo"],
@@ -172,14 +173,23 @@ class Game
     property :maxhp,     Integer
     property :points,    Integer
     property :deathdate, String
-    property :version,   String
-    def version=(new_version)
-      new_version = "UNH" if new_version.start_with? 'UNH-'
-      new_version = "DNH" if new_version.start_with? 'DNH-'
-      new_version = "slth" if new_version.start_with? 'slth-'
-      new_version = "slex" if new_version.start_with? 'slex-'
-      new_version = "3.6.0" if new_version == '3.6.1'
-      super new_version
+    property :version,   String, required: true
+    def version=(version)
+      _version = 'unh'   if version.start_with? 'UNH-'
+      _version = 'dnh'   if version.start_with? 'DNH-'
+      _version = 'slth'  if version.start_with? 'slth-'
+      _version = 'slex'  if version.start_with? 'slex-'
+      _version = '3.6'   if version == '3.6.1'
+      _version = '3.4.3' if version == '3.4.3'
+      _version = 'NH-1.3d' if version == 'NH-1.3d'
+      _version = 'nh4' if version == '4.3.0'
+
+      # if the variant hasn't been recognized yet, derive it from the server's name
+      if _version.nil?
+        _version = server.name.split('_')[1]
+      end
+
+      super _version
     end
 
     property :align,     String

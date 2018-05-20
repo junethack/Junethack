@@ -4,23 +4,31 @@ require 'trophyscore'
 require 'userscore'
 
 describe Game do
-  it "should remove the version info from variants that often change their version number" do
-    Game.new(:version => 'UNH-4.1.1',
-             :user_id => 1,
-             :server_id => 1,
-             :death => 'ascended').save!
+  it "removes the version info from variants that often change their version number" do
+    Game.new(version: 'UNH-4.1.1',
+             user_id: 1,
+             server_id: 1,
+             death: 'ascended').save!
 
-    Game.first(:version => 'UNH-4.1.1').should be_nil
-    Game.first(:version => 'UNH').should_not be_nil
+    expect(Game.first(version: 'UNH-4.1.1')).to be_nil
+    expect(Game.first(version: 'unh')).to be
   end
 
-  it "should not change the version info from variants without development" do
-    Game.new(:version => '3.4.3',
-             :user_id => 1,
-             :server_id => 1,
-             :death => 'ascended').save!
+  it "does not change the version info from variants without development" do
+    Game.new(version: '3.4.3',
+             user_id: 1,
+             server_id: 1,
+             death: 'ascended').save!
 
-    Game.first(:version => '3.4.3').should_not be_nil
+    expect(Game.first(version: '3.4.3')).to be
+  end
+
+  describe 'for not unique version info' do
+    it 'heuristically determines the version info from the server' do
+      server = Server.new(name: 'server_variant').tap(&:save!)
+      Game.new(server_id: server.id, version: 'unknown', death: 'ascended').save!
+      expect(Game.first(version: 'variant')).to be
+    end
   end
 end
 

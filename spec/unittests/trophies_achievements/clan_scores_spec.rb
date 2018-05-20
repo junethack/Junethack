@@ -5,8 +5,9 @@ describe Game,"update_clan_scores" do
   before :each do
     clean_database
 
-    clan = Clan.create(:name => "clan", :admin => [1,1])
-    $user = User.create(:login => "test_user", :clan => clan)
+    clan = Clan.create(name: "clan", admin: [1,1])
+    $user = User.create(login: "test_user", clan: clan)
+    @server = Server.create(name: 'server_variant')
   end
 
   # Games are saved first without user_id, the scoring calculation only triggers
@@ -20,57 +21,57 @@ describe Game,"update_clan_scores" do
 
   it "should acknowledge NetHack 1.3d games" do
 
-    Game.create(:version => 'NH-1.3d', :server_id => 1, :maxlvl => 10, :event => 0x0100, :points => 900, :endtime => 1000, :death => 'escaped (with amulet)', :turns => 1023)
+    Game.create(server_id: @server.id, version: 'NH-1.3d', maxlvl: 10, event: 0x0100, points: 900, endtime: 1000, death: 'escaped (with amulet)', turns: 1023)
     update_games
 
     ClanScoreEntry.count.should == 8
 
-    ClanScoreEntry.first(:trophy => "most_ascended_combinations").value.should == 1
-    ClanScoreEntry.first(:trophy => "most_ascensions_in_a_24_hour_period").value.should == 1
-    ClanScoreEntry.first(:trophy => "most_full_conducts_broken").value.should == 0
-    ClanScoreEntry.first(:trophy => "most_log_points").value.should == 2
-    ClanScoreEntry.first(:trophy => "most_medusa_kills").value.should == 0
-    ClanScoreEntry.first(:trophy => "most_unique_deaths").value.should == 1
-    ClanScoreEntry.first(:trophy => "most_variant_trophy_combinations").value.should == 1
+    ClanScoreEntry.first(trophy: "most_ascended_combinations").value.should == 1
+    ClanScoreEntry.first(trophy: "most_ascensions_in_a_24_hour_period").value.should == 1
+    ClanScoreEntry.first(trophy: "most_full_conducts_broken").value.should == 0
+    ClanScoreEntry.first(trophy: "most_log_points").value.should == 2
+    ClanScoreEntry.first(trophy: "most_medusa_kills").value.should == 0
+    ClanScoreEntry.first(trophy: "most_unique_deaths").value.should == 1
+    ClanScoreEntry.first(trophy: "most_variant_trophy_combinations").value.should == 1
   end
 
   it "should correctly calculate clan scores" do
 
-    Game.create(:version => 'NH-1.3d', :server_id => 1, :maxlvl => 10, :points => 900, :endtime => 1000, :death => 'escaped (with amulet)', :turns => 1023)
-    Game.create(:version => 'v1', :server_id => 1, :achieve => "0x800", :points => 9000, :endtime => 1000, :death => 'ascended', :turns => 1023)
-    Game.create(:version => 'v1', :server_id => 1, :achieve => "0x800", :conduct => 4096, :points => 9000, :endtime => 1000, :death => 'ascended', :turns => 1023)
+    Game.create(server_id: @server.id, version: 'NH-1.3d', maxlvl: 10, points: 900, endtime: 1000, death: 'escaped (with amulet)', turns: 1023)
+    Game.create(server_id: @server.id, version: 'v1', achieve: "0x800", points: 9000, endtime: 1000, death: 'ascended', turns: 1023)
+    Game.create(server_id: @server.id, version: 'v1', achieve: "0x800", :conduct => 4096, points: 9000, endtime: 1000, death: 'ascended', turns: 1023)
     update_games
 
     ClanScoreEntry.count.should == 8 # including clan_winner
 
-    ClanScoreEntry.first(:trophy => "most_ascended_combinations").value.should == 2
-    ClanScoreEntry.first(:trophy => "most_ascensions_in_a_24_hour_period").value.should == 3
-    ClanScoreEntry.first(:trophy => "most_full_conducts_broken").value.should == 2
-    ClanScoreEntry.first(:trophy => "most_log_points").value.should == 8
-    ClanScoreEntry.first(:trophy => "most_medusa_kills").value.should == 2
-    ClanScoreEntry.first(:trophy => "most_unique_deaths").value.should == 2
-    ClanScoreEntry.first(:trophy => "most_variant_trophy_combinations").value.should == 9
+    ClanScoreEntry.first(trophy: "most_ascended_combinations").value.should == 2
+    ClanScoreEntry.first(trophy: "most_ascensions_in_a_24_hour_period").value.should == 3
+    ClanScoreEntry.first(trophy: "most_full_conducts_broken").value.should == 2
+    ClanScoreEntry.first(trophy: "most_log_points").value.should == 8
+    ClanScoreEntry.first(trophy: "most_medusa_kills").value.should == 2
+    ClanScoreEntry.first(trophy: "most_unique_deaths").value.should == 2
+    ClanScoreEntry.first(trophy: "most_variant_trophy_combinations").value.should == 9
   end
 
   it "creates clan score history entries" do
-    Game.create(:version => 'v1', :server_id => 1, :achieve => "0x800", :points => 9000, :endtime => 1000, :death => 'ascended', :turns => 1023)
+    Game.create(server_id: @server.id, version: 'v1', achieve: "0x800", points: 9000, endtime: 1000, death: 'ascended', turns: 1023)
     update_games
-    ClanScoreEntry.first(:trophy => :most_medusa_kills).value.should == 1
-    ClanScoreHistory.all(:trophy => :most_medusa_kills).count.should == 1
+    ClanScoreEntry.first(trophy: :most_medusa_kills).value.should == 1
+    ClanScoreHistory.all(trophy: :most_medusa_kills).count.should == 1
   end
 
   it "creates clan score history entries if the value of the trophy changes" do
-    attributes = { version: 'v1', server_id: 1, achieve: "0x800", points: 9000, endtime: 1000, death: 'ascended', turns: 1023 }
+    attributes = { server_id: @server.id, version: 'v1', achieve: "0x800", points: 9000, endtime: 1000, death: 'ascended', turns: 1023 }
     Game.create(attributes)
     update_games
-    ClanScoreEntry.first(:trophy => :most_medusa_kills).value.should == 1
-    ClanScoreHistory.all(:trophy => :most_medusa_kills).count.should == 1
+    ClanScoreEntry.first(trophy: :most_medusa_kills).value.should == 1
+    ClanScoreHistory.all(trophy: :most_medusa_kills).count.should == 1
 
     Game.create(attributes)
     update_games
 
-    ClanScoreEntry.first(:trophy => :most_medusa_kills).value.should == 2
-    ClanScoreHistory.all(:trophy => :most_medusa_kills).count.should == 2
-    ClanScoreHistory.all(:trophy => :most_medusa_kills).map(&:value).sort == [1, 2]
+    ClanScoreEntry.first(trophy: :most_medusa_kills).value.should == 2
+    ClanScoreHistory.all(trophy: :most_medusa_kills).count.should == 2
+    ClanScoreHistory.all(trophy: :most_medusa_kills).map(&:value).sort == [1, 2]
   end
 end

@@ -291,6 +291,8 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "fiqhack"
     Trophy.check_trophies_for_variant "dynahack"
     Trophy.check_trophies_for_variant "slash'em extended"
+    Trophy.check_trophies_for_variant "xnethack"
+    Trophy.check_trophies_for_variant "splicehack"
     #Trophy.check_trophies_for_variant "slashthem"
     #Trophy.check_trophies_for_variant "oldhack"
   end

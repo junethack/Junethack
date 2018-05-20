@@ -39,7 +39,7 @@ describe Game,"saving of cross variant achievements" do
   before :each do
     clean_database
     $user = User.create(:login => "test_user")
-    $server = Server.create(url: "http://example.ignore/")
+    $server = Server.create(name: 'server_variant', url: "http://example.ignore/")
   end
 
   # Games are saved first without user_id, the scoring calculation only triggers
@@ -52,34 +52,35 @@ describe Game,"saving of cross variant achievements" do
   end
 
   it "should correctly create cross variant achievements" do
-    params = { server_id: $server.id, achieve: "0x800", endtime: 1000, death: 'ascended', turns: 1023 }
+    params = { server_id: $server.id, version: '', achieve: "0x800", endtime: 1000, death: 'ascended', turns: 1023 }
+    half_variants_count = $variant_order.count / 2
 
     expect(Individualtrophy.count).to eq 0
     expect(Event.count).to eq 0
 
-    Game.create(params.merge version: 'v1')
-    Game.create(params.merge version: 'v2')
-    Game.create(params.merge version: 'v3')
-    Game.create(params.merge version: 'v4')
+    (half_variants_count-1).times { Game.create(params) }
+    repository.adapter.execute "UPDATE games SET version= 'v'||id"
     update_games
+    # not yet half the variants played
     expect(Individualtrophy.count).to eq 0
     expect(Event.count).to eq 0
 
-    Game.create(params.merge version: 'v5')
+    Game.create params
+    repository.adapter.execute "UPDATE games SET version= 'v'||id"
     update_games # 1/2 cross variant achievements
+    # half the variants played
     expect(Individualtrophy.count).to eq 4
     expect(Event.count).to eq 4
 
-    Game.create(params.merge version: 'v6')
-    Game.create(params.merge version: 'v7')
-    Game.create(params.merge version: 'v8')
-    Game.create(params.merge version: 'v9')
-    Game.create(params.merge version: 'v10')
+    5.times { Game.create(params) }
+    repository.adapter.execute "UPDATE games SET version= 'v'||id"
     update_games
+    # all variants played
     expect(Individualtrophy.count).to eq 4
     expect(Event.count).to eq 4
 
-    Game.create(params.merge version: 'v11')
+    2.times { Game.create(params) }
+    repository.adapter.execute "UPDATE games SET version= 'v'||id"
     update_games # full and 1/2 cross variant achievements
     expect(Individualtrophy.count).to eq 8
     expect(Event.count).to eq 8
