@@ -246,6 +246,12 @@ class Game
     # nh4k-specific properties
     property :variant, String
 
+    # fiqhack-specific properties
+    property :name64,     String
+    property :charname64, String
+    property :death64,    String
+    property :dumplog64,  String
+
     # SlashTHEM/SlashEm Extended-specific properties
     property :modes, String
     property :hybrid, String
