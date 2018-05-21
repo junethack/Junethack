@@ -75,6 +75,7 @@ class StartScummedGame
 
     # nh4k-specific properties
     property :variant, String
+    property :versionstring, String
 
     # fiqhack-specific properties
     property :name64,     String
