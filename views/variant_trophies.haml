@@ -1,0 +1,24 @@
+.content_bulk
+  .text_content_wrapper
+    .text_content
+      - variant = helper_get_variant_for(@variant)
+      - variant_name = $variants_mapping[variant]
+      - trophies = Trophy.user_trophies variant
+      %h1
+        = "Achievements for #{variant_name}"
+
+      %p
+        There are #{trophies.count} achievements tracked for #{variant_name} in the Junethack tournament.
+
+      %p.trophycabinet
+        - row = 0
+        - trophies.each do |trophy|
+          - if trophy.row != row
+            - row = trophy.row
+            %hr
+          %p.trophycabinet{ id: trophy.trophy }
+            %img{style: "vertical-align:middle", alt: "", src: "/icons/#{trophy.icon}"}
+            %span
+              = h trophy.text
+
+        %hr

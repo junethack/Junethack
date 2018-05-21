@@ -122,6 +122,13 @@ get "/trophies" do
     haml :trophies, :layout => @layout
 end
 
+get "/trophies/:variant" do
+    caching_check_application_start_time
+
+    @variant = params[:variant]
+    haml :variant_trophies, layout: @layout
+end
+
 get "/users" do
     caching_check_last_played_game
 

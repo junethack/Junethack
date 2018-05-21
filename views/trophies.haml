@@ -80,133 +80,19 @@
             %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/ascension.png"}
             %span
               Ascension: ascend a character.
-          %li#m-soko
-            %h3
-              Achievement trophies
-            %p
-              For NetHack4 and NetHack Fourk, the requirements are sometimes different. When
-              applicable this is noted in parentheses next to the vanilla
-              requirement.
-            %ul.trophypage{:style => "margin-left: 2em;"}
-              %li
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-soko.png"}
-                %span
-                  get the Sokoban prize (get an Oracle consultation)
-              %li#m-luckstone
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-luckstone.png"}
-                %span
-                  get the luckstone from Mines' End (get accepted to quest)
-              %li#m-bell
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-bell.png"}
-                %span
-                  get the Bell of Opening (defeat the quest nemesis)
-              %li#m-medusa
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-medusa.png"}
-                %span
-                  defeat Medusa
-              %li#m-gehennom
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-gehennom.png"}
-                %span
-                  enter Gehennom (enter Gehennom the front way)
-              %li#m-candelabrum
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-candelabrum.png"}
-                %span
-                  get the Candelabrum of Invocation (defeat Vlad)
-              %li#m-book
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-book.png"}
-                %span
-                  get the Book of the Dead (defeat Rodney at least once)
-              %li#m-invocation
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-invocation.png"}
-                %span
-                  complete the invocation ritual
-              %li#m-amulet
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-amulet.png"}
-                %span
-                  get the Amulet of Yendor (defeat the High Priest of Moloch)
-              %li#m-planes
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-planes.png"}
-                %span
-                  enter the elemental planes
-              %li#m-astral
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-astral.png"}
-                %span
-                  enter the Astral Plane
-              %li#escapologist
-                %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/escapologist.png"}
-                %span
-                  Escapologist: escape in celestial disgrace
         .text_content.non_top_post
         %h3
-          NetHack4, NetHack Fourk and UnNetHack
-        %ul.trophypage
-          %li#m-croesus
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-croesus.png"}
-            %span
-              Assault on Fort Knox: defeat Croesus
-          %li#m-sam
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-sam.png"}
-            %span
-              No membership card: defeat One-Eyed Sam (UnNetHack only)
-          %li#m-no-nemesis
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-no-nemesis.png"}
-            %span
-              Too good for quests: ascend without defeating the quest nemesis
-          %li#m-no-vlad
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-no-vlad.png"}
-            %span
-              Too good for Vladbanes: ascend without defeating Vlad
-          %li#m-no-wizard
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-no-wizard.png"}
-            %span
-              Too good for... wait, what? How?: ascend without defeating Rodney
-          %li#m-no-cthulhu
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-no-cthulhu.png"}
-            %span
-              Too good for a brain: ascend without defeating Cthulhu (UnNetHack only)
-          %li#m-hoarder
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-hoarder.png"}
-            %span
-              Hoarder: ascend carrying all the invocation items
-          %li#heaven-or-hell
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/heaven-or-hell.png"}
-            %span
-              Heaven or Hell: ascend in "Heaven or Hell" mode (monsters and player only have 1 HP) (UnNetHack only)
-          %li#m-mini-croesus
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-mini-croesus.png"}
-            %span
-              Mini-Croesus: finish a game with at least 100,000 gold pieces (UnNetHack only)
-
+          Variant specific achievements
+        %p
+          These variant specific achievements are listed on their own pages:
+          .trophypage
+          - $variant_order.each do |variant|
+            - variant_name = $variants_mapping[variant]
+            %span{style: 'padding-left: 1em'}
+              %a{href: "/trophies/#{variant_name.downcase}"}= h variant_name
+            %br
         .text_content.non_top_post
-        %h3
-          DNetHack
-        %ul.trophypage
-          %li#m-one-key
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-one-key.png"}
-            %span
-              That was the easy one: obtained at least one alignment key
-          %li#m-three-keys
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-three-keys.png"}
-            %span
-              Through the gates of Gehennom: obtained at least three alignment keys
-          %li#m-nine-keys
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-nine-keys.png"}
-            %span
-              Those were for replay value...: obtained all nine alignment keys
-          %li#m-dn-king
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-dn-king.png"}
-            %span
-              King of dNethack: Ascend a game with all the new races/roles in dNethack. 
-          %li#m-dn-prince
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-dn-prince.png"}
-            %span
-              Prince of dNethack: Ascend a game with half the new races/roles in dNethack. 
-          %li#m-dn-tour
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/m-dn-tour.png"}
-            %span
-              dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack. 
 
-        .text_content.non_top_post
         %h3#nh1.3d
           Nethack 1.3d
         %ul.trophypage
