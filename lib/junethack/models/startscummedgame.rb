@@ -25,6 +25,7 @@ class StartScummedGame
     property :points,    Integer
     property :deathdate, String
     property :version,   String
+    property :old_version, String
     property :align,     String
     property :align0,    String
     property :starttime, Integer

@@ -187,6 +187,7 @@ class Game
     property :points,    Integer
     property :deathdate, String
     property :version,   String, required: true
+    property :old_version, String
     def version=(version)
       _version = 'unh'   if version.start_with? 'UNH-'
       _version = 'dnh'   if version.start_with? 'DNH-'
@@ -202,6 +203,7 @@ class Game
         _version = server.name.split('_')[1]
       end
 
+      self.old_version = version
       super _version
     end
 
