@@ -922,3 +922,15 @@ li.multiline > span {
 #page_rules .description {
   margin-top:20px;
 }
+
+/* styling trophy tables with text */
+.trophies td.trophy {
+  padding: 0;
+  width: 1px;
+  border: 1px solid #888
+}
+.trophies td.trophy img {
+  vertical-align: middle;
+  width:  2em;
+  height: 2em;
+}
