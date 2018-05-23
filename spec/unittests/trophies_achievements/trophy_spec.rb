@@ -88,7 +88,7 @@ describe TrophyScore do
     let(:killed_uniques) { '' }
     let(:user) { User.create login: 'user' }
     before :each do
-      game = Game.new(version: 'UNH', user_id: user.id, server_id: 1, death: 'quit', killed_uniques: killed_uniques).tap(&:save!)
+      game = Game.new(version: 'UNH-', user_id: user.id, server_id: 1, death: 'quit', killed_uniques: killed_uniques).tap(&:save!)
       generic_achievements(game, game.killed_uniques.split(','))
     end
 
@@ -105,7 +105,7 @@ describe TrophyScore do
     let(:killed_uniques) { '' }
     let(:user) { User.create login: 'user' }
     before :each do
-      game = Game.new(version: 'UNH', user_id: user.id, server_id: 1, death: 'quit', killed_uniques: killed_uniques).tap(&:save!)
+      game = Game.new(version: 'UNH-', user_id: user.id, server_id: 1, death: 'quit', killed_uniques: killed_uniques).tap(&:save!)
       update_scores(game)
     end
 

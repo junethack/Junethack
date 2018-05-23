@@ -11,17 +11,23 @@ describe 'server linking helper methods' do
       dumplog_less_server = Server.new(id: '1', url: "http://example.ignore/")
       dumplog_less_server.dumplog_link(game).should be_nil
 
-      game = Game.new(name: 'player', starttime: 123456, version: '3.4.3')
+      game = Game.new(name: 'player', starttime: 123456, version: '3.6.1')
       nao = Server.new(url: 'http://nethack.alt.org/')
       expect(nao.dumplog_link(game)).to eq "https://alt.org/nethack/userdata/p/player/dumplog/123456.nh343.txt"
-
-      game = Game.new(:name => 'player', :endtime => 123456)
-      un_nethack_nu = Server.new(url: 'http://un.nethack.nu/')
-      un_nethack_nu.dumplog_link(game).should == "https://un.nethack.nu/user/player/dumps/us/player.123456.txt.html"
 
       game = Game.new(:name => 'player', :starttime => 123456)
       grunthack = Server.new(url: 'http://grunthack.org/')
       grunthack.dumplog_link(game).should == "http://grunthack.org/userdata/p/player/dumplog/123456.gh020.txt"
+    end
+
+    it 'returns a link to the european or american server of hardfought.org' do
+      hdf = Server.new(name: 'xxx_unh', url: 'https://www.hardfought.org')
+      game = Game.new(name: 'player', starttime: 123456, server: hdf, version: '')
+      expect(hdf.dumplog_link(game)).to eq 'https://www.hardfought.org/userdata/p/player/un531/dumplog/123456.un531.txt.html'
+
+      hdf = Server.new(name: 'xxx_unh', url: 'https://eu.hardfought.org')
+      game = Game.new(name: 'player', starttime: 123456, server: hdf, version: '')
+      expect(hdf.dumplog_link(game)).to eq 'https://eu.hardfought.org/userdata/p/player/un531/dumplog/123456.un531.txt.html'
     end
   end
 
