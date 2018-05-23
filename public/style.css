@@ -782,6 +782,10 @@ ul.trophypage > li > img,
     height: 2em;
     width: 2em;
 }
+ul.trophypage.indented > li {
+    list-style: none;
+    padding-left: 0.8em;
+}
 
 /* exception for clan page trophies */
 #clan_trophies .trophyicon {
