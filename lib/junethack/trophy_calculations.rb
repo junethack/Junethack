@@ -561,12 +561,6 @@ def update_clan_scores(game)
   # Clan competition
   clan_name = (User.get game.user_id).clan_name
   if clan_name then
-    log_points = (repository.adapter.select "SELECT SUM(length(points)-1) FROM games WHERE user_id in (SELECT id FROM users WHERE clan_name = ?);", clan_name)[0]
-    c = ClanScoreEntry.first_or_new(clan_name: clan_name,
-                                    trophy: :most_log_points)
-    c.value = log_points
-    c.save
-
     most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+ascended_combinations_sql+");", clan_name)[0]
     c = ClanScoreEntry.first_or_new(clan_name: clan_name,
                                     trophy: :most_ascended_combinations)
@@ -627,7 +621,6 @@ def history_clans
 end
 
 def rank_clans
-  rank_collection(ClanScoreEntry.all(trophy: :most_log_points, order: :value.desc))
   rank_collection(ClanScoreEntry.all(trophy: :most_ascended_combinations, order: :value.desc))
   rank_collection(ClanScoreEntry.all(trophy: :most_unique_deaths, order: :value.desc))
   rank_collection(ClanScoreEntry.all(trophy: :most_ascensions_in_a_24_hour_period, order: :value.desc))
@@ -662,7 +655,7 @@ def score_clans
   end
 
   # calculate clan points
-  clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_log_points','most_unique_deaths','most_ascensions_in_a_24_hour_period','most_variant_trophy_combinations','most_full_conducts_broken','most_medusa_kills') group by clan_name"
+  clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_unique_deaths','most_ascensions_in_a_24_hour_period','most_variant_trophy_combinations','most_full_conducts_broken','most_medusa_kills') group by clan_name"
   clan_scores.each do |clan_score|
     c = ClanScoreEntry.first_or_new(clan_name: clan_score.clan_name,
                                     trophy: :clan_winner)

@@ -19,17 +19,16 @@ describe Game,"update_clan_scores" do
     }
   end
 
-  it "should acknowledge NetHack 1.3d games" do
+  it "includes NetHack 1.3d games" do
 
     Game.create(server_id: @server.id, version: 'NH-1.3d', maxlvl: 10, event: 0x0100, points: 900, endtime: 1000, death: 'escaped (with amulet)', turns: 1023)
     update_games
 
-    ClanScoreEntry.count.should == 8
+    expect(ClanScoreEntry.count).to eq 7
 
     ClanScoreEntry.first(trophy: "most_ascended_combinations").value.should == 1
     ClanScoreEntry.first(trophy: "most_ascensions_in_a_24_hour_period").value.should == 1
     ClanScoreEntry.first(trophy: "most_full_conducts_broken").value.should == 0
-    ClanScoreEntry.first(trophy: "most_log_points").value.should == 2
     ClanScoreEntry.first(trophy: "most_medusa_kills").value.should == 0
     ClanScoreEntry.first(trophy: "most_unique_deaths").value.should == 1
     ClanScoreEntry.first(trophy: "most_variant_trophy_combinations").value.should == 1
@@ -42,12 +41,11 @@ describe Game,"update_clan_scores" do
     Game.create(server_id: @server.id, version: 'v1', achieve: "0x800", :conduct => 4096, points: 9000, endtime: 1000, death: 'ascended', turns: 1023)
     update_games
 
-    ClanScoreEntry.count.should == 8 # including clan_winner
+    expect(ClanScoreEntry.count).to eq 7 # including clan_winner
 
     ClanScoreEntry.first(trophy: "most_ascended_combinations").value.should == 2
     ClanScoreEntry.first(trophy: "most_ascensions_in_a_24_hour_period").value.should == 3
     ClanScoreEntry.first(trophy: "most_full_conducts_broken").value.should == 2
-    ClanScoreEntry.first(trophy: "most_log_points").value.should == 8
     ClanScoreEntry.first(trophy: "most_medusa_kills").value.should == 2
     ClanScoreEntry.first(trophy: "most_unique_deaths").value.should == 2
     ClanScoreEntry.first(trophy: "most_variant_trophy_combinations").value.should == 9
