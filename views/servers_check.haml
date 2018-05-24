@@ -24,7 +24,7 @@
             %td{"data-title": "Variant name"}
               #{server.variant}
             %td{"data-title": "Last modified"}
-              %a{href: server.xlogurl}=server.xloglastmodified
+              %a{href: server.xlogurl}=server&.xloglastmodified
             %td.table_number{"data-title": "Xlogfile offset"}
-              #{server.xlogcurrentoffset.html_formatted}
+              #{server.xlogcurrentoffset&.html_formatted}
       %span#end_of_content_spacer.clear
