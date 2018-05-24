@@ -173,7 +173,7 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
       prefix = prefixes[location]
       [
         [:hdf_nao,  'NetHack 3.4.3-nao',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
-        [:hdf_nh36, 'NetHack 3.6.1',           "https://#{prefix}.hardfought.org/xlogfiles/nhdev/xlogfile"],
+        [:hdf_nh36, 'NetHack 3.6.1',           "https://#{prefix}.hardfought.org/xlogfiles/nh361/xlogfile"],
         [:hdf_shc,  'SporkHack 0.6.5',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
         [:hdf_gho,  'GruntHack 0.2.3',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
         [:hdf_unh,  'UnNetHack 5.3.1',         "https://#{prefix}.hardfought.org/xlogfiles/un531/xlogfile"],
