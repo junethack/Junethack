@@ -927,7 +927,7 @@ li.multiline > span {
 .trophies td.trophy {
   padding: 0;
   width: 1px;
-  border: 1px solid #888
+  border: 1px solid #888;
 }
 .trophies td.trophy img {
   vertical-align: middle;

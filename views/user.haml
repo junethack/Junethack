@@ -8,15 +8,6 @@
                     #{h @player.login}
                 %h2
                     #{@player.display_game_statistics}
-                - server_accounts = (Server.all - @player.servers)
-                %table.greytable
-                    %tr
-                        %th Server
-                        %th Account
-                    - for account in @player.accounts
-                        %tr.account
-                            %td= account.server.display_name
-                            %td= account.name
 
             .text_content.non_top_post
                 .trophycabinet.text_cabinet
@@ -28,16 +19,33 @@
                             / only show achievements for games that the player actually played
                             - if Game.count(user_id: @player.id, version: @variant) > 0
                                 =haml :user_trophies
+
             .text_content.non_top_post
                 =haml :_player_games
+
             .text_content.non_top_post
                 =haml :games_played
+
             .text_content.non_top_post
                 =haml :cross_variant_games
+
             .text_content.non_top_post
                 - @ascended_combinations_sql = ascended_combinations_user_sql
                 - @ascended_combinations_value = @player.id
                 =haml :ascended_combinations
+
+            .text_content.non_top_post
+                %h2 Accounts
+                %table.greytable
+                    %tr
+                        %th Server
+                        %th Account
+                    - accounts = @player.accounts.map {|acc| [acc.server.hostname, acc.name] }.uniq.sort
+                    - accounts.each do |server, name|
+                        %tr.account
+                            %td= server
+                            %td= name
+
             #clanmanager.text_content.non_top_post
                 %h2 Clan
                 - if @player.clan

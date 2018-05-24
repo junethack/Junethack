@@ -12,7 +12,7 @@
         %tr
           %th{colspan: 2} Competition
           %th
-          %th{:style => "padding-right: 0; width: 3em;" }  Placing
+          %th{style: "padding-right: 0; width: 3em;" } Rank
           - $competition_trophy_order.each do|competition_trophy|
             %tr
               - c = CompetitionScoreEntry.first user_id: @user_id, variant: @variant, trophy: competition_trophy
@@ -20,5 +20,8 @@
               %td.trophy
                 =haml :trophy, locals: {trophy: trophy, achieved: (user_competition_trophies.include? trophy.trophy)}
               %td= h trophy.text
-              %td.table_number= h c.value
+              - if competition_trophy == :fastest_ascension_realtime
+                %td.table_number= h parse_seconds(c.value)
+              - else
+                %td.table_number= c.value.html_formatted
               %td.table_number= h c.rank

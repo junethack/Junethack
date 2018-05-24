@@ -23,7 +23,7 @@ input, label {
 }
 body {
     line-height: 1;
-    font-family: Arial, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
 }
 ol, ul {
     list-style: none;
@@ -140,16 +140,19 @@ form#login_form > fieldset > input[type=submit],
 }
 
 /* The texts around the logo itself */
-.logotitles
-{
-	color: #000;
+.logotitles:first-child {
+  margin-top: 2.0em;
+}
+.logotitles {
+  color: #000;
+  margin: 0.5em 0em 0.5em 0em;
 }
 
 .logotitles h1 {
-	font-size: 120%;
+  font-size: 2.6em;
 }
 .logotitles h2 {
-	font-size: 120%;
+  font-size: 2em;
 }
 .logoimage img {
 	max-width: 100%;
@@ -220,7 +223,6 @@ form#login_form > fieldset > input[type=submit],
 **************************/
 
 .text_content_wrapper {
-    /* space between the main content and the element before - eg signup button */
     padding-top: 1px;
     padding-bottom: 30px;
 }
@@ -270,18 +272,20 @@ form#login_form > fieldset > input[type=submit],
     vertical-align: middle;
 }
 table.misc,
-.greytable.misc { /* override width:100% */
+.greytable.misc {
     width: auto;
 }
 .greytable th {
     text-align: left;
-    padding-right: 1em;
-    border-top: 1px solid #ccc;
-    border-right: 1px solid black;
+    padding-right: 20px;
+    padding-left: 8px;
 }
 .greytable td
 {
-    border-top: 1px solid black;
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
+    padding-right: 10px;
+    padding-left: 10px;
     vertical-align: middle;
 }
 .greytable tr:nth-child(odd) td
@@ -291,6 +295,24 @@ table.misc,
 .greytable tr:nth-child(even) td
 {
     background-color: #bbb;
+}
+
+.greytable td.table_number
+{
+    text-align: right;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+}
+.greytable td.table_date
+{
+    text-align: center;
+    padding-right: 0;
+    padding-left: 0;
+}
+.greytable td.variant,
+.greytable td.table_date,
+.greytable td.table_character {
+    white-space: nowrap;
 }
 
 /* next two declarations are probably deprecated */
@@ -449,12 +471,6 @@ form#login_form > fieldset > input[type=submit].active:hover {
     text-align: center;
     margin: 1em 0;
 }
-#flattr img,
-a#flattr {
-    vertical-align: baseline;
-    margin-bottom: -5px;
-}
-
 
 /**************************
 **                       **
@@ -571,8 +587,12 @@ structure for a trophy cabinet:
 
 ul.trophypage > li > img,
 .trophycabinet img {
-    height: 35px;
-    width: 35px;
+    height: 2em;
+    width: 2em;
+}
+ul.trophypage.indented > li {
+    list-style: none;
+    padding-left: 0.8em;
 }
 
 /* exception for clan page trophies */
@@ -588,7 +608,7 @@ ul.trophypage > li > img,
 
 /* vertically align text and images */
 .trophycabinet .trophyleft {
-    vertical-align: middle;
+    vertical-align: top;
 }
 .trophycabinet .trophyright {
     width: 90%;
@@ -606,7 +626,7 @@ ul.trophypage > li > img,
 .trophycabinet .trophyleft,
 .trophycabinet .trophyright {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
 }
 /* finer-grained display styles */
 .trophycabinet .trophyright, .trophycabinet .trophyleft {
@@ -683,3 +703,14 @@ li.multiline > span {
     font-size: 0.9em;
 }
 
+/* styling trophy tables with text */
+.trophies td.trophy {
+  padding: 0;
+  width: 1px;
+  border: 1px solid #888;
+}
+.trophies td.trophy img {
+  vertical-align: middle;
+  width:  2em;
+  height: 2em;
+}
