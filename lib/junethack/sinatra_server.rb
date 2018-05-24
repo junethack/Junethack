@@ -441,12 +441,12 @@ get "/servers" do
     caching_check_application_start_time
 
     @servers = Server.all
-    haml :servers, :layout => @layout
+    haml :servers, layout: @layout, locals: { verbose: false }
 end
 
 get "/servers/check" do
     @servers = Server.all
-    haml :servers_check, layout: @layout
+    haml :servers, layout: @layout, locals: { verbose: true }
 end
 
 get "/server/:name" do
