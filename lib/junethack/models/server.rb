@@ -73,10 +73,13 @@ class Server
             return "https://ascension.run/userdata/#{game.name}/dynahack/dumplog/#{game.dumplog}"
         end
       when "nethack4.org"
-        return "http://nethack4.org/dumps/#{game.dumplog.tr("_",":")}"
-      when "www.hardfought.org", "eu.hardfought.org"
+        return nil if game.dumplog.nil?
+        "http://nethack4.org/dumps/#{game.dumplog.tr("_",":")}"
+      when /hardfought.org/
         player = "#{game.name[0..0]}/#{game.name}"
-        prefix = hostname.start_with?('eu.') ? 'eu' : 'www'
+        prefix = 'eu' if hostname.start_with?('eu.')
+        prefix = 'au' if hostname.start_with?('au.')
+        prefix ||= 'www'
         case game.version
         when "dyn"
             "https://#{prefix}.hardfought.org/userdata/#{player}/dynahack/dumplog/#{game.dumplog}"
@@ -165,8 +168,9 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
       Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
     }
 
-    [:us, :eu].each {|location|
-      prefix = location == :eu ? 'eu' : 'www'
+    prefixes = { us: :www, eu: :eu, au: :au }
+    [:us, :eu, :au].each {|location|
+      prefix = prefixes[location]
       [
         [:hdf_nao,  'NetHack 3.4.3-nao',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
         [:hdf_nh36, 'NetHack 3.6.1',           "https://#{prefix}.hardfought.org/xlogfiles/nhdev/xlogfile"],
@@ -186,6 +190,7 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
         url = "https://#{prefix}.hardfought.org/"
 
         server[0] = server[0].to_s.sub('h', 'euh').to_sym if location == :eu
+        server[0] = server[0].to_s.sub('h', 'auh').to_sym if location == :au
 
         configfileurl = 'https://#{prefix}.hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
         Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
