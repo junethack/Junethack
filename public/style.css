@@ -924,13 +924,32 @@ li.multiline > span {
 }
 
 /* styling trophy tables with text */
+th.trophy,
 .trophies td.trophy {
   padding: 0;
   width: 1px;
+}
+.trophies td.trophy {
   border: 1px solid #888;
 }
+th.trophy img,
 .trophies td.trophy img {
   vertical-align: middle;
   width:  2em;
   height: 2em;
+}
+th.trophy img {
+  vertical-align: bottom;
+  margin-bottom: 3px;
+  width:  2em;
+  height: 2em;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+.trophyleft a {
+  color: inherit;
+}
+h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a,
+.trophyleft a:hover {
+  color: #888;
 }

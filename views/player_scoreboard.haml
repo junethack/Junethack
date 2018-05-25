@@ -12,7 +12,7 @@
     - $variant_order.each do |variant|
       - variant_name = $variants_mapping[variant]
       %section.text_content
-        %h3{:id => variant}= variant_name
+        =h3 variant_name
         - if (CompetitionScoreEntry.count :variant => variant) == 0
           %div
             No ascensions yet
@@ -20,8 +20,11 @@
           - for i in 0..$competition_trophy_order.size-1 do
             .scorelisting
               %table.greytable
+                - trophy = Trophy.first variant: variant, trophy: $competition_trophy_order[i]
                 %tr
-                  %th= $competition_trophy_order[i]
+                  %th.trophy
+                    =haml :trophy, locals: { trophy: trophy, achieved: true }
+                  %th= trophy.text
                   %th.competition_value
                   %th.competition_placing Rank
                 / only show the first 3 places
@@ -29,7 +32,7 @@
                 - for j in 0..c.size-1 do
                   %tr
                     - user = User.get(c[j].user_id).login
-                    %td
+                    %td{colspan: 2}
                       %a{:href => "/user/" + CGI::escape(user)}=h user
                     - if $competition_trophy_order[i] == :fastest_ascension_realtime
                       %td.table_number= h parse_seconds(c[j].value)

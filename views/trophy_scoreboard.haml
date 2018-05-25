@@ -13,7 +13,7 @@
         %p
           %a{:href => "##{variant}"}= variant_name
     %section.text_content.trophycabinet
-      %h3{:id => "cross-variant"} Cross-Variant
+      =h3 'Cross-Variant'
       %ul
         - Trophy.cross_variant_trophies.each do |trophy|
           %li
@@ -29,7 +29,7 @@
     - (["NH-1.3d"]+$variant_order).each do |variant|
       - variant_name = $variants_mapping[variant]
       %section.text_content.trophycabinet
-        %h3{:id => variant}= variant_name
+        =h3 variant_name
         %ul
           - count = Trophy.achieved_user_all_stuff_trophies_count variant
           - if count > 0

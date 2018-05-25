@@ -1,5 +1,6 @@
 %li
-    .trophyleft= "#{$variants_mapping[@variant]}"
+    .trophyleft{id: link_id($variants_mapping[@variant])}
+        %a{href: "##{link_id($variants_mapping[@variant])}"}= $variants_mapping[@variant]
     .trophyright
         / user competition trophies
         - trophies = Trophy.user_competition_trophies @variant

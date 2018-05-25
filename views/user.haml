@@ -11,8 +11,7 @@
 
             .text_content.non_top_post
                 .trophycabinet.text_cabinet
-                    %h3
-                        Trophies
+                    =h3 'Trophies'
                     %ul
                         =haml :user_cross_variant_trophies
                         - for @variant in ["NH-1.3d"]+$variant_order
@@ -35,7 +34,7 @@
                 =haml :ascended_combinations
 
             .text_content.non_top_post
-                %h2 Accounts
+                =h2 :Accounts
                 %table.greytable
                     %tr
                         %th Server
@@ -47,7 +46,7 @@
                             %td= name
 
             #clanmanager.text_content.non_top_post
-                %h2 Clan
+                =h2 :Clan
                 - if @player.clan
                     %a{:href => "/clan/#{CGI::escape @player.clan.name}"}= @player.clan.name
                     %span#small_content_spacer.clear

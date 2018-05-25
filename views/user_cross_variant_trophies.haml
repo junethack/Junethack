@@ -1,6 +1,6 @@
 %li
-    .trophyleft
-        Cross-Variant
+    .trophyleft{id: link_id('Cross-Variant')}
+        %a{href: "##{link_id('Cross-Variant')}"}= 'Cross-Variant'
     .trophyright
         - trophies = repository.adapter.select "select trophy from individualtrophies where user_id = ?", @player.id
         - for individualtrophy in Trophy.cross_variant_trophies

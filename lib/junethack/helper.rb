@@ -77,3 +77,23 @@ def parse_seconds(duration=nil)
     return str.join " "
 end
 
+def h2 text, id=nil
+  hn 2, text, id
+end
+def h3 text, id=nil
+  hn 3, text, id
+end
+def h4 text, id=nil
+  hn 4, text, id
+end
+
+def link_id id
+  id = h id.to_s.tr(" _'", '-').downcase
+end
+
+def hn(level, text, id)
+  id = link_id(id || text)
+  link = "<a href='##{id}'>#{h text}</a>"
+  tag = level >= 1 ? "h#{level}" : "span"
+  "<#{tag} id='#{id}'>#{link}</#{tag}>"
+end

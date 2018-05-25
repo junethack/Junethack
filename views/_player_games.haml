@@ -1,12 +1,11 @@
-%h3
-  Competition
+=h3 'Competition'
 - $variant_order.each do |variant|
   - @variant = variant
   - entries = repository.adapter.select "SELECT * FROM competition_score_entries WHERE variant = ? AND user_id = ?", variant, @user_id
   - if (CompetitionScoreEntry.count user_id: @user_id, variant: @variant) > 0
     - trophies = Trophy.user_competition_trophies @variant
     - user_competition_trophies = repository.adapter.select "select trophy from competition_score_entries where user_id = ? and variant = ? and rank = 1", @player.id, @variant
-    %h4= $variants_mapping[variant]
+    =h4 $variants_mapping[variant], "competition_#{variant}"
     .scorelisting
       %table.greytable.trophies
         %tr
