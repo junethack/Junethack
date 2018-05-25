@@ -138,21 +138,6 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
       Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
     }
 
-    Server.create name: 'nh4', variant: 'NetHack4 4.3.0',
-      url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
-
-    [
-      [:esm_nh36, 'NetHack 3.6.1',           'https://em.slashem.me/xlogfiles/nethack'],
-      [:esm_slex, "Slash'EM Extended 2.2.2", 'https://em.slashem.me/xlogfiles/slex'],
-      [:esm_gho,  'GruntHack 0.2.1',         'https://em.slashem.me/xlogfiles/grunthack'],
-      [:esm_shc,  'SporkHack 0.6.3',         'https://em.slashem.me/xlogfiles/sporkhack'],
-    ].each {|server|
-      url = 'https://em.slashem.me/'
-      configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
-
-      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
-    }
-
     [
       [:asc_nao,  'NetHack 3.4.3-nao',     'https://ascension.run/xlogfiles/nethack'],
       [:asc_unh,  'UnNetHack 5.3.1',       'https://ascension.run/xlogfiles/unnethack'],
@@ -164,6 +149,21 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
     ].each {|server|
       url = 'https://ascension.run/'
       configfileurl = 'https://ascension.run/userdata/random_user/nethack/nethackrc'
+
+      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+    }
+
+    Server.create name: 'nh4', variant: 'NetHack4 4.3.0',
+      url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
+
+    [
+      [:esm_nh36, 'NetHack 3.6.1',           'https://em.slashem.me/xlogfiles/nethack'],
+      [:esm_slex, "Slash'EM Extended 2.2.2", 'https://em.slashem.me/xlogfiles/slex'],
+      [:esm_gho,  'GruntHack 0.2.3',         'https://em.slashem.me/xlogfiles/grunthack'],
+      [:esm_shc,  'SporkHack 0.6.5',         'https://em.slashem.me/xlogfiles/sporkhack'],
+    ].each {|server|
+      url = 'https://em.slashem.me/'
+      configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
 
       Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
     }
