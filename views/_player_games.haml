@@ -12,7 +12,7 @@
           %th{colspan: 2} Competition
           %th
           %th{style: "padding-right: 0; width: 3em;" } Rank
-          - $competition_trophy_order.each do|competition_trophy|
+          - $competition_trophy_order.each do |competition_trophy|
             %tr
               - c = CompetitionScoreEntry.find_by(user_id: @user_id, variant: @variant, trophy: competition_trophy)
               - trophy = Trophy.find_by(variant: c.variant, trophy: c.trophy)

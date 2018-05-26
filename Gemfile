@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem 'activerecord'
 gem 'sinatra-activerecord'
-gem 'sqlite3', '~> 1.4'
+gem 'pg'
 gem 'composite_primary_keys', '>= 14.0.0'
 
 gem "json"
@@ -31,6 +31,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'ci_reporter'
   gem 'pry'
+  gem 'irb'
   gem "sync"
   #gem 'pry-stack_explorer'
 end

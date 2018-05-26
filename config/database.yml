@@ -1,11 +1,13 @@
 development:
-  adapter: sqlite3
-  database: junethack_dev.db
+  adapter: postgresql
+  database: junethack-dev
 
 production:
-  adapter: sqlite3
-  database: junethack.db
+  adapter: postgresql
+  database: junethack-prod
 
 test:
-  adapter: sqlite3
-  database: ":memory:"
+  adapter: postgresql
+  database: junethack-test
+  user: junethack
+  password: junethack

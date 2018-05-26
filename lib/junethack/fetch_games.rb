@@ -40,7 +40,7 @@ def fetch_all
         if server.xlogcurrentoffset == nil
           server.xlogcurrentoffset = header['content-length'].to_i
           server.xloglastmodified = header['last-modified'] || 'Thu, 01 Jan 1970 00:00:00 GMT'
-          $db_access.synchronize { server.save }
+          server.save!
           next
         end
 
@@ -57,9 +57,6 @@ def fetch_all
                     #repository.adapter.execute("BEGIN IMMEDIATE TRANSACTION");
                     games.each do |line|
                       begin
-                        $db_access.lock :EX
-                        #@fetch_logger.debug $db_access.inspect
-
                         i += 1
                         #@fetch_logger.debug "#{line.length} #{line}"
                         xlog_add_offset = line.length
@@ -98,7 +95,7 @@ def fetch_all
                               game.user_id = acc.user_id
 
                               if regular_game then
-                                Event.new(:text => "#{game.user.login} ascended a game of #{$variants_mapping[game.version]} on #{game.server.hostname}!").save if game.ascended
+                                Event.new(:text => "#{game.user.login} ascended a game of #{$variants_mapping[game.version]} on #{game.server.hostname}!").save! if game.ascended
 
                                 # record some gaming milestones
                                 games_count = Game.where('user_id > 0').count + 1
@@ -124,10 +121,6 @@ def fetch_all
                         # this game is completely input into the db
                         # don't parse it again
                         server.xlogcurrentoffset += xlog_add_offset
-                        server.save
-                      ensure
-                        $db_access.unlock :EX
-                        #@fetch_logger.debug $db_access.inspect
                       end
                     end
                     #repository.adapter.execute("COMMIT");
@@ -145,7 +138,7 @@ def fetch_all
                 @fetch_logger.debug "No games at all on #{server.name}!"
             end
             server.xloglastmodified = last_modified
-            $db_access.synchronize { server.save }
+            server.save!
         else
             @fetch_logger.debug "No new games on #{server.name}."
         end

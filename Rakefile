@@ -12,8 +12,6 @@ require 'rake/dsl_definition'
 require 'sinatra/activerecord/rake'
 require 'rake'
 
-$db_access = Sync.new
-
 load File.expand_path('spec/spec.rake')
 
 # default database is development
