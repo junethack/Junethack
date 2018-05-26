@@ -141,6 +141,8 @@ def Trophy.check_trophies_for_variant variant_description
     fiqhack = helper_get_variant_for 'fiqhack'
     slashthem = helper_get_variant_for 'slashthem'
     slex = helper_get_variant_for "slash'em extended"
+    sporkhack = helper_get_variant_for 'sporkhack'
+    splicehack = helper_get_variant_for 'splicehack'
 
     if [acehack, nethack4, nh4k, dynahack, fiqhack].include? variant then
       # these variants don't have standard xlogfile achievement flags
@@ -151,7 +153,7 @@ def Trophy.check_trophies_for_variant variant_description
 
     # standard devnull achievement trophies
     Trophy.create :variant => variant, :trophy => "ascended", :text => "ascended", :icon => "ascension.png"
-    Trophy.create :variant => variant, :trophy => "escapologist", :text => "escaped in celestial disgrace", :icon => "escapologist.png"
+    Trophy.create :variant => variant, :trophy => "escapologist", :text => "escaped in celestial disgrace", :icon => "escapologist.png", row: 2
     Trophy.create :variant => variant, :trophy => "entered_astral_plane", :text => "entered Astral Plane", :icon => "m-astral.png"
     Trophy.create :variant => variant, :trophy => "entered_elemental_planes", :text => "entered Elemental Planes", :icon => "m-planes.png"
     Trophy.create :variant => variant, :trophy => "obtained_the_amulet_of_yendor", :text => "obtained the Amulet of Yendor", :icon => "m-amulet.png" if not broken_xlogfile
@@ -292,8 +294,8 @@ def Trophy.check_trophies_for_variant variant_description
       }
     end
 
-    if [grunthack].include? variant then
-      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png"
+    if [grunthack, sporkhack, splicehack].include? variant then
+      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
     end
 
     # user competition trophies
