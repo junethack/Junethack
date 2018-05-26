@@ -209,7 +209,7 @@ class Game
     property :conduct,   String, :default => "0"
     property :nconducts, Integer,
      :default => lambda { |r, p| (Integer(r.conduct) & 4095).to_s(2).count("1") } # count the number of bits set in conduct
-    property :conductX,  Text
+    property :conductX,  Text, :default => ''
     property :role,      String
     property :deathdnum, Integer
     property :gender,    String

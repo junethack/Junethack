@@ -15,18 +15,20 @@ configure :production do
   puts "Configuring production database"
   # for debugging: print all generated SQL statemtens
   #DataMapper::Logger.new("logs/db.log", :debug)
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/junethack.db")
+  DataMapper.setup(:default, 'postgres://localhost/junethack')
 end
+
 configure :development do
   puts "Configuring development database"
   # for debugging: print all generated SQL statemtens
   DataMapper::Logger.new("logs/dev_db.log", :debug)
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/junethack_dev.db")
+  DataMapper.setup(:default, 'postgres://localhost/junethack')
 end
+
 configure :test do
   puts "Configuring test database"
   DataMapper::Logger.new("logs/test_db.log", :debug)
-  DataMapper.setup(:default, "sqlite3::memory:")
+  DataMapper.setup(:default, "postgres://#{user}:#{password}@localhost/junethack_test")
 
   # suppress migration output.
   # it would be written at every run as we use a in-memory db

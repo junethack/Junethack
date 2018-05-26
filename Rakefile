@@ -11,8 +11,6 @@ require 'sync'
 require 'rake/dsl_definition'
 require 'rake'
 
-$db_access = Sync.new
-
 load File.expand_path('spec/spec.rake')
 
 # default database is development

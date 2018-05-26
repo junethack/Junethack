@@ -4,6 +4,9 @@ require 'trophyscore'
 require 'userscore'
 
 describe TrophyScore do
+  before do
+    Game.destroy
+  end
 
   context "given 2 ascended games from the same user with identical score points" do
     server = Server.create(name: 'server_highscore')

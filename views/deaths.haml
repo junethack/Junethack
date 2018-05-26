@@ -1,5 +1,5 @@
 - cache_fragment(Game.max_endtime) do
-  - @deaths = repository.adapter.select "SELECT death, count(1) AS count, group_concat(version) AS versions FROM games WHERE user_id IS NOT NULL GROUP BY death ORDER BY count DESC;"
+  - @deaths = repository.adapter.select "SELECT death, count(1) AS count, string_agg(version, ',') AS versions FROM games WHERE user_id IS NOT NULL GROUP BY death ORDER BY count DESC;"
   - @unique_deaths = repository.adapter.select "SELECT death, count(1) AS count FROM normalized_deaths GROUP BY death ORDER BY count DESC;"
 
   .content_bulk

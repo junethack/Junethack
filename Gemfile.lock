@@ -79,16 +79,16 @@ GEM
       dm-core (~> 1.2.0)
     dm-migrations (1.2.0)
       dm-core (~> 1.2.0)
-    dm-sqlite-adapter (1.2.0)
+    dm-postgres-adapter (1.2.0)
       dm-do-adapter (~> 1.2.0)
-      do_sqlite3 (~> 0.10.6)
+      do_postgres (~> 0.10.6)
     dm-timestamps (1.2.0)
       dm-core (~> 1.2.0)
     dm-transactions (1.2.0)
       dm-core (~> 1.2.0)
     dm-validations (1.2.0)
       dm-core (~> 1.2.0)
-    do_sqlite3 (0.10.17)
+    do_postgres (0.10.17)
       data_objects (= 0.10.17)
     docile (1.4.1)
     et-orbi (1.2.11)
@@ -175,8 +175,8 @@ DEPENDENCIES
   ci_reporter
   data_mapper
   dm-migrations
+  dm-postgres-adapter
   dm-serializer!
-  dm-sqlite-adapter
   dm-types!
   eventmachine!
   fastercsv

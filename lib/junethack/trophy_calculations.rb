@@ -1025,7 +1025,7 @@ def all_stuff_streak(column, len, user_id, variant)
 
   distinct_values = {}
   games.each {|game|
-    if game.ascended == 't'
+    if game.ascended
       distinct_values[game.column] = 1
     else
       distinct_values = {}

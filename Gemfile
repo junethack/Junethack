@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'dm-sqlite-adapter'
+gem 'dm-postgres-adapter'
 
 gem "dm-serializer",
     git: "https://github.com/89mo/dm-serializer.git",

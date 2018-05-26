@@ -72,7 +72,7 @@ class User
     end
 
     def User.max_created_at
-        repository.adapter.select "select strftime('%s',max(created_at)) from users"
+      repository.adapter.select('SELECT EXTRACT(EPOCH FROM MAX(created_at))::int FROM users')
     end
 
     def display_game_statistics

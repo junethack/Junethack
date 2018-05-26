@@ -99,7 +99,7 @@
                 %td.table_number= "<a class='hidden_link' href='/ascensions/#{v}'>#{ascended_variant_games}</a>"
 
     - cache_fragment("games_#{Game.max_endtime}") do
-      - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null) group by datum order by datum asc;"
+      - @finished_games_per_day = repository.adapter.select "SELECT datum, COUNT(1) AS count FROM (SELECT to_timestamp(endtime)::date AS datum FROM games WHERE user_id IS NOT NULL) AS query GROUP BY datum ORDER BY datum ASC;"
       .text_content.non_top_post
         %h2 Finished Games per Day
         .scorelisting
@@ -125,7 +125,7 @@
     - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
       // Ugly SQL to also get days with zero ascensions. Will only work
       // as long there are any games for each day
-      - @ascensions_per_day = repository.adapter.select "select days.datum, endtime, count from (select endtime, date(endtime, 'unixepoch') as datum from games group by datum) days left join (select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum) counts on counts.datum = days.datum;"
+      - @ascensions_per_day = repository.adapter.select "SELECT days.datum, count FROM (SELECT to_timestamp(endtime)::date AS datum FROM games GROUP BY datum) AS days LEFT JOIN (SELECT datum, COUNT(1) AS count FROM (SELECT to_timestamp(endtime)::date as datum FROM games WHERE user_id IS NOT NULL AND   ascended = 't') AS ascended_games GROUP BY datum) counts ON counts.datum = days.datum"
       .text_content.non_top_post
         %h2 Ascensions per Day
         .scorelisting

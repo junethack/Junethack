@@ -55,12 +55,12 @@ def longest_ascension_streak(variant=nil)
     # streaks are per server and per variant
     server_id = 0
     games_ascended.each {|game|
-        asc = 0 if game.ascended == 'f' or game.server_id != server_id
+        asc = 0 if !game.ascended or game.server_id != server_id
         server_id = game.server_id
 
-        asc += 1 if game.ascended == 't'
+        asc += 1 if game.ascended
 
-        max_asc = asc if asc > max_asc 
+        max_asc = asc if asc > max_asc
     }
     return max_asc
 end
