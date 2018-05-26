@@ -135,6 +135,11 @@ namespace :db do
                                              xlogcurrentoffset: 0)
         puts Server.all(name: args[:name]).inspect
     end
+    desc "reset all servers' xlogfile modification date"
+    task :reset_all_servers, :name do |t, args|
+        Server.all.update(xloglastmodified: "Sat Jan 01 00:00:00 UTC 2000",
+                                             xlogcurrentoffset: 0)
+    end
 
     desc "change a user's password"
     task :change_password, :user, :password do |t, args|
