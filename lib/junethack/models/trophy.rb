@@ -143,6 +143,7 @@ def Trophy.check_trophies_for_variant variant_description
     slex = helper_get_variant_for "slash'em extended"
     sporkhack = helper_get_variant_for 'sporkhack'
     splicehack = helper_get_variant_for 'splicehack'
+    xnethack = helper_get_variant_for 'xnethack'
 
     if [acehack, nethack4, nh4k, dynahack, fiqhack].include? variant then
       # these variants don't have standard xlogfile achievement flags
@@ -296,6 +297,10 @@ def Trophy.check_trophies_for_variant variant_description
 
     if [grunthack, sporkhack, splicehack].include? variant then
       Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
+    end
+
+    if [xnethack].include? variant then
+      Trophy.create variant: variant, trophy: :ascended_without_unfairly_scaring_monsters, text: "Ascended without scaring any monsters", icon: "m-elbereth.png", row: 2
     end
 
     # user competition trophies

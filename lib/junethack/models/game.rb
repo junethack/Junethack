@@ -295,7 +295,7 @@ class Game
     end
     # No membership card
     def defeated_one_eyed_sam?
-        version.start_with? "UNH" and event and event.to_i & 0x10000 > 0
+        version.start_with? "unh" and event and event.to_i & 0x10000 > 0
     end
     # Too good for quests
     def ascended_without_defeating_nemesis?
@@ -320,6 +320,10 @@ class Game
 
     def ascended_without_elbereth?
         (ascended && (Integer(conduct) & 0x01000 > 0)) || (ascended && elbereths == 0)
+    end
+
+    def ascended_without_unfairly_scaring_monsters?
+      (ascended && (Integer(conduct) & 0x04000 > 0))
     end
 
     # Heaven or Hell

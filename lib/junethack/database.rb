@@ -10,7 +10,6 @@ DataMapper::Model.raise_on_save_failure = true # globally
 # set all String properties to have a default length of 255
 DataMapper::Property::String.length(255)
 
-options = {}
 configure :production do
   puts "Configuring production database"
   # for debugging: print all generated SQL statemtens

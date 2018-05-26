@@ -56,7 +56,7 @@ end
 
 def helper_get_variants_for_user(id)
     variants = repository.adapter.select "select distinct version from games where user_id = ?;", @id
-    v = $variants_mapping.dup.reject {|key,value| not variants.include? key }
+    $variants_mapping.dup.reject {|key,value| not variants.include? key }
 end
 
 def helper_get_score(key, variant)
