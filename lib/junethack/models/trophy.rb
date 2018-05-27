@@ -180,14 +180,14 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: "ascended_without_defeating_nemesis", text: "Too good for quests (ascended without defeating the quest nemesis)", icon: "m-no-nemesis.png", row: 2
       Trophy.create variant: variant, trophy: "ascended_without_defeating_vlad", text: "Too good for Vladbanes (ascended without defeating Vlad)", icon: "m-no-vlad.png", row: 2
       Trophy.create variant: variant, trophy: "ascended_without_defeating_rodney", text: "Too good for... wait, what? How? (ascended without defeating Rodney)", icon: "m-no-wizard.png", row: 2
-      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
       Trophy.create variant: variant, trophy: "ascended_with_all_invocation_items", text: "Hoarder (ascended carrying all the invocation items)", icon: "m-hoarder.png", row: 2
       Trophy.create variant: variant, trophy: "defeated_croesus", text: "Assault on Fort Knox (defeated Croesus)", icon: "m-croesus.png", row: 2
 
       if variant == unnethack
         achievements = [
           [:ascended_without_defeating_cthulhu, "Too good for a brain (ascended without defeating Cthulhu)", "m-no-cthulhu.png", 3],
-          [:heaven_or_hell,                     "heaven or hell (ascend in 1 HP mode)",                      "heaven-or-hell.png", 3],
+          [:heaven_or_hell,                     "Heaven or Hell (ascend in 1 HP mode)",                      "heaven-or-hell.png", 3],
           [:mini_croesus,                       "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 3],
           [:better_than_croesus,                "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 3],
           [:bought_oracle_consultation,         'got an Oracle consultation', '4-oracle-consult.png', 3],
@@ -264,13 +264,13 @@ def Trophy.check_trophies_for_variant variant_description
     end
 
     if [nethack36, splicehack, xnethack].include? variant then
-      Trophy.create variant: variant, trophy: :killed_by_molochs_indifference, text: "Killed by Moloch's indifference", icon: "killed_by_molochs_indifference.png", row: 2
+      Trophy.create variant: variant, trophy: :killed_by_molochs_indifference, text: "killed by Moloch's indifference", icon: "killed_by_molochs_indifference.png", row: 2
     end
 
     if [nh4k].include? variant then
-      Trophy.create variant: variant, trophy: "entered_the_sokoban_zoo", text: "Entered the Sokoban Zoo", icon: "4k-entered-sokoban.png", row: 2
-      Trophy.create variant: variant, trophy: "entered_minetown_temple", text: "Entered the Minetown Temple", icon: "4k-entered-minetown-temple.png", row: 2
-      Trophy.create variant: variant, trophy: "reached_mines_end", text: "Reached the bottom of the Mines", icon: "4k-mines-end.png", row: 2
+      Trophy.create variant: variant, trophy: "entered_the_sokoban_zoo", text: "entered the Sokoban Zoo", icon: "4k-entered-sokoban.png", row: 2
+      Trophy.create variant: variant, trophy: "entered_minetown_temple", text: "entered the Minetown Temple", icon: "4k-entered-minetown-temple.png", row: 2
+      Trophy.create variant: variant, trophy: "reached_mines_end", text: "reached the bottom of the Mines", icon: "4k-mines-end.png", row: 2
     end
 
     # DNetHack specific achievements
@@ -301,11 +301,11 @@ def Trophy.check_trophies_for_variant variant_description
     end
 
     if [grunthack, sporkhack, splicehack].include? variant then
-      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "Ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
     end
 
     if [xnethack].include? variant then
-      Trophy.create variant: variant, trophy: :ascended_without_unfairly_scaring_monsters, text: "Ascended without scaring any monsters", icon: "m-elbereth.png", row: 2
+      Trophy.create variant: variant, trophy: :ascended_without_unfairly_scaring_monsters, text: "ascended without scaring any monsters", icon: "m-elbereth.png", row: 2
     end
 
     # user competition trophies
