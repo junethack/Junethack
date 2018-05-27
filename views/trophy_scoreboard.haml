@@ -11,7 +11,7 @@
       - (["NH-1.3d"]+$variant_order).each do |variant|
         - variant_name = $variants_mapping[variant]
         %p
-          %a{:href => "##{variant}"}= variant_name
+          %a{:href => "##{link_id variant_name}"}= variant_name
     %section.text_content.trophycabinet
       =h3 'Cross-Variant'
       %ul
