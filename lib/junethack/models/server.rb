@@ -187,12 +187,12 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
         [:hdf_spl,  'SpliceHack 0.3.0',        "https://#{prefix}.hardfought.org/xlogfiles/splicehack/xlogfile"],
         [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
       ].each {|server|
-        url = "https://#{prefix}.hardfought.org/"
+        url = "https://#{prefix}.hardfought.org/nethack"
 
         server[0] = server[0].to_s.sub('h', 'euh').to_sym if location == :eu
         server[0] = server[0].to_s.sub('h', 'auh').to_sym if location == :au
 
-        configfileurl = 'https://#{prefix}.hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc'
+        configfileurl = "https://#{prefix}.hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc"
         Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
       }
     }

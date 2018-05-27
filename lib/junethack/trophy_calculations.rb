@@ -80,17 +80,17 @@ end
 $dNetHack_races = "race in ('Inc','Clk','Dro','Hlf')"
 $dNetHack_roles = "role in ('Nob','Pir','Bin','Brd', 'Ana', 'Con')"
 def dnethack_tour?(user)
-  anz = repository.adapter.select("select count(1) from (select distinct race from games where user_id = ? and version == 'DNH' and turns >= 1000 and #{$dNetHack_races} union select distinct role from games where user_id = ? and version == 'DNH' and turns >= 1000 and #{$dNetHack_roles});", user, user)[0]
+  anz = repository.adapter.select("SELECT count(1) FROM (SELECT DISTINCT race FROM games WHERE user_id = ? AND version = 'dnh' AND turns >= 1000 AND #{$dNetHack_races} UNION SELECT DISTINCT role FROM games WHERE user_id = ? AND version = 'dnh' AND turns >= 1000 AND #{$dNetHack_roles}) a;", user, user)[0]
   return anz == 10
 end
 
 def dnethack_king?(user)
-  anz = repository.adapter.select("select count(1) from (select distinct race from games where user_id = ? and version == 'DNH' and ascended='t' and #{$dNetHack_races} union select distinct role from games where user_id = ? and version == 'DNH' and ascended='t' and #{$dNetHack_roles});", user, user)[0]
+  anz = repository.adapter.select("SELECT count(1) FROM (SELECT DISTINCT race FROM games WHERE user_id = ? AND version = 'dnh' AND ascended='t' AND #{$dNetHack_races} UNION SELECT DISTINCT role FROM games WHERE user_id = ? AND version = 'dnh' AND ascended='t' AND #{$dNetHack_roles}) a;", user, user)[0]
   return anz == 10
 end
 
 def dnethack_prince?(user)
-  anz = repository.adapter.select("select count(1) from (select distinct race from games where user_id = ? and version == 'DNH' and ascended='t' and #{$dNetHack_races} union select distinct role from games where user_id = ? and version == 'DNH' and ascended='t' and #{$dNetHack_roles});", user, user)[0]
+  anz = repository.adapter.select("SELECT count(1) FROM (SELECT DISTINCT race FROM games WHERE user_id = ? AND version = 'dnh' AND ascended='t' AND #{$dNetHack_races} UNION SELECT DISTINCT role FROM games WHERE user_id = ? AND version = 'dnh' AND ascended='t' AND #{$dNetHack_roles}) a;", user, user)[0]
   return anz >= 5
 end
 
@@ -548,14 +548,14 @@ def unique_deaths_sql
 end
 
 def variant_trophy_combinations_sql
-  "SELECT DISTINCT variant, trophy from (SELECT user_id, variant, trophy from scoreentries UNION SELECT user_id, variant, trophy from competition_score_entries where rank = 1) where user_id in (SELECT id FROM users WHERE clan_name = ?)"
+  "SELECT DISTINCT variant, trophy from (SELECT user_id, variant, trophy from scoreentries UNION SELECT user_id, variant, trophy from competition_score_entries where rank = 1) scoreentriees where user_id in (SELECT id FROM users WHERE clan_name = ?)"
 end
 def variant_trophy_combinations_user_sql
   "SELECT DISTINCT variant, trophy from (SELECT user_id, variant, trophy from scoreentries UNION SELECT user_id, variant, trophy from competition_score_entries = 1) where user_id = ?"
 end
 
 def most_ascensions_in_a_24_hour_period(clan)
-  clan_endtimes = repository.adapter.select "select * from (select (select clan_name from users where user_id = id) as clan, endtime, endtime+86400 as endtime_end from games where ascended='t' and clan = ? and user_id is not null order by endtime)", clan
+  clan_endtimes = repository.adapter.select "SELECT * FROM (SELECT (SELECT clan_name FROM users WHERE user_id = id) AS clan, endtime, endtime+86400 AS endtime_end FROM games WHERE ascended='t' AND user_id IS NOT NULL) games WHERE clan = ? ORDER BY endtime", clan
 
   max_ascensions = 0
   clan_endtimes.each do |e|
@@ -571,13 +571,13 @@ def update_clan_scores(game)
   # Clan competition
   clan_name = (User.get game.user_id).clan_name
   if clan_name then
-    most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+ascended_combinations_sql+");", clan_name)[0]
+    most_ascended_combinations = (repository.adapter.select "SELECT count(1) from ("+ascended_combinations_sql+") a;", clan_name)[0]
     c = ClanScoreEntry.first_or_new(clan_name: clan_name,
                                     trophy: :most_ascended_combinations)
     c.value = most_ascended_combinations
     c.save
 
-    most_unique_deaths = (repository.adapter.select "SELECT count(1) from ("+unique_deaths_sql+");", clan_name)[0]
+    most_unique_deaths = (repository.adapter.select "SELECT count(1) from ("+unique_deaths_sql+") a;", clan_name)[0]
     c = ClanScoreEntry.first_or_new(clan_name: clan_name,
                                     trophy: :most_unique_deaths)
     c.value = most_unique_deaths
@@ -590,7 +590,7 @@ def update_clan_scores(game)
 
     # This one is new for 2012.
     # We didn't have this clan trophy for the 2011 tournament.
-    most_variant_trophy_combinations = (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_sql+");", clan_name)[0]
+    most_variant_trophy_combinations = (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_sql+") a;", clan_name)[0]
     c = ClanScoreEntry.first_or_new(clan_name: clan_name,
                                     trophy: :most_variant_trophy_combinations)
     c.value = most_variant_trophy_combinations

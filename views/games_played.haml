@@ -20,7 +20,7 @@
           - else
             = h game.name
         %td.variant{"data-title" => "Name"}= h game.variant_name
-        %td.table_character{"data-title" => "Character"}= h [game.role, game.race, game.gender, game.align].join('-')
+        %td.table_character{"data-title" => "Character"}= h [game.role, game.race, game.gender, game.align].compact.join('-')
         %td{"data-title" => "Server"}= h game.server.hostname
         %td.table_number{"data-title" => "Points"}= game.points.html_formatted
         %td{"data-title" => "Killer"}= h game.death
