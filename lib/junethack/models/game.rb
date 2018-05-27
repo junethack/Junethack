@@ -389,6 +389,10 @@ class Game
         death == "escaped (in celestial disgrace)"
     end
 
+    def killed_by_molochs_indifference?
+      death == "killed by Moloch's indifference"
+    end
+
     def variant_name
         return $variants_mapping[version]
     end

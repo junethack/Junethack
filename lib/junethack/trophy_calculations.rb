@@ -296,6 +296,7 @@ def update_scores(game)
   sporkhack = helper_get_variant_for 'sporkhack'
   splicehack = helper_get_variant_for 'splicehack'
   xnethack = helper_get_variant_for 'xnethack'
+  nethack36 = helper_get_variant_for '3.6.1'
 
   if [acehack, nethack4, nh4k, dynahack, fiqhack].include? game.version then
     ## specific trophies as they don't track xlogfile achievements
@@ -404,6 +405,14 @@ def update_scores(game)
       Scoreentry.first_or_create(user_id: game.user_id,
                                  variant: game.version,
                                  trophy:  :defeated_all_quest_nemeses).save
+    end
+  end
+
+  if [nethack36, splicehack, xnethack].include? game.version then
+    if game.killed_by_molochs_indifference?
+      Scoreentry.first_or_create(user_id: game.user_id,
+                                 variant: game.version,
+                                 trophy:  :killed_by_molochs_indifference).save
     end
   end
 

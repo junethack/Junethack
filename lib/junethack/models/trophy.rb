@@ -144,6 +144,7 @@ def Trophy.check_trophies_for_variant variant_description
     sporkhack = helper_get_variant_for 'sporkhack'
     splicehack = helper_get_variant_for 'splicehack'
     xnethack = helper_get_variant_for 'xnethack'
+    nethack36 = helper_get_variant_for '3.6.1'
 
     if [acehack, nethack4, nh4k, dynahack, fiqhack].include? variant then
       # these variants don't have standard xlogfile achievement flags
@@ -260,6 +261,10 @@ def Trophy.check_trophies_for_variant variant_description
           Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[3]
         }
       end
+    end
+
+    if [nethack36, splicehack, xnethack].include? variant then
+      Trophy.create variant: variant, trophy: :killed_by_molochs_indifference, text: "Killed by Moloch's indifference", icon: "killed_by_molochs_indifference.png", row: 2
     end
 
     if [nh4k].include? variant then
