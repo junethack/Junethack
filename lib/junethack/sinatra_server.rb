@@ -206,14 +206,22 @@ post "/add_server_account" do
         session['errors'] << "Could not verify account!<br>" + (h e.message)
         redirect "/home" and return
     end
-    begin
-        account = Account.create(:user => User.get(session['user_id']), :server => server, :name => params[:user], :verified => true)
-    rescue => e
-        session['errors'].push(e.to_s)
+    if server.name.include?('hdf_')
+      servers = Server.all.select {|s| s.name.include? 'hdf_' }
+    else
+      servers = Server.all(url: server.url)
     end
-    # set user_id on all already played games
-    Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
-    repository.adapter.execute "UPDATE start_scummed_games set user_id = ? where name = ? and server_id = ?", session['user_id'], params[:user], server.id
+    servers.each {|server|
+      begin
+        account = Account.create(user: User.get(session['user_id']), server: server, name: params[:user], verified: true)
+      rescue => e
+        session['errors'].push(e.to_s)
+      end
+      # set user_id on all already played games
+      Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
+      repository.adapter.execute "UPDATE start_scummed_games SET user_id = ? WHERE name = ? AND server_id = ?", session['user_id'], params[:user], server.id
+      repository.adapter.execute "UPDATE junk_games SET user_id = ? WHERE name = ? AND server_id = ?", session['user_id'], params[:user], server.id
+    }
   }
 
     redirect "/home"

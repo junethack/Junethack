@@ -5,6 +5,7 @@
                 Manage your accounts
             -# determine which servers have no account linked
             - server_accounts = (Server.all - @user.servers)
+            - server_accounts = server_accounts.map {|server| [server.id, server.hostname] }.uniq {|_,server| server}
             - if server_accounts.size > 0
                 #greeting
                     = "Hi #{h @user.login}!  To have your games on one of the <a href='/servers'>supported public servers</a> ranked in the tournament, add the following line<br/><tt># #{h @tournament_identifier}</tt><br/> to your options file on the public server."
@@ -18,19 +19,18 @@
                 %tr
                     %th Server
                     %th Account
-                    %th Variant
-                - for account in @user.accounts
+                - accounts = @user.accounts.map {|acc| [acc.server.hostname, acc.name] }.uniq.sort
+                - accounts.each do |server, name|
                     %tr.account
-                        %td= account.server.display_name
-                        %td= account.name
-                        %td= account.server.variant
+                        %td= server
+                        %td= name
             - if server_accounts.size > 0
                 %h3
                     Add an account to your name
                 %form#add_server_form.smallform{ action: "/add_server_account", method: "post"}
                     %select{ name: "server"}
-                        - server_accounts.each do |s|
-                            %option{:value => s.id}= s.display_name
+                        - server_accounts.each do |id, hostname|
+                            %option{value: id}= hostname
                     %input{ type: "text", name: "user", placeholder: "public server username", style: "width: 22ex;", autofocus: ""}
                     %input{ type: "submit", value: "add account"}
                     %span.clear
