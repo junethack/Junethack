@@ -225,5 +225,21 @@ namespace :run do
     end
 end
 
+namespace :test do
+  desc 'Import a local xlogfile'
+  task :import, :file, :server do |t, args|
+    require 'parse'
+    server = Server.first(name: args[:server])
+    lines = File.open(args[:file]).readlines
+    lines.each {|line|
+      hgame = XLog.parse_xlog line.force_encoding(Encoding::UTF_8).encode("utf-8", invalid: :replace)
+      game = Game.create({server: server}.merge(hgame))
+
+      account = Account.first(name: hgame["name"], server_id: server.id)
+      game.update(user_id: account.user_id) if account
+    }
+  end
+end
+
 task :default => ["run:server"]
 
