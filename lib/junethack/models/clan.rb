@@ -27,9 +27,3 @@ class Clan
     "https://www.gravatar.com/avatar/#{hash}?s=200&d=retro"
   end
 end
-
-DataMapper::MigrationRunner.migration( 1, :gravatar_link_for_amy_bundlebundlebundle ) do
-  up do
-    Clan.first(name: 'SlexyRobberNymphets').update gravatar: '29cfcb749b2fc550665ea6e82b04fbdf'
-  end
-end
