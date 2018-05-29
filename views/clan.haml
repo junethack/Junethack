@@ -50,10 +50,13 @@
         %h2
           Clan trophies
         / TODO: trophy image for clan competition winner
-        - ClanScoreEntry.all(:clan_name => @clan.name, :trophy.not => 'clan_winner', :rank => 1).each do |trophy|
-          - trophy = Trophy.first :trophy => trophy.trophy
-          %a.imagelink{:href => "/trophies#" + trophy.anchor, :title => trophy.text}
-            %img.trophyicon{:src => "/icons/" + trophy.icon}
+        - ClanScoreEntry.all(clan_name: @clan.name, :trophy.not => 'clan_winner').each do |clan_trophy|
+          - trophy = Trophy.first trophy: clan_trophy.trophy
+          %a.imagelink{:href => "/trophies#" + trophy.anchor, title: trophy.text}
+            - if clan_trophy.rank == 1
+              %img.trophyicon{:src => "/icons/" + trophy.icon}
+            - else
+              %img.trophyicon{:src => "/icons/" + trophy.light_icon}
         %span.clear.endofcabinetrow
 
     .text_content.non_top_post#clan_members
