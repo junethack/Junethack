@@ -28,6 +28,24 @@
       #clan_banner
         %img{src: @clan.gravatar_link}
 
+        - if !@logged_in
+          - if @user.login == @clan.get_admin.login
+            %p
+              Enter the email address of a
+              %a{href: 'https://en.gravatar.com/'}Gravatar
+              associated image to set it as your clan banner.
+            %p
+              Your email address is not saved in plain text but only in the
+              hashed form necessary for getting it from the Gravatar servers.
+            %form{action: "", method: :post}
+              %fieldset
+                .mail
+                  %input{name: :mail, type: :text, value: "", autofocus: ""}/
+                %br
+                .buttons
+                  %input{name: :submit, type: :submit, value: "set clan banner"}/
+                  %input{name: :clear, type: :submit, value: "clear clan banner"}/
+
       #clan_trophies.trophycabinet
         %h2
           Clan trophies

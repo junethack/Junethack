@@ -306,8 +306,9 @@ get "/clans" do
     @clans = Clan.all
     haml :clans, :layout => @layout
 end
+
 get "/clan/:name" do
-    @clan = Clan.get(params[:name])   
+    @clan = Clan.get(params[:name])
     if @clan
         puts "Invitations: #{@clan.invitations.inspect}"
         @admin = @clan.get_admin
@@ -316,6 +317,22 @@ get "/clan/:name" do
         session['errors'] << "Could not find clan with id #{params[:name].inspect}"
         redirect "/clans"
     end
+end
+
+post '/clan/:name' do
+  $db_access.synchronize {
+    @clan = Clan.get(params[:name])
+    redirect '/' if @clan.nil?
+    redirect '/' if @user != @clan.get_admin
+
+    if params[:clear]
+      @clan.gravatar = nil
+    elsif params[:mail] && !params[:mail].empty?
+      @clan.gravatar = Digest::MD5.hexdigest(params[:mail].downcase)
+    end
+    @clan.save!
+  }
+  redirect "/clan/#{@clan.name}"
 end
 
 post "/clan" do

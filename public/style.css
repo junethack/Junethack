@@ -953,3 +953,16 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a,
 .trophyleft a:hover {
   color: #888;
 }
+
+#clan_banner fieldset {
+  width: 100%;
+}
+#clan_banner input[type=text] {
+  width: 20em;
+  margin-left: 7.5px;
+  margin-right: 7.5px;
+}
+#clan_banner input[type=submit] {
+  width: 10em;
+  margin: 5px;
+}

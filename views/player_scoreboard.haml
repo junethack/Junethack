@@ -8,7 +8,7 @@
       - $variant_order.each do |variant|
         - variant_name = $variants_mapping[variant]
         %p
-          %a{:href => "##{variant}"}= variant_name
+          %a{href: "##{link_id variant_name}"}= variant_name
     - $variant_order.each do |variant|
       - variant_name = $variants_mapping[variant]
       %section.text_content
