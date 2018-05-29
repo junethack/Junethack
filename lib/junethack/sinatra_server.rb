@@ -319,7 +319,7 @@ get "/clan/:name" do
     end
 end
 
-post '/clan/:name' do
+post '/clan_banner/:name' do
   $db_access.synchronize {
     @clan = Clan.get(params[:name])
     redirect '/' if @clan.nil?
