@@ -73,73 +73,35 @@ a.imagelink:hover {
 **                                      **
 *****************************************/
 .footer,
-/* topnav */
 .text_content_wrapper, #topnav {
     background-color: #ddd;
-    background-image:         linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
-    background-image:      -o-linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
-    background-image:    -moz-linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
-    background-image: -webkit-linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
-    background-image:     -ms-linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
-
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
+    background-image: linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
     border-radius: 10px;
 }
 /* typical inset rounding and shadowing */
 #topnav,
 .footer,
 .text_content_wrapper {
-    -webkit-box-shadow: 0px 0px 8px #222;
-    -moz-box-shadow: 0px 0px 8px #222;
-    box-shadow: 0px 0px 8px #222;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    filter:alpha(opacity=90); 
-    -moz-opacity: 0.9; 
-    opacity: 0.9; 
+  box-shadow: 0px 0px 8px #222;
+  border-radius: 6px;
+  opacity: 0.9;
 }
 
-/* elements on the page that need rounding/shadowing */
-/* these don't
-#clan_trophies,
-#clan_header > div */ {
-    -webkit-box-shadow: 0px 0px 10px #888;
-    -moz-box-shadow: 0px 0px 10px #888;
-    box-shadow: 0px 0px 10px #888;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    filter:alpha(opacity=90); 
-    -moz-opacity: 0.9; 
-    opacity: 0.9; 
-}
 /* slightly larger and darker rounding/shadowing, eg error messages...? */
 #errors,
 #messages {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    -webkit-box-shadow: 0px 5px 20px #555;
-    -moz-box-shadow: 0px 5px 20px #555;
-    box-shadow: 0px 5px 20px #555;
+  border-radius: 5px;
+  box-shadow: 0px 5px 20px #555;
 }
 /* massive bigred rounding */
 input[type=submit].bigred,
 form#login_form > fieldset > input[type=submit],
 .signup_text a {
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
-    -webkit-box-shadow: 0px 5px 20px #555;
-    -moz-box-shadow: 0px 5px 20px #555;
-    box-shadow: 0px 5px 20px #555;
+  border-radius: 50px;
+  box-shadow: 0px 5px 20px #555;
 }
 
-::-moz-selection{ background: #aaa; color:#fff; text-shadow: none; }
-::-webkit-selection{ background: #aaa; color:#fff; text-shadow: none; }
-::selection { background:#aaa; color:#fff; text-shadow: none; }
+::selection{ background: #aaa; color:#fff; text-shadow: none; }
 
 /**************************
 **                       **
@@ -210,11 +172,7 @@ form#login_form > fieldset > input[type=submit],
 #topnav .main > li > a:hover {
     color: #000;
     background-color: #ccc;
-    -webkit-box-shadow: inset 0px 0px 2px #222;
-    -moz-box-shadow: inset 0px 0px 2px #222;
     box-shadow: inset 0px 0px 2px #222;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     border-radius: 4px;
 }
 #topnav .main > li.first > a.active,
@@ -224,8 +182,6 @@ form#login_form > fieldset > input[type=submit],
     background-color: #ddd;
     background-color: transparent;
     background: url(logo-sprite.png) no-repeat bottom left;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
     box-shadow: none;
 /*    */
 }

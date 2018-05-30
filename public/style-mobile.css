@@ -85,8 +85,6 @@ a.imagelink:hover {
 .text_content_wrapper, #topnav {
     background-color: #ddd;
 
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
     border-radius: 10px;
     background-image: inherit;
 }
@@ -94,8 +92,6 @@ a.imagelink:hover {
 #topnav,
 #footer,
 .text_content_wrapper {
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
     border-radius: 6px;
 }
 
@@ -103,28 +99,20 @@ a.imagelink:hover {
 /* these don't
 #clan_trophies,
 #clan_header > div */ {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     border-radius: 5px;
 }
 /* slightly larger and darker rounding/shadowing, eg error messages...? */
 #errors,
 #messages {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
     border-radius: 5px;
 }
 /* massive bigred rounding */
 input[type=submit].bigred,
 form#login_form > fieldset > input[type=submit],
 .signup_text a {
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
     border-radius: 50px;
 }
 
-::-moz-selection{ background: #aaa; color:#fff; text-shadow: none; }
-::-webkit-selection{ background: #aaa; color:#fff; text-shadow: none; }
 ::selection { background:#aaa; color:#fff; text-shadow: none; }
 
 
