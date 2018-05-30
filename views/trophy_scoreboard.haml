@@ -4,14 +4,16 @@
     %section.text_content
       %h2
         Trophy scoreboard
+
     %section#page_outline.text_content
-      %p
+      .list
         %a{:href => "#cross-variant"} Cross-Variant
-      / ideally we would use the names already described in /servers
-      - (["NH-1.3d"]+$variant_order).each do |variant|
-        - variant_name = $variants_mapping[variant]
-        %p
-          %a{:href => "##{link_id variant_name}"}= variant_name
+        %br
+        - variant_and_bonus_games_order.each do |variant|
+          - variant_name = $variants_mapping[variant]
+          %a{href: "##{link_id variant_name}"}= variant_name
+          %br
+
     %section.text_content.trophycabinet
       =h3 'Cross-Variant'
       %ul
@@ -26,7 +28,7 @@
                 %span
                   %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
 
-    - (["NH-1.3d"]+$variant_order).each do |variant|
+    - variant_and_bonus_games_order.each do |variant|
       - variant_name = $variants_mapping[variant]
       %section.text_content.trophycabinet
         =h3 variant_name

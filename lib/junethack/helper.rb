@@ -42,6 +42,11 @@ $variant_order << "slex"
 $variant_order << "xnh"
 $variant_order << "spl"
 
+# order of variants and bonus games
+def variant_and_bonus_games_order
+  ["NH-1.3d"]+$variant_order
+end
+
 def helper_get_variant_for(description)
     # hard coded descriptions for some variants
     return '3.4.3' if description.downcase == 'vanilla'

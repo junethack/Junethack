@@ -83,35 +83,13 @@
         %p
           These variant specific achievements are listed on their own pages:
           .trophypage
-          - $variant_order.each do |variant|
+          - variant_and_bonus_games_order.each do |variant|
             - variant_name = $variants_mapping[variant]
             %span{style: 'padding-left: 1em'}
               %a{href: "/trophies/#{variant_name.downcase}"}= h variant_name
             %br
         .text_content.non_top_post
 
-        =h3 'Nethack 1.3d'
-        %ul.trophypage.indented
-          %li#old-ascension
-            %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/old-ascension.png"}
-            %span 
-              Ascension: ascend a character.
-          %li
-            Achievements:
-            %ul.trophypage.indented
-              %li#old-crowned
-                %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/old-crowned.png"}
-                %span
-                  get crowned
-              %li#old-hell
-                %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/old-hell.png"}
-                %span
-                  enter Hell
-              %li#old-wizard
-                %img{:style => "vertical-align:middle", :alt => "All Conducts Logo", :src => "/icons/old-wizard.png"}
-                %span
-                  defeat Rodney
-        .text_content.non_top_post
         =h2 'Competitions'
         %h3
           All Variants

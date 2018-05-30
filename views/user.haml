@@ -14,7 +14,7 @@
                     =h3 'Trophies'
                     %ul
                         =haml :user_cross_variant_trophies
-                        - for @variant in ["NH-1.3d"]+$variant_order
+                        - for @variant in variant_and_bonus_games_order
                             / only show achievements for games that the player actually played
                             - if Game.count(user_id: @player.id, version: @variant) > 0
                                 =haml :user_trophies
