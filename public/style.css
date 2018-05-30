@@ -83,8 +83,12 @@ a.imagelink:hover {
 .footer,
 .text_content_wrapper {
   box-shadow: 0px 0px 8px #222;
-  border-radius: 6px;
   opacity: 0.9;
+
+  border-top-left-radius:     0px;
+  border-top-right-radius:    0px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius:  6px;
 }
 
 /* slightly larger and darker rounding/shadowing, eg error messages...? */
@@ -118,38 +122,21 @@ form#login_form > fieldset > input[type=submit],
  * */
 #topnav {
     font-size: 0.8em;
-    width: 100%;
     margin: 0 auto;
     padding: 0;
-    height: 60px;
-    margin-top: 10px;
-}
-/* because of ie's amazing expanding box trick * /
-#topnav, #topnav ul.main {
-  z-index: 99;
-    overflow: hidden;
-}
-/* maybe not. */
-#topnav h1 {
-    display: none;
-}
-#topnav .main {
-    width: 100%;
-    margin-left: 30px;
 }
 #topnav .main > li {
   /* Any li in main can be a label for a submenu */
-    position: relative;
-    float: left;
-    width: auto;
-    margin: 5px;
-    margin-top: 15px;
-    line-height: 30px;
-    text-align: center;
+  position: relative;
+  width: auto;
+  line-height: 55px;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
 }
 #topnav .main > li.first {
     margin: 0px;
-    margin-top: 5px;
+    /*margin-top: 5px;*/
 }
 #topnav .main > li.first > a {
     background: url(logo-sprite.png) no-repeat top left;
@@ -170,20 +157,18 @@ form#login_form > fieldset > input[type=submit],
 }
 #topnav .main > li > a.active, #topnav .main > li > a.active:hover,
 #topnav .main > li > a:hover {
-    color: #000;
-    background-color: #ccc;
-    box-shadow: inset 0px 0px 2px #222;
-    border-radius: 4px;
+  color: #000;
+  background-color: #ccc;
+  box-shadow: 0px 0px 2px #222;
 }
 #topnav .main > li.first > a.active,
 #topnav .main > li.first > a.active:hover,
 #topnav .main > li.first > a:hover {
-/* if we don't want the home to have a highlight */
-    background-color: #ddd;
-    background-color: transparent;
-    background: url(logo-sprite.png) no-repeat bottom left;
-    box-shadow: none;
-/*    */
+  /* if we don't want the home to have a highlight */
+  background-color: #ddd;
+  background-color: transparent;
+  background: url(logo-sprite.png) no-repeat bottom left;
+  box-shadow: none;
 }
 
 /*******
@@ -196,7 +181,9 @@ submenus
   padding-top: 5px;
   position: absolute;
   display: none;
-  width: 150px;
+  min-width: 175px;
+  width: max-content;
+  line-height: 30px;
 }
 /* Also, if the position of the arrow is wrong, put a class on it :) */
 #topnav .main li.longer ul {  background-position: 30px 0;  }
@@ -521,11 +508,7 @@ fieldset {
     /* to avoid margin collaspe with submit button below */
     padding-bottom: 1px;
 }
-/* not needed
-fieldset > div {
-    overflow: hidden;
-}
-*/
+
 .form_msg,
 input,
 label {
@@ -592,9 +575,13 @@ form#login_form > fieldset > input[type=submit].active:hover {
 **************************/
 
 .footer {
-    height: auto;
-    margin: 20px 0;
-    padding-bottom: 20px;
+  height: auto;
+  margin-top: 20px;
+
+  border-top-right-radius:    6px;
+  border-top-left-radius:     6px;
+  border-bottom-left-radius:  0px;
+  border-bottom-right-radius: 0px;
 }
 .footer ul {
     text-align: center;
@@ -921,4 +908,13 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a,
 #clan_banner input[type=submit] {
   width: 10em;
   margin: 5px;
+}
+
+nav .fas {
+  font-size: 1.1em;
+}
+nav .settings {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
