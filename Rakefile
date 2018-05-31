@@ -176,34 +176,37 @@ end
 
 namespace :news do
 
-    desc "add a new news entry"
-    task :add, :html_snippet, :url do |t, args|
-        ARGV.each {|a| task a.to_sym do ; end }
-        news = News.new
-        news.html = args[:html_snippet] || ARGV[1]
-        news.url = args[:url] || ARGV[2]
-        news.save
+  desc "add a new news entry"
+  task :add, :html_snippet, :url, :publish_at do |t, args|
+    ARGV.each {|a| task a.to_sym do ; end }
+    news = News.new
+    news.html = args[:html_snippet] || ARGV[1]
+    news.url = args[:url] || ARGV[2]
+    if args[:publish_at] && !args[:publish_at].empty?
+      news.updated_at = news.created_at = DateTime.parse(args[:publish_at])
     end
+    news.save
+  end
 
-    desc "delete a new news entry"
-    task :delete, :id do |t, args|
-        News.get(args[:id]).destroy
-    end
+  desc "delete a new news entry"
+  task :delete, :id do |t, args|
+    News.get(args[:id]).destroy
+  end
 
-    desc "update a new news entry"
-    task :update, :id, :html_snippet, :url do |t, args|
-        ARGV.each {|a| task a.to_sym do ; end }
-        news = News.get(args[:id])
-        news.html = args[:html_snippet] || ARGV[1]
-        news.url = args[:url] || ARGV[2]
-        news.save
-    end
+  desc "update a new news entry"
+  task :update, :id, :html_snippet, :url do |t, args|
+    ARGV.each {|a| task a.to_sym do ; end }
+    news = News.get(args[:id])
+    news.html = args[:html_snippet] || ARGV[1]
+    news.url = args[:url] || ARGV[2]
+    news.save
+  end
 
-    desc "list all news entries"
-    task :list do |t, args|
-        news = News.all(:order => [ :id.desc ])
-        news.each {|n| puts n.inspect}
-    end
+  desc "list all news entries"
+  task :list do |t, args|
+    news = News.all order: [ :created_at.desc ]
+    news.each {|n| puts n.inspect}
+  end
 end
 
 namespace :run do

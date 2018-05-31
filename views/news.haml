@@ -1,4 +1,4 @@
 =h2 'News and Announcements'
-- news = News.all(:order => [ :updated_at.desc ])
+- news = News.all order: [ :created_at.desc ], :created_at.lte => DateTime.now
 - for n in news
   %article= "<b>#{n.created_at.strftime("%Y-%m-%d")}</b>: #{n.html}"
