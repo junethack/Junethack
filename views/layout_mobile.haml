@@ -38,29 +38,77 @@
           %a.mobile-logo{:href => "/"}
             %img{:alt => "", :src => "/logo.png"}/
           %ul.main
-            %li.first
-              - if !@logged_in then
-                %a{:href => "/home"} #{h @user.login}
-              - if @logged_in then
-                %a{:href => "/login"} Login
             %li
-              %a{:href => "/scoreboard"} Scoreboard
-            %li.longer1.parent
-              %a{:href => "/games"} Games
-              %ul
-                %li.first
+              %a{:href => "/games"} Results
+              %ul.nested
+                %li
+                  %a{:href => "/scoreboard"} Clan scoreboard
+                %li
+                  %a{:href => "/player_scoreboard"} Player scoreboard
+                %li
+                  %a{:href => "/trophy_scoreboard"} Trophy scoreboard
+                %li
                   %a{:href => "/ascensions"} Ascensions
                 %li
                   %a{:href => "/deaths"} Deaths
+                %li
+                  %a{:href => "/games"} Games
             %li
-              %a{:href => "/users"} Players
-            %li.shorter1.parent
-              %a{:href => "/clans"} Clans
+              %a{:href => "/activity"} Tournament stats
+              %ul.nested
+                %li
+                  %a{:href => "/activity"} Summary
+                %li
+                  %a{:href => "/clans"} Clans
+                %li
+                  %a{:href => "/users"} Players
+                %li
+                  %a{:href => "/servers"} Servers
             %li
-              - if !@logged_in then
-                %a{:href => "/logout"} Logout
-              - if @logged_in then
-                %a{:href => "/about"} Help
+              %a{hiref: '/archive/2017/index.html'} Archives
+              %ul.nested
+                %li
+                  %a{:href => "/archive/2017/index.html"} 2017 tournament
+                %li
+                  %a{:href => "/archive/2016/index.html"} 2016 tournament
+                %li
+                  %a{:href => "/archive/2015/index.html"} 2015 tournament
+                %li
+                  %a{:href => "/archive/2014/index.html"} 2014 tournament
+                %li
+                  %a{:href => "/archive/2013/index.html"} 2013 tournament
+                %li
+                  %a{:href => "/archive/2012/index.html"} 2012 tournament
+                %li
+                  %a{:href => "/archive/2011/index.html"} 2011 tournament
+
+            %li
+              %a{:href => "/about"} About
+              %ul.nested
+                %li
+                  %a{:href => "/rules"} Rules
+                %li
+                  %a{:href => "/trophies"} Trophies
+                %li
+                  %a{:href => "/authors.txt"} The project
+
+            %li
+              %a{href: "https://nethackwiki.com/wiki/Junethack/FAQ"} FAQ
+
+          %ul.main.settings
+            - if !@logged_in then
+              %li
+                %a{href: "/user/#{@user.login}"}
+                  %i.fas.fa-user
+              %li
+                %a{href: "/home"}
+                  %i.fas.fa-cog
+              %li
+                %a{href: "/logout"}
+                  %i.fas.fa-sign-out-alt
+            - if @logged_in then
+              %li
+                %a{href: "/login"} Login
       %span.clear
       .hcenter
         - if @show_banner
