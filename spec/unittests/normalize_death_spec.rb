@@ -176,6 +176,7 @@ describe Game,"normalization of death strings" do
   it "should substitute the name of a shopkeeper" do
     test = {
       "killed by Ms. Pakka Pakka, the shopkeeper" => "killed by a shopkeeper",
+      "killed by Ms. Pakka Pakka; the shopkeeper" => "killed by a shopkeeper",
       "killed by Ms. Pakka Pakka, the shopkeeper's magic missile" => "killed by a shopkeeper's magic missile",
       "killed by Ms. Sipaliwini, the shopkeeper's wand" => "killed by a shopkeeper's wand"
     }

@@ -39,7 +39,7 @@ class Game
     death = death.gsub(/killed by a falling (?!rock).+$/, "killed by a falling object")
 
     # consolidate shopkeepers
-    death = death.gsub(/ (an? )?M[rs]\. [A-Z].*, the shopkeeper/, " a shopkeeper")
+    death = death.gsub(/ (an? )?M[rs]\. [A-Z].*[,;] the shopkeeper/, " a shopkeeper")
 
     # consolidate ghosts
     death = death.gsub(/ (an?|the) ghost of .+/, " a ghost")
