@@ -436,15 +436,15 @@ class Game
 
     # NetHack Fourk
     def entered_the_sokoban_zoo?
-        event && event.to_i & 0x00010000 > 0
+      event && event.to_i & 0x00020000 > 0
     end
 
     def entered_minetown_temple?
-        event && event.to_i & 0x00020000 > 0
+      event && event.to_i & 0x00040000 > 0
     end
 
     def reached_mines_end?
-        event && event.to_i & 0x00040000 > 0
+      event && event.to_i & 0x00080000 > 0
     end
 
     after :update do
