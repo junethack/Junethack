@@ -29,4 +29,9 @@
                 %a{href: server.xlogurl}=server&.xloglastmodified
               %td.table_number{"data-title": "Xlogfile offset"}
                 #{server.xlogcurrentoffset&.html_formatted}
+              %td{"data-title": "Last games"}
+                - endtime = Game.first(server_id: server.id, order: :endtime.desc)&.endtime
+                - if endtime
+                  #{Time.at(endtime).getutc.strftime("%Y-%m-%d %H:%M")}
+
       %span#end_of_content_spacer.clear
