@@ -15,6 +15,7 @@ def write_icon(filename, color, symbol=nil)
              when '@' then -3
              when 's' then -3
              when '_' then -1
+             when '|' then -3
              else           0
              end
   x_offset = case symbol
@@ -53,3 +54,4 @@ blank_light_cyan lcyan
 blank_light_red lred
 blank_light_magenta lmagenta
 killed_by_molochs_indifference red _
+clan-lowest-turns-for-monster-kills gray |

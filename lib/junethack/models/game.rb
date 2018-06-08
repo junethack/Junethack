@@ -473,4 +473,5 @@ class NormalizedDeath
     belongs_to :user,  :required => false
 
     property :death,     String
+    property :monster,   String
 end

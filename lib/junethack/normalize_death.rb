@@ -1,6 +1,10 @@
 require 'pry'
 class Game
-  def normalize_death
+  def normalize_monster
+    normalize_death monster: true
+  end
+
+  def normalize_death monster: false
     # no need to be grammatical correct
     death = self.death.gsub /^killed by an /, "killed by a "
 
@@ -39,7 +43,11 @@ class Game
     death = death.gsub(/killed by a falling (?!rock).+$/, "killed by a falling object")
 
     # consolidate shopkeepers
-    death = death.gsub(/ (an? )?M[rs]\. [A-Z].*[,;] the shopkeeper/, " a shopkeeper")
+    if monster
+      death = death.gsub(/ (an? )?(M[rs]. )?([A-Z].*)[,;] the shopkeeper/, ' \3')
+    else
+      death = death.gsub(/ (an? )?M[rs]\. [A-Z].*[,;] the shopkeeper/, " a shopkeeper")
+    end
 
     # consolidate ghosts
     death = death.gsub(/ (an?|the) ghost of .+/, " a ghost")
@@ -58,12 +66,18 @@ class Game
     # minion list is from vanilla...
     death = death.gsub(/(\w+ elemental|Aleax|couatl|Angel|\w+ demon|\w+ devil|(suc|in)cubus|balrog|pit fiend|nalfeshnee|hezrou|vrock|marilith|erinyes) of .+/, "minion of a deity")
 
+    death = death.gsub(/a monster \(([^)]+)\)/, 'killed by a \1') if monster
+
     # SlashEM'Extended has a multiplujillion of different monsters and items
     death = death.gsub(/monster \([^)]+\)/, "monster")
                  .gsub(/a monster corpse \([^)]+\)/, "a monster corpse")
                  .gsub(/tasting petrifying meat \([^)]+\)/, "tasting petrifying meat")
                  .gsub(/touching an artifact \([^)]+\)/, "touching an artifact")
                  .gsub(/petrifying egg \([^)]+\)/, "petrifying egg")
+
+    if monster
+      death = death.gsub(/[a-z]+ by( a| the)? ([A-Za-z][a-z]+)/, '\2')
+    end
 
     death
   end

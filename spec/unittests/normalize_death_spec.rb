@@ -205,4 +205,40 @@ describe Game,"normalization of death strings" do
     }
   end
 
+  describe '#normalize_monster' do
+    it "doesn't strip the shopkeeper's name" do
+      test = [
+        "killed by hallucinogen-distorted Mr. Izchak, the shopkeeper",
+        "killed by invisible Izchak, the shopkeeper",
+        "killed by invisible Izchak; the shopkeeper",
+        "killed by invisible Mr. Izchak, the shopkeeper",
+        "killed by invisible Mr. Izchak, the shopkeeper, while helpless",
+        "killed by Izchak; the shopkeeper",
+        "killed by Mr. Izchak, the shopkeeper",
+        "killed by Ms. Izchak, the shopkeeper",
+      ]
+
+      test.each {|message, result|
+        @game.death = message
+        expect(@game.normalize_monster).to eq 'Izchak'
+      }
+    end
+
+    it 'shows only the monster name' do
+      test = {
+        'killed by Izchak, the shopkeeper': 'Izchak',
+        'killed by Croesus': 'Croesus',
+        'killed by Vlad the Impaler': 'Vlad the Impaler',
+        'killed by the Oracle': 'Oracle',
+        'killed by a dwarf': 'dwarf',
+        'a monster (cockatrice)': 'cockatrice',
+      }
+      test.each {|message, result|
+        @game.death = message
+        expect(@game.normalize_monster).to eq result
+      }
+    end
+
+  end
+
 end

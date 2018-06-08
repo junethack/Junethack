@@ -1,29 +1,27 @@
-=h2 @games_played_title
+=h2 'Games killed by trophy relevant monsters', 'clan-turns'
 .scorelisting#no-more-tables
   %table.greytable.cf
     %thead.cf
       %tr
         %th Name
         %th Variant
-        %th Character
         %th Server
-        %th Points
-        %th Killer
+        %th Monster
+        %th Turns
         -# download column
         %th
         %th Time (UTC)
-    - @games_played.each do |game|
+    - users = @clan.users.map(&:id)
+    - game_ids = NormalizedDeath.all(user_id: users, monster: $clan_killed_by).map(&:game_id)
+    - games = Game.all(id: game_ids)
+    - games.each do |game|
       %tr
         %td{:id => "game-#{game.id}"}
-          - if @games_played_user_links
-            %a{:href => "/user_id/#{game.user_id}"}= h game.name
-          - else
-            = h game.name
-        %td.variant{"data-title" => "Name"}= h game.variant_name
-        %td.table_character{"data-title" => "Character"}= h [game.role, game.race, game.gender, game.align].compact.join('-')
+          %a{:href => "/user_id/#{game.user_id}"}= h game.name
+        %td{"data-title" => "Name"}= h game.variant_name
         %td{"data-title" => "Server"}= h game.server.hostname
-        %td.table_number{"data-title" => "Points"}= game.points.html_formatted
-        %td{"data-title" => "Killer"}= h game.death
+        %td.small_cell{"data-title" => "Monster"}= h game.death
+        %td.table_number{"data-title" => "Turns"}= game.turns.html_formatted
         %td.dllink
           -# link to the dumplog of the game if possible
           - link = game.server.dumplog_link(game)

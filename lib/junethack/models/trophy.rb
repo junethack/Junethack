@@ -374,6 +374,9 @@ DataMapper::MigrationRunner.migration( 2, :create_clan_trophies ) do
     Trophy.create :variant => "clan", :trophy => "most_medusa_kills", :text => "Most Medusa kills", :icon => "clan-medusa-kills.png"
     Trophy.create :variant => "clan", :trophy => "most_full_conducts_broken", :text => "Most games with all conducts broken", :icon => "clan-full-conducts-broken.png"
     #Trophy.create :variant => "clan", :trophy => "most_log_points", :text => "Most logarithmic points", :icon => "clan-points.png"
+
+    # new clan trophies in 2018
+    Trophy.create variant: :clan, trophy: :lowest_turns_for_monster_kills, text: "Lowest sum of turns of getting killed by specific monsters", icon: "clan-lowest-turns-for-monster-kills.png"
   end
 end
 
@@ -395,5 +398,11 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "splicehack"
     #Trophy.check_trophies_for_variant "slashthem"
     Trophy.check_trophies_for_variant "oldhack"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 5, :clan_lowest_turns_for_monster_kills ) do
+  up do
+    Trophy.create variant: :clan, trophy: :lowest_turns_for_monster_kills, text: "Lowest sum of turns of getting killed by specific monsters", icon: "clan-lowest-turns-for-monster-kills.png"
   end
 end

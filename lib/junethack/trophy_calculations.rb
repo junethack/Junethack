@@ -542,6 +542,7 @@ end
 def local_normalize_death(game)
   normalized_death = NormalizedDeath.first_or_create(game_id: game.id)
   normalized_death.death = game.normalize_death
+  normalized_death.monster = game.normalize_monster
   normalized_death.user_id = game.user_id
   normalized_death.save
 end
@@ -572,6 +573,30 @@ def most_ascensions_in_a_24_hour_period(clan)
     max_ascensions = ascensions if ascensions > max_ascensions
   end
   return max_ascensions
+end
+
+$clan_killed_by = [
+  'newt',
+  'dwarf',
+  'soldier ant',
+  'Asmodeus',
+  'Croesus',
+  'Izchak',
+  'Medusa',
+  'Oracle',
+  'Vlad the Impaler',
+]
+def turns_killed_by_all_monsters clan_name
+  clan = Clan.first(name: clan_name)
+  users = clan.users.map(&:id)
+
+  turns = $clan_killed_by.map {|monster|
+    game_ids = NormalizedDeath.all(user_id: users, monster: monster).map(&:game_id)
+    Game.all(id: game_ids).min(:turns)
+  }
+  return nil if turns.include? nil
+
+  turns.inject(0) {|sum,i| sum += i }
 end
 
 def update_clan_scores(game)
@@ -620,6 +645,12 @@ def update_clan_scores(game)
     c.value = most_full_conducts_broken
     c.save
 
+    # new clan trophy for 2018
+    lowest_turns_for_monster_kills = turns_killed_by_all_monsters clan_name
+    c = ClanScoreEntry.first_or_new(clan_name: clan_name,
+                                    trophy: :lowest_turns_for_monster_kills)
+    c.value = lowest_turns_for_monster_kills
+    lowest_turns_for_monster_kills ? c.save : (c.destroy unless c.new?)
   end
 
   rank_clans
@@ -646,6 +677,8 @@ def rank_clans
   rank_collection(ClanScoreEntry.all(trophy: :most_variant_trophy_combinations, order: :value.desc))
   rank_collection(ClanScoreEntry.all(trophy: :most_medusa_kills, order: :value.desc))
   rank_collection(ClanScoreEntry.all(trophy: :most_full_conducts_broken, order: :value.desc))
+  rank_collection(ClanScoreEntry.all(trophy: :lowest_turns_for_monster_kills, order: :value.asc))
+  true
 end
 
 def score_clans
@@ -674,7 +707,7 @@ def score_clans
   end
 
   # calculate clan points
-  clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_unique_deaths','most_ascensions_in_a_24_hour_period','most_variant_trophy_combinations','most_full_conducts_broken','most_medusa_kills') group by clan_name"
+  clan_scores = repository.adapter.select "select sum(points) as sum_points, clan_name from clan_score_entries where trophy in ('most_ascended_combinations','most_unique_deaths','most_ascensions_in_a_24_hour_period','most_variant_trophy_combinations','most_full_conducts_broken','most_medusa_kills','lowest_turns_for_monster_kills') group by clan_name"
   clan_scores.each do |clan_score|
     c = ClanScoreEntry.first_or_new(clan_name: clan_score.clan_name,
                                     trophy: :clan_winner)

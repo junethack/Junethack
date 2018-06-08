@@ -47,8 +47,7 @@
                   %input{name: :clear, type: :submit, value: "clear clan banner"}/
 
       #clan_trophies.trophycabinet
-        %h2
-          Clan trophies
+        =h2 'Clan trophies'
         / TODO: trophy image for clan competition winner
         - ClanScoreEntry.all(clan_name: @clan.name, :trophy.not => 'clan_winner').each do |clan_trophy|
           - trophy = Trophy.first trophy: clan_trophy.trophy
@@ -60,8 +59,7 @@
         %span.clear.endofcabinetrow
 
     .text_content.non_top_post#clan_members
-      %h2
-        Clan members
+      =h2 'Clan members'
       %table.prettytable.clan_members
         %tr
           %th
@@ -100,8 +98,7 @@
 
     .text_content.non_top_post#clan_variant_trophy
       .trophycabinet.text_cabinet
-        %h2
-          Clan variant/trophy combinations
+        =h2 'Clan variant/trophy combinations'
         %ul
           - user_ids = Clan.first(name: @clan.name).users.map {|user| user.id }.uniq
           =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => "NH-1.3d"}
@@ -117,9 +114,12 @@
     .text_content.non_top_post
       =haml :clan_games
 
+    .text_content.non_top_post
+      =haml :turns_killed_by_monsters
+
     - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
     .text_content.non_top_post
-      %h2= "#{unique_deaths.count} unique death#{'s' if unique_deaths.count != 1}"
+      =h2 "#{unique_deaths.count} unique death#{'s' if unique_deaths.count != 1}", 'unique_deaths'
       .scorelisting
         %table.greytable.misc
           %tr

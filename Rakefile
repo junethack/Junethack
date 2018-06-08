@@ -81,7 +81,7 @@ namespace :update do
         (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
             i += 1
             puts "#{i} #{game.version}"
-            normalize_death(Game.get(game.id))
+            local_normalize_death(Game.get(game.id))
         }
     end
 

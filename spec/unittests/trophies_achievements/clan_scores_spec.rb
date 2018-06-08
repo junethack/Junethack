@@ -72,4 +72,29 @@ describe Game,"update_clan_scores" do
     ClanScoreHistory.all(trophy: :most_medusa_kills).count.should == 2
     ClanScoreHistory.all(trophy: :most_medusa_kills).map(&:value).sort == [1, 2]
   end
+
+  describe 'lowest turns getting killed by monsters' do
+    let(:attributes) { { server_id: @server.id, version: 'v1', achieve: "0", endtime: 1000 } }
+    before :each do
+      Game.create(attributes.merge(turns:   1, death: 'killed by a newt'))
+      Game.create(attributes.merge(turns:   2, death: 'killed by a dwarf'))
+      Game.create(attributes.merge(turns:   4, death: 'killed by a soldier ant'))
+      Game.create(attributes.merge(turns:   8, death: 'killed by Asmodeus'))
+      Game.create(attributes.merge(turns:  16, death: 'killed by Croesus'))
+      Game.create(attributes.merge(turns:  32, death: 'killed by Izchak, the shopkeeper'))
+      Game.create(attributes.merge(turns:  64, death: 'killed by Medusa'))
+      Game.create(attributes.merge(turns: 128, death: 'killed by the Oracle'))
+      update_games
+    end
+
+    it 'creates the clan trophy' do
+      expect(ClanScoreEntry.first(trophy: :lowest_turns_for_monster_kills)).not_to be
+
+      Game.create(attributes.merge(turns: 256, death: 'killed by Vlad the Impaler'))
+      update_games
+
+      expect(ClanScoreEntry.first(trophy: :lowest_turns_for_monster_kills)).to be
+      expect(ClanScoreEntry.first(trophy: :lowest_turns_for_monster_kills).value).to eq 511
+    end
+  end
 end
