@@ -43,7 +43,7 @@ class Server
       when "nethack.alt.org"
         case game.version
         when "3.6"
-          return "https://alt.org/nethack/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.nh343.txt"
+          return "https://s3.amazonaws.com/altorg/dumplog/#{game.name}/#{game.starttime}.nh361.txt"
         end
       when "grunthack.org"
         return "http://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"

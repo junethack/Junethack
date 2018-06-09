@@ -13,7 +13,7 @@ describe 'server linking helper methods' do
 
       game = Game.new(name: 'player', starttime: 123456, version: '3.6.1')
       nao = Server.new(url: 'http://nethack.alt.org/')
-      expect(nao.dumplog_link(game)).to eq "https://alt.org/nethack/userdata/p/player/dumplog/123456.nh343.txt"
+      expect(nao.dumplog_link(game)).to eq 'https://s3.amazonaws.com/altorg/dumplog/player/123456.nh361.txt'
 
       game = Game.new(:name => 'player', :starttime => 123456)
       grunthack = Server.new(url: 'http://grunthack.org/')
