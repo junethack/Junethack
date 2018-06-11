@@ -699,7 +699,11 @@ def score_clans
         c.points = 0.0
       else
         # round to 2 significant figures after decimal point
-        c.points = (c.value.to_f / best_value.to_f).round(2)
+        if c.value.to_f <= best_value.to_f
+          c.points = (c.value.to_f / best_value.to_f).round(2)
+        else
+          c.points = (best_value.to_f / c.value.to_f).round(2)
+        end
       end
     end
     c.save

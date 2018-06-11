@@ -400,9 +400,3 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "oldhack"
   end
 end
-
-DataMapper::MigrationRunner.migration( 5, :clan_lowest_turns_for_monster_kills ) do
-  up do
-    Trophy.create variant: :clan, trophy: :lowest_turns_for_monster_kills, text: "Lowest sum of turns of getting killed by specific monsters", icon: "clan-lowest-turns-for-monster-kills.png"
-  end
-end
