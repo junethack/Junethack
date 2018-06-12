@@ -106,6 +106,9 @@
             =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
 
     .text_content.non_top_post
+      =haml :turns_killed_by_monsters
+
+    .text_content.non_top_post
       - @games_played = Game.all(user_id: User.all(clan_name: @clan.name), conditions: [ "ascended='t'" ], order: [ :endtime.desc ])
       - @games_played_title = "Ascended Clan Games"
       - @games_played_user_links = true
@@ -113,9 +116,6 @@
 
     .text_content.non_top_post
       =haml :clan_games
-
-    .text_content.non_top_post
-      =haml :turns_killed_by_monsters
 
     - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
     .text_content.non_top_post

@@ -3,28 +3,31 @@
   %table.greytable.cf
     %thead.cf
       %tr
+        %th Monster
         %th Name
         %th Variant
         %th Server
-        %th Monster
-        %th Turns
+        %th{style: 'text-align: right'} Turns
         -# download column
         %th
         %th Time (UTC)
     - users = @clan.users.map(&:id)
-    - game_ids = NormalizedDeath.all(user_id: users, monster: $clan_killed_by).map(&:game_id)
-    - games = Game.all(id: game_ids)
-    - games.each do |game|
+    - $clan_killed_by.each do |monster|
+      - game_ids = NormalizedDeath.all(user_id: users, monster: monster).map(&:game_id)
+      - turns = Game.all(id: game_ids).min(:turns)
+      - game = Game.first(id: game_ids, turns: turns)
+      - colspan = game ? 1 : 7
       %tr
-        %td{:id => "game-#{game.id}"}
-          %a{:href => "/user_id/#{game.user_id}"}= h game.name
-        %td{"data-title" => "Name"}= h game.variant_name
-        %td{"data-title" => "Server"}= h game.server.hostname
-        %td.small_cell{"data-title" => "Monster"}= h game.death
-        %td.table_number{"data-title" => "Turns"}= game.turns.html_formatted
-        %td.dllink
-          -# link to the dumplog of the game if possible
-          - link = game.server.dumplog_link(game)
-          - if link then
-            (<a href="#{link}">d</a>)
-        %td.table_date{"data-title" => "Time"}= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
+        %td.small_cell{colspan: colspan, 'data-title': 'Monster'}= h monster
+        - if game
+          %td{:id => "game-#{game.id}"}
+            %a{:href => "/user_id/#{game.user_id}"}= h game.name
+          %td{"data-title" => "Name"}= h game.variant_name
+          %td{"data-title" => "Server"}= h game.server.hostname
+          %td.table_number{"data-title" => "Turns"}= game.turns.html_formatted
+          %td.dllink
+            -# link to the dumplog of the game if possible
+            - link = game.server.dumplog_link(game)
+            - if link then
+              (<a href="#{link}">d</a>)
+          %td.table_date{"data-title" => "Time"}= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
