@@ -119,7 +119,7 @@ class Server
         #  "https://em.slashem.me/userdata/#{game.name}/slex/dumplog/#{endtime}.txt"
         when "gho"
           "https://em.slashem.me/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}.txt"
-        when "sho"
+        when "shc"
           "https://em.slashem.me/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}.txt"
         end
       else
