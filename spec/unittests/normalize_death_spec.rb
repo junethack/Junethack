@@ -232,6 +232,7 @@ describe Game,"normalization of death strings" do
         'killed by the Oracle': 'Oracle',
         'killed by a dwarf': 'dwarf',
         'a monster (cockatrice)': 'cockatrice',
+        'petrified by catching the eye of Medusa': 'Medusa'
       }
       test.each {|message, result|
         @game.death = message

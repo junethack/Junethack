@@ -77,6 +77,7 @@ class Game
 
     if monster
       death = death.gsub(/[a-z]+ by( a| the)? ([A-Za-z][a-z]+)/, '\2')
+      death = death.gsub(/^catching the eye of /, '')
     end
 
     death
