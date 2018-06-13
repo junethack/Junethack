@@ -495,7 +495,7 @@ def update_scores(game)
 
   end
 
-  if [xnethack].include? game.version then
+  if game.ascended && [xnethack].include?(game.version) then
     achievements = game.conduct.hex if game.conduct
     if achievements and achievements > 0 then
       for i in 0..$xnethack_achievements.size-1 do
@@ -510,6 +510,28 @@ def update_scores(game)
                               value: "1",
                               endtime: game.endtime,
                               trophy: $xnethack_achievements[i][1]).save
+          end
+        end
+      end
+    end
+  end
+
+  if [splicehack].include?(game.version) then
+    achievements = game.achieve.hex if game.achieve
+    if achievements and achievements > 0 then
+      for i in 0..$splicehack_achievements.size-1 do
+        next if $splicehack_achievements[i].empty?
+        next if $splicehack_achievements[i][1].to_s.start_with?('ascended_') && !game.ascended
+        if achievements & 2**(i+14) > 0 then
+          entry = Scoreentry.first(user_id: game.user_id,
+                                   variant: game.version,
+                                   trophy: $splicehack_achievements[i][1])
+          if not entry then
+            Scoreentry.create(user_id: game.user_id,
+                              variant: game.version,
+                              value: "1",
+                              endtime: game.endtime,
+                              trophy: $splicehack_achievements[i][1]).save
           end
         end
       end

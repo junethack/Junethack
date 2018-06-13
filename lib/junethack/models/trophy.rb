@@ -312,6 +312,12 @@ def Trophy.check_trophies_for_variant variant_description
       }
     end
 
+    if [splicehack].include? variant then
+      $splicehack_achievements.reject(&:empty?).each {|trophy|
+        Trophy.create variant: variant, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
+      }
+    end
+
     # user competition trophies
     Trophy.create :variant => variant, :trophy => "most_ascensions", :text => "Most ascensions", :icon => "c-most-ascensions.png", :user_competition => true
     Trophy.create :variant => variant, :trophy => "fastest_ascension_gametime", :text => "Fastest ascension (by turns)", :icon => "c-fastest-gametime.png", :user_competition => true
@@ -410,6 +416,15 @@ DataMapper::MigrationRunner.migration( 5, :create_new_xnethack_trophies ) do
     xnethack = helper_get_variant_for 'xnethack'
     $xnethack_achievements.reject(&:empty?).each {|trophy|
       Trophy.first_or_create variant: xnethack, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
+    }
+  end
+end
+
+DataMapper::MigrationRunner.migration( 6, :create_new_splicehack_trophies ) do
+  up do
+    splicehack = helper_get_variant_for 'splicehack'
+    $splicehack_achievements.reject(&:empty?).each {|trophy|
+      Trophy.first_or_create variant: splicehack, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
     }
   end
 end
