@@ -205,7 +205,7 @@ def update_scores(game)
   end
 
   killed_uniques = (game.killed_uniques||'').split(',').map {|unique|
-    "defeated_#{unique.downcase.gsub(' ', '_')}"
+    "defeated_#{unique.downcase.gsub(' ', '_').gsub("'",'')}"
   }
   generic_achievements(game, killed_uniques)
 
