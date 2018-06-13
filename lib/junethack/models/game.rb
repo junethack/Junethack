@@ -98,6 +98,16 @@ $slex_extended_achievements = [
   [2, :killed_witchking,     "killed the Witch King of Angmar",          "m-slex-witchking.png"],
 ]
 
+$xnethack_achievements = [
+  [2, :ascended_petless,      'ascended without having a pet',            'x-conduct-petless.png'],
+  [2, :ascended_artifactless, 'ascended without touching an artifact',    'x-conduct-artifactless.png'],
+  "", # never unfairly scared
+  "", # permablind
+  "", # nudist
+  [2, :ascended_permahallu,   'ascended while hallucinating permanently', 'x-conduct-permahallu.png'],
+  [2, :ascended_permadeaf,    'ascended being permanently deaf',          'x-conduct-permadeaf.png'],
+]
+
 $trophy_names = {
     "ascended" => "ascended",
 

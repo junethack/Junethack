@@ -11,7 +11,7 @@ function light_me {
   fi
 }
 
-for FILE in $(find . -maxdepth 1 -type f -name '*.png' ! -name '*_light.png')
+for FILE in $(find . -maxdepth 1 -type f -name '*.png' ! -name '*_light.png' ! -name 'blank_*.png')
 do
   light_me $FILE
 done

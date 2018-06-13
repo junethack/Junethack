@@ -306,6 +306,10 @@ def Trophy.check_trophies_for_variant variant_description
 
     if [xnethack].include? variant then
       Trophy.create variant: variant, trophy: :ascended_without_unfairly_scaring_monsters, text: "ascended without scaring any monsters", icon: "m-elbereth.png", row: 2
+
+      $xnethack_achievements.reject(&:empty?).each {|trophy|
+        Trophy.create variant: variant, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
+      }
     end
 
     # user competition trophies
@@ -398,5 +402,14 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "splicehack"
     #Trophy.check_trophies_for_variant "slashthem"
     Trophy.check_trophies_for_variant "oldhack"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 5, :create_new_xnethack_trophies ) do
+  up do
+    xnethack = helper_get_variant_for 'xnethack'
+    $xnethack_achievements.reject(&:empty?).each {|trophy|
+      Trophy.first_or_create variant: xnethack, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
+    }
   end
 end

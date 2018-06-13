@@ -495,6 +495,27 @@ def update_scores(game)
 
   end
 
+  if [xnethack].include? game.version then
+    achievements = game.conduct.hex if game.conduct
+    if achievements and achievements > 0 then
+      for i in 0..$xnethack_achievements.size-1 do
+        next if $xnethack_achievements[i].empty?
+        if achievements & 2**(i+12) > 0 then
+          entry = Scoreentry.first(user_id: game.user_id,
+                                   variant: game.version,
+                                   trophy: $xnethack_achievements[i][1])
+          if not entry then
+            Scoreentry.create(user_id: game.user_id,
+                              variant: game.version,
+                              value: "1",
+                              endtime: game.endtime,
+                              trophy: $xnethack_achievements[i][1]).save
+          end
+        end
+      end
+    end
+  end
+
   ## Non-Ascension cross-variant trophies
   # Sightseeing tour: finish a game in all variants
   Individualtrophy.add(game.user_id, "Sightseeing Tour",
