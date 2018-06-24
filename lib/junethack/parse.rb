@@ -48,7 +48,8 @@ class XLog
 end
 
 class Hash
-    def to_xlog            #expects sane input
-        map{|k, v| "#{k.to_s}=#{v.to_s}"}.join(":")
-    end
+  def to_xlog
+    self.reject {|key, value| [:id, :user_id].include?(key) || value.to_s.empty? }
+        .map{|key, value| "#{key}=#{value}"}.join(":")
+  end
 end
