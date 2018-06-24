@@ -20,6 +20,6 @@
         %td.table_number
           #{entry.value.to_i.html_formatted}
         %td.table_number
-          #{h entry.points}
+          #{h "%.2f" % entry.points}
         %td.table_number
           #{h entry.rank}
