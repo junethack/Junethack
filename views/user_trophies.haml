@@ -32,6 +32,6 @@
                 - if newline
                     %br
                 =haml :trophy, locals: { trophy: trophy, achieved: (user_trophies.include? trophy.trophy)}
-                / workaround for the fact that the master of thieves is a quest leader and nemesis
+                -# workaround for the fact that the master of thieves is a quest leader and nemesis
                 - if trophy.trophy == 'defeated_ashikaga_takauji' && (trophy = Trophy.first(variant: @variant, trophy: 'defeated_master_of_thieves'))
                     =haml :trophy, locals: { trophy: trophy, achieved: (user_trophies.include? trophy.trophy)}
