@@ -64,7 +64,7 @@ class Game
 
     # killed by the {minion} of {deity} -> 'killed by the minion of a deity'.
     # minion list is from vanilla...
-    death = death.gsub(/(\w+ elemental|Aleax|couatl|Angel|\w+ demon|\w+ devil|(suc|in)cubus|balrog|pit fiend|nalfeshnee|hezrou|vrock|marilith|erinyes) of .+/, "minion of a deity")
+    death = death.gsub(/(\w+ elemental|Aleax|couatl|Angel|\w+ demon|\w+ devil|(suc|in)cubus|balrog|pit fiend|nalfeshnee|hezrou|vrock|marilith|erinys) of .+/, "minion of a deity")
 
     death = death.gsub(/a monster \(([^)]+)\)/, 'killed by a \1') if monster
 
