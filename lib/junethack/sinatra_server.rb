@@ -18,7 +18,7 @@ require 'sanitize'
 
 require 'graph'
 
-require 'ext/fixnum'
+require 'ext/numeric'
 
 require 'rack/mobile-detect'
 use Rack::MobileDetect
