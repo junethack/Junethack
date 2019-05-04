@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 
 gem 'dm-sqlite-adapter'
 
@@ -31,4 +31,5 @@ group :development, :test do
   gem 'simplecov'
   gem 'ci_reporter'
   gem 'pry'
+  #gem 'pry-stack_explorer'
 end
