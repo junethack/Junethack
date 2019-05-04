@@ -1,6 +1,6 @@
 LICENSE STUFF
 
-Junethack (c) 2011-2013 Junethack developers
+Junethack (c) 2011-2019 Junethack developers
 
 Copyright holders are in authors.txt
 

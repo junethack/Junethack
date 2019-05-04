@@ -34,7 +34,7 @@ $(document).ready(function() {
 			var items = line.split(',');
 			var series = {
 				data: [],
-				pointStart: Date.UTC(2018, 04, 28), // 2018-05-28
+				pointStart: Date.UTC(2019, 04, 27), // 2019-05-27
 				pointInterval: 24 * 3600 * 1000, // one day
 			};
 			$.each(items, function(itemNo, item) {
