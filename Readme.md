@@ -55,19 +55,19 @@ Use httrack to make a static copy of the website:
 ```
 # httrack http://127.0.0.1:4567 -O /tmp/junethack_mirror '-127.0.0.1:4567/archive/*' -%v --max-rate=1000000
 
-# mv /tmp/junethack_mirror/127.0.0.1_4567 public/archive/2017
+# mv /tmp/junethack_mirror/127.0.0.1_4567 public/archive/2018
 
-# sed -i "s/<a class='logo' href='index.html'>/<a class='logo' href='\/'>/" public/archive/2017/*.html
+# sed -i "s/<a class='logo' href='index.html'>/<a class='logo' href='\/'>/" public/archive/2018/*.html
 
-# sed -i "s/href='http:\/\/127.0.0.1:4567\/archive\//href='\/archive\//" `find public/archive/2017/ -name \*.html`
+# sed -i "s/href='http:\/\/127.0.0.1:4567\/archive\//href='\/archive\//" `find public/archive/2018/ -name \*.html`
 
-# git add public; git commit public -m 'Archival of 2017 tournament'
+# git add public; git commit public -m 'Archival of 2018 tournament'
 ```
 
-Edit the archive links to the previous Junethack tournaments in public/archive/2017/index.html.
+Edit the archive links to the previous Junethack tournaments in public/archive/2018/index.html.
 Also add a link to the the new Junethack archive in views/splash.haml.
 
-Add and commit the the repository.
+Add and commit the repository.
 
 
 TODO: more documentation, distinction prod/dev env, maintenance mode, manually fetching games, dummy users
