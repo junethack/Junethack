@@ -5,6 +5,7 @@
         Clans
       %table.prettytable
         %tr
+          %th{style: 'width: 1.5em'}
           %th
             Clan name
           %th
@@ -12,10 +13,14 @@
           %th
             Members
         - @clans.each do |clan|
-          %tr
+          %tr{style: 'vertical-alig: middle'}
             %td
-              %a{:href => "/clan/#{CGI::escape clan.name}"}
-                #{h clan.name}
+              %span
+                %img{src: clan.gravatar_link, style: 'vertical-align: middle; width: 100%'}
+            %td
+              %span
+                %a{:href => "/clan/#{CGI::escape clan.name}"}
+                  #{h clan.name}
             %td
               %a{:href => "/user/" + clan.get_admin.login}
                 #{h clan.get_admin.login}

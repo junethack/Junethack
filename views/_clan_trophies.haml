@@ -1,6 +1,7 @@
 .scorelisting
   %table.greytable.misc
     %tr
+      %th{style: 'width: 1.25em'}
       %th 
         Clan
       %th 
@@ -9,6 +10,9 @@
         Rank
     - ClanScoreEntry.all(:order => [:rank.asc], :trophy => 'clan_winner').each do |entry|
       %tr
+        %td
+          %span
+            %img{src: entry.clan.gravatar_link, style: 'vertical-align: middle; width: 100%'}
         %td
           %a{:href => "/clan/#{CGI::escape entry.clan.name}"}
             #{h entry.clan.name}
