@@ -71,8 +71,8 @@ a.imagelink:hover {
 }
 /* misc */
 #container {
-    width: 99%;
-    margin: 0 auto;
+  width: 99%;
+  margin: 0 auto;
 }
 
 /*****************************************
@@ -80,19 +80,23 @@ a.imagelink:hover {
 **         fiddly css3 properties       **
 **                                      **
 *****************************************/
-#footer,
-/* topnav */
+.footer,
 .text_content_wrapper, #topnav {
     background-color: #ddd;
-
+    background-image: linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
     border-radius: 10px;
-    background-image: inherit;
 }
 /* typical inset rounding and shadowing */
 #topnav,
-#footer,
+.footer,
 .text_content_wrapper {
-    border-radius: 6px;
+  box-shadow: 0px 0px 8px #222;
+  opacity: 0.9;
+
+  border-top-left-radius:     0px;
+  border-top-right-radius:    0px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius:  6px;
 }
 
 /* elements on the page that need rounding/shadowing */
@@ -114,7 +118,6 @@ form#login_form > fieldset > input[type=submit],
 }
 
 ::selection { background:#aaa; color:#fff; text-shadow: none; }
-
 
 /**************************
 **                       **
@@ -145,7 +148,16 @@ form#login_form > fieldset > input[type=submit],
 .logoimage img {
 	max-width: 100%;
 	height : auto;
-}$
+}
+
+/* The text below the logo on the front page. */
+.title_text {
+    margin: 1.5em;
+    font-weight: bold;
+    font-size: 1.2em;
+    clear: both;
+    text-align: center;
+}
 
 /**************************
 **                       **
@@ -173,7 +185,6 @@ form#login_form > fieldset > input[type=submit],
 }
 .signup_text a {
     font-size: 1.4em;
-    display: block;
     display: block;
     text-decoration: none;
     color: #fff;
