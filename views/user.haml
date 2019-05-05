@@ -8,6 +8,10 @@
                     #{h @player.login}
                 %h2
                     #{@player.display_game_statistics}
+                - if @player.clan
+                    #clan_banner.user_page
+                        %a{:href => "/clan/#{CGI::escape @player.clan.name}"}
+                            %img{src: @player.clan.gravatar_link}
 
             .text_content.non_top_post
                 .trophycabinet.text_cabinet
@@ -48,6 +52,7 @@
             #clanmanager.text_content.non_top_post
                 =h2 :Clan
                 - if @player.clan
+                    %img{src: @player.clan.gravatar_link, style: 'vertical-align: middle; width: 2em'}
                     %a{:href => "/clan/#{CGI::escape @player.clan.name}"}= @player.clan.name
                     %span#small_content_spacer.clear
                 - else

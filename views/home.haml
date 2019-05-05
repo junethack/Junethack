@@ -40,6 +40,7 @@
                 Manage your clan
             .account-clan
                 - if @user.clan
+                    %img{src: @user.clan.gravatar_link, style: 'vertical-align: middle; width: 2em'}
                     %a{:href => "/clan/#{CGI::escape @user.clan.name}"}= @user.clan.name
                     %a{:href => "/leaveclan"} Leave
                 - else

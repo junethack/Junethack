@@ -909,6 +909,11 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a,
   width: 10em;
   margin: 5px;
 }
+#clan_banner.user_page {
+  position: absolute;
+  right: 2em;
+  top: 2em;
+}
 
 nav .fas {
   font-size: 1.1em;
