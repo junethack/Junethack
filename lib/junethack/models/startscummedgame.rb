@@ -13,7 +13,7 @@ class StartScummedGame
     property :realtime,  Integer
     property :turns,     Integer
     property :birthdate, String
-    property :conduct,   String, :default => 0
+    property :conduct,   String, :default => '0'
     property :nconducts, Integer,
      :default => lambda { |r, p| (Integer(r.conduct) & 4095).to_s(2).count("1") } # count the number of bits set in conduct
     property :role,      String
@@ -54,6 +54,7 @@ class StartScummedGame
     property :deathdname, String
     property :dlev_name,  String
     property :elbereths,  Integer, :default => -1
+    property :user_seed,  String
 
     property :xplevel, Integer, :default => 0
     property :exp,     Integer, :default => 0
@@ -93,6 +94,9 @@ class StartScummedGame
     property :hybrid, String
     property :gamemode, String
     property :achieveX, Text
+    property :alias, String
+    property :role0, String
+    property :race0, String
 
     # new in 3.6.0
     property :while, String

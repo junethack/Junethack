@@ -215,6 +215,7 @@ class Game
       _version = 'slth'  if version.start_with? 'slth-'
       _version = 'slex'  if version.start_with? 'slex-'
       _version = '3.6'   if version == '3.6.1'
+      _version = '3.6'   if version == '3.6.2'
       _version = '3.4.3' if version == '3.4.3'
       _version = 'NH-1.3d' if version == 'NH-1.3d'
       _version = 'nh4' if version == '4.3.0'
@@ -259,6 +260,7 @@ class Game
     property :deathdname, String
     property :dlev_name,  String
     property :elbereths,  Integer, :default => -1
+    property :user_seed,  String
 
     property :xplevel, Integer, :default => 0
     property :exp,     Integer, :default => 0
@@ -298,6 +300,9 @@ class Game
     property :hybrid, String
     property :gamemode, String
     property :achieveX, Text
+    property :alias, String
+    property :role0, String
+    property :race0, String
 
     # new in 3.6.0
     property :while, String

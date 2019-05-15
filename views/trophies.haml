@@ -87,6 +87,7 @@
             - variant_name = $variants_mapping[variant]
             %span{style: 'padding-left: 1em'}
               %a{href: "/trophies/#{variant_name.downcase}"}= h variant_name
+              = "(#{Trophy.all(variant: variant).count} achievements)"
             %br
         .text_content.non_top_post
 

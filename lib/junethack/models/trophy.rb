@@ -145,6 +145,9 @@ def Trophy.check_trophies_for_variant variant_description
     splicehack = helper_get_variant_for 'splicehack'
     xnethack = helper_get_variant_for 'xnethack'
     nethack36 = helper_get_variant_for '3.6.1'
+    evilhack = helper_get_variant_for 'evilhack'
+    dnhslex = helper_get_variant_for 'dnethack slex'
+    notdnethack = helper_get_variant_for 'notdnethack'
 
     if [acehack, nethack4, nh4k, dynahack, fiqhack].include? variant then
       # these variants don't have standard xlogfile achievement flags
@@ -263,7 +266,7 @@ def Trophy.check_trophies_for_variant variant_description
       end
     end
 
-    if [nethack36, splicehack, xnethack].include? variant then
+    if [nethack36, splicehack, xnethack, evilhack].include? variant then
       Trophy.create variant: variant, trophy: :killed_by_molochs_indifference, text: "killed by Moloch's indifference", icon: "killed_by_molochs_indifference.png", row: 2
     end
 
@@ -274,7 +277,7 @@ def Trophy.check_trophies_for_variant variant_description
     end
 
     # DNetHack specific achievements
-    if dnethack == variant then
+    if [dnethack, dnhslex, notdnethack].include? variant then
       Trophy.create variant: variant, trophy: "one_key", text: "That was the easy one (obtained at least one alignment key)", icon: "m-one-key.png", row: 2
       Trophy.create variant: variant, trophy: "three_keys", text: "Through the gates of Gehennom (obtained at least three alignment keys)", icon: "m-three-keys.png", row: 2
       Trophy.create variant: variant, trophy: "nine_keys", text: "Those were for replay value... (obtained all nine alignment keys)", icon: "m-nine-keys.png", row: 2
@@ -390,7 +393,7 @@ DataMapper::MigrationRunner.migration( 2, :create_clan_trophies ) do
   end
 end
 
-DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
+DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
   up do
     # add all already existing variants
     Trophy.check_trophies_for_variant "vanilla"
@@ -406,25 +409,9 @@ DataMapper::MigrationRunner.migration( 4, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "slash'em extended"
     Trophy.check_trophies_for_variant "xnethack"
     Trophy.check_trophies_for_variant "splicehack"
-    #Trophy.check_trophies_for_variant "slashthem"
+    Trophy.check_trophies_for_variant "evilhack"
+    Trophy.check_trophies_for_variant "dnethack slex"
+    Trophy.check_trophies_for_variant "notdnethack"
     Trophy.check_trophies_for_variant "oldhack"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 5, :create_new_xnethack_trophies ) do
-  up do
-    xnethack = helper_get_variant_for 'xnethack'
-    $xnethack_achievements.reject(&:empty?).each {|trophy|
-      Trophy.first_or_create variant: xnethack, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
-    }
-  end
-end
-
-DataMapper::MigrationRunner.migration( 6, :create_new_splicehack_trophies ) do
-  up do
-    splicehack = helper_get_variant_for 'splicehack'
-    $splicehack_achievements.reject(&:empty?).each {|trophy|
-      Trophy.first_or_create variant: splicehack, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
-    }
   end
 end

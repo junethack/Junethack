@@ -54,6 +54,7 @@ class JunkGame
     property :deathdname, String
     property :dlev_name,  String
     property :elbereths,  Integer, :default => -1
+    property :user_seed,  String
 
     property :xplevel, Integer, :default => 0
     property :exp,     Integer, :default => 0
@@ -93,6 +94,9 @@ class JunkGame
     property :hybrid, String
     property :gamemode, String
     property :achieveX, Text
+    property :alias, String
+    property :role0, String
+    property :race0, String
 
     # new in 3.6.0
     property :while, String

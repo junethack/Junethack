@@ -88,7 +88,7 @@ class Server
         when "3.6"
             "https://#{prefix}.hardfought.org/userdata/#{player}/nh361/dumplog/#{game.starttime}.nh361.txt"
         when "unh"
-            "https://#{prefix}.hardfought.org/userdata/#{player}/un531/dumplog/#{game.starttime}.un531.txt.html"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/unnethack/dumplog/#{game.starttime}.un.txt.html"
         when "fiq"
             "https://#{prefix}.hardfought.org/userdata/#{player}/fiqhack/dumplog/#{game.dumplog.tr("_",":")}"
         when "nh4k"
@@ -131,20 +131,20 @@ end
 DataMapper::MigrationRunner.migration( 1, :create_servers ) do
   up do
     [
-      [:nao_nh36, 'NetHack 3.6.1', 'https://alt.org/nethack/xlogfile.nh361'],
+      [:nao_nh36, 'NetHack 3.6.2', 'https://alt.org/nethack/xlogfile.nh362'],
     ].each {|server|
       url = 'https://nethack.alt.org/'
-      configfileurl = 'https://alt.org/nethack/userdata/random_user/random_user.nh361rc'
+      configfileurl = 'https://alt.org/nethack/userdata/random_user/random_user.nh362rc'
       Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
     }
 
     [
       [:asc_nao,  'NetHack 3.4.3-nao',     'https://ascension.run/xlogfiles/nethack'],
       [:asc_unh,  'UnNetHack 5.3.1',       'https://ascension.run/xlogfiles/unnethack'],
-      [:asc_dnh,  'dNetHack 3.15.1',       'https://ascension.run/xlogfiles/dnethack'],
+      [:asc_dnh,  'dNetHack 3.16.0',       'https://ascension.run/xlogfiles/dnethack'],
       [:asc_dyn,  'DynaHack 0.6.0',        'https://ascension.run/xlogfiles/dynahack'],
       [:asc_nh4k, 'NetHack Fourk 4.3.0.4', 'https://ascension.run/xlogfiles/nhfourk'],
-      [:asc_fiq,  'FIQHack 4.3.0',         'https://ascension.run/xlogfiles/fiqhack'],
+      [:asc_fiq,  'FIQHack 4.3.1',         'https://ascension.run/xlogfiles/fiqhack'],
       [:asc_nh4,  'NetHack4 4.3.0',        'https://ascension.run/xlogfiles/nethack4'],
     ].each {|server|
       url = 'https://ascension.run/'
@@ -158,9 +158,10 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
     [
       [:esm_nh36, 'NetHack 3.6.1',           'https://em.slashem.me/xlogfiles/nethack'],
-      [:esm_slex, "Slash'EM Extended 2.2.2", 'https://em.slashem.me/xlogfiles/slex'],
+      [:esm_slex, "Slash'EM Extended 2.5.0", 'https://em.slashem.me/xlogfiles/slex'],
       [:esm_gho,  'GruntHack 0.2.3',         'https://em.slashem.me/xlogfiles/grunthack'],
       [:esm_shc,  'SporkHack 0.6.5',         'https://em.slashem.me/xlogfiles/sporkhack'],
+      [:esm_dslex,'DNetHack SLEX 3.16.0',    'https://em.slashem.me/xlogfiles/dnhslex'],
     ].each {|server|
       url = 'https://em.slashem.me/'
       configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
@@ -173,18 +174,20 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
       prefix = prefixes[location]
       [
         [:hdf_nao,  'NetHack 3.4.3-nao',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
-        [:hdf_nh36, 'NetHack 3.6.1',           "https://#{prefix}.hardfought.org/xlogfiles/nh361/xlogfile"],
+        [:hdf_nh36, 'NetHack 3.6.2',           "https://#{prefix}.hardfought.org/xlogfiles/nh361/xlogfile"],
         [:hdf_shc,  'SporkHack 0.6.5',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
-        [:hdf_gho,  'GruntHack 0.2.3',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
-        [:hdf_unh,  'UnNetHack 5.3.1',         "https://#{prefix}.hardfought.org/xlogfiles/un531/xlogfile"],
-        [:hdf_dnh,  'dNetHack 3.15.1',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
+        [:hdf_gho,  'GruntHack 0.2.4',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
+        [:hdf_unh,  'UnNetHack 5.3.2',         "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
+        [:hdf_dnh,  'dNetHack 3.16.0',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
         [:hdf_nh4,  'NetHack4 4.3.0',          "https://#{prefix}.hardfought.org/xlogfiles/nethack4/xlogfile"],
         [:hdf_nh4k, 'NetHack Fourk 4.3.0.4',   "https://#{prefix}.hardfought.org/xlogfiles/4k/xlogfile"],
         [:hdf_fiq,  'FIQHack 4.3.1',           "https://#{prefix}.hardfought.org/xlogfiles/fh/xlogfile"],
         [:hdf_dyn,  'DynaHack 0.6.0',          "https://#{prefix}.hardfought.org/xlogfiles/dynahack/xlogfile"],
-        [:hdf_slex, "Slash'EM Extended 2.2.2", "https://#{prefix}.hardfought.org/xlogfiles/slex/xlogfile"],
-        [:hdf_xnh,  'xNetHack 0.2.0',          "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
-        [:hdf_spl,  'SpliceHack 0.3.0',        "https://#{prefix}.hardfought.org/xlogfiles/splicehack/xlogfile"],
+        [:hdf_slex, "Slash'EM Extended 2.5.0", "https://#{prefix}.hardfought.org/xlogfiles/slex/xlogfile"],
+        [:hdf_xnh,  'xNetHack 0.4.1',          "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
+        [:hdf_spl,  'SpliceHack 0.6.2',        "https://#{prefix}.hardfought.org/xlogfiles/splicehack/xlogfile"],
+        [:hdf_ndnh, 'notdNetHack 2019.04.8',   "https://#{prefix}.hardfought.org/xlogfiles/notdnethack/xlogfile"],
+        [:hdf_evh,  'EvilHack 0.3.1',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
         [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
       ].each {|server|
         url = "https://#{prefix}.hardfought.org/nethack"

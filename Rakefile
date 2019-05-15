@@ -136,7 +136,7 @@ namespace :db do
         puts Server.all(name: args[:name]).inspect
     end
     desc "reset all servers' xlogfile modification date"
-    task :reset_all_servers, :name do |t, args|
+    task :reset_all_servers do
         Server.all.update(xloglastmodified: "Sat Jan 01 00:00:00 UTC 2000",
                                              xlogcurrentoffset: 0)
     end
@@ -241,6 +241,23 @@ namespace :test do
       account = Account.first(name: hgame["name"], server_id: server.id)
       game.update(user_id: account.user_id) if account
     }
+  end
+
+  desc 'Verify all supported variants have a correct setup'
+  task :variants do
+    versions = repository.adapter.select 'SELECT DISTINCT version FROM games'
+    versions.each {|version|
+      if $variants_mapping[version].nil?
+        puts "Version #{version} has unknown mapping!"
+      end
+      if version != 'NH-1.3d' && !$variant_order.include?(version)
+        puts "Version #{version} has no known order!"
+      end
+      if Trophy.count(variant: version) == 0
+        puts "Version #{version} has no trophies!"
+      end
+    }
+
   end
 end
 

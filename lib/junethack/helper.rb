@@ -10,7 +10,7 @@ $competition_trophy_order = [
 
 $variants_mapping = {}
 $variants_mapping["3.4.3"]   = "NetHack 3.4.3"
-$variants_mapping["3.6"]     = "NetHack 3.6.1"
+$variants_mapping["3.6"]     = "NetHack 3.6.2"
 $variants_mapping["shc"]     = "SporkHack"
 $variants_mapping["unh"]     = "UnNetHack"
 $variants_mapping["gho"]     = "GruntHack"
@@ -22,13 +22,16 @@ $variants_mapping["dyn"]     = "DynaHack"
 $variants_mapping["slex"]    = "Slash'EM Extended"
 $variants_mapping["spl"]     = "SpliceHack"
 $variants_mapping["xnh"]     = "xNetHack"
+$variants_mapping["dslex"]   = "dNetHack SLEX"
+$variants_mapping["ndnh"]    = "notdNetHack"
+$variants_mapping["evh"]     = "EvilHack"
 $variants_mapping["NH-1.3d"] = "NetHack 1.3d"
 
 # hard coded ordering of variants with competition score entries
 # order by release date
 $variant_order = []
-$variant_order << "3.4.3"
 $variant_order << "3.6"
+$variant_order << "3.4.3"
 $variant_order << "shc"
 $variant_order << "unh"
 $variant_order << "gho"
@@ -41,6 +44,9 @@ $variant_order << "dyn"
 $variant_order << "slex"
 $variant_order << "xnh"
 $variant_order << "spl"
+$variant_order << "dslex"
+$variant_order << "ndnh"
+$variant_order << "evh"
 
 # order of variants and bonus games
 def variant_and_bonus_games_order
@@ -52,6 +58,7 @@ def helper_get_variant_for(description)
     return '3.4.3' if description.downcase == 'vanilla'
     return '3.6' if description.downcase == '3.6.0'
     return '3.6' if description.downcase == '3.6.1'
+    return '3.6' if description.downcase == '3.6.2'
     return 'NH-1.3d' if description.downcase == 'oldhack'
 
     # find variant by text description
