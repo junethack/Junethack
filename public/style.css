@@ -931,3 +931,14 @@ nav .settings {
   top: 0;
   right: 0;
 }
+
+/* rotate table header */
+table.greytable tr.rotated {
+  height: 8em;
+  white-space: nowrap;
+}
+
+tr.rotated th div {
+  transform: translate(1.5em, 5em) rotate(310deg);
+  width: 2em;
+}

@@ -12,10 +12,12 @@
         .scorelisting
           %table.greytable.misc
             -# table header
-            %tr
-              %th Date (UTC)
+            %tr.rotated
+              %th
+                %div Date (UTC)
               - $variant_order.each do |v|
-                %th= $variants_mapping[v]
+                %th
+                  %div= $variants_mapping[v]
 
             -# table data
             - today = Time.now.to_i

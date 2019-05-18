@@ -732,3 +732,14 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a,
 .trophyleft a:hover {
   color: #888;
 }
+
+/* rotate table header */
+table.greytable tr.rotated {
+  height: 10em;
+  white-space: nowrap;
+}
+
+tr.rotated th div {
+  transform: translate(0.6em, 8em) rotate(270deg);
+  width: 0em;
+}
