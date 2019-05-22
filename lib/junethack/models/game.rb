@@ -216,6 +216,7 @@ class Game
       _version = 'slex'  if version.start_with? 'slex-'
       _version = '3.6'   if version == '3.6.1'
       _version = '3.6'   if version == '3.6.2'
+      _version = '3.6'   if version == '3.6.3'
       _version = '3.4.3' if version == '3.4.3'
       _version = 'NH-1.3d' if version == 'NH-1.3d'
       _version = 'nh4' if version == '4.3.0'

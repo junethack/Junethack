@@ -59,6 +59,7 @@ def helper_get_variant_for(description)
     return '3.6' if description.downcase == '3.6.0'
     return '3.6' if description.downcase == '3.6.1'
     return '3.6' if description.downcase == '3.6.2'
+    return '3.6' if description.downcase == '3.6.3'
     return 'NH-1.3d' if description.downcase == 'oldhack'
 
     # find variant by text description
