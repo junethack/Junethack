@@ -18,7 +18,8 @@ class Trophy
 
     # returns all cross variant trophies
     def Trophy.cross_variant_trophies
-        Trophy.all :conditions => ["variant is null"]
+        Trophy.all conditions: ["variant is null"],
+                   order: [ :row, :id ]
     end
 
     # returns all variant-specific user trophies
@@ -206,9 +207,9 @@ def Trophy.check_trophies_for_variant variant_description
       achievements = [
         #[:defeated_all_unique_monsters, ", nil, 4], TODO
         [:defeated_all_riders,              'You Are War! (defeated Death, Famine, and Pestilence)', 'defeated_all_riders.png', 4],
-        [:defeated_all_quest_leaders,       'You already know the way (defeated all Quest leaders)', 'defeated_all_quest_leaders.png', 4],
-        [:defeated_all_quest_nemeses,       "Viel Feind', viel Ehr' (defeated all Quest nemeses)", 'defeated_all_quest_nemeses.png', 4],
         [:defeated_all_demon_lords_princes, 'Demonbuster (defeated all demon lords and princes)', 'defeated_all_demon_lords_princes.png', 4],
+        [:defeated_all_quest_nemeses,       "Viel Feind', viel Ehr' (defeated all Quest nemeses)", 'defeated_all_quest_nemeses.png', 4],
+        [:defeated_all_quest_leaders,       'You already know the way (defeated all Quest leaders)', 'defeated_all_quest_leaders.png', 4],
         #[:defeated_all_erinyes, ", nil, 4], TODO
         #[:defeated_all_nazgul, ", nil, 4], TODO
         #[:defeated_all_weeping_archangels, ", nil, 4], TODO
@@ -221,9 +222,9 @@ def Trophy.check_trophies_for_variant variant_description
         [:defeated_cthulhu,              'defeated Cthulhu', nil, 6],
         [:defeated_wizard_of_yendor,     'defeated the Wizard of Yendor', nil, 6],
         [:defeated_one_eyed_sam,         'No membership card (defeated One-Eyed Sam)', 'm-sam.png', 6],
-        [:defeated_aphrodite,            'defeated Aphrodite', nil, 6],
+        [:defeated_aphrodite,            'Make War Not Love (defeated Aphrodite)', nil, 6],
         [:defeated_vlad_the_impaler,     'defeated Vlad the Impaler', nil, 6],
-        [:defeated_oracle,               'defeated the Oracle', nil, 6],
+        [:defeated_oracle,               'No Further Knowledge Required (defeated the Oracle', nil, 6],
         #[:defeated_medusa,               'defeated Medusa', nil, 6],
         #[:defeated_croesus,              'defeated Croesus', nil, 6],
         [:defeated_executioner,          'defeated the Executioner', nil, 6],
@@ -406,21 +407,25 @@ end
 DataMapper::MigrationRunner.migration( 1, :create_cross_variant_achievements ) do
   up do
     # Cross Variant
-    Trophy.create :trophy => "king_of_the_world", :text => "King of the World: ascend in all variants", :icon => "king.png"
-    Trophy.create :trophy => "prince_of_the_world", :text => "Prince of the World: ascend in half of the variants", :icon => "prince.png"
+    (1..$variant_order.size).to_a.reverse.each {|i|
+      variants = "variant#{i == 1 ? '' : 's'}"
 
-    Trophy.create :trophy => "anti_stoner",       :text => "Anti-Stoner: defeated Medusa in all variants", :icon => "anti-stoner.png"
-    Trophy.create :trophy => "hemi_stoner",       :text => "Hemi-Stoner: defeat Medusa in half of the variants", :icon => "hemi-stoner.png"
+      trophy = "ascended_variants_#{i}".to_sym
+      text = "Ascended #{$numbers[i]} #{variants}"
+      Trophy.create trophy: trophy, text: text, icon: "#{trophy}.png", row: 1
 
-    Trophy.create :trophy => "globetrotter",      :text => "Globetrotter: get a trophy for each variant", :icon => "globetrotter.png"
-    Trophy.create :trophy => "backpacking_tourist", :text => "Backpacking Tourist: get a trophy for half of the variants", :icon => "backpacking_tourist.png"
+      trophy = "anti_stoner_#{i}".to_sym
+      text = "Anti-Stoner: defeated Medusa in #{$numbers[i]} #{variants}"
+      Trophy.create trophy: trophy, text: text, icon: "#{trophy}.png", row: 2
 
-    Trophy.create :trophy => "sightseeing_tour",  :text => "Sightseeing Tour: finish a game in all variants", :icon => "sightseeing.png"
-    Trophy.create :trophy => "walk_in_the_park",  :text => "Walk in the Park: finish a game in half of the variants", :icon => "walk_in_the_park.png"
-  end
+      trophy = "globetrotter_#{i}".to_sym
+      text = "Globetrotter: get a trophy in #{$numbers[i]} #{variants}"
+      Trophy.create trophy: trophy, text: text, icon: "#{trophy}.png", row: 3
 
-  down do
-    Trophy.all.destroy
+      trophy = "sightseeing_tour_#{i}".to_sym
+      text = "Sightseeing Tour: finish a game in #{$numbers[i]} #{variants}"
+      Trophy.create trophy: trophy, text: text, icon: "#{trophy}.png", row: 4
+    }
   end
 end
 

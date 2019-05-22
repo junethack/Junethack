@@ -32,48 +32,27 @@ end
 
 ## Cross Variant Achievements
 # King of the world: ascend in all variants
-def king_of_the_world?(user)
+def count_ascended_variants(user)
   anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and ascended='t';", user
-  return anz[0] == $variant_order.size
-end
-
-def prince_of_the_world?(user)
-  anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and ascended='t';", user
-  return anz[0] >= ($variant_order.size/2)
+  anz[0]
 end
 
 # Sightseeing tour: finish a game in all variants (die after at least 1000 turns or ascend)
-def sightseeing_tour?(user)
+def count_sightseeing_tour(user)
   anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and turns >= 1000;", user
-  return anz[0] == $variant_order.size
+  anz[0]
 end
-# Walk In The Park: finish a game in half of the variants
-def walk_in_the_park?(user)
-  anz = repository.adapter.select "select count(distinct version) from games where user_id = ? and version != 'NH-1.3d' and turns >= 1000;", user
-  return anz[0] >= ($variant_order.size/2)
-end
-
 
 #  Globetrotter: get a trophy for each variant
-def globetrotter?(user)
+def count_globetrotter(user)
   anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d';", user
-  return anz[0] == $variant_order.size
-end
-# Backpacking tourist: get a trophy for half of the variants
-def backpacking_tourist?(user)
-  anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d';", user
-  return anz[0] >= ($variant_order.size/2)
+  anz[0]
 end
 
 # Anti-Stoner: defeat Medusa in each variant
-def anti_stoner?(user)
+def count_anti_stoner(user)
   anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d' and trophy='defeated_medusa';", user
-  return anz[0] == $variant_order.size
-end
-# Hemi-Stoner: defeat Medusa in half of the variants
-def hemi_stoner?(user)
-  anz = repository.adapter.select "select count(distinct variant) from scoreentries where user_id = ? and variant != 'NH-1.3d' and trophy='defeated_medusa';", user
-  return anz[0] >= ($variant_order.size/2)
+  anz[0]
 end
 
 # dNetHack
@@ -167,12 +146,14 @@ def update_scores(game)
       end
 
       ## Ascension Individual trophies
-      # King of the World: ascend in all variants
-      Individualtrophy.add(game.user_id, "King of the World",
-                           :king_of_the_world, "king.png") if king_of_the_world? game.user_id
-      # Prince of the World: ascend in half of the variants
-      Individualtrophy.add(game.user_id, "Prince of the World",
-                           :prince_of_the_world, "prince.png") if prince_of_the_world? game.user_id
+      # Ascended how many different variants
+      if game.ascended
+        (1..count_ascended_variants(game.user_id)).each {|i|
+          Individualtrophy.add(game.user_id,
+                               "ascended_variants_#{i}".to_sym,
+                               "ascended_variants_#{i}.png")
+        }
+      end
 
       update_competition_scores_ascended(game)
 
@@ -540,26 +521,26 @@ def update_scores(game)
   end
 
   ## Non-Ascension cross-variant trophies
-  # Sightseeing tour: finish a game in all variants
-  Individualtrophy.add(game.user_id, "Sightseeing Tour",
-                       :sightseeing_tour, "sightseeing.png") if sightseeing_tour? game.user_id
-  # Walk In The Park: finish a game in half of the variants
-  Individualtrophy.add(game.user_id, "Walk In The Park",
-                       :walk_in_the_park, "walk_in_the_park.png") if walk_in_the_park? game.user_id
+  # Sightseeing tour: finish a game in n variants
+  (1..count_sightseeing_tour(game.user_id)).each {|index|
+    Individualtrophy.add(game.user_id,
+                         "sightseeing_tour_#{index}".to_sym,
+                         "sightseeing_tour_#{index}.png")
+  }
 
-  # Anti-Stoner: defeat Medusa in all variants
-  Individualtrophy.add(game.user_id, "Anti-Stoner",
-                       :anti_stoner, "anti-stoner.png") if anti_stoner? game.user_id
-  # Hemi-Stoner: defeat Medusa in half of the variants
-  Individualtrophy.add(game.user_id, "Hemi-Stoner",
-                       :hemi_stoner, "hemi-stoner.png") if hemi_stoner? game.user_id
+  # Anti-Stoner: defeat Medusa in n variants
+  (1..count_anti_stoner(game.user_id)).each {|index|
+    Individualtrophy.add(game.user_id,
+                         "anti_stoner_#{index}".to_sym,
+                         "anti_stoner_#{index}.png")
+  }
 
-  # Globetrotter: get a trophy for each variant
-  Individualtrophy.add(game.user_id, "Globetrotter",
-                       :globetrotter, "globetrotter.png") if globetrotter? game.user_id
-  # Backpacking tourist: get a trophy for half of the variants
-  Individualtrophy.add(game.user_id, "Backpacking Tourist",
-                       :backpacking_tourist, "backpacking_tourist.png") if backpacking_tourist? game.user_id
+  # Globetrotter: get a trophy in n variants
+  (1..count_globetrotter(game.user_id)).each {|index|
+    Individualtrophy.add(game.user_id,
+                         "globetrotter_#{index}".to_sym,
+                         "globetrotter_#{index}.png")
+  }
 
   return false if not local_normalize_death(game)
 

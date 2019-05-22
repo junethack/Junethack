@@ -48,6 +48,13 @@ $variant_order << "dslex"
 $variant_order << "ndnh"
 $variant_order << "evh"
 
+$numbers = [
+  'zero', 'one', 'two', 'three', 'four', 'five',
+  'six', 'seven', 'eight', 'nine', 'ten',
+  'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen',
+  'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty',
+]
+
 # order of variants and bonus games
 def variant_and_bonus_games_order
   ["NH-1.3d"]+$variant_order

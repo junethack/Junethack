@@ -5,17 +5,18 @@ describe Individualtrophy do
   before :each do
     clean_database
     $user = User.create(:login => "test_user")
+    Trophy.create trophy: :test_achievement, text: 'an achievement', icon: :icon
   end
 
   it "should add user unique cross variant achievements" do
     expect(Individualtrophy.count).to eq 0
 
     # add achievement
-    Individualtrophy.add($user.id, nil, :test_achievement, "test_achievement.png")
+    Individualtrophy.add($user.id, :test_achievement, "test_achievement.png")
     expect(Individualtrophy.count).to eq 1
 
     # only one achievement per user
-    Individualtrophy.add($user.id, nil, :test_achievement, "test_achievement.png")
+    Individualtrophy.add($user.id, :test_achievement, "test_achievement.png")
     expect(Individualtrophy.count).to eq 1
   end
 
@@ -23,14 +24,14 @@ describe Individualtrophy do
     expect(Event.count).to eq 0
 
     # add achievement
-    Individualtrophy.add($user.id, "test_achievement", :test_achievement, "test_achievement.png")
+    Individualtrophy.add($user.id, :test_achievement, "test_achievement.png")
     expect(Event.count).to eq 1
 
     # only one achievement per user
-    Individualtrophy.add($user.id, "test_achievement", :test_achievement, "test_achievement.png")
+    Individualtrophy.add($user.id, :test_achievement, "test_achievement.png")
     expect(Event.count).to eq 1
 
-    expect(Event.first.text).to eq 'Achievement "test_achievement" unlocked by test_user!'
+    expect(Event.first.text).to eq 'Achievement "an achievement" unlocked by test_user!'
   end
 end
 
@@ -58,31 +59,25 @@ describe Game,"saving of cross variant achievements" do
     expect(Individualtrophy.count).to eq 0
     expect(Event.count).to eq 0
 
-    (half_variants_count-1).times { Game.create(params) }
+    Game.create(params)
     repository.adapter.execute "UPDATE games SET version= 'v'||id"
     update_games
-    # not yet half the variants played
-    expect(Individualtrophy.count).to eq 0
-    expect(Event.count).to eq 0
-
-    Game.create params
-    repository.adapter.execute "UPDATE games SET version= 'v'||id"
-    update_games # 1/2 cross variant achievements
-    # half the variants played
     expect(Individualtrophy.count).to eq 4
+    expect(Individualtrophy.all.map(&:trophy).sort).to eq ["anti_stoner_1", "ascended_variants_1", "globetrotter_1", "sightseeing_tour_1"]
     expect(Event.count).to eq 4
+    expect(Event.all.map(&:text).sort).to eq(
+      ['Achievement "Ascended one variant" unlocked by test_user!',
+       'Achievement "Sightseeing Tour: finish a game in one variant" unlocked by test_user!',
+       'Achievement "Anti-Stoner: defeated Medusa in one variant" unlocked by test_user!',
+       'Achievement "Globetrotter: get a trophy in one variant" unlocked by test_user!'].sort
+    )
 
-    5.times { Game.create(params) }
+    Game.create(params)
     repository.adapter.execute "UPDATE games SET version= 'v'||id"
     update_games
-    # all variants played
-    expect(Individualtrophy.count).to eq 4
-    expect(Event.count).to eq 4
-
-    2.times { Game.create(params) }
-    repository.adapter.execute "UPDATE games SET version= 'v'||id"
-    update_games # full and 1/2 cross variant achievements
+    expect(Individualtrophy.all.map(&:trophy)).to include "anti_stoner_2"
     expect(Individualtrophy.count).to eq 8
+    expect(Event.all.map(&:text)).to include 'Achievement "Anti-Stoner: defeated Medusa in two variants" unlocked by test_user!'
     expect(Event.count).to eq 8
   end
 end

@@ -23,17 +23,19 @@ class Individualtrophy
     property :trophy,    String, :key => true
     property :icon,      String
 
-    def Individualtrophy.add(user_id, text, trophy, icon)
+    def Individualtrophy.add(user_id, trophy, icon)
       # check for existence
       c = Individualtrophy.first(:user_id => user_id,
               :trophy => trophy,
               :icon => icon)
       # achievement doesn't exist yet, create it
       if not c then
-          Individualtrophy.create(:user_id => user_id,
-              :trophy => trophy,
-              :icon => icon)
-          Event.create(:text => "Achievement \"#{text}\" unlocked by #{User.first(:id => user_id).login}!")
+        Individualtrophy.create(user_id: user_id,
+                                trophy: trophy,
+                                icon: icon)
+        text = Trophy.first(trophy: trophy).text
+        user = User.first(:id => user_id).login
+        Event.create(:text => "Achievement \"#{text}\" unlocked by #{user}!")
       end
     end
 end
