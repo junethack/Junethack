@@ -186,84 +186,109 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
       Trophy.create variant: variant, trophy: "ascended_with_all_invocation_items", text: "Hoarder (ascended carrying all the invocation items)", icon: "m-hoarder.png", row: 2
       Trophy.create variant: variant, trophy: "defeated_croesus", text: "Assault on Fort Knox (defeated Croesus)", icon: "m-croesus.png", row: 2
+    end
 
-      if variant == unnethack
-        achievements = [
-          [:ascended_without_defeating_cthulhu, "Too good for a brain (ascended without defeating Cthulhu)", "m-no-cthulhu.png", 3],
-          [:heaven_or_hell,                     "Heaven or Hell (ascend in 1 HP mode)",                      "heaven-or-hell.png", 3],
-          [:mini_croesus,                       "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 3],
-          [:better_than_croesus,                "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 3],
-          [:bought_oracle_consultation,         'got an Oracle consultation', '4-oracle-consult.png', 3],
+    if variant == unnethack
+      achievements = [
+        [:ascended_without_defeating_cthulhu, "Too good for a brain (ascended without defeating Cthulhu)", "m-no-cthulhu.png", 3],
+        [:heaven_or_hell,                     "Heaven or Hell (ascend in 1 HP mode)",                      "heaven-or-hell.png", 3],
+        [:mini_croesus,                       "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 3],
+        [:better_than_croesus,                "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 3],
+        [:bought_oracle_consultation,         'got an Oracle consultation', '4-oracle-consult.png', 3],
+      ]
+      achievements.each {|achievement|
+        icon = achievement[2] || "u-#{achievement[0].to_s.gsub(' ', '_')}.png"
+        Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[3]
+      }
+    end
 
-          #[:defeated_all_unique_monsters, ", nil, 4], TODO
-          [:defeated_all_riders,              'You Are War! (defeated Death, Famine, and Pestilence)', 'defeated_all_riders.png', 4],
-          [:defeated_all_quest_leaders,       'You already know the way (defeated all Quest leaders)', 'defeated_all_quest_leaders.png', 4],
-          [:defeated_all_quest_nemeses,       "Viel Feind', viel Ehr' (defeated all Quest nemeses)", 'defeated_all_quest_nemeses.png', 4],
-          [:defeated_all_demon_lords_princes, 'Demonbuster (defeated all demon lords and princes)', 'defeated_all_demon_lords_princes.png', 4],
-          #[:defeated_all_erinyes, ", nil, 4], TODO
-          #[:defeated_all_nazgul, ", nil, 4], TODO
-          #[:defeated_all_weeping_archangels, ", nil, 4], TODO
+    if [unnethack, evilhack].include? variant
+      achievements = [
+        #[:defeated_all_unique_monsters, ", nil, 4], TODO
+        [:defeated_all_riders,              'You Are War! (defeated Death, Famine, and Pestilence)', 'defeated_all_riders.png', 4],
+        [:defeated_all_quest_leaders,       'You already know the way (defeated all Quest leaders)', 'defeated_all_quest_leaders.png', 4],
+        [:defeated_all_quest_nemeses,       "Viel Feind', viel Ehr' (defeated all Quest nemeses)", 'defeated_all_quest_nemeses.png', 4],
+        [:defeated_all_demon_lords_princes, 'Demonbuster (defeated all demon lords and princes)', 'defeated_all_demon_lords_princes.png', 4],
+        #[:defeated_all_erinyes, ", nil, 4], TODO
+        #[:defeated_all_nazgul, ", nil, 4], TODO
+        #[:defeated_all_weeping_archangels, ", nil, 4], TODO
 
-          # riders
-          [:defeated_death,      'defeated Death', nil, 5],
-          [:defeated_famine,     'defeated Famine', nil, 5],
-          [:defeated_pestilence, 'defeated Pestilence', nil, 5],
-          # uncategorized unique monsters
-          [:defeated_cthulhu,              'defeated Cthulhu', nil, 6],
-          [:defeated_wizard_of_yendor,     'defeated the Wizard of Yendor', nil, 6],
-          [:defeated_one_eyed_sam,         'No membership card (defeated One-Eyed Sam)', 'm-sam.png', 6],
-          [:defeated_aphrodite,            'defeated Aphrodite', nil, 6],
-          [:defeated_vlad_the_impaler,     'defeated Vlad the Impaler', nil, 6],
-          [:defeated_oracle,               'defeated the Oracle', nil, 6],
-          #[:defeated_medusa,               'defeated Medusa', nil, 6],
-          #[:defeated_croesus,              'defeated Croesus', nil, 6],
-          [:defeated_executioner,          'defeated the Executioner', nil, 6],
-          [:defeated_durins_bane,          "defeated Durin's Bane", nil, 6],
-          [:defeated_watcher_in_the_water, 'defeated the Watcher in the Water', nil, 6],
-          # demons
-          [:defeated_asmodeus,   'defeated Asmodeus', nil, 7],
-          [:defeated_baalzebub,  'defeated Baalzebub', nil, 7],
-          [:defeated_demogorgon, 'defeated Demogorgon', nil, 7],
-          [:defeated_dispater,   'defeated Dispater', nil, 7],
-          [:defeated_geryon,     'defeated Geryon', nil, 7],
-          [:defeated_juiblex,    'defeated Juiblex', nil, 7],
-          [:defeated_orcus,      'defeated Orcus', nil, 7],
-          [:defeated_yeenoghu,   'defeated Yeenoghu', nil, 7],
-          # quest leader
-          [:defeated_lord_carnarvon,     'defeated Lord Carnarvon, the Archeologist quest leader', nil, 8],
-          [:defeated_pelias,             'defeated Pelias, the Barbarian quest leader', nil, 8],
-          [:defeated_shaman_karnov,      'defeated Shaman Karnov, the Caveman quest leader', nil, 8],
-          [:defeated_robert_the_lifer,   'defeated Robert the Lifer, the Convict quest leader', nil, 8],
-          [:defeated_hippocrates,        'defeated Hippocrates, the Healer quest leader', nil, 8],
-          [:defeated_king_arthur,        'defeated King Arthur, the Knight quest leader', nil, 8],
-          [:defeated_grand_master,       'defeated Grand Master, the Monk quest leader', nil, 8],
-          [:defeated_arch_priest,        'defeated the Arch Priest, the Priest quest leader', nil, 8],
-          [:defeated_orion,              'defeated Orion, the Ranger quest leader', nil, 8],
-          [:defeated_master_of_thieves,  'defeated the Master of Thieves, the Rogue quest leader and Tourist quest nemesis', nil, 8],
-          [:defeated_lord_sato,          'defeated Lord Sato, the Samurai quest leader', nil, 8],
-          [:defeated_twoflower,          'defeated Twoflower, the Tourist quest leader', nil, 8],
-          [:defeated_norn,               'defeated Norn, the Valkyrie quest leader', nil, 8],
-          [:defeated_neferet_the_green,  'defeated Neferet the Green, the Wizard quest leader', nil, 8],
-          # quest nemesis
-          [:defeated_minion_of_huhetotl, 'defeated the Minion of Huhetotl, the Archeologist quest nemesis', nil, 9],
-          [:defeated_thoth_amon,         'defeated Thoth Amon, the Barbarian quest nemesis', nil, 9],
-          [:defeated_tiamat,             'defeated Tiamat, the Caveman quest nemesis', nil, 9],
-          [:defeated_warden_arianna,     'defeated Warden Arianna, the Convict quest nemesis', nil, 9],
-          [:defeated_cyclops,            'defeated Cyclops, the Healer quest nemesis', nil, 9],
-          [:defeated_ixoth,              'defeated Ixoth, the Knight quest nemesis', nil, 9],
-          [:defeated_master_kaen,        'defeated Master Kaen, the Monk quest nemesis', nil, 9],
-          [:defeated_nalzok,             'defeated Nalzok, the Priest quest nemesis', nil, 9],
-          [:defeated_scorpius,           'defeated Scorpius, the Ranger quest nemesis', nil, 9],
-          [:defeated_master_assassin,    'defeated the Master Assassin, the Rogue quest nemesis', nil, 9],
-          [:defeated_ashikaga_takauji,   'defeated Ashikaga Takauji, the Samurai quest nemesis', nil, 9],
-          [:defeated_lord_surtur,        'defeated Lord Surtur, the Valkyrie quest nemesis', nil, 9],
-          [:defeated_dark_one,           'defeated the Dark One, the Wizard quest nemesis', nil, 9],
-        ]
-        achievements.each {|achievement|
-          icon = achievement[2] || "u-#{achievement[0].to_s.gsub(' ', '_')}.png"
-          Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[3]
+        # riders
+        [:defeated_death,      'defeated Death', nil, 5],
+        [:defeated_famine,     'defeated Famine', nil, 5],
+        [:defeated_pestilence, 'defeated Pestilence', nil, 5],
+        # uncategorized unique monsters
+        [:defeated_cthulhu,              'defeated Cthulhu', nil, 6],
+        [:defeated_wizard_of_yendor,     'defeated the Wizard of Yendor', nil, 6],
+        [:defeated_one_eyed_sam,         'No membership card (defeated One-Eyed Sam)', 'm-sam.png', 6],
+        [:defeated_aphrodite,            'defeated Aphrodite', nil, 6],
+        [:defeated_vlad_the_impaler,     'defeated Vlad the Impaler', nil, 6],
+        [:defeated_oracle,               'defeated the Oracle', nil, 6],
+        #[:defeated_medusa,               'defeated Medusa', nil, 6],
+        #[:defeated_croesus,              'defeated Croesus', nil, 6],
+        [:defeated_executioner,          'defeated the Executioner', nil, 6],
+        [:defeated_durins_bane,          "defeated Durin's Bane", nil, 6],
+        [:defeated_watcher_in_the_water, 'defeated the Watcher in the Water', nil, 6],
+        # demons
+        [:defeated_asmodeus,   'defeated Asmodeus', nil, 7],
+        [:defeated_baalzebub,  'defeated Baalzebub', nil, 7],
+        [:defeated_demogorgon, 'defeated Demogorgon', nil, 7],
+        [:defeated_dispater,   'defeated Dispater', nil, 7],
+        [:defeated_geryon,     'defeated Geryon', nil, 7],
+        [:defeated_juiblex,    'defeated Juiblex', nil, 7],
+        [:defeated_orcus,      'defeated Orcus', nil, 7],
+        [:defeated_yeenoghu,   'defeated Yeenoghu', nil, 7],
+        # quest leader
+        [:defeated_lord_carnarvon,     'defeated Lord Carnarvon, the Archeologist quest leader', nil, 8],
+        [:defeated_pelias,             'defeated Pelias, the Barbarian quest leader', nil, 8],
+        [:defeated_shaman_karnov,      'defeated Shaman Karnov, the Caveman quest leader', nil, 8],
+        [:defeated_robert_the_lifer,   'defeated Robert the Lifer, the Convict quest leader', nil, 8],
+        [:defeated_hippocrates,        'defeated Hippocrates, the Healer quest leader', nil, 8],
+        [:defeated_king_arthur,        'defeated King Arthur, the Knight quest leader', nil, 8],
+        [:defeated_grand_master,       'defeated Grand Master, the Monk quest leader', nil, 8],
+        [:defeated_arch_priest,        'defeated the Arch Priest, the Priest quest leader', nil, 8],
+        [:defeated_orion,              'defeated Orion, the Ranger quest leader', nil, 8],
+        [:defeated_master_of_thieves,  'defeated the Master of Thieves, the Rogue quest leader and Tourist quest nemesis', nil, 8],
+        [:defeated_lord_sato,          'defeated Lord Sato, the Samurai quest leader', nil, 8],
+        [:defeated_twoflower,          'defeated Twoflower, the Tourist quest leader', nil, 8],
+        [:defeated_norn,               'defeated Norn, the Valkyrie quest leader', nil, 8],
+        [:defeated_neferet_the_green,  'defeated Neferet the Green, the Wizard quest leader', nil, 8],
+        # quest nemesis
+        [:defeated_minion_of_huhetotl, 'defeated the Minion of Huhetotl, the Archeologist quest nemesis', nil, 9],
+        [:defeated_thoth_amon,         'defeated Thoth Amon, the Barbarian quest nemesis', nil, 9],
+        [:defeated_tiamat,             'defeated Tiamat, the Caveman quest nemesis', nil, 9],
+        [:defeated_warden_arianna,     'defeated Warden Arianna, the Convict quest nemesis', nil, 9],
+        [:defeated_cyclops,            'defeated Cyclops, the Healer quest nemesis', nil, 9],
+        [:defeated_ixoth,              'defeated Ixoth, the Knight quest nemesis', nil, 9],
+        [:defeated_master_kaen,        'defeated Master Kaen, the Monk quest nemesis', nil, 9],
+        [:defeated_nalzok,             'defeated Nalzok, the Priest quest nemesis', nil, 9],
+        [:defeated_scorpius,           'defeated Scorpius, the Ranger quest nemesis', nil, 9],
+        [:defeated_master_assassin,    'defeated the Master Assassin, the Rogue quest nemesis', nil, 9],
+        [:defeated_ashikaga_takauji,   'defeated Ashikaga Takauji, the Samurai quest nemesis', nil, 9],
+        [:defeated_lord_surtur,        'defeated Lord Surtur, the Valkyrie quest nemesis', nil, 9],
+        [:defeated_dark_one,           'defeated the Dark One, the Wizard quest nemesis', nil, 9],
+      ]
+
+      if variant != unnethack then
+        achievements.reject! {|achievement|
+          [:defeated_warden_arianna, :defeated_robert_the_lifer, :defeated_cthulhu,
+           :defeated_one_eyed_sam, :defeated_executioner, :defeated_durins_bane,
+           :defeated_watcher_in_the_water, :defeated_aphrodite].include? achievement[0]
         }
       end
+
+      if [evilhack].include? variant then
+        achievements << [:defeated_red_horse,   'defeated the Red Horse',   nil, 10]
+        achievements << [:defeated_white_horse, 'defeated the White Horse', nil, 10]
+        achievements << [:defeated_pale_horse,  'defeated the Pale Horse',  nil, 10]
+        achievements << [:defeated_black_horse, 'defeated the Black Horse', nil, 10]
+        achievements << [:defeated_croesus,     'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
+      end
+
+      achievements.each {|achievement|
+        icon = achievement[2] || "u-#{achievement[0].to_s.gsub(' ', '_')}.png"
+        Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[3]
+      }
     end
 
     if [nethack36, splicehack, xnethack, evilhack].include? variant then

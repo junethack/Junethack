@@ -161,3 +161,7 @@ h,  lgreen,    Cthulhu,                  ,  ≋, red, dark
 &,  magenta,   Baalzebub,           prince, ·, blue
 &,  magenta,   Asmodeus,            prince, ·, red
 &,  magenta,   Demogorgon,          prince, ≋, red
+h,  white,     White Horse,               ,  , white
+h,  lgray,     Pale Horse,                ,  , lgray
+h,  gray,      Black Horse,               ,  ,  gray
+h,  red,       Red Horse,                 ,  , red

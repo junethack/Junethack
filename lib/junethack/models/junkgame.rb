@@ -64,6 +64,7 @@ class JunkGame
     property :killed_nazgul, Integer, default: 0
     property :killed_erinyes, Integer, default: 0
     property :killed_weeping_archangels, Integer, default: 0
+    property :killed_archangels, Integer, default: 0
 
     # nethack4-specific properties
     property :charname, String
