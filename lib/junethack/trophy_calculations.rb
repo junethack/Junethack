@@ -489,10 +489,11 @@ def update_scores(game)
         end
       end
     end
-    if slex == game.version then
-      generic_achievements(game, (game.achieveX||'').split(','))
-    end
+  end
 
+  notdnethack = helper_get_variant_for 'notdnethack' 
+  if [slex, notdnethack].include? game.version then
+    generic_achievements(game, (game.achieveX||'').split(','))
   end
 
   if game.ascended && [xnethack].include?(game.version) then
