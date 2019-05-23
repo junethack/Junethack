@@ -2,6 +2,8 @@
 %html.no-js{"xmlns:og" => "http://ogp.me/ns#"}
   %head
     %meta{:content => "application/xhtml+xml;charset=utf-8", "http-equiv" => "content-type"}/
+    %link{href: "/style.css",       rel: "stylesheet", type: "text/css"}/
+    %link{href: "/back-to-top.css", rel: "stylesheet", type: "text/css"}/
     - games_count = Game.count :conditions => [ 'user_id > 0' ]
     - if Time.now.to_i < $tournament_signupstarttime
       %title= 'Junethack'
@@ -16,8 +18,7 @@
     <meta property="og:image" content="#{request.scheme}://junethack.net/apple-touch-icon.png" />
     <link rel="alternate" type="application/rss+xml" title="Junethack" href="#{request.scheme}://junethack.net/junethack.rss" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}/
-    %link{:href => "/back-to-top.css", :rel => "stylesheet", :type => "text/css"}/
+
     /[if lt IE 9] %script {:src => "http://html5shim.googlecode.com/svn/trunk/html5.js"}
 
   %body
