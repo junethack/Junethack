@@ -66,7 +66,7 @@ describe Game,"saving of cross variant achievements" do
     expect(Individualtrophy.all.map(&:trophy).sort).to eq ["anti_stoner_1", "ascended_variants_1", "globetrotter_1", "sightseeing_tour_1"]
     expect(Event.count).to eq 4
     expect(Event.all.map(&:text).sort).to eq(
-      ['Achievement "Ascended one variant" unlocked by test_user!',
+      ['Achievement "Diversity Ascender: Ascended one variant" unlocked by test_user!',
        'Achievement "Sightseeing Tour: finish a game in one variant" unlocked by test_user!',
        'Achievement "Anti-Stoner: defeated Medusa in one variant" unlocked by test_user!',
        'Achievement "Globetrotter: get a trophy in one variant" unlocked by test_user!'].sort

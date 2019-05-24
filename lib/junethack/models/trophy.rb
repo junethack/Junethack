@@ -411,7 +411,7 @@ DataMapper::MigrationRunner.migration( 1, :create_cross_variant_achievements ) d
       variants = "variant#{i == 1 ? '' : 's'}"
 
       trophy = "ascended_variants_#{i}".to_sym
-      text = "Ascended #{$numbers[i]} #{variants}"
+      text = "Diversity Ascender: Ascended #{$numbers[i]} #{variants}"
       Trophy.create trophy: trophy, text: text, icon: "#{trophy}.png", row: 1
 
       trophy = "anti_stoner_#{i}".to_sym
