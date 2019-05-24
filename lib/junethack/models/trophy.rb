@@ -329,7 +329,7 @@ def Trophy.check_trophies_for_variant variant_description
       }
     end
 
-    if [grunthack, sporkhack, splicehack].include? variant then
+    if [grunthack, sporkhack, splicehack, evilhack].include? variant then
       Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
     end
 

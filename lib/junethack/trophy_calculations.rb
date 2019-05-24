@@ -278,6 +278,7 @@ def update_scores(game)
   splicehack = helper_get_variant_for 'splicehack'
   xnethack = helper_get_variant_for 'xnethack'
   nethack36 = helper_get_variant_for '3.6.1'
+  evilhack = helper_get_variant_for 'evilhack'
 
   if [acehack, nethack4, nh4k, dynahack, fiqhack].include? game.version then
     ## specific trophies as they don't track xlogfile achievements
@@ -343,7 +344,7 @@ def update_scores(game)
                               ).save if game.ascended_without_elbereth?
   end
 
-  if [unnethack, grunthack, sporkhack, splicehack].include? game.version then
+  if [unnethack, grunthack, sporkhack, splicehack, evilhack].include? game.version then
     Scoreentry.first_or_create(user_id: game.user_id,
                                variant: game.version,
                                trophy: :ascended_without_elbereth
