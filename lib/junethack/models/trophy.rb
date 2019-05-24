@@ -279,7 +279,6 @@ def Trophy.check_trophies_for_variant variant_description
       end
 
       if [evilhack].include? variant then
-        achievements << [:defeated_red_horse,   'defeated the Red Horse',   nil, 10]
         achievements << [:defeated_white_horse, 'defeated the White Horse', nil, 10]
         achievements << [:defeated_pale_horse,  'defeated the Pale Horse',  nil, 10]
         achievements << [:defeated_black_horse, 'defeated the Black Horse', nil, 10]
