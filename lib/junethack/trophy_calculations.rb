@@ -521,6 +521,13 @@ def update_scores(game)
     end
   end
 
+  if [unnethack].include? game.version then
+    Scoreentry.first_or_create(user_id: game.user_id,
+                               variant: game.version,
+                               trophy: :ascended_marathon
+                              ).save if game.ascended? && game.mode == 'marathon'
+  end
+
   ## Non-Ascension cross-variant trophies
   # Sightseeing tour: finish a game in n variants
   (1..count_sightseeing_tour(game.user_id)).each {|index|

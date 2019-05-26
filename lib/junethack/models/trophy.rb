@@ -291,6 +291,10 @@ def Trophy.check_trophies_for_variant variant_description
       }
     end
 
+    if [unnethack].include? variant then
+      Trophy.create variant: variant, trophy: :ascended_marathon, text: 'ascended in marathon mode', icon: 's-conduct-marathon.png', row: 3
+    end
+
     if [nethack36, splicehack, xnethack, evilhack].include? variant then
       Trophy.create variant: variant, trophy: :killed_by_molochs_indifference, text: "killed by Moloch's indifference", icon: "killed_by_molochs_indifference.png", row: 2
     end
