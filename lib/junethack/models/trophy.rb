@@ -181,21 +181,21 @@ def Trophy.check_trophies_for_variant variant_description
 
     # AceHack, NetHack4 and UnNetHack specific achievements
     if [acehack, nethack4, unnethack, dynahack, nh4k, fiqhack].include? variant then
-      Trophy.create variant: variant, trophy: "ascended_without_defeating_nemesis", text: "Too good for quests (ascended without defeating the quest nemesis)", icon: "m-no-nemesis.png", row: 2
-      Trophy.create variant: variant, trophy: "ascended_without_defeating_vlad", text: "Too good for Vladbanes (ascended without defeating Vlad)", icon: "m-no-vlad.png", row: 2
-      Trophy.create variant: variant, trophy: "ascended_without_defeating_rodney", text: "Too good for... wait, what? How? (ascended without defeating Rodney)", icon: "m-no-wizard.png", row: 2
-      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
-      Trophy.create variant: variant, trophy: "ascended_with_all_invocation_items", text: "Hoarder (ascended carrying all the invocation items)", icon: "m-hoarder.png", row: 2
       Trophy.create variant: variant, trophy: "defeated_croesus", text: "Assault on Fort Knox (defeated Croesus)", icon: "m-croesus.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_with_all_invocation_items", text: "Hoarder (ascended carrying all the invocation items)", icon: "m-hoarder.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_without_elbereth", text: "ascended without writing Elbereth", icon: "m-elbereth.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_without_defeating_vlad", text: "Too good for Vladbanes (ascended without defeating Vlad)", icon: "m-no-vlad.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_without_defeating_nemesis", text: "Too good for quests (ascended without defeating the quest nemesis)", icon: "m-no-nemesis.png", row: 2
+      Trophy.create variant: variant, trophy: "ascended_without_defeating_rodney", text: "Too good for... wait, what? How? (ascended without defeating Rodney)", icon: "m-no-wizard.png", row: 2
     end
 
     if variant == unnethack
       achievements = [
-        [:ascended_without_defeating_cthulhu, "Too good for a brain (ascended without defeating Cthulhu)", "m-no-cthulhu.png", 3],
-        [:heaven_or_hell,                     "Heaven or Hell (ascend in 1 HP mode)",                      "heaven-or-hell.png", 3],
+        [:bought_oracle_consultation,         'got an Oracle consultation', '4-oracle-consult.png', 3],
         [:mini_croesus,                       "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 3],
         [:better_than_croesus,                "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 3],
-        [:bought_oracle_consultation,         'got an Oracle consultation', '4-oracle-consult.png', 3],
+        [:ascended_without_defeating_cthulhu, "Too good for a brain (ascended without defeating Cthulhu)", "m-no-cthulhu.png", 3],
+        [:heaven_or_hell,                     "Heaven or Hell (ascend in 1 HP mode)",                      "heaven-or-hell.png", 3],
       ]
       achievements.each {|achievement|
         icon = achievement[2] || "u-#{achievement[0].to_s.gsub(' ', '_')}.png"
@@ -224,7 +224,7 @@ def Trophy.check_trophies_for_variant variant_description
         [:defeated_one_eyed_sam,         'No membership card (defeated One-Eyed Sam)', 'm-sam.png', 6],
         [:defeated_aphrodite,            'Make War Not Love (defeated Aphrodite)', nil, 6],
         [:defeated_vlad_the_impaler,     'defeated Vlad the Impaler', nil, 6],
-        [:defeated_oracle,               'No Further Knowledge Required (defeated the Oracle', nil, 6],
+        [:defeated_oracle,               'No Further Knowledge Required (defeated the Oracle)', nil, 6],
         #[:defeated_medusa,               'defeated Medusa', nil, 6],
         #[:defeated_croesus,              'defeated Croesus', nil, 6],
         [:defeated_executioner,          'defeated the Executioner', nil, 6],
