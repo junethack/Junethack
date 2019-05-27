@@ -550,12 +550,9 @@ end
 
 get "/junethack.rss" do
   # determine date of last event or news
-  last_event = Event.last
-  last_news = News.last
-  events = []
-  events << last_event.created_at if last_event
-  events << last_news.created_at if last_news
-  event = events.max
+  last_event = Event.first order: [ :created_at.desc ], :created_at.lte => DateTime.now
+  last_news  = News.first  order: [ :created_at.desc ], :created_at.lte => DateTime.now
+  event = [last_event, last_news].compact.map(&:created_at).max
 
   etag "#{event}".hash if event
   last_modified event.httpdate if event
