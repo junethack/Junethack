@@ -68,11 +68,14 @@ def fetch_all
                             modes = [hgame['mode']] + hgame['modes'].split(',') + hgame['gamemode'].split(',')
 
                             start_scummed = hgame['turns'].to_i <= 10 && ['escaped','quit'].include?(hgame['death'])
+                            junk = (ignored_game_modes & modes).size > 0
+                            junk ||= hgame['role'] == 'Ana' && hgame['race'] == 'Elf'
+
                             if start_scummed then
                                 game = StartScummedGame.create({server: server}.merge(hgame))
                                 @fetch_logger.debug "start scummed game"
                                 count_scummed_games += 1
-                            elsif (ignored_game_modes & modes) != [] then
+                            elsif junk then
                                 game = JunkGame.create({server: server}.merge(hgame))
                                 @fetch_logger.debug "junk game"
                                 count_junk_games += 1
