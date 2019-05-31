@@ -68,7 +68,6 @@ def fetch_all
                             modes = [hgame['mode']] + hgame['modes'].split(',') + hgame['gamemode'].split(',')
 
                             start_scummed = hgame['turns'].to_i <= 10 && ['escaped','quit'].include?(hgame['death'])
-                            start_scummed ||= hgame['turns'].to_i > 10 && hgame['endtime'].to_i-hgame['starttime'].to_i <= 10
                             if start_scummed then
                                 game = StartScummedGame.create({server: server}.merge(hgame))
                                 @fetch_logger.debug "start scummed game"
