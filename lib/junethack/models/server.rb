@@ -206,3 +206,34 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
     Server.destroy
   end
 end
+
+DataMapper::MigrationRunner.migration( 4, :update_hdf ) do
+  up do
+    Server.all.select {|server| server.name =~ /hdf_nao$/ }.each {|server|
+      server.variant = 'NetHack 3.4.3-hdf'
+      server.save!
+    }
+    Server.all.select {|server| server.name =~ /hdf_nh36$/ }.each {|server|
+      server.variant = 'NetHack 3.6.3-hdf'
+      server.xlogurl = 'https://www.hardfought.org/xlogfiles/nethack/xlogfile'
+      server.xlogcurrentoffset = 0
+      server.save!
+    }
+    Server.all.select {|server| server.name =~ /hdf_dnh$/ }.each {|server|
+      server.variant = 'dNetHack 3.17.1'
+      server.save!
+    }
+    Server.all.select {|server| server.name =~ /hdf_spl$/ }.each {|server|
+      server.variant = 'SpliceHack 0.6.2'
+      server.save!
+    }
+    Server.all.select {|server| server.name =~ /hdf_ndnh$/ }.each {|server|
+      server.variant = 'notdNetHack 2019.04.8'
+      server.save!
+    }
+    Server.all.select {|server| server.name =~ /hdf_evh$/ }.each {|server|
+      server.variant = 'EvilHack 0.3.2'
+      server.save!
+    }
+  end
+end
