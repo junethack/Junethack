@@ -448,7 +448,7 @@ DataMapper::MigrationRunner.migration( 2, :create_clan_trophies ) do
     #Trophy.create :variant => "clan", :trophy => "most_log_points", :text => "Most logarithmic points", :icon => "clan-points.png"
 
     # new clan trophies in 2018
-    Trophy.create variant: :clan, trophy: :lowest_turns_for_monster_kills, text: "Lowest sum of turns of getting killed by specific monsters", icon: "clan-lowest-turns-for-monster-kills.png"
+    #Trophy.create variant: :clan, trophy: :lowest_turns_for_monster_kills, text: "Lowest sum of turns of getting killed by specific monsters", icon: "clan-lowest-turns-for-monster-kills.png"
   end
 end
 
@@ -472,5 +472,11 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "dnethack slex"
     Trophy.check_trophies_for_variant "notdnethack"
     Trophy.check_trophies_for_variant "oldhack"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 4, :delete_clan_trophy ) do
+  up do
+    Trophy.all(trophy: :lowest_turns_for_monster_kills).destroy
   end
 end

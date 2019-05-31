@@ -679,11 +679,11 @@ def update_clan_scores(game)
     c.save
 
     # new clan trophy for 2018
-    lowest_turns_for_monster_kills = turns_killed_by_all_monsters clan_name
-    c = ClanScoreEntry.first_or_new(clan_name: clan_name,
-                                    trophy: :lowest_turns_for_monster_kills)
-    c.value = lowest_turns_for_monster_kills
-    lowest_turns_for_monster_kills ? c.save : (c.destroy unless c.new?)
+    #lowest_turns_for_monster_kills = turns_killed_by_all_monsters clan_name
+    #c = ClanScoreEntry.first_or_new(clan_name: clan_name,
+    #                                trophy: :lowest_turns_for_monster_kills)
+    #c.value = lowest_turns_for_monster_kills
+    #lowest_turns_for_monster_kills ? c.save : (c.destroy unless c.new?)
   end
 
   rank_clans
@@ -710,7 +710,7 @@ def rank_clans
   rank_collection(ClanScoreEntry.all(trophy: :most_variant_trophy_combinations, order: :value.desc))
   rank_collection(ClanScoreEntry.all(trophy: :most_medusa_kills, order: :value.desc))
   rank_collection(ClanScoreEntry.all(trophy: :most_full_conducts_broken, order: :value.desc))
-  rank_collection(ClanScoreEntry.all(trophy: :lowest_turns_for_monster_kills, order: :value.asc))
+  #rank_collection(ClanScoreEntry.all(trophy: :lowest_turns_for_monster_kills, order: :value.asc))
   true
 end
 

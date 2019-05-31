@@ -105,8 +105,8 @@
           - for variant in $variant_order
             =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
 
-    .text_content.non_top_post
-      =haml :turns_killed_by_monsters
+    -#.text_content.non_top_post
+    -#  =haml :turns_killed_by_monsters
 
     .text_content.non_top_post
       - @games_played = Game.all(user_id: User.all(clan_name: @clan.name), conditions: [ "ascended='t'" ], order: [ :endtime.desc ])

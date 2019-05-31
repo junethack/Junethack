@@ -88,6 +88,7 @@ describe Game,"update_clan_scores" do
     end
 
     it 'creates the clan trophy' do
+      pending
       expect(ClanScoreEntry.first(trophy: :lowest_turns_for_monster_kills)).not_to be
 
       Game.create(attributes.merge(turns: 256, death: 'killed by Vlad the Impaler'))
