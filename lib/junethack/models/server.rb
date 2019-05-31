@@ -237,3 +237,16 @@ DataMapper::MigrationRunner.migration( 4, :update_hdf ) do
     }
   end
 end
+
+DataMapper::MigrationRunner.migration( 5, :update_hdf2 ) do
+  up do
+    Server.all.select {|server| server.name =~ /hdf_spl$/ }.each {|server|
+      server.variant = 'SpliceHack 0.6.3'
+      server.save!
+    }
+    Server.all.select {|server| server.name =~ /hdf_ndnh$/ }.each {|server|
+      server.variant = 'notdNetHack 2019.05.24'
+      server.save!
+    }
+  end
+end
