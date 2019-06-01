@@ -107,6 +107,10 @@ class Server
             "https://#{prefix}.hardfought.org/userdata/#{player}/splicehack/dumplog/#{game.starttime}.splice.txt"
         when "xnh"
             "https://#{prefix}.hardfought.org/userdata/#{player}/xnethack/dumplog/#{game.starttime}.xnh.txt"
+        when "evh"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/evilhack/dumplog/#{game.starttime}.evil.txt"
+        when "ndnh"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/notdnethack/dumplog/#{game.starttime}.ndnh.txt"
         when "NH-1.3d"
             "https://#{prefix}.hardfought.org/userdata/#{player}/nh13d/dumplog/#{game.starttime}.nh13d.txt"
         end
