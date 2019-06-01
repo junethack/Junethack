@@ -250,3 +250,18 @@ DataMapper::MigrationRunner.migration( 5, :update_hdf2 ) do
     }
   end
 end
+
+DataMapper::MigrationRunner.migration( 6, :update_hdf3 ) do
+  up do
+    Server.all.select {|server| server.name =~ /hdf_nh36$/ }.each {|server|
+      case server.name
+      when 'euhdf_nh36'
+        server.xlogurl = 'https://eu.hardfought.org/xlogfiles/nethack/xlogfile'
+      when 'auhdf_nh36'
+        server.xlogurl = 'https://au.hardfought.org/xlogfiles/nethack/xlogfile'
+      end
+      server.xlogcurrentoffset = 0
+      server.save!
+    }
+  end
+end
