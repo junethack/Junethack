@@ -1,19 +1,18 @@
 %section.content_bulk
   .text_content_wrapper
-    / This h2 should be in the branding section
     %section.text_content
       %h2
         Player scoreboard
-    %section#page_outline.text_content
-      .list
-      - $variant_order.each do |variant|
+    %section#variant_navigation_list.text_content
+      %ul.list
+        - $variant_order.each do |variant|
         - variant_name = $variants_mapping[variant]
-        %a{href: "##{link_id variant_name}"}= variant_name
-        %br
+          %li
+            %a{href: "##{link_id variant_name}"}= variant_name
 
     - $variant_order.each do |variant|
       - variant_name = $variants_mapping[variant]
-      %section.text_content
+      %section.text_content.non_top_post
         =h3 variant_name
         - if (CompetitionScoreEntry.count :variant => variant) == 0
           %div

@@ -1,18 +1,16 @@
 %section.content_bulk
   .text_content_wrapper
-    / This h2 should be in the branding section
     %section.text_content
       %h2
         Trophy scoreboard
-
-    %section#page_outline.text_content
-      .list
-        %a{:href => "#cross-variant"} Cross-Variant
-        %br
+    %section#variant_navigation_list.text_content
+      %ul.list
+        %li
+          %a{:href => "#cross-variant"} Cross-Variant
         - variant_and_bonus_games_order.each do |variant|
           - variant_name = $variants_mapping[variant]
-          %a{href: "##{link_id variant_name}"}= variant_name
-          %br
+          %li
+            %a{href: "##{link_id variant_name}"}= variant_name
 
     %section.text_content.trophycabinet
       =h3 'Cross-Variant'

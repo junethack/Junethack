@@ -664,6 +664,32 @@ th.competition_placing {
     width: 3em;
 }
 
+/* variant inter page navigational link list */
+#variant_navigation_list {
+  display: inline-block;
+  margin-top: 0;
+}
+#variant_navigation_list li:first-child {
+  padding-top: 0.2em;
+  border-top-left-radius: 0.4em;
+  border-top-right-radius: 0.4em;
+}
+#variant_navigation_list li:last-child {
+  padding-top: 0.2em;
+  border-bottom-left-radius: 0.4em;
+  border-bottom-right-radius: 0.4em;
+}
+#variant_navigation_list li {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#variant_navigation_list li:nth-child(odd) {
+  background-color: #ccc;
+}
+#variant_navigation_list li:nth-child(even) {
+  background-color: #bbb;
+}
+
 /**************************
 **                       **
 **   clan page display   **
