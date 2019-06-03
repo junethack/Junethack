@@ -86,7 +86,7 @@ class Server
         when "gho"
             "https://#{prefix}.hardfought.org/userdata/#{player}/gh/dumplog/#{game.starttime}.gh.txt"
         when "3.6"
-            "https://#{prefix}.hardfought.org/userdata/#{player}/nh361/dumplog/#{game.starttime}.nh361.txt"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/nethack/dumplog/#{game.starttime}.nh.txt"
         when "unh"
             "https://#{prefix}.hardfought.org/userdata/#{player}/unnethack/dumplog/#{game.starttime}.un.txt.html"
         when "fiq"
