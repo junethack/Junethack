@@ -400,7 +400,8 @@ def update_scores(game)
 
   # DNetHack specific trophies
   dnethack = helper_get_variant_for 'dnethack'
-  if dnethack == game.version then
+  dnhslex = helper_get_variant_for 'dnethack slex'
+  if [dnethack, dnhslex].include? game.version then
     Scoreentry.first_or_create(user_id: game.user_id,
                                variant: game.version,
                                trophy: :one_key
