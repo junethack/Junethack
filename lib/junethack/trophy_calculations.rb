@@ -358,7 +358,7 @@ def update_scores(game)
                               ).save if game.ascended_without_unfairly_scaring_monsters?
   end
 
-  if [unnethack].include? game.version then
+  if [unnethack, evilhack].include? game.version then
     if game.event_bought_oracle_consultation?
       Scoreentry.first_or_create(user_id: game.user_id,
                                  variant: game.version,
