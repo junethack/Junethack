@@ -101,7 +101,7 @@ GEM
       method_source (~> 0.9.0)
     public_suffix (3.0.3)
     raabro (1.1.6)
-    rack (1.6.11)
+    rack (1.6.12)
     rack-mobile-detect (0.4.0)
       rack
     rack-protection (1.5.5)
