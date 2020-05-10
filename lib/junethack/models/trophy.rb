@@ -369,6 +369,8 @@ def Trophy.check_trophies_for_variant variant_description
         [:max_punch,         "Not Pulling Punches (Land a punch with all 4 offensive mystic powers active)", nil, 2],
         [:garnet_spear,      "Garnet Rod (Land a hit with a garnet tipped spear)", nil, 2],
         [:half_overload,     "Chernobyl (Cast a spell 150% overloaded or higher)", nil, 2],
+        [:inked_up,          "Inked Up (Get a tattoo in The Sigil from Fell)", nil, 2],
+        [:new_races,         "New Races. New Faces. (Ascend either a salamander, a symbiote, or an etheraloid)", nil, 2],
       ]
       achievements.each {|achievement|
         icon = achievement[2] || "#{achievement[0].to_s.gsub(' ', '_')}.png"
