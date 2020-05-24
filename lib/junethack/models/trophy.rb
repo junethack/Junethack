@@ -273,17 +273,21 @@ def Trophy.check_trophies_for_variant variant_description
 
       if variant != unnethack then
         achievements.reject! {|achievement|
-          [:defeated_warden_arianna, :defeated_robert_the_lifer, :defeated_cthulhu,
+          [:defeated_cthulhu,
            :defeated_one_eyed_sam, :defeated_executioner, :defeated_durins_bane,
            :defeated_watcher_in_the_water, :defeated_aphrodite].include? achievement[0]
         }
       end
 
       if [evilhack].include? variant then
-        achievements << [:defeated_white_horse, 'defeated the White Horse', nil, 10]
-        achievements << [:defeated_pale_horse,  'defeated the Pale Horse',  nil, 10]
-        achievements << [:defeated_black_horse, 'defeated the Black Horse', nil, 10]
-        achievements << [:defeated_croesus,     'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
+        achievements << [:defeated_white_horse,  'defeated the White Horse', nil, 10]
+        achievements << [:defeated_pale_horse,   'defeated the Pale Horse',  nil, 10]
+        achievements << [:defeated_black_horse,  'defeated the Black Horse', nil, 10]
+        achievements << [:defeated_cerberus,     'defeated Cerberus', nil, 10]
+        achievements << [:defeated_the_rat_king, 'defeated the Rat King', nil, 10]
+        achievements << [:defeated_croesus,      'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
+        achievements << [:mini_croesus,          "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
+        achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 6]
       end
 
       achievements.each {|achievement|
@@ -339,7 +343,9 @@ def Trophy.check_trophies_for_variant variant_description
 
     if [xnethack].include? variant then
       Trophy.create variant: variant, trophy: :ascended_without_unfairly_scaring_monsters, text: "ascended without scaring any monsters", icon: "m-elbereth.png", row: 2
+    end
 
+    if [xnethack, evilhack].include? variant then
       $xnethack_achievements.reject(&:empty?).each {|trophy|
         Trophy.create variant: variant, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
       }
@@ -491,5 +497,13 @@ DataMapper::MigrationRunner.migration( 5, :create_variant_trophies2 ) do
     # add all already existing variants
     Trophy.check_trophies_for_variant "3.7"
     Trophy.check_trophies_for_variant "slashem"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 6, :create_variant_trophies3 ) do
+  up do
+    evilhack = helper_get_variant_for 'evilhack'
+    Trophy.all(variant: evilhack).destroy!
+    Trophy.check_trophies_for_variant "evilhack"
   end
 end
