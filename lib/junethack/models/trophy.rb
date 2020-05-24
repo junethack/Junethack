@@ -146,6 +146,7 @@ def Trophy.check_trophies_for_variant variant_description
     splicehack = helper_get_variant_for 'splicehack'
     xnethack = helper_get_variant_for 'xnethack'
     nethack36 = helper_get_variant_for '3.6.1'
+    nethack37 = helper_get_variant_for '3.7'
     evilhack = helper_get_variant_for 'evilhack'
     dnhslex = helper_get_variant_for 'dnethack slex'
     notdnethack = helper_get_variant_for 'notdnethack'
@@ -295,7 +296,7 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: :ascended_marathon, text: 'ascended in marathon mode', icon: 's-conduct-marathon.png', row: 3
     end
 
-    if [nethack36, splicehack, xnethack, evilhack].include? variant then
+    if [nethack37,  nethack36, splicehack, xnethack, evilhack].include? variant then
       Trophy.create variant: variant, trophy: :killed_by_molochs_indifference, text: "killed by Moloch's indifference", icon: "killed_by_molochs_indifference.png", row: 2
     end
 
@@ -459,6 +460,7 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     # add all already existing variants
     Trophy.check_trophies_for_variant "vanilla"
     Trophy.check_trophies_for_variant "3.6.0"
+    Trophy.check_trophies_for_variant "3.7"
     Trophy.check_trophies_for_variant "sporkhack"
     Trophy.check_trophies_for_variant "unnethack"
     Trophy.check_trophies_for_variant "grunthack"
@@ -473,6 +475,7 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "evilhack"
     Trophy.check_trophies_for_variant "dnethack slex"
     Trophy.check_trophies_for_variant "notdnethack"
+    Trophy.check_trophies_for_variant "slashem"
     Trophy.check_trophies_for_variant "oldhack"
   end
 end
@@ -480,5 +483,13 @@ end
 DataMapper::MigrationRunner.migration( 4, :delete_clan_trophy ) do
   up do
     Trophy.all(trophy: :lowest_turns_for_monster_kills).destroy
+  end
+end
+
+DataMapper::MigrationRunner.migration( 5, :create_variant_trophies2 ) do
+  up do
+    # add all already existing variants
+    Trophy.check_trophies_for_variant "3.7"
+    Trophy.check_trophies_for_variant "slashem"
   end
 end
