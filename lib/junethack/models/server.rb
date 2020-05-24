@@ -135,17 +135,17 @@ end
 DataMapper::MigrationRunner.migration( 1, :create_servers ) do
   up do
     [
-      [:nao_nh36, 'NetHack 3.6.2', 'https://alt.org/nethack/xlogfile.nh362'],
+      [:nao_nh36, 'NetHack 3.6.6', 'https://alt.org/nethack/xlogfile.nh363+'],
     ].each {|server|
       url = 'https://nethack.alt.org/'
-      configfileurl = 'https://alt.org/nethack/userdata/random_user/random_user.nh362rc'
+      configfileurl = 'https://alt.org/nethack/userdata/random_user/random_user.nh366rc'
       Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
     }
 
     [
       [:asc_nao,  'NetHack 3.4.3-nao',     'https://ascension.run/xlogfiles/nethack'],
-      [:asc_unh,  'UnNetHack 5.3.1',       'https://ascension.run/xlogfiles/unnethack'],
-      [:asc_dnh,  'dNetHack 3.16.0',       'https://ascension.run/xlogfiles/dnethack'],
+      [:asc_unh,  'UnNetHack 5.3.2',       'https://ascension.run/xlogfiles/unnethack'],
+      [:asc_dnh,  'dNetHack 3.18.0',       'https://ascension.run/xlogfiles/dnethack'],
       [:asc_dyn,  'DynaHack 0.6.0',        'https://ascension.run/xlogfiles/dynahack'],
       [:asc_nh4k, 'NetHack Fourk 4.3.0.4', 'https://ascension.run/xlogfiles/nhfourk'],
       [:asc_fiq,  'FIQHack 4.3.1',         'https://ascension.run/xlogfiles/fiqhack'],
@@ -162,10 +162,11 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
     [
       [:esm_nh36, 'NetHack 3.6.1',           'https://em.slashem.me/xlogfiles/nethack'],
-      [:esm_slex, "Slash'EM Extended 2.5.0", 'https://em.slashem.me/xlogfiles/slex'],
-      [:esm_gho,  'GruntHack 0.2.3',         'https://em.slashem.me/xlogfiles/grunthack'],
+      [:esm_slex, "Slash'EM Extended 2.6.6", 'https://em.slashem.me/xlogfiles/slex'],
+      [:esm_gho,  'GruntHack 0.2.4',         'https://em.slashem.me/xlogfiles/grunthack'],
       [:esm_shc,  'SporkHack 0.6.5',         'https://em.slashem.me/xlogfiles/sporkhack'],
       [:esm_dslex,'DNetHack SLEX 3.16.0',    'https://em.slashem.me/xlogfiles/dnhslex'],
+      [:esm_ndnh, 'notdNetHack 2020.04.16',  "https://em.slashem.me/xlogfiles/notdnh"],
     ].each {|server|
       url = 'https://em.slashem.me/'
       configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
@@ -177,21 +178,22 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
     [:us, :eu, :au].each {|location|
       prefix = prefixes[location]
       [
-        [:hdf_nao,  'NetHack 3.4.3-nao',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
+        [:hdf_nao,  'NetHack 3.4.3-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
         [:hdf_nh36, 'NetHack 3.6.2',           "https://#{prefix}.hardfought.org/xlogfiles/nh361/xlogfile"],
+        [:hdf_nh37, 'NetHack 3.7.0-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack/xlogfile-370-hdf"],
         [:hdf_shc,  'SporkHack 0.6.5',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
         [:hdf_gho,  'GruntHack 0.2.4',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
         [:hdf_unh,  'UnNetHack 5.3.2',         "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
-        [:hdf_dnh,  'dNetHack 3.16.0',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
+        [:hdf_dnh,  'dNetHack 3.19.0',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
         [:hdf_nh4,  'NetHack4 4.3.0',          "https://#{prefix}.hardfought.org/xlogfiles/nethack4/xlogfile"],
         [:hdf_nh4k, 'NetHack Fourk 4.3.0.4',   "https://#{prefix}.hardfought.org/xlogfiles/4k/xlogfile"],
         [:hdf_fiq,  'FIQHack 4.3.1',           "https://#{prefix}.hardfought.org/xlogfiles/fh/xlogfile"],
         [:hdf_dyn,  'DynaHack 0.6.0',          "https://#{prefix}.hardfought.org/xlogfiles/dynahack/xlogfile"],
-        [:hdf_slex, "Slash'EM Extended 2.5.0", "https://#{prefix}.hardfought.org/xlogfiles/slex/xlogfile"],
-        [:hdf_xnh,  'xNetHack 0.4.1',          "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
-        [:hdf_spl,  'SpliceHack 0.6.2',        "https://#{prefix}.hardfought.org/xlogfiles/splicehack/xlogfile"],
-        [:hdf_ndnh, 'notdNetHack 2019.04.8',   "https://#{prefix}.hardfought.org/xlogfiles/notdnethack/xlogfile"],
-        [:hdf_evh,  'EvilHack 0.3.1',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
+        [:hdf_slex, "Slash'EM Extended 2.6.6", "https://#{prefix}.hardfought.org/xlogfiles/slex/xlogfile"],
+        [:hdf_xnh,  'xNetHack 5.1',            "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
+        [:hdf_spl,  'SpliceHack 0.7.1',        "https://#{prefix}.hardfought.org/xlogfiles/splicehack/xlogfile"],
+        [:hdf_ndnh, 'notdNetHack 2020.04.16',  "https://#{prefix}.hardfought.org/xlogfiles/notdnethack/xlogfile"],
+        [:hdf_evh,  'EvilHack 0.5.0',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
         [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
       ].each {|server|
         url = "https://#{prefix}.hardfought.org/nethack"
@@ -265,6 +267,96 @@ DataMapper::MigrationRunner.migration( 6, :update_hdf3 ) do
         server.xlogurl = 'https://au.hardfought.org/xlogfiles/nethack/xlogfile'
       end
       server.xlogcurrentoffset = 0
+      server.save!
+    }
+  end
+end
+
+DataMapper::MigrationRunner.migration( 7, :update_hdf4 ) do
+  up do
+    prefixes = { us: :www, eu: :eu, au: :au }
+    [:us, :eu, :au].each {|location|
+      prefix = prefixes[location]
+      [
+        [:hdf_nh37, 'NetHack 3.7.0-hdf', "https://#{prefix}.hardfought.org/xlogfiles/nethack/xlogfile-370-hdf"],
+      ].each {|server|
+        url = "https://#{prefix}.hardfought.org/nethack"
+
+        server[0] = server[0].to_s.sub('h', 'euh').to_sym if location == :eu
+        server[0] = server[0].to_s.sub('h', 'auh').to_sym if location == :au
+
+        configfileurl = "https://#{prefix}.hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc"
+        Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+      }
+    }
+
+    Server.all.select {|server| server.name =~ /hdf_nao$/ }.each {|server|
+      server.variant = 'NetHack 3.4.3-hdf'
+      server.save!
+    }
+
+    Server.all.select {|server| server.name =~ /hdf_dnh$/ }.each {|server|
+      server.variant = 'dNetHack 3.19.0'
+      server.save!
+    }
+
+    Server.all.select {|server| server.name =~ /hdf_slex$/ }.each {|server|
+      server.variant = "Slash'EM Extended 2.6.6"
+      server.save!
+    }
+
+    Server.all.select {|server| server.name =~ /hdf_xnh$/ }.each {|server|
+      server.variant = 'xNetHack 5.1'
+      server.save!
+    }
+
+    Server.all.select {|server| server.name =~ /hdf_ndnh$/ }.each {|server|
+      server.variant = 'notdNetHack 2020.04.16'
+      server.save!
+    }
+
+    Server.all.select {|server| server.name =~ /hdf_evh$/ }.each {|server|
+      server.variant = 'EvilHack 0.5.0'
+      server.save!
+    }
+  end
+end
+
+DataMapper::MigrationRunner.migration( 8, :update_nao ) do
+  up do
+
+    Server.all.select {|server| server.name == 'nao_nh36' }.each {|server|
+      server.variant = 'NetHack 3.6.6'
+      server.xlogurl = 'https://alt.org/nethack/userdata/random_user/random_user.nh366rc'
+      server.configfileurl = 'https://alt.org/nethack/userdata/random_user/random_user.nh366rc'
+      server.save!
+    }
+  end
+end
+
+DataMapper::MigrationRunner.migration( 8, :update_esm ) do
+  up do
+    [
+      [:esm_ndnh, 'notdNetHack 2020.04.16',  "https://em.slashem.me/xlogfiles/notdnh"],
+    ].each {|server|
+      url = 'https://em.slashem.me/'
+      configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
+
+      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+    }
+
+    Server.all.select {|server| server.name == 'esm_gho' }.each {|server|
+      server.variant = 'GruntHack 0.2.4'
+      server.save!
+    }
+
+    Server.all.select {|server| server.name == 'esm_dslex' }.each {|server|
+      server.variant = 'DNetHack SLEX 3.16.0'
+      server.save!
+    }
+
+    Server.all.select {|server| server.name == 'esm_slex' }.each {|server|
+      server.variant = "Slash'EM Extended 2.6.6"
       server.save!
     }
   end
