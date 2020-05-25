@@ -26,7 +26,7 @@ $variants_mapping["xnh"]     = "xNetHack"
 $variants_mapping["dslex"]   = "dNetHack SLEX"
 $variants_mapping["ndnh"]    = "notdNetHack"
 $variants_mapping["evh"]     = "EvilHack"
-$variants_mapping["slashem"] = "Slash'Em"
+$variants_mapping["slashem"] = "Slash'EM"
 $variants_mapping["NH-1.3d"] = "NetHack 1.3d"
 
 # hard coded ordering of variants with competition score entries
