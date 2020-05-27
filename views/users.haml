@@ -1,4 +1,4 @@
-- cache_fragment("#{Game.max_endtime}_#{User.count}") do
+- cache_fragment("#{Game.max_endtime}_#{User.count}_#{Account.count}") do
   .content_bulk
     .text_content_wrapper
       .text_content
@@ -9,7 +9,7 @@
             %th
               Username
             %th
-              Accounts
+              Servers
             %th
               Games Played
             %th
@@ -20,7 +20,7 @@
                 %a{:href => "/user/" + user.login}
                   #{h user.login}
               %td
-                #{h user.accounts.count}
+                #{h user.servers.map(&:url).uniq.count}
               %td
                 #{h user.games_count}
               %td
