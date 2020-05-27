@@ -5,6 +5,7 @@
                 Manage your accounts
             -# determine which servers have no account linked
             - server_accounts = (Server.all - @user.servers)
+            - server_accounts.reject! {|server| server.url =~ /https:\/\/[ae]u.hardfought.org\/nethack/ }
             - server_accounts = server_accounts.map {|server| [server.id, server.hostname] }.uniq {|_,server| server}
             - if server_accounts.size > 0
                 #greeting
