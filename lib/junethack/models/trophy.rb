@@ -325,6 +325,52 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: "dn_tour", text: "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack", icon: "m-dn-tour.png", row: 4
     end
 
+    if [dnethack].include? variant then
+      achievements = [
+        [:archeologist_quest, "Completed the revised archeologist quest", "dnh_archeologist_quest.png", 6],
+        [:caveman_quest, "Serpent slayer (Completed the revised caveman quest)", "dnh_caveman_quest.png", 6],
+        [:convict_quest, "Sentence commuted (Completed the revised convict quest)", "dnh_convict_quest.png", 6],
+        [:knight_quest, "Completed the revised knight quest", "dnh_knight_quest.png", 6],
+        [:anachrononaut_quest, "Completed the anachrononaut quest", "dnh_anachrononaut_quest.png", 6],
+        [:android_quest, "Glory to mankind (Completed the android quest)", "dnh_android_quest.png", 6],
+        [:anachrononaut_ascension, "No fate (Ascended an Anachrononaut and saved the future)", "dnh_anachrononaut_ascension.png", 5],
+        [:binder_quest, "33 spirits (Completed the binder quest)", "dnh_binder_quest.png", 6],
+        [:binder_ascension, "The other side of the sky (Ascended a Binder)", "dnh_binder_ascension.png", 5],
+        [:pirate_quest, "Not so inconceivable (Completed the pirate quest)", "dnh_pirate_quest.png", 6],
+        [:bard_quest, "Not so spoony (Completed the bard quest)", "dnh_bard_quest.png", 6],
+        [:base_noble_quest, "Rebellion crushed (Completed the base noble quest)", "dnh_base_noble_quest.png", 6],
+        [:hedrow_noble_quest, "Family drama (Completed the hedrow noble quest)", "dnh_hedrow_noble_quest.png", 6],
+        [:hedrow_shared_quest, "On agency (Completed the hedrow shared quest)", "dnh_hedrow_shared_quest.png", 6],
+        [:drow_noble_quest, "Foreshadowing (Completed the drow noble quest)", "dnh_drow_noble_quest.png", 6],
+        [:drow_shared_quest, "Old friends (Completed the drow shared quest)", "dnh_drow_shared_quest.png", 6],
+        [:dwarf_noble_quest, "Durin's Bane's Bane (Completed the dwarf noble quest)", "dnh_dwarf_noble_quest.png", 6],
+        [:dwarf_knight_quest, "Battle of (5-4) armies (Completed the dwarf knight quest)", "dnh_dwarf_knight_quest.png", 6],
+        [:gnome_ranger_quest, "Completed the gnome ranger quest", "dnh_gnome_ranger_quest.png", 6],
+        [:elf_shared_quest, "Driven out (Completed the elf shared quest)", "dnh_elf_shared_quest.png", 6],
+        [:clockwork_ascension, "Deus ex machina (Ascended a clockwork automaton)", "dnh_clockwork_ascension.png", 5],
+        [:chiropteran_ascension, "Bat outa hell (Ascended a chiropteran)", "dnh_chiropteran_ascension.png", 5],
+        [:yuki_onna_ascension, "Ascended a yuki-onna", "dnh_yuki_onna_ascension.png", 5],
+        [:half_dragon_ascension, "Three halves (Ascended a half-dragon)", "dnh_half_dragon_ascension.png", 5],
+        [:law_quest, "Completed the law quest", "dnh_law_quest.png", 6],
+        [:neutral_quest, "Key to the (corpse) city (Completed the neutral quest)", "dnh_neutral_quest.png", 6],
+        [:chaos_temple_quest, "Asinine paradigm (Completed the chaos temple quest)", "dnh_chaos_temple_quest.png", 6],
+        [:mithardir_quest, "Chasing after the wind (Completed the mithardir quest)", "dnh_mithardir_quest.png", 6],
+        [:mordor_quest, "Completed the mordor quest", "dnh_mordor_quest.png", 6],
+        [:second_thoughts, "Second thoughts (Completed a drow shared quest loyally before completing the traitor's quest)", "dnh_second_thoughts.png", 5],
+        [:illuminated, "Illuminated (Learned every word of creation and accumulated 30 passive sylabel bonuses)", "dnh_illuminated.png", 5],
+        [:exodus, "Exodus (Ascended with a pet android commander or opperator android)", "dnh_exodus.png", 5],
+        [:fully_upgraded, "Super Fighting Robot (Acquried all clockwork upgrades (except high-tension spring))", "dnh_fully_upgraded.png", 5],
+        [:hunter_of_nightmares, "Hunter of Nightmares (Defeated at least one of each of the secret insight bosses)", "dnh_hunter_of_nightmares.png", 5],
+        [:two_keys, "Two Keys (Ascended having only touched two alignment keys)", "dnh_two_keys.png", 5],
+        [:quite_mad, "Quite Mad (Suffered from at least 6 madnesses)", "dnh_quite_mad.png", 5],
+        [:booze_hound, "Booze Hound (Maxed out your drunkard score by drinking at least 90 potions of booze)", "dnh_booze_hound.png", 5],
+      ]
+
+      achievements.each {|achievement|
+        Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: achievement[2], row: achievement[3]
+      }
+    end
+
     if [slashthem, slex].include? variant then
       $slash_achievements.reject(&:empty?).each {|trophy|
         Trophy.create variant: variant, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
@@ -505,5 +551,13 @@ DataMapper::MigrationRunner.migration( 6, :create_variant_trophies3 ) do
     evilhack = helper_get_variant_for 'evilhack'
     Trophy.all(variant: evilhack).destroy!
     Trophy.check_trophies_for_variant "evilhack"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 7, :add_new_dnethack_achievements ) do
+  up do
+    variant = helper_get_variant_for 'dnethack'
+    Trophy.all(variant: variant).destroy!
+    Trophy.check_trophies_for_variant "dnethack"
   end
 end
