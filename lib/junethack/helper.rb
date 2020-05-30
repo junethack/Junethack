@@ -27,6 +27,7 @@ $variants_mapping["dslex"]   = "dNetHack SLEX"
 $variants_mapping["ndnh"]    = "notdNetHack"
 $variants_mapping["evh"]     = "EvilHack"
 $variants_mapping["slashem"] = "Slash'EM"
+$variants_mapping["gnl"]     = "GnollHack"
 $variants_mapping["NH-1.3d"] = "NetHack 1.3d"
 
 # hard coded ordering of variants with competition score entries
@@ -51,6 +52,7 @@ $variant_order << "dyn"
 $variant_order << "dslex"
 $variant_order << "ndnh"
 $variant_order << "slashem"
+$variant_order << "gnl"
 
 $numbers = [
   'zero', 'one', 'two', 'three', 'four', 'five',
@@ -73,6 +75,7 @@ def helper_get_variant_for(description)
     return '3.6' if description.downcase == '3.6.3'
     return '3.7' if description.downcase == '3.7'
     return 'slashem' if description.downcase == 'slashem'
+    return 'gnl' if description.downcase == 'gnollhack'
     return 'NH-1.3d' if description.downcase == 'oldhack'
 
     # find variant by text description

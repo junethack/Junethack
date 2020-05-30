@@ -585,3 +585,9 @@ DataMapper::MigrationRunner.migration( 8, :add_new_slashem_achievements ) do
     Trophy.check_trophies_for_variant "slashem"
   end
 end
+
+DataMapper::MigrationRunner.migration( 9, :add_gnollhack_achievements ) do
+  up do
+    Trophy.check_trophies_for_variant "gnollhack"
+  end
+end

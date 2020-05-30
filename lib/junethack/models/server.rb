@@ -251,3 +251,24 @@ DataMapper::MigrationRunner.migration(11, :esm_slashem ) do
     }
   end
 end
+
+DataMapper::MigrationRunner.migration(12, :add_gnollhack_servers ) do
+  up do
+    prefixes = { us: :server, eu: 'eu-server', au: 'au-server' }
+    [:us, :eu, :au].each {|location|
+      prefix = prefixes[location]
+      [
+        [:gnl_hck, 'GnollHack', "http://#{prefix}.gnollhack.com/xlogfile"]
+      ].each {|server|
+        url = "http://#{prefix}.gnollhack.com/"
+
+        server[0] = :us_gnl if location == :us
+        server[0] = :eu_gnl if location == :eu
+        server[0] = :au_gnl if location == :au
+
+        configfileurl = "http://#{prefix}.gnollhack.com/userdata/random_user/random_user_gnollhack.gnhrc"
+        Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+      }
+    }
+  end
+end
