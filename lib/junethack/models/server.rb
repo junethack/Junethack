@@ -127,6 +127,9 @@ class Server
           "https://em.slashem.me/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}.txt"
         when "shc"
           "https://em.slashem.me/userdata/#{game.name}/sporkhack/dumplog/#{game.starttime}.txt"
+        when "slashem"
+          starttime = DateTime.strptime(game.starttime.to_s,"%s").strftime("%Y%m%d%H%M%S")
+          "https://em.slashem.me/userdata/#{game.name}/slashem-008/dumplog/#{starttime}.txt"
         end
       else
         return nil
@@ -161,12 +164,13 @@ class Server
         url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
 
       [
-        [:esm_nh36, 'NetHack 3.6.6',           'https://em.slashem.me/xlogfiles/nethack'],
-        [:esm_slex, "Slash'EM Extended 2.6.6", 'https://em.slashem.me/xlogfiles/slex'],
-        [:esm_gho,  'GruntHack 0.2.4',         'https://em.slashem.me/xlogfiles/grunthack'],
-        [:esm_shc,  'SporkHack 0.6.5',         'https://em.slashem.me/xlogfiles/sporkhack'],
-        [:esm_dslex,'DNetHack SLEX 3.16.0',    'https://em.slashem.me/xlogfiles/dnhslex'],
-        [:esm_ndnh, 'notdNetHack 2020.04.16',  "https://em.slashem.me/xlogfiles/notdnh"],
+        [:esm_nh36,  'NetHack 3.6.6',           'https://em.slashem.me/xlogfiles/nethack'],
+        [:esm_slex,  "Slash'EM Extended 2.6.6", 'https://em.slashem.me/xlogfiles/slex'],
+        [:esm_gho,   'GruntHack 0.2.4',         'https://em.slashem.me/xlogfiles/grunthack'],
+        [:esm_shc,   'SporkHack 0.6.5',         'https://em.slashem.me/xlogfiles/sporkhack'],
+        [:esm_dslex, 'DNetHack SLEX 3.16.0',    'https://em.slashem.me/xlogfiles/dnhslex'],
+        [:esm_ndnh,  'notdNetHack 2020.04.16',  'https://em.slashem.me/xlogfiles/notdnh'],
+        [:esm_slsh,  "Slash'EM 0.0.8E0F2",      'https://em.slashem.me/xlogfiles/slashem'],
       ].each {|server|
         url = 'https://em.slashem.me/'
         configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
@@ -231,6 +235,19 @@ DataMapper::MigrationRunner.migration(10, :hdf_fix ) do
     Server.all.select {|server| server.name =~ /hdf_nh36/ }.each {|server|
       server.accounts.destroy!
       server.destroy!
+    }
+  end
+end
+
+DataMapper::MigrationRunner.migration(11, :esm_slashem ) do
+  up do
+    [
+      [:esm_slsh, "Slash'EM 0.0.8E0F2", 'https://em.slashem.me/xlogfiles/slashem'],
+    ].each {|server|
+      url = 'https://em.slashem.me/'
+      configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
+
+      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
     }
   end
 end

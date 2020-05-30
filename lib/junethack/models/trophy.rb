@@ -150,6 +150,7 @@ def Trophy.check_trophies_for_variant variant_description
     evilhack = helper_get_variant_for 'evilhack'
     dnhslex = helper_get_variant_for 'dnethack slex'
     notdnethack = helper_get_variant_for 'notdnethack'
+    slashem = helper_get_variant_for 'slashem'
 
     if [acehack, nethack4, nh4k, dynahack, fiqhack].include? variant then
       # these variants don't have standard xlogfile achievement flags
@@ -286,6 +287,11 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:defeated_cerberus,     'defeated Cerberus', nil, 10]
         achievements << [:defeated_the_rat_king, 'defeated the Rat King', nil, 10]
         achievements << [:defeated_croesus,      'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
+        achievements << [:mini_croesus,          "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
+        achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 6]
+      end
+
+      if [slashem].include? variant then
         achievements << [:mini_croesus,          "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
         achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 6]
       end
@@ -431,6 +437,16 @@ def Trophy.check_trophies_for_variant variant_description
       }
     end
 
+    if [slashem].include? variant then
+      achievements = []
+      achievements << [:mini_croesus,          "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 2]
+      achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 2]
+
+      achievements.each {|achievement|
+        Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: achievement[2], row: achievement[3]
+      }
+    end
+
     # user competition trophies
     Trophy.create :variant => variant, :trophy => "most_ascensions", :text => "Most ascensions", :icon => "c-most-ascensions.png", :user_competition => true
     Trophy.create :variant => variant, :trophy => "fastest_ascension_gametime", :text => "Fastest ascension (by turns)", :icon => "c-fastest-gametime.png", :user_competition => true
@@ -559,5 +575,13 @@ DataMapper::MigrationRunner.migration( 7, :add_new_dnethack_achievements ) do
     variant = helper_get_variant_for 'dnethack'
     Trophy.all(variant: variant).destroy!
     Trophy.check_trophies_for_variant "dnethack"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 8, :add_new_slashem_achievements ) do
+  up do
+    variant = helper_get_variant_for 'slashem'
+    Trophy.all(variant: variant).destroy!
+    Trophy.check_trophies_for_variant "slashem"
   end
 end
