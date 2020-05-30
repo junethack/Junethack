@@ -14,7 +14,7 @@
               Last modified
             %th
               Xlogfile offset
-        - servers = Server.all
+        - servers = Server.all(order: :name)
         - servers.each_with_index do |server, index|
           %tr
             %td{"data-title": "Server name"}

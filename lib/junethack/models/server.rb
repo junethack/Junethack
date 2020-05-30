@@ -180,11 +180,10 @@ class Server
         [
           [:hdf_nao,  'NetHack 3.4.3-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
           [:hdf_nh37, 'NetHack 3.7.0-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack/xlogfile-370-hdf"],
-          [:hdf_nh36, 'NetHack 3.6.6',           "https://#{prefix}.hardfought.org/xlogfiles/nethack/xlogfile"],
           [:hdf_shc,  'SporkHack 0.6.5',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
           [:hdf_gho,  'GruntHack 0.2.4',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
           [:hdf_unh,  'UnNetHack 5.3.2',         "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
-          [:hdf_dnh,  'dNetHack 3.19.0',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
+          [:hdf_dnh,  'dNetHack 3.19.1',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
           [:hdf_nh4,  'NetHack4 4.3.0',          "https://#{prefix}.hardfought.org/xlogfiles/nethack4/xlogfile"],
           [:hdf_nh4k, 'NetHack Fourk 4.3.0.4',   "https://#{prefix}.hardfought.org/xlogfiles/4k/xlogfile"],
           [:hdf_fiq,  'FIQHack 4.3.1',           "https://#{prefix}.hardfought.org/xlogfiles/fh/xlogfile"],
@@ -224,5 +223,14 @@ DataMapper::MigrationRunner.migration( 9, :recreate_servers ) do
   up do
     Server.destroy!
     Server.create_servers
+  end
+end
+
+DataMapper::MigrationRunner.migration(10, :hdf_fix ) do
+  up do
+    Server.all.select {|server| server.name =~ /hdf_nh36/ }.each {|server|
+      server.accounts.destroy!
+      server.destroy!
+    }
   end
 end
