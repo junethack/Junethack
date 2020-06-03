@@ -106,7 +106,7 @@ class Server
         when "spl"
             "https://#{prefix}.hardfought.org/userdata/#{player}/splicehack/dumplog/#{game.starttime}.splice.html"
         when "xnh"
-            "https://#{prefix}.hardfought.org/userdata/#{player}/xnethack/dumplog/#{game.starttime}.xnh.txt"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/xnethack/dumplog/#{game.starttime}.xnh.html"
         when "evh"
             "https://#{prefix}.hardfought.org/userdata/#{player}/evilhack/dumplog/#{game.starttime}.evil.html"
         when "ndnh"
@@ -269,6 +269,54 @@ DataMapper::MigrationRunner.migration(12, :add_gnollhack_servers ) do
         configfileurl = "http://#{prefix}.gnollhack.com/userdata/random_user/random_user_gnollhack.gnhrc"
         Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
       }
+    }
+  end
+end
+
+DataMapper::MigrationRunner.migration(13, :fix_hdf_accounts ) do
+  up do
+    hdf_13 = Server.first(name: 'hdf_13d')
+    hdf_37 = Server.first(name: 'hdf_nh37')
+    user_ids = Account.all(server: hdf_13).map(&:user_id) - Account.all(server: hdf_37).map(&:user_id)
+
+    servers = [:hdf_nh37, :euhdf_nh37, :auhdf_nh37, :hdf_slsh, :euhdf_slsh, :auhdf_slsh].map {|name|
+      Server.first(name: name)
+    }
+
+    user_ids.each {|user_id|
+      user = User.first(id: user_id)
+
+      servers.each {|server|
+        account = Account.first(server: hdf_13, user_id: user_id)
+
+        Account.create!(user: user, server: server, name: account.name, verified: true)
+
+        Game.all(name: account.name, server: server).update(user_id: user_id)
+        execute "UPDATE start_scummed_games SET user_id = ? WHERE name = ? AND server_id = ?", user_id, account.name, server.id
+        execute "UPDATE junk_games SET user_id = ? WHERE name = ? AND server_id = ?", user_id, account.name, server.id
+      }
+    }
+  end
+end
+
+DataMapper::MigrationRunner.migration(14, :fix_esm_accounts ) do
+  up do
+    esm_nh36 = Server.first(name: 'esm_nh36')
+    esm_slsh = Server.first(name: 'esm_slsh')
+    user_ids = Account.all(server: esm_nh36).map(&:user_id) - Account.all(server: esm_slsh).map(&:user_id)
+
+    server = esm_slsh
+
+    user_ids.each {|user_id|
+      user = User.first(id: user_id)
+
+      account = Account.first(server: esm_nh36, user_id: user_id)
+
+      Account.create!(user: user, server: server, name: account.name, verified: true)
+
+      Game.all(name: account.name, server: server).update(user_id: user_id)
+      execute "UPDATE start_scummed_games SET user_id = ? WHERE name = ? AND server_id = ?", user_id, account.name, server.id
+      execute "UPDATE junk_games SET user_id = ? WHERE name = ? AND server_id = ?", user_id, account.name, server.id
     }
   end
 end
