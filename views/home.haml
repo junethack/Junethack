@@ -15,7 +15,7 @@
                     %li= "On nethack4.org, set the interface option \"comment\" and enter your public server account name (case-sensitive) into the form below."
                     %li= "On ascension.run, use the \"NetHack 3.4.3\" nethackrc."
                     %li= "On em.slashem.me, use the \"NetHack 3.6.6\" nethackrc."
-                    %li= "On hardfought.org, use the \"NetHack 3.4.3\" nethackrc."
+                    %li= "On hardfought.org, use the \"NetHack 3.4.3\" nethackrc on www.hardfought.org (also for the other hardfought servers)."
             %table.greytable
                 %tr
                     %th Server
@@ -31,7 +31,7 @@
                 %p
                     Note that account names are case sensitive, even though logging in on the public server usually is case insensitive.
                 %p
-                    Adding your account on www.hardfought.org adds it for all other hardfought servers too, so make sure you have an account there if you want to use any of the hardfought servers.
+                    Adding your account on www.hardfought.org adds it for all other hardfought servers too, so make sure you have an account there if you want to play on any of the hardfought servers.
                 %form#add_server_form.smallform{ action: "/add_server_account", method: "post"}
                     %select{ name: "server"}
                         - server_accounts.each do |id, hostname|
