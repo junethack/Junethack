@@ -28,6 +28,10 @@
             - if server_accounts.size > 0
                 %h3
                     Add an account to your name
+                %p
+                    Note that account names are case sensitive, even though logging in on the public server usually is case insensitive.
+                %p
+                    Adding your account on www.hardfought.org adds it for all other hardfought servers too, so make sure you have an account there if you want to use any of the hardfought servers.
                 %form#add_server_form.smallform{ action: "/add_server_account", method: "post"}
                     %select{ name: "server"}
                         - server_accounts.each do |id, hostname|
