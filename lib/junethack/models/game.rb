@@ -276,6 +276,9 @@ class Game
     property :killed_erinyes, Integer, default: 0
     property :killed_weeping_archangels, Integer, default: 0
     property :killed_archangels, Integer, default: 0
+    property :wish_cnt,       Integer, default: -1
+    property :magic_wish_cnt, Integer, default: -1
+    property :arti_wish_cnt,  Integer, default: -1
 
     # nethack4-specific properties
     property :charname, String
