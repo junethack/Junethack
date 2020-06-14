@@ -270,6 +270,11 @@ form#login_form > fieldset > input[type=submit],
     text-align: left;
     vertical-align: middle;
 }
+
+.greytable td a.hidden_link {
+  color: inherit;
+}
+
 table.misc,
 .greytable.misc {
     width: auto;

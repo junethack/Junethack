@@ -24,16 +24,17 @@
             - $tournament_starttime.step($tournament_endtime,86400).each do |datum|
               - if today > datum then
                 %tr
-                  %td.table_date= h Time.at(datum).getutc.strftime("%Y-%m-%d")
+                  - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
+                  %td.table_date= "<a class='hidden_link' href='/games/#{formatted_date}'>#{formatted_date}</a>"
                   - $variant_order.each do |v|
                     - finished_variant_games_per_day = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and endtime >= ? and endtime < ?;", v, datum, datum+86400)[0]
-                    %td.table_number= finished_variant_games_per_day
+                    %td.table_number= "<a class='hidden_link' href='/games/#{formatted_date}/#{v}'>#{finished_variant_games_per_day}</a>"
             -# Total number of tournament games per variant
             %tr
               %td.table_date= "Total"
               - $variant_order.each do |v|
                 - finished_variant_games = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ?;", v)[0]
-                %td.table_number= finished_variant_games
+                %td.table_number= "<a class='hidden_link' href='/games/#{v}'>#{finished_variant_games}</a>"
 
     - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
       // Ugly SQL to also get days with zero ascensions. Will only work

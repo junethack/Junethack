@@ -374,6 +374,11 @@ submenus
     vertical-align: middle;
     margin: 10px 0;
 }
+
+.greytable td a.hidden_link {
+  color: inherit;
+}
+
 table.misc,
 .greytable.misc {
     width: auto;
