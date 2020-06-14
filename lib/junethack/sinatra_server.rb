@@ -500,12 +500,31 @@ get "/server/:name/all" do
     end
 end
 
-get "/games" do
+get %r{/games/?(\d{4}-\d{2}-\d{2})?/?([-0-9a-zNH.]+)?} do |date, variant|
     caching_check_last_played_game
 
-    @games_played = Game.all(:conditions => [ 'user_id is not null' ], :order => [ :endtime.desc ], :limit => 100)
+    where = [ 'user_id is not null' ]
     @games_played_user_links = true
-    @games_played_title = "Last #{@games_played.size} games played"
+    title_variant = '';
+    title_date = '';
+
+    if variant
+      title_variant = " for #{$variants_mapping[variant]}"
+      where << "version = '#{variant}'"
+    end
+
+    if date
+      title_date = " on #{date}"
+      date = Time.parse("#{date} 00:00:00Z").to_i
+      where << "endtime >= #{date} and endtime < #{date+86400}"
+    end
+
+    hash = { conditions: [where.join(' AND ')], order: [ :endtime.desc ] }
+    hash[:limit] = 100 unless (date && variant)
+
+    @games_played = Game.all(hash)
+    @games_played_title = "Last #{@games_played.size} games played" + title_variant + title_date
+
     haml :last_games_played, :layout => @layout
 end
 
