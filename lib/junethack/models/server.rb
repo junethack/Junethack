@@ -131,6 +131,12 @@ class Server
           starttime = DateTime.strptime(game.starttime.to_s,"%s").strftime("%Y%m%d%H%M%S")
           "https://em.slashem.me/userdata/#{game.name}/slashem-008/dumplog/#{starttime}.txt"
         end
+      when "server.gnollhack.com"
+        "http://server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.log"
+      when "eu-server.gnollhack.com"
+        "http://eu-server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.log"
+      when "au-server.gnollhack.com"
+        "http://au-server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.log"
       else
         return nil
       end
