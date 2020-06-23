@@ -18,8 +18,13 @@ class Trophy
 
     # returns all cross variant trophies
     def Trophy.cross_variant_trophies
-        Trophy.all conditions: ["variant is null"],
-                   order: [ :row, :id ]
+      # remove me after Junethack 2020
+      return Trophy.all(conditions: ["variant is null"], order: [ :row, :id ]).sort_by {|t|
+        [t.row, t.trophy.split('_').last.to_i*-1]
+      }
+
+      Trophy.all conditions: ["variant is null"],
+                 order: [ :row, :id ]
     end
 
     # returns all variant-specific user trophies
@@ -589,5 +594,30 @@ end
 DataMapper::MigrationRunner.migration( 9, :add_gnollhack_achievements ) do
   up do
     Trophy.check_trophies_for_variant "gnollhack"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 11, :create_missing_cross_variant_achievements ) do
+  up do
+    # Cross Variant
+    (17..$variant_order.size).to_a.reverse.each {|i|
+      variants = "variant#{i == 1 ? '' : 's'}"
+
+      trophy = "ascended_variants_#{i}".to_sym
+      text = "Diversity Ascender: Ascended #{$numbers[i]} #{variants}"
+      Trophy.create! trophy: trophy, text: text, icon: "#{trophy}.png", row: 1
+
+      trophy = "anti_stoner_#{i}".to_sym
+      text = "Anti-Stoner: defeated Medusa in #{$numbers[i]} #{variants}"
+      Trophy.create! trophy: trophy, text: text, icon: "#{trophy}.png", row: 2
+
+      trophy = "globetrotter_#{i}".to_sym
+      text = "Globetrotter: get a trophy in #{$numbers[i]} #{variants}"
+      Trophy.create! trophy: trophy, text: text, icon: "#{trophy}.png", row: 3
+
+      trophy = "sightseeing_tour_#{i}".to_sym
+      text = "Sightseeing Tour: finish a game in #{$numbers[i]} #{variants}"
+      Trophy.create! trophy: trophy, text: text, icon: "#{trophy}.png", row: 4
+    }
   end
 end
