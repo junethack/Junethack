@@ -17,7 +17,8 @@
       %ul
         - Trophy.cross_variant_trophies.each do |trophy|
           %li
-            - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id, icon from individualtrophies where trophy = ? order by upper(user);", trophy.trophy
+            - next_higher_trophy = trophy.trophy.split('_').tap {|t| t[-1] = t[-1].to_i+1 }.join('_')
+            - users = repository.adapter.select "SELECT (SELECT login FROM users WHERE user_id = id) AS user, user_id, icon FROM individualtrophies a WHERE trophy = ? AND NOT EXISTS (SELECT 1 FROM individualtrophies b WHERE trophy = ? AND a.user_id = b.user_id) ORDER BY UPPER(user);", trophy.trophy, next_higher_trophy
             - icon = (users.size > 0) ? trophy.icon : trophy.light_icon
             %a.imagelink{:title => trophy.text, :href => "/trophies##{trophy.anchor}"}
               %img.trophyleft{:src => "/icons/#{icon}", :alt => trophy.text}
