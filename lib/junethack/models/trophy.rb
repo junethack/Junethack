@@ -290,7 +290,7 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:defeated_pale_horse,   'defeated the Pale Horse',  nil, 10]
         achievements << [:defeated_black_horse,  'defeated the Black Horse', nil, 10]
         achievements << [:defeated_cerberus,     'defeated Cerberus', nil, 10]
-        achievements << [:defeated_the_rat_king, 'defeated the Rat King', nil, 10]
+        achievements << [:defeated_rat_king,     'defeated the Rat King', nil, 10]
         achievements << [:defeated_croesus,      'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
         achievements << [:mini_croesus,          "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
         achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 6]
@@ -619,5 +619,14 @@ DataMapper::MigrationRunner.migration( 11, :create_missing_cross_variant_achieve
       text = "Sightseeing Tour: finish a game in #{$numbers[i]} #{variants}"
       Trophy.create! trophy: trophy, text: text, icon: "#{trophy}.png", row: 4
     }
+  end
+end
+
+DataMapper::MigrationRunner.migration( 12, :fix_rat_king_achievement ) do
+  up do
+    trophy = Trophy.first(trophy: 'defeated_the_rat_king')
+    trophy.trophy = 'defeated_rat_king'
+    trophy.icon = 'u-defeated_rat_king.png'
+    trophy.save!
   end
 end
