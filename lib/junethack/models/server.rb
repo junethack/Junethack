@@ -216,6 +216,23 @@ class Server
           Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
         }
       }
+
+      prefixes = { us: :server, eu: 'eu-server', au: 'au-server' }
+      [:us, :eu, :au].each {|location|
+        prefix = prefixes[location]
+        [
+          [:gnl_hck, 'GnollHack', "http://#{prefix}.gnollhack.com/xlogfile"]
+        ].each {|server|
+          url = "http://#{prefix}.gnollhack.com/"
+
+          server[0] = :us_gnl if location == :us
+          server[0] = :eu_gnl if location == :eu
+          server[0] = :au_gnl if location == :au
+
+          configfileurl = "http://#{prefix}.gnollhack.com/userdata/random_user/random_user_gnollhack.gnhrc"
+          Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+        }
+      }
     end
 end
 
@@ -226,103 +243,5 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
   down do
     Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 9, :recreate_servers ) do
-  up do
-    Server.destroy!
-    Server.create_servers
-  end
-end
-
-DataMapper::MigrationRunner.migration(10, :hdf_fix ) do
-  up do
-    Server.all.select {|server| server.name =~ /hdf_nh36/ }.each {|server|
-      server.accounts.destroy!
-      server.destroy!
-    }
-  end
-end
-
-DataMapper::MigrationRunner.migration(11, :esm_slashem ) do
-  up do
-    [
-      [:esm_slsh, "Slash'EM 0.0.8E0F2", 'https://em.slashem.me/xlogfiles/slashem'],
-    ].each {|server|
-      url = 'https://em.slashem.me/'
-      configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
-
-      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
-    }
-  end
-end
-
-DataMapper::MigrationRunner.migration(12, :add_gnollhack_servers ) do
-  up do
-    prefixes = { us: :server, eu: 'eu-server', au: 'au-server' }
-    [:us, :eu, :au].each {|location|
-      prefix = prefixes[location]
-      [
-        [:gnl_hck, 'GnollHack', "http://#{prefix}.gnollhack.com/xlogfile"]
-      ].each {|server|
-        url = "http://#{prefix}.gnollhack.com/"
-
-        server[0] = :us_gnl if location == :us
-        server[0] = :eu_gnl if location == :eu
-        server[0] = :au_gnl if location == :au
-
-        configfileurl = "http://#{prefix}.gnollhack.com/userdata/random_user/random_user_gnollhack.gnhrc"
-        Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
-      }
-    }
-  end
-end
-
-DataMapper::MigrationRunner.migration(13, :fix_hdf_accounts ) do
-  up do
-    hdf_13 = Server.first(name: 'hdf_13d')
-    hdf_37 = Server.first(name: 'hdf_nh37')
-    user_ids = Account.all(server: hdf_13).map(&:user_id) - Account.all(server: hdf_37).map(&:user_id)
-
-    servers = [:hdf_nh37, :euhdf_nh37, :auhdf_nh37, :hdf_slsh, :euhdf_slsh, :auhdf_slsh].map {|name|
-      Server.first(name: name)
-    }
-
-    user_ids.each {|user_id|
-      user = User.first(id: user_id)
-
-      servers.each {|server|
-        account = Account.first(server: hdf_13, user_id: user_id)
-
-        Account.create!(user: user, server: server, name: account.name, verified: true)
-
-        Game.all(name: account.name, server: server).update(user_id: user_id)
-        execute "UPDATE start_scummed_games SET user_id = ? WHERE name = ? AND server_id = ?", user_id, account.name, server.id
-        execute "UPDATE junk_games SET user_id = ? WHERE name = ? AND server_id = ?", user_id, account.name, server.id
-      }
-    }
-  end
-end
-
-DataMapper::MigrationRunner.migration(14, :fix_esm_accounts ) do
-  up do
-    esm_nh36 = Server.first(name: 'esm_nh36')
-    esm_slsh = Server.first(name: 'esm_slsh')
-    user_ids = Account.all(server: esm_nh36).map(&:user_id) - Account.all(server: esm_slsh).map(&:user_id)
-
-    server = esm_slsh
-
-    user_ids.each {|user_id|
-      user = User.first(id: user_id)
-
-      account = Account.first(server: esm_nh36, user_id: user_id)
-
-      Account.create!(user: user, server: server, name: account.name, verified: true)
-
-      Game.all(name: account.name, server: server).update(user_id: user_id)
-      execute "UPDATE start_scummed_games SET user_id = ? WHERE name = ? AND server_id = ?", user_id, account.name, server.id
-      execute "UPDATE junk_games SET user_id = ? WHERE name = ? AND server_id = ?", user_id, account.name, server.id
-    }
   end
 end
