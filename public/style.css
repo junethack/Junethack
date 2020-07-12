@@ -380,6 +380,7 @@ submenus
 }
 
 table.misc,
+table.compact,
 .greytable.misc {
     width: auto;
 }

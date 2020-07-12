@@ -567,6 +567,12 @@ get "/player_scoreboard" do
     haml :player_scoreboard, :layout => @layout
 end
 
+get "/post_tournament_statistics" do
+    caching_check_last_played_game
+
+    haml :post_tournament_statistics, :layout => @layout
+end
+
 get "/junethack.rss" do
   # determine date of last event or news
   last_event = Event.first order: [ :created_at.desc ], :created_at.lte => DateTime.now

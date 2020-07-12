@@ -1,0 +1,130 @@
+- tournament_games = Game.all(conditions: ['user_id IS NOT NULL'])
+- tournament_games_count = tournament_games.count
+- all_games = Game.all
+- all_games_count = all_games.count
+.content_bulk
+  .text_content_wrapper
+    .text_content
+      %h2
+        Some boring post tournament statistics
+
+    .text_content
+      =h3 "Players"
+      %div
+        = "#{User.count.html_formatted} players registered on the server,"
+        %br
+        = "#{User.all(:accounts.not => nil).count.html_formatted} linked their account with the public servers,"
+        %br
+        = "and #{Game.all(fields: [:user_id]).map {|g| g.user_id}.uniq.count.html_formatted} actually played at least one game."
+
+    .text_content.non_top_post
+      =h3 "Games"
+      %div
+        = "#{tournament_games.count.html_formatted} games were played on #{Server.all.map(&:url).uniq.count.html_formatted} public servers during the tournament by registered users,"
+        %br
+        = "#{Game.count.html_formatted} were played by all players including those not taking part in the tournament."
+        %br
+        = "Junethack games accounted for #{'%.1f%%' % (100.0*tournament_games_count/all_games_count)} of all games played during the tournament period."
+
+    .text_content.non_top_post
+      =h3 "Start scummed games"
+      %div
+        = "#{StartScummedGame.all(conditions: ['user_id IS NOT NULL']).count.html_formatted} games were start scummed by Junethack players,"
+        %br
+        = "#{StartScummedGame.count.html_formatted} games were start scummed in total."
+
+    .text_content.non_top_post
+      =h3 "Ascensions"
+      %div
+        - games_ascended = Game.all(conditions: [ "user_id IS NOT NULL AND ascended='t'" ])
+        = "#{games_ascended.collect {|g| g.user_id}.uniq.count.html_formatted} different players ascended a total of #{games_ascended.count.html_formatted} games."
+
+    .text_content.non_top_post
+      =h3 "Medusa kills"
+      .scorelisting#no-more-tables
+        %table.greytable.cf.compact
+          %thead.cf
+            %tr
+              %th Role
+              %th Race
+              %th Kills
+              %th
+          %tbody.cf
+            - medusa_kills = Game.all(killed_medusa: 1, conditions: [ "user_id IS NOT NULL" ])
+            - medusa_kills_count = medusa_kills.count
+            = "Medusa was killed in #{medusa_kills_count.html_formatted} games."
+
+            - sql = 'SELECT count(1) AS count,role,race FROM games WHERE killed_medusa >= 1 AND user_id IS NOT NULL GROUP BY role,race ORDER BY 1 DESC LIMIT 10'
+            - medusa_kills_combinations = repository.adapter.select sql
+            - top10_kills = medusa_kills_combinations.map(&:count).inject(0) {|sum,i| sum+=i}
+            - percentage = '%.1f%%' % (100.0*top10_kills/medusa_kills.count)
+
+            - medusa_kills_combinations.each do |kill|
+              %tr
+                %td.variant{"data-title": "Role"}
+                  = kill.role
+                %td.variant{"data-title": "Race"}
+                  = kill.race
+                %td.table_number{"data-title": "Kills"}
+                  = kill.count.html_formatted
+                %td.table_number
+                  = "(#{'%.1f%%' % (100.0*kill.count/medusa_kills_count)})"
+
+        = "The #{medusa_kills_combinations.count.html_formatted} most used role/race combinations account for #{percentage} of all Medusa kills."
+
+    .text_content.non_top_post
+      =h3 "Tournament games by variant"
+      .scorelisting#no-more-tables
+        %table.greytable.cf.compact
+          %thead.cf
+            %tr
+              %th Variant
+              %th
+              %th
+          %tbody.cf
+            - sql = "SELECT count(1) AS count, version FROM games WHERE user_id IS NOT NULL GROUP BY version ORDER BY 1 DESC"
+            - games_by_variant = repository.adapter.select sql
+            - games_by_variant.each do |variant|
+              %tr
+                %td.variant{"data-title": "Variant"}
+                  = h $variants_mapping[variant.version]
+                %td.table_number
+                  = variant.count.html_formatted
+                %td.table_number
+                  = "(#{'%.1f%%' % (100.0*variant.count/tournament_games_count)})"
+            %tr
+              %td.variant{"data-title": "Variant"}
+                Total
+              %td.table_number
+                = tournament_games_count.html_formatted
+              %td.table_number
+                = "(100.0%)"
+
+    .text_content.non_top_post
+      =h3 "Tournament games by server"
+      .scorelisting#no-more-tables
+        %table.greytable.cf.compact
+          %thead.cf
+            %tr
+              %th Server
+              %th
+              %th
+          %tbody.cf
+            - sql = "SELECT count(1) AS count, url FROM games LEFT JOIN servers ON servers.id = games.server_id WHERE user_id IS NOT NULL GROUP BY url ORDER BY 1 DESC"
+            - games_by_server = repository.adapter.select sql
+            - games_by_server.each do |server|
+              %tr
+                %td.variant{"data-title": "Server"}
+                  %a{ href: server.url}
+                    = server.url.split("/")[2]
+                %td.table_number
+                  = server.count.html_formatted
+                %td.table_number
+                  = "(#{'%.1f%%' % (100.0*server.count/tournament_games_count)})"
+            %tr
+              %td.variant{"data-title": "Server"}
+                Total
+              %td.table_number
+                = "#{tournament_games_count.html_formatted}"
+              %td.table_number
+                = "(100.0%)"
