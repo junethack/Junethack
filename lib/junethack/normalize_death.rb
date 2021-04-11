@@ -75,6 +75,9 @@ class Game
                  .gsub(/touching an artifact \([^)]+\)/, "touching an artifact")
                  .gsub(/petrifying egg \([^)]+\)/, "petrifying egg")
 
+    # The pots163 filter
+    death = death.gsub(/while mounting .+/, "while mounting eir steed")
+
     if monster
       death = death.gsub(/[a-z]+ by( a| the)? ([A-Za-z][a-z]+)/, '\2')
       death = death.gsub(/^catching the eye of /, '')
