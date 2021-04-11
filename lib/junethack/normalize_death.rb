@@ -50,7 +50,7 @@ class Game
     end
 
     # consolidate ghosts
-    death = death.gsub(/ (an?|the) ghost of .+/, " a ghost")
+    death = death.gsub(/(an?|the?) ghost of .+/, " a ghost")
 
     # poisoned by a rotted {monster} corpse -> poisoned by a rotted corpse
     death = death.gsub(/poisoned by a rotted .* corpse/, "poisoned by a rotted corpse")
