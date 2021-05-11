@@ -62,6 +62,9 @@
                   %a{:href => "/users"} Players
                 %li
                   %a{:href => "/servers"} Servers
+                - if Time.now.to_i > $tournament_endtime
+                  %li
+                    %a{:href => "/post_tournament_statistics"} Post Tournament Statistics
             %li
               %a{href: '/archive/2020/index.html'} Archives
               %ul.nested
