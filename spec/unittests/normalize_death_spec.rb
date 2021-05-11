@@ -150,7 +150,7 @@ describe Game,"normalization of death strings" do
   it "should substitute everything after chocked on with something" do
     result = "choked on something"
     @game.death = "choked on the blessed Excalibur"
-    @game.normalize_death.should == result 
+    @game.normalize_death.should == result
 
     @game.death = "choked on a wraith corpse"
     @game.normalize_death.should == result
@@ -186,11 +186,16 @@ describe Game,"normalization of death strings" do
     }
   end
 
+  it "normalizes death messages on every possible starting mount" do
+      @game.death = "slipped while mounting a horse"
+      expect(@game.normalize_death).to eq "slipped while mounting eir steed"
+  end
+
   it "normalizes SlashEM'Extended monster and item names" do
     test = {
        "a monster (%s )":                    "a monster",
        "unwisely ate the body of a monster (%s)": "unwisely ate the body of a monster",
-       "slipped while mounting a monster (%s)":   "slipped while mounting a monster",
+       "slipped while mounting a monster (%s)":   "slipped while mounting eir steed",
        "unwisely tried to eat a monster (%s)":    "unwisely tried to eat a monster",
 
        "kicking a monster corpse (%s) without boots": "kicking a monster corpse without boots",
