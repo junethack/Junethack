@@ -118,9 +118,10 @@ describe Game,"normalization of death strings" do
     @game.death = "killed by a war hammer named Mjollnir"
     @game.normalize_death.should == "killed by a war hammer"
   end
-  it "should remove (with the Amulet)" do
+
+  it "doesn't remove (with the Amulet)" do
     @game.death = "killed by a Archon (with the Amulet)"
-    @game.normalize_death.should == "killed by a Archon"
+    expect(@game.normalize_death).to eq "killed by a Archon (with the Amulet)"
   end
 
   it "should substitute everything after killed by kicking with something" do
