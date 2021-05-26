@@ -11,7 +11,7 @@ gem 'dm-migrations'
 gem "json"
 gem "haml"
 
-gem "sinatra", "~> 1.4.0"
+gem "sinatra"
 gem "nokogiri", "~> 1.10"
 
 gem "rufus-scheduler"
@@ -27,7 +27,7 @@ gem "fastercsv"
 
 group :development, :test do
   gem 'rake'
-  gem "rack-test", "~> 0.6.1"
+  gem "rack-test"
   gem 'rspec'
   gem 'simplecov'
   gem 'ci_reporter'

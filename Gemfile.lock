@@ -165,13 +165,13 @@ DEPENDENCIES
   nokogiri (~> 1.10)
   pry
   rack-mobile-detect
-  rack-test (~> 0.6.1)
+  rack-test
   rake
   rspec
   rufus-scheduler
   sanitize
   simplecov
-  sinatra (~> 1.4.0)
+  sinatra
   sinatra-cache!
   thin
 
