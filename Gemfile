@@ -26,7 +26,7 @@ gem "thin"
 gem "fastercsv"
 
 group :development, :test do
-  gem 'rake', '< 11.0'
+  gem 'rake', '< 13.0'
   gem "rack-test", "~> 0.6.1"
   gem 'rspec'
   gem 'simplecov'
