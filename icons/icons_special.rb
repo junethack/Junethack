@@ -75,7 +75,37 @@ def defeated_all_quest_nemeses
   write_image(image, :magenta, 'defeated_all_quest_nemeses')
 end
 
+def read_a_discworld_novel
+  image = setup_image(:yellow)
+
+  image = image.color_floodfill(0,0, 'rgb(6,6,6)')
+
+  draw_text(image, 'P', :yellow, 32, -7, 0, bold: true)
+  draw_text(image, 't', :yellow, 24, 10, 3, bold: true)
+
+  write_image(image, :yellow, 'read_a_discworld_novel')
+end
+
+def entered_bigroom
+  image = setup_image(:gray)
+
+  image = image.color_floodfill(0,0, 'rgb(6,6,6)')
+
+  draw_text(image, 'j', :blue,     16,  -8,  -1, bold: true)
+  draw_text(image, 'F', :magenta,      16,   8,  -1, bold: true)
+  draw_text(image, 'h', :red,      16,  16, -16, bold: true)
+  draw_text(image, 'G', :magenta,   16, -16, -16, bold: true)
+  draw_text(image, 'q', :brown,    16,   0, -16, bold: true)
+  draw_text(image, 'd', :red,   16,   0,  16, bold: true)
+  draw_text(image, 'o', :yellow,  16,  16,  16, bold: true)
+  draw_text(image, 'o', :yellow,   16, -16,  16, bold: true)
+
+  write_image(image, :gray, 'entered_bigroom')
+end
+
 defeated_all_riders
 defeated_all_demon_lords_princes
 defeated_all_quest_leaders
 defeated_all_quest_nemeses
+entered_bigroom
+read_a_discworld_novel

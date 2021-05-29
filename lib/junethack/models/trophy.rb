@@ -315,6 +315,36 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: :killed_by_molochs_indifference, text: "killed by Moloch's indifference", icon: "killed_by_molochs_indifference.png", row: 2
     end
 
+    if [nethack37, unnethack, splicehack, xnethack, evilhack].include? variant then
+      achievements = []
+      if variant != unnethack
+        achievements << [:read_a_discworld_novel, "read a Discworld novel", 2]
+      end
+      achievements << [:consulted_the_oracle, "consulted the Oracle", 2]
+      achievements << [:entered_a_shop, "entered a shop", 2]
+      achievements << [:entered_a_temple, "entered a temple", 2]
+      achievements << [:entered_sokoban, "entered Sokoban", 2]
+      achievements << [:entered_the_gnomish_mines, "entered the Gnomish Mines", 2]
+      achievements << [:entered_mine_town, "entered Mine Town", 2]
+      achievements << [:entered_bigroom, "entered the Big Room", 2]
+
+      if variant == unnethack
+        achievements << [:entered_the_town, "entered the Town", 2]
+        achievements << [:entered_fort_ludios, "entered Fort Ludios", 2]
+        achievements << [:entered_quest_portal_level, "entered Quest Home", 2]
+        achievements << [:entered_moria, "entered Moria", 2]
+        achievements << [:entered_the_dragon_caves, "entered the Dragon Caves", 2]
+        achievements << [:entered_sheol, "entered Sheol", 2]
+        achievements << [:entered_vlads_tower, "entered Vlad's tower", 2]
+        achievements << [:entered_the_blackmarket, "entered the Blackmarket", 2]
+      end
+
+      achievements.each { |achievement|
+        icon = "#{achievement[0].to_s}.png"
+        Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[2]
+      }
+    end
+
     if [nh4k].include? variant then
       Trophy.create variant: variant, trophy: "entered_the_sokoban_zoo", text: "entered the Sokoban Zoo", icon: "4k-entered-sokoban.png", row: 2
       Trophy.create variant: variant, trophy: "entered_minetown_temple", text: "entered the Minetown Temple", icon: "4k-entered-minetown-temple.png", row: 2

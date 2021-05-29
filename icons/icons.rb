@@ -20,6 +20,7 @@ def write_icon(filename, color, symbol=nil)
              end
   x_offset = case symbol
              when '_' then  1
+             when 'Ω' then  1
              else           0
              end
   if symbol
@@ -55,3 +56,17 @@ blank_light_red lred
 blank_light_magenta lmagenta
 killed_by_molochs_indifference red _
 clan-lowest-turns-for-monster-kills gray |
+consulted_the_oracle lblue @
+entered_the_gnomish_mines brown G
+entered_mine_town green @
+entered_a_shop yellow @
+entered_sokoban lgray 0
+entered_a_temple lgray Ω
+entered_the_town brown r
+entered_fort_ludios yellow $
+entered_quest_portal_level magenta ^
+entered_moria green o
+entered_the_dragon_caves white D
+entered_sheol lcyan 8
+entered_vlads_tower magenta V
+entered_the_blackmarket gray @
