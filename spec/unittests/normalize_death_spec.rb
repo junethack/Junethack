@@ -163,14 +163,16 @@ describe Game,"normalization of death strings" do
     @game.normalize_death.should == result
   end
 
-  it "should substitute then name of ghosts" do
+  it "substitutes the name of ghosts" do
     test = {
-      "killed by the ghost of Kenneth Arnold" => "killed by a ghost",
-      "killed by the ghost of coffeebug" => "killed by a ghost"
+      "1 killed by the ghost of Kenneth Arnold" => "1 killed by a ghost",
+      "2 killed by the ghost of coffeebug" => "2 killed by a ghost",
+      "3 killed by a ghost of Karnov" => "3 killed by a ghost",
+      "4 killed by ghost of Karnov" => "4 killed by a ghost",
     }
     test.each {|message, result|
       @game.death = message
-      @game.normalize_death.should == result
+      expect(@game.normalize_death).to eq result
     }
   end
 
