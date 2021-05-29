@@ -319,6 +319,20 @@ get "/clan/:name" do
     end
 end
 
+post '/clan_description/:name' do
+  $db_access.synchronize {
+    @clan = Clan.get(params[:name])
+    redirect '/' if @clan.nil?
+    redirect '/' if @user != @clan.get_admin
+
+    if params[:description]
+      @clan.description = params[:description]
+      @clan.save!
+    end
+  }
+  redirect "/clan/#{@clan.name}"
+end
+
 post '/clan_banner/:name' do
   $db_access.synchronize {
     @clan = Clan.get(params[:name])

@@ -735,6 +735,16 @@ th.competition_placing {
     background-color: #dadada;
     text-decoration: none;
 }
+#clan_description {
+    border-bottom: 3px double #bbb;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+#clan_description_input form {
+    border-bottom: 3px double #bbb;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
 /**************************
 **                       **
 ** Display trophy images **

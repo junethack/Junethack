@@ -28,8 +28,21 @@
       #clan_banner
         %img{src: @clan.gravatar_link}
 
+        #clan_description
+          :escaped
+            #{ p @clan.description }
+
         - if !@logged_in
           - if @user.login == @clan.get_admin.login
+            %p
+              Type a description for your clan (maximum length 500 characters).
+            #clan_description_input
+              %form{action: "/clan_description/#{@clan.name}", method: :post}
+                %fieldset
+                  .description
+                    %input{name: :description, type: :text, value: "", maxlength: 500}/
+                  .buttons
+                    %input{name: :submit, type: :submit, value: "set description"}/
             %p
               Enter the email address of a
               %a{href: 'https://en.gravatar.com/'}Gravatar
