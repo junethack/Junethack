@@ -139,6 +139,7 @@ V,  magenta,   Vlad the Impaler    ,      , (, yellow
 &,  red,       Minion of Huhetotl,  nemesis, Arc, white, dark
 @,  magenta,   Thoth Amon,          nemesis, Bar, white, dark
 D,  magenta,   Tiamat,              nemesis, Cav, white, dark
+H,  magenta,   Annam,               nemesis, Cav, white, dark
 @,  magenta,   Warden Arianna,      nemesis, Con, white, dark
 H,  lgray,     Cyclops,             nemesis, Hea, white, dark
 D,  red,       Ixoth,               nemesis, Kni, white, dark

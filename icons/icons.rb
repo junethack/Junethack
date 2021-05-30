@@ -70,3 +70,13 @@ entered_the_dragon_caves white D
 entered_sheol lcyan 8
 entered_vlads_tower magenta V
 entered_the_blackmarket gray @
+never_abused_alignment yellow ±
+defeated_grazzt magenta &
+defeated_lolth magenta &
+defeated_baphomet magenta &
+defeated_mephistopheles magenta &
+defeated_tiamat magenta D
+defeated_kathryn_the_ice_queen lcyan @
+defeated_abominable_snowman lcyan Y
+defeated_vecna lmagenta L
+defeated_kas gray V
