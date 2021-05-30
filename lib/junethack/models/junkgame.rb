@@ -69,6 +69,7 @@ class JunkGame
     property :wish_cnt,       Integer, default: -1
     property :magic_wish_cnt, Integer, default: -1
     property :arti_wish_cnt,  Integer, default: -1
+    property :bones,          Integer, default: -1
 
     # nethack4-specific properties
     property :charname, String
@@ -102,6 +103,9 @@ class JunkGame
     property :alias, String
     property :role0, String
     property :race0, String
+
+    # xnethack-specific properties
+    property :polyinit, String
 
     # new in 3.6.0
     property :while, String
