@@ -63,6 +63,16 @@ def dnethack_tour?(user)
   return anz == 10
 end
 
+def dnethack_one_hellish_seal?(user)
+  seals = Game.all(user_id: user, fields: [:achieveX]).map { |g| (g.achieveX||"").split(",") }.flatten
+  (seals & ["angel_hell_vault", "ancient_hell_vault", "tanninim_hell_vault"]).size >= 1
+end
+
+def dnethack_all_hellish_seals?(user)
+  seals = Game.all(user_id: user, fields: [:achieveX]).map { |g| (g.achieveX||"").split(",") }.flatten
+  (seals & ["angel_hell_vault", "ancient_hell_vault", "tanninim_hell_vault"]).size >= 3
+end
+
 def dnethack_king?(user)
   anz = repository.adapter.select("SELECT count(1) FROM (SELECT DISTINCT race FROM games WHERE user_id = ? AND version = 'dnh' AND ascended='t' AND #{$dNetHack_races} UNION SELECT DISTINCT role FROM games WHERE user_id = ? AND version = 'dnh' AND ascended='t' AND #{$dNetHack_roles}) a;", user, user)[0]
   return anz == 10
@@ -422,6 +432,14 @@ def update_scores(game)
                                variant: game.version,
                                trophy: :dn_tour
                               ).save if dnethack_tour? game.user_id
+    Scoreentry.first_or_create(user_id: game.user_id,
+                               variant: game.version,
+                               trophy: :opened_one_hellish_seal
+                              ).save if dnethack_one_hellish_seal? game.user_id
+    Scoreentry.first_or_create(user_id: game.user_id,
+                               variant: game.version,
+                               trophy: :opened_all_hellish_seals
+                              ).save if dnethack_all_hellish_seals? game.user_id
     Scoreentry.first_or_create(user_id: game.user_id,
                                variant: game.version,
                                trophy: :killed_asmodeus
