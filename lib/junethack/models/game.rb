@@ -88,14 +88,24 @@ $slash_achievements = [
 ]
 
 $slex_extended_achievements = [
-  [2, :killed_bofh,          "killed the BOFH",                          "m-slex-bofh.png"],
-  [2, :killed_elderpriest,   "killed an elder priest",                   "m-slex-elderpriest.png"],
-  [2, :killed_glassgolem,    "killed the Motherfucker Glass Golem",      "m-slex-glassgolem.png"],
-  [2, :killed_katia,         "killed Erogenous Katia",                   "m-slex-katia.png"],
+  [2, :killed_bofh,        "killed the BOFH",                     "m-slex-bofh.png"],
+  [2, :killed_elderpriest, "killed an elder priest",              "m-slex-elderpriest.png"],
+  [2, :killed_glassgolem,  "killed the Motherfucker Glass Golem", "m-slex-glassgolem.png"],
+  [2, :killed_katia,       "killed Erogenous Katia",              "m-slex-katia.png"],
+  [2, :killed_tiksrvzllat, "killed Tiksrvzllat",                  "m-slex-tiksrvzllat.png"],
+  [2, :killed_witchking,   "killed the Witch King of Angmar",     "m-slex-witchking.png"],
+  [2, :killed_minotaur,    "killed the Minotaur of the Maze",     "s-minotaur.png"],
+  [2, :killed_kalwina,     "killed Kalwina",                      "s-kalwina.png"],
+  [2, :killed_stahngnir,   "killed Lord Stahngnir",               "s-stahngnir.png"],
+  [2, :killed_ariane,      "killed Lady Ariane",                  "s-ariane.png"],
+  [2, :killed_vera,        "killed Vera the Ice Queen",           "s-vera.png"],
+  [2, :killed_elaine,      "killed Elaine the Enchantress",       "s-elaine.png"],
+
   [3, :get_magresstone,      "obtained the stone of magic resistance from the Deep Mines", "m-slex-magresstone.png"],
   [3, :swimmingpool_cleared, "reached the bottom of the Swimming Pools", "m-slex-swimmingpool.png"],
-  [2, :killed_tiksrvzllat,   "killed Tiksrvzllat",                       "m-slex-tiksrvzllat.png"],
-  [2, :killed_witchking,     "killed the Witch King of Angmar",          "m-slex-witchking.png"],
+  [3, :devnull_complete,     "visited all DevNull challenges",           "s-devnull.png"],
+  [3, :completed_rivalquest, "completed the Rival Quest",                "s-rivalquest.png"],
+  [3, :completed_minusworld, "completed the Minus World",                "s-minusworld.png"],
 ]
 
 $xnethack_achievements = [
