@@ -156,6 +156,7 @@ def Trophy.check_trophies_for_variant variant_description
     dnhslex = helper_get_variant_for 'dnethack slex'
     notdnethack = helper_get_variant_for 'notdnethack'
     slashem = helper_get_variant_for 'slashem'
+    gnollhack = helper_get_variant_for 'gnollhack'
 
     if [acehack, nethack4, nh4k, dynahack, fiqhack].include? variant then
       # these variants don't have standard xlogfile achievement flags
@@ -315,7 +316,7 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: :killed_by_molochs_indifference, text: "killed by Moloch's indifference", icon: "killed_by_molochs_indifference.png", row: 2
     end
 
-    if [nethack37, unnethack, splicehack, xnethack, evilhack].include? variant then
+    if [nethack37, unnethack, splicehack, xnethack, evilhack, gnollhack].include? variant then
       achievements = []
       if variant != unnethack
         achievements << [:read_a_discworld_novel, "read a Discworld novel", 2]
@@ -337,6 +338,11 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:entered_sheol, "entered Sheol", 2]
         achievements << [:entered_vlads_tower, "entered Vlad's tower", 2]
         achievements << [:entered_the_blackmarket, "entered the Blackmarket", 2]
+      end
+
+      if variant == gnollhack
+        achievements << [:defeated_yacc, "killed Yacc", 2]
+        achievements << [:obtained_the_prime_codex, "touched the Prime Codex", 2]
       end
 
       achievements.each { |achievement|
