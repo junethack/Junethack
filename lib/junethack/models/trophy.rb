@@ -393,8 +393,6 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: "killed_asmodeus", text: "No budget for bribes (killed Asmodeus)", icon: "m-killed-asmodeus.png", row: 3
       Trophy.create variant: variant, trophy: "killed_demogorgon", text: "Postulate Proven (killed Demogorgon, thereby proving the Lord British Postulate (if it has stats, we can kill it))", icon: "m-killed-demogorgon.png", row: 3
 
-      Trophy.create variant: variant, trophy: "dn_king", text: "King of dNethack: Ascend a game with all the new races/roles in dNethack", icon: "m-dn-king.png", row: 4
-      Trophy.create variant: variant, trophy: "dn_prince", text: "Prince of dNethack: Ascend a game with half the new races/roles in dNethack", icon: "m-dn-prince.png", row: 4
       Trophy.create variant: variant, trophy: "dn_tour", text: "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack", icon: "m-dn-tour.png", row: 4
     end
 

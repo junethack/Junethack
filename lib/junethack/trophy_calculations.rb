@@ -420,14 +420,6 @@ def update_scores(game)
                               ).save if game.got_nine_keys?
     Scoreentry.first_or_create(user_id: game.user_id,
                                variant: game.version,
-                               trophy: :dn_king
-                              ).save if dnethack_king? game.user_id
-    Scoreentry.first_or_create(user_id: game.user_id,
-                               variant: game.version,
-                               trophy: :dn_prince
-                              ).save if dnethack_prince? game.user_id
-    Scoreentry.first_or_create(user_id: game.user_id,
-                               variant: game.version,
                                trophy: :dn_tour
                               ).save if dnethack_tour? game.user_id
     Scoreentry.first_or_create(user_id: game.user_id,
