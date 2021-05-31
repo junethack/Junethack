@@ -190,6 +190,7 @@ class Server
         [
           [:hdf_nao,  'NetHack 3.4.3-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
           [:hdf_nh37, 'NetHack 3.7.0-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack/xlogfile-370-hdf"],
+          [:hdf_nh37s, 'NetHack 3.7.0-hdf (seed)', "https://#{prefix}.hardfought.org/xlogfiles/setseed/xlogfile"],
           [:hdf_shc,  'SporkHack 0.6.5',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
           [:hdf_gho,  'GruntHack 0.2.4',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
           [:hdf_unh,  'UnNetHack 6.0.3',         "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
@@ -244,4 +245,25 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
   down do
     Server.destroy
   end
+end
+
+DataMapper::MigrationRunner.migration( 2, :add_setseed ) do
+  up do
+    prefixes = { us: :www, eu: :eu, au: :au }
+    [:us, :eu, :au].each {|location|
+      prefix = prefixes[location]
+      [
+        [:hdf_nh37s, 'NetHack 3.7.0-hdf (seed)', "https://#{prefix}.hardfought.org/xlogfiles/setseed/xlogfile"],
+      ].each {|server|
+        url = "https://#{prefix}.hardfought.org/nethack"
+
+        server[0] = server[0].to_s.sub('h', 'euh').to_sym if location == :eu
+        server[0] = server[0].to_s.sub('h', 'auh').to_sym if location == :au
+
+        configfileurl = "https://#{prefix}.hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc"
+        Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+      }
+    }
+  end
+
 end

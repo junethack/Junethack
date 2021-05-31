@@ -276,6 +276,7 @@ class Game
     property :dlev_name,  String
     property :elbereths,  Integer, :default => -1
     property :user_seed,  String
+    property :seed,       String
 
     property :xplevel, Integer, :default => 0
     property :exp,     Integer, :default => 0
