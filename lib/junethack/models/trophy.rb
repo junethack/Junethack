@@ -464,7 +464,10 @@ def Trophy.check_trophies_for_variant variant_description
     end
 
     if [xnethack].include? variant then
+      Trophy.create variant: variant, trophy: :completed_arc_quest, text: "completed the revised Archeologist quest", icon: "completed_arc_quest.png", row: 2
+
       Trophy.create variant: variant, trophy: :ascended_without_unfairly_scaring_monsters, text: "ascended without scaring any monsters", icon: "m-elbereth.png", row: 2
+
     end
 
     if [xnethack, evilhack].include? variant then
@@ -616,5 +619,12 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "slashem"
     Trophy.check_trophies_for_variant "gnollhack"
     Trophy.check_trophies_for_variant "oldhack"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 4, :add_xnethack_achievement ) do
+  up do
+    xnethack = helper_get_variant_for 'xnethack'
+    Trophy.create variant: xnethack, trophy: :completed_arc_quest, text: "completed the revised Archeologist quest", icon: "completed_arc_quest.png", row: 2
   end
 end

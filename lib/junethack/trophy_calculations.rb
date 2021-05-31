@@ -368,6 +368,11 @@ def update_scores(game)
   if [xnethack].include? game.version then
     Scoreentry.first_or_create(user_id: game.user_id,
                                variant: game.version,
+                               trophy: :completed_arc_quest
+                              ).save if game.role == "Arc" && game.completed_quest?
+
+    Scoreentry.first_or_create(user_id: game.user_id,
+                               variant: game.version,
                                trophy: :ascended_without_unfairly_scaring_monsters
                               ).save if game.ascended_without_unfairly_scaring_monsters?
   end

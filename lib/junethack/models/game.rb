@@ -464,6 +464,10 @@ class Game
         gold >= 200_000
     end
 
+    def completed_quest?
+      (achieveX&.split(",") & ["completed_quest", "quest_completed"]).size > 0
+    end
+
     # DNetHack
     def dnethack_defeated_asmodeus?
         (dnetachieve and dnetachieve.hex & 0x00002 > 0)
