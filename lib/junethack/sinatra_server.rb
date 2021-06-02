@@ -195,16 +195,30 @@ post "/add_server_account" do
 
     # verify that this user wants to connect this account to this user
     begin
-        if server.verify_user(params[:user], @tournament_identifier_regexp)
-            session['messages'] << 'Account verified and added.'
-        else
-            session['errors'] << 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.display_name)]
-            redirect "/home" and return
-        end
-    rescue Exception => e
-        puts e
-        session['errors'] << "Could not verify account!<br>" + (h e.message)
+      if server.name.start_with?("hdf_")
+        name = server.name
+        server = Server.first(name: "eu#{name}")
+        verified = server.verify_user(params[:user], @tournament_identifier_regexp) rescue nil
+
+        server = Server.first(name: "au#{name}")
+        verified ||= server.verify_user(params[:user], @tournament_identifier_regexp) rescue nil
+
+        server = Server.first(name: "#{name}")
+        verified ||= server.verify_user(params[:user], @tournament_identifier_regexp) rescue nil
+      else
+        verified = server.verify_user(params[:user], @tournament_identifier_regexp)
+      end
+
+      if verified
+        session['messages'] << 'Account verified and added.'
+      else
+        session['errors'] << 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.display_name)]
         redirect "/home" and return
+      end
+    rescue Exception => e
+      puts e
+      session['errors'] << "Could not verify account!<br>" + (h e.message)
+      redirect "/home" and return
     end
     if server.name.include?('hdf_')
       servers = Server.all.select {|s| s.name.include? 'hdf_' }
