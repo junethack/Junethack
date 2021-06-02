@@ -557,6 +557,13 @@ input[type=submit] {
     background-color: #bbb;
     border: 1px outset #eee;
 }
+input[type=submit]:hover {
+    background-color: #b6b6b6;
+}
+input[type=submit]:active {
+    margin-top: 11px;
+    margin-left: 1px;
+}
 /* use this class on a submit button if you would like it to be big and red. */
 input[type=submit].bigred,
 form#login_form > fieldset > input[type=submit] {
