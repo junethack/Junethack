@@ -148,7 +148,7 @@ describe Game,"normalization of death strings" do
     end
   end
 
-  it "should substitute everything after chocked on with something" do
+  it "should substitute everything after choked on with something" do
     result = "choked on something"
     @game.death = "choked on the blessed Excalibur"
     @game.normalize_death.should == result
@@ -189,6 +189,17 @@ describe Game,"normalization of death strings" do
     }
   end
 
+  it "normalizes information about wounded/uninjured state" do
+    test = {
+      "killed by a moderately wounded leocrotta" => "killed by a leucrotta",
+      "killed by a uninjured goblin" => "killed by a goblin"
+    }
+    test.each {|message, result|
+      @game.death = message
+      @game.normalize_death.should == result
+    }
+  end
+  
   it "normalizes death messages on every possible starting mount" do
       @game.death = "slipped while mounting a horse"
       expect(@game.normalize_death).to eq "slipped while mounting eir steed"
