@@ -86,7 +86,11 @@ class Server
         when "gho"
             "https://#{prefix}.hardfought.org/userdata/#{player}/gh/dumplog/#{game.starttime}.gh.txt"
         when "3.6", "3.7"
+          if game.server.name.end_with?("nh37s")
+            "https://#{prefix}.hardfought.org/userdata/#{player}/setseed/dumplog/#{game.starttime}.seed.html"
+          else
             "https://#{prefix}.hardfought.org/userdata/#{player}/nethack/dumplog/#{game.starttime}.nh.html"
+          end
         when "unh"
             "https://#{prefix}.hardfought.org/userdata/#{player}/unnethack/dumplog/#{game.starttime}.un.txt.html"
         when "fiq"
