@@ -497,7 +497,22 @@ def update_scores(game)
     generic_achievements(game, (game.achieveX||'').split(','))
   end
 
-  if game.ascended && [xnethack, evilhack].include?(game.version) then
+  if game.ascended && [xnethack].include?(game.version)
+    conducts = conductX&.split(",")
+    [
+      [:ascended_petless,      "petless"],
+      [:ascended_artifactless, "artifactless"],
+      [:ascended_permahallu,   "permahallu"],
+      [:ascended_permadeaf,    "permadeaf"],
+    ].each { |trophy, conduct|
+      Scoreentry.first_or_create(user_id: game.user_id,
+                                 variant: game.version,
+                                 trophy: trophy,
+                                ).save if conducts.include?(conduct)
+    }
+  end
+
+  if game.ascended && [evilhack].include?(game.version) then
     achievements = game.conduct.hex if game.conduct
     if achievements and achievements > 0 then
       for i in 0..$xnethack_achievements.size-1 do

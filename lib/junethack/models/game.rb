@@ -375,7 +375,7 @@ class Game
     end
 
     def ascended_without_unfairly_scaring_monsters?
-      (ascended && (Integer(conduct) & 0x04000 > 0))
+      ascended && (conductX&.split(",").include?("unfairscareless"))
     end
 
     # Heaven or Hell
