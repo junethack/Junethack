@@ -1,6 +1,6 @@
 - cache_fragment(Game.max_endtime) do
-  - @deaths = repository.adapter.select "select death, count(1) as count from games where user_id is not null group by death order by count desc;"
-  - @unique_deaths = repository.adapter.select "select death, count(1) as count from normalized_deaths group by death order by count desc;"
+  - @deaths = repository.adapter.select "SELECT death, count(1) AS count, group_concat(version) AS versions FROM games WHERE user_id IS NOT NULL GROUP BY death ORDER BY count DESC;"
+  - @unique_deaths = repository.adapter.select "SELECT death, count(1) AS count FROM normalized_deaths GROUP BY death ORDER BY count DESC;"
 
   .content_bulk
     .text_content_wrapper
@@ -14,7 +14,9 @@
             - @deaths.each do |death|
               %tr
                 %td.table_number= death.count
-                %td= h death.death
+                - variants = (["NH-1.3d"]+$variant_order) & death.versions.split(",").uniq
+                - variant_names = variants.map { |v| $variants_mapping[v] }
+                %td= h "#{death.death} (#{variant_names.join(", ")})"
       .text_content.non_top_post
         =h2 'Unique deaths (filtered)', 'unique_deaths'
         %h3= "(eligible for <a href='/trophies#clan-deaths'>Most unique deaths for Clan Competition</a>)"
