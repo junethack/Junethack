@@ -17,7 +17,7 @@ class Game
     death = death.gsub /by invisible /, "by "
 
     death = death.gsub /uninjured /, ""
-    death = death.gsub /(moderately|critically|seriously|slightly) wounded /, ""
+    death = death.gsub /(moderately|critically|badly|seriously|slightly) wounded /, ""
     
     death = death.gsub(/ (her|his) /, " eir ")
     death = death.gsub(/ (herself|himself) /, " eirself ")

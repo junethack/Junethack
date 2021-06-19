@@ -191,8 +191,12 @@ describe Game,"normalization of death strings" do
 
   it "normalizes information about wounded/uninjured state" do
     test = {
-      "killed by a moderately wounded leocrotta" => "killed by a leucrotta",
-      "killed by a uninjured goblin" => "killed by a goblin"
+      "killed by a critically wounded gnome lord" => "killed by a gnome lord",
+      "killed by a badly wounded dwarf" => "killed by a dwarf",
+      "killed by a seriously wounded gargoyle" => "killed by a gargoyle",
+      "killed by a moderately wounded leocrotta" => "killed by a leocrotta",
+      "killed by a slightly wounded gnome lady" => "killed by a gnome lady",
+      "killed by a uninjured goblin" => "killed by a goblin",
     }
     test.each {|message, result|
       @game.death = message
