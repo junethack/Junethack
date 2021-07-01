@@ -33,6 +33,37 @@
         %br
         = "#{StartScummedGame.count.html_formatted} games were start scummed in total."
 
+      .scorelisting#no-more-tables
+        %table.greytable.cf.compact
+          %thead.cf
+            %tr
+              %th User
+              %th
+              %th
+          %tbody.cf
+            - sql = 'SELECT count(1) AS count, (SELECT login FROM users where id = user_id) AS username, user_id FROM start_scummed_games WHERE user_id IS NOT NULL GROUP BY user_id ORDER BY 1 DESC LIMIT 10'
+            - start_scummed_games = repository.adapter.select sql
+            - start_scummed_games_count = StartScummedGame.all(conditions: ['user_id IS NOT NULL']).count
+            - top10_count = start_scummed_games.map(&:count).inject(0) { |sum,i| sum += i }
+            - start_scummed_games.each do |game|
+              %tr
+                %td.variant{"data-title": "User"}
+                  %a{ href: "/user_id/#{game.user_id}"}= h game.username
+                %td.table_number
+                  = game.count.html_formatted
+                %td.table_number
+                  = "(#{'%.1f%%' % (100.0*game.count/start_scummed_games_count)})"
+            %tr
+              %td.variant{"data-title": "User"}
+                Total
+              %td.table_number
+                = top10_count.html_formatted
+              %td.table_number
+                = "(#{'%.1f%%' % (100.0*top10_count/start_scummed_games_count)})"
+
+        - percentage = '%.1f%%' % (100.0*top10_count/StartScummedGame.count)
+        = "These 10 players accounted for #{percentage} of all start scummed games during the tournament period."
+
     .text_content.non_top_post
       =h3 "Ascensions"
       %div
