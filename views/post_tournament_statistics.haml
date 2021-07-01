@@ -27,6 +27,39 @@
         = "Junethack games accounted for #{'%.1f%%' % (100.0*tournament_games_count/all_games_count)} of all games played during the tournament period."
 
     .text_content.non_top_post
+      =h3 "Ascensions"
+      %div
+        - games_ascended = Game.all(conditions: [ "user_id IS NOT NULL AND ascended='t'" ])
+        = "#{games_ascended.collect {|g| g.user_id}.uniq.count.html_formatted} different players ascended a total of #{games_ascended.count.html_formatted} games."
+
+      .scorelisting#no-more-tables
+        %table.greytable.cf.compact
+          %thead.cf
+            %tr
+              %th Variant
+              %th
+              %th
+          %tbody.cf
+            - sql = "SELECT count(1) AS count, version FROM games WHERE user_id IS NOT NULL and ascended='t' GROUP BY version ORDER BY 1 DESC"
+            - games_ascended_by_variant = repository.adapter.select sql
+            - games_ascended_by_variant.each do |variant|
+              %tr
+                %td.variant{"data-title": "Variant"}
+                  = h $variants_mapping[variant.version]
+                %td.table_number
+                  = variant.count.html_formatted
+                %td.table_number
+                  = "(#{'%.1f%%' % (100.0*variant.count/games_ascended.count)})"
+            %tr
+              %td.variant{"data-title": "Variant"}
+                Total
+              %td.table_number
+                = games_ascended_by_variant.map(&:count).inject(0) { |sum,i| sum += i }
+              %td.table_number
+                = "(100.0%)"
+
+
+    .text_content.non_top_post
       =h3 "Start scummed games"
       %div
         = "#{StartScummedGame.all(conditions: ['user_id IS NOT NULL']).count.html_formatted} games were start scummed by Junethack players,"
@@ -63,12 +96,6 @@
 
         - percentage = '%.1f%%' % (100.0*top10_count/StartScummedGame.count)
         = "These 10 players accounted for #{percentage} of all start scummed games during the tournament period."
-
-    .text_content.non_top_post
-      =h3 "Ascensions"
-      %div
-        - games_ascended = Game.all(conditions: [ "user_id IS NOT NULL AND ascended='t'" ])
-        = "#{games_ascended.collect {|g| g.user_id}.uniq.count.html_formatted} different players ascended a total of #{games_ascended.count.html_formatted} games."
 
     .text_content.non_top_post
       =h3 "Medusa kills"
