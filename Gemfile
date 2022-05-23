@@ -12,7 +12,7 @@ gem "json"
 gem "haml"
 
 gem "sinatra"
-gem "nokogiri", "~> 1.10"
+gem "nokogiri", "~> 1.13"
 
 gem "rufus-scheduler"
 gem 'sinatra-cache', git: 'https://github.com/kematzy/sinatra-cache.git'
