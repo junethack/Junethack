@@ -55,17 +55,17 @@ Use httrack to make a static copy of the website:
 ```
 # httrack http://127.0.0.1:4567 -O /tmp/junethack_mirror '+https://www.gravatar.com*' '-127.0.0.1:4567/archive/*' -%v
 
-# mv /tmp/junethack_mirror/127.0.0.1_4567 public/archive/2021
+# mv /tmp/junethack_mirror/127.0.0.1_4567 public/archive/2022
 # cp /tmp/junethack_mirror/www.gravatar.com/avatar/* public/archive/www.gravatar.com/
 
-# sed -i "s/<a class='logo' href='index.html'>/<a class='logo' href='\/'>/" public/archive/2021/*.html
+# sed -i "s/<a class='logo' href='index.html'>/<a class='logo' href='\/'>/" public/archive/2022/*.html
 
-# find public/archive/2021/ -name \*.html -print0 | xargs -0 sed -i "s/href='http:\/\/127.0.0.1:4567\/archive\//href='\/archive\//"
+# find public/archive/2022/ -name \*.html -print0 | xargs -0 sed -i "s/href='http:\/\/127.0.0.1:4567\/archive\//href='\/archive\//"
 
-# git add public; git commit public -m 'Archival of 2021 tournament'
+# git add public; git commit public -m 'Archival of 2022 tournament'
 ```
 
-Edit the archive links to the previous Junethack tournaments in public/archive/2021/index.html.
+Edit the archive links to the previous Junethack tournaments in public/archive/2022/index.html.
 Also add a link to the the new Junethack archive in views/splash.haml.
 
 Add and commit the repository.
