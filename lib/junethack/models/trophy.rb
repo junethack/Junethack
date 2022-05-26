@@ -610,21 +610,12 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "nethack fourk"
     Trophy.check_trophies_for_variant "fiqhack"
     Trophy.check_trophies_for_variant "dynahack"
-    Trophy.check_trophies_for_variant "slash'em extended"
     Trophy.check_trophies_for_variant "xnethack"
     Trophy.check_trophies_for_variant "splicehack"
     Trophy.check_trophies_for_variant "evilhack"
-    Trophy.check_trophies_for_variant "dnethack slex"
     Trophy.check_trophies_for_variant "notdnethack"
     Trophy.check_trophies_for_variant "slashem"
     Trophy.check_trophies_for_variant "gnollhack"
     Trophy.check_trophies_for_variant "oldhack"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 4, :add_xnethack_achievement ) do
-  up do
-    xnethack = helper_get_variant_for 'xnethack'
-    Trophy.create variant: xnethack, trophy: :completed_arc_quest, text: "completed the revised Archeologist quest", icon: "completed_arc_quest.png", row: 2
   end
 end
