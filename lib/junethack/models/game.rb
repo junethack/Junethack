@@ -5,7 +5,7 @@ require 'pry'
 
 $conducts = [
     [0x001, "Foodless", "Foo"],
-    [0x002, "Vegan", "Vgn"],    
+    [0x002, "Vegan", "Vgn"],
     [0x004, "Vegetarian", "Vgt"],
     [0x008, "Atheist", "Ath"],
     [0x010, "Weaponless", "Wea"],
@@ -42,8 +42,8 @@ $achievements = [
     [:entered_astral_plane,
      "entered Astral Plane",
      "m-astral.png"],
-    [:ascended, 
-     "ascended", 
+    [:ascended,
+     "ascended",
      "ascension.png"],
     [:obtained_the_luckstone_from_the_mines,
      "obtained the luckstone from the Mines",
@@ -83,8 +83,8 @@ $slash_achievements = [
   [2, :defeated_croesus, "defeated Croesus", "s-croesus.png"],
   [2, :defeated_dagon, "defeated Dagon", "s-dagon.png"],
   [2, :defeated_hydra, "defeated Hydra", "s-hydra.png"],
-  [3, :imbued_bell, "imbued the Bell of Opening", "m-slex-bellimbued.png"],
-  [3, :imbued_amulet, "imbued the Amulet of Yendor", "m-slex-amuletimbued.png"],
+  #[3, :imbued_bell, "imbued the Bell of Opening", "m-slex-bellimbued.png"],
+  #[3, :imbued_amulet, "imbued the Amulet of Yendor", "m-slex-amuletimbued.png"],
 ]
 
 $slex_extended_achievements = [
