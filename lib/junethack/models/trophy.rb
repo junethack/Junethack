@@ -300,6 +300,7 @@ def Trophy.check_trophies_for_variant variant_description
       if [evilhack].include? variant then
         achievements << [:defeated_kathryn_the_ice_queen, 'defeated Kathryn the Ice Queen', "defeated_kathryn_the_ice_queen.png", 10]
         achievements << [:defeated_abominable_snowman, 'defeated Abominable Snowman', "defeated_abominable_snowman.png", 10]
+        achievements << [:defeated_goblin_king, 'defeated the Goblin King', "defeated_goblin_king.png", 10]
         achievements << [:defeated_vecna,       'defeated Vecna', "defeated_vecna.png", 10]
         achievements << [:defeated_kas,         'defeated Kas', "defeated_kas.png", 10]
         achievements << [:defeated_cerberus,    'defeated Cerberus', nil, 10]
