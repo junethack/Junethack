@@ -465,6 +465,7 @@ def Trophy.check_trophies_for_variant variant_description
 
     if [xnethack].include? variant then
       Trophy.create variant: variant, trophy: :completed_arc_quest, text: "completed the revised Archeologist quest", icon: "completed_arc_quest.png", row: 2
+      Trophy.create variant: variant, trophy: :completed_val_quest, text: "completed the revised Valkyrie quest", icon: "completed_val_quest.png", row: 2
 
       Trophy.create variant: variant, trophy: :ascended_without_unfairly_scaring_monsters, text: "ascended without scaring any monsters", icon: "m-elbereth.png", row: 2
 

@@ -373,6 +373,11 @@ def update_scores(game)
 
     Scoreentry.first_or_create(user_id: game.user_id,
                                variant: game.version,
+                               trophy: :completed_val_quest
+                              ).save if game.role == "Val" && game.completed_quest?
+
+    Scoreentry.first_or_create(user_id: game.user_id,
+                               variant: game.version,
                                trophy: :ascended_without_unfairly_scaring_monsters
                               ).save if game.ascended_without_unfairly_scaring_monsters?
   end
@@ -985,7 +990,7 @@ def all_races_streak?(user_id, variant)
   all_stuff_streak "race", 5, user_id, variant
 end
 
-# All alignments: ascend a character of every alignment (the starting alignment is considered). 
+# All alignments: ascend a character of every alignment (the starting alignment is considered).
 def all_alignments?(user_id, variant)
   anz = repository.adapter.select "select count(distinct align0) from games where version = ? and user_id = ? and ascended='t';", variant, user_id
   return anz[0] == 3 # Lawful, Neutral, Chaotic
