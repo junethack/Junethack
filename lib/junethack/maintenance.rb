@@ -32,6 +32,7 @@ get "/*" do
     @messages = []
     @errors = []
     @show_banner = true
+    status 503
     haml :maintenance
 end
 
