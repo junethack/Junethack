@@ -397,7 +397,7 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: "dn_tour", text: "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack", icon: "m-dn-tour.png", row: 4
     end
 
-    if [dnethack].include? variant then
+    if [dnethack, notdnethack].include? variant then
       achievements = [
         [:archeologist_quest, "Walking international incident (Completed the revised archeologist quest)", "dnh_archeologist_quest.png", 6],
         [:caveman_quest, "Serpent slayer (Completed the revised caveman quest)", "dnh_caveman_quest.png", 6],
@@ -439,6 +439,7 @@ def Trophy.check_trophies_for_variant variant_description
         [:madman_quest, "Oh good. I'm not crazy. (Completed the madman quest)", "dnh_madman_quest.png", 6],
         [:lamashtu_kill, "Does this count as a paradox? (Destroyed Lamashtu (Demon Queen of the future))", "dnh_lamashtu_kill.png", 5],
         [:baalphegor_kill, "A universe without motion (Destroyed Baalphegor)", "dnh_baalphegor_kill.png", 5],
+        [:bokrug_ascension, "Detestable gods (Completed Bokrug's ascension ritual)", "dnh_bokrug_ascension.png", 5],
         [:opened_one_hellish_seal, "Relics of a bygone era (Opened one type of hellish seal)", "dnh_opened_one_hellish_seal.png", 4],
         [:opened_all_hellish_seals, "There are a lot of these… (Opened all three types of hellish seal (across all games played))", "dnh_opened_all_hellish_seals.png", 4],
       ]
@@ -490,7 +491,6 @@ def Trophy.check_trophies_for_variant variant_description
         [:get_poplar,        "Punishing Poplars (Acquire the black forest completion prize)", nil, 2],
         [:get_abominable,    "Snowplow (Acquire the ice caves completion prize)", nil, 2],
         [:get_gilly,         "Gillywhatnow (Acquire the archipelago completion prize)", nil, 2],
-        [:did_demo,          "Aameul & Hethradiah (Summon demogorgon with the forbidden ritual)", nil, 2],
         [:did_unknown,       "An Unknown Ritual (Perform the ritual of an unknown god)", nil, 2],
         [:killed_illurien,   "Angry Librarian (Kill Illurien of the Myriad Glimpses)", nil, 2],
         [:pain_duo,          "Duo of Pain (Acquire both the silver key and the cage key)", nil, 2],
