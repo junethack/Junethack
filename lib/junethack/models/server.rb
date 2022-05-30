@@ -158,19 +158,6 @@ class Server
       Server.create name: 'nh4', variant: 'NetHack4 4.3.0',
         url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
 
-      [
-        [:esm_nh36,  'NetHack 3.6.6',           'https://em.slashem.me/xlogfiles/nethack'],
-        [:esm_gho,   'GruntHack 0.2.4',         'https://em.slashem.me/xlogfiles/grunthack'],
-        [:esm_shc,   'SporkHack 0.6.5',         'https://em.slashem.me/xlogfiles/sporkhack'],
-        [:esm_ndnh,  'notdNetHack 2021.05.21',   'https://em.slashem.me/xlogfiles/notdnh'],
-        [:esm_slsh,  "Slash'EM 0.0.8E0F1",      'https://em.slashem.me/xlogfiles/slashem'],
-      ].each {|server|
-        url = 'https://em.slashem.me/'
-        configfileurl = 'https://em.slashem.me/userdata/random_user/nethack/random_user.nh360rc'
-
-        Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
-      }
-
       prefixes = { us: :www, eu: :eu, au: :au }
       [:us, :eu, :au].each {|location|
         prefix = prefixes[location]
@@ -231,5 +218,11 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
   down do
     Server.destroy
+  end
+end
+
+DataMapper::MigrationRunner.migration( 2, :remove_em_slashem_me ) do
+  up do
+    Server.all(url: "https://em.slashem.me/").destroy
   end
 end
