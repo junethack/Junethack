@@ -21,6 +21,8 @@ gem "rufus-scheduler"
 gem 'sinatra-cache', git: 'https://github.com/kematzy/sinatra-cache.git'
 gem 'sanitize'
 
+gem 'eventmachine', git: 'https://github.com/eventmachine/eventmachine.git'
+
 gem "rack-mobile-detect"
 
 gem "thin"
