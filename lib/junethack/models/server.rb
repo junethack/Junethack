@@ -179,6 +179,7 @@ class Server
           [:hdf_evh,  'EvilHack 0.8.0',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
           [:hdf_slsh, "Slash'EM 0.0.8E0F2",      "https://#{prefix}.hardfought.org/xlogfiles/slashem/xlogfile"],
           [:hdf_slth, "SlashTHEM 0.9.6",         "https://#{prefix}.hardfought.org/xlogfiles/slashthem/xlogfile"],
+          [:hdf_gnl,  "GnollHack",               "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
           [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
 
         ].each {|server|
@@ -224,5 +225,33 @@ end
 DataMapper::MigrationRunner.migration( 2, :remove_em_slashem_me ) do
   up do
     Server.all(url: "https://em.slashem.me/").destroy
+  end
+end
+
+DataMapper::MigrationRunner.migration( 3, :add_hdf_gnollhack ) do
+  up do
+      prefixes = { us: :www, eu: :eu, au: :au }
+      [:us, :eu, :au].each {|location|
+          prefix = prefixes[location]
+          [
+              [:hdf_gnl, "GnollHack", "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
+          ].each {|server|
+              url = "https://#{prefix}.hardfought.org/nethack"
+
+              server[0] = server[0].to_s.sub('h', 'euh').to_sym if location == :eu
+              server[0] = server[0].to_s.sub('h', 'auh').to_sym if location == :au
+
+              configfileurl = "https://#{prefix}.hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc"
+              Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+          }
+      }
+
+      servers = Server.last(3)
+      server_id = Server.first(name: "hdf_nao").id
+      Account.all(server_id: server_id).each { |account|
+          servers.each { |server|
+              Account.create(user: account.user, server: server, name: account.name, verified: true)
+          }
+      }
   end
 end
