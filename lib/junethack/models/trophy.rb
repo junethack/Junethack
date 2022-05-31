@@ -385,7 +385,7 @@ def Trophy.check_trophies_for_variant variant_description
     end
 
     # DNetHack specific achievements
-    if [dnethack, dnhslex].include? variant then
+    if [dnethack, dnhslex, notdnethack].include? variant then
       Trophy.create variant: variant, trophy: "one_key", text: "That was the easy one (obtained at least one alignment key)", icon: "m-one-key.png", row: 2
       Trophy.create variant: variant, trophy: "three_keys", text: "Through the gates of Gehennom (obtained at least three alignment keys)", icon: "m-three-keys.png", row: 2
       Trophy.create variant: variant, trophy: "nine_keys", text: "Those were for replay value... (obtained all nine alignment keys)", icon: "m-nine-keys.png", row: 2
@@ -494,15 +494,9 @@ def Trophy.check_trophies_for_variant variant_description
         [:did_unknown,       "An Unknown Ritual (Perform the ritual of an unknown god)", nil, 2],
         [:killed_illurien,   "Angry Librarian (Kill Illurien of the Myriad Glimpses)", nil, 2],
         [:pain_duo,          "Duo of Pain (Acquire both the silver key and the cage key)", nil, 2],
-        [:killed_asmodeus,   "Asmodown (Kill Asmodeus)", 'm-killed-asmodeus.png', 2],
-        [:killed_demogorgon, "Demogorgone (Kill Demogorgon)", 'm-killed-demogorgon.png', 2],
-        [:one_key,           "One Key (Acquire an alignment key)", 'm-one-key.png', 2],
-        [:three_keys,        "Three Keys (Acquire three alignment keys)", 'm-three-keys.png', 2],
-        [:anarcho_alchemist, "Anarcho-Alchemist (Make every unique alchemy kit potion in a single game)", nil, 2],
         [:used_smith,        "If The Shoe Fits... (Pay for an armorsmith service)", nil, 2],
         [:max_punch,         "Not Pulling Punches (Land a punch with all 4 offensive mystic powers active)", nil, 2],
         [:garnet_spear,      "Garnet Rod (Land a hit with a garnet tipped spear)", nil, 2],
-        [:half_overload,     "Chernobyl (Cast a spell 150% overloaded or higher)", nil, 2],
         [:inked_up,          "Inked Up (Get a tattoo in The Sigil from Fell)", nil, 2],
         [:new_races,         "New Races. New Faces. (Ascend either a salamander, a symbiote, or an etheraloid)", nil, 2],
       ]
