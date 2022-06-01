@@ -112,6 +112,7 @@ class StartScummedGame
     property :while, String
 
     property :difficulty, String
+    property :demo, String
 
     property :killed_medusa, Integer
 end

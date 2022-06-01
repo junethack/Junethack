@@ -332,6 +332,7 @@ class Game
     property :while, String
 
     property :difficulty, String
+    property :demo, String
 
     property :killed_medusa, Integer,
       :default => -> (r,p) { r.defeated_medusa? ? 1 : 0 }
