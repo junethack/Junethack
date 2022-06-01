@@ -220,9 +220,11 @@ class Game
     property :deathdate, String
     property :version,   String, required: true
     property :old_version, String
+
     def version=(version)
       _version = 'unh'   if version.start_with? 'UNH-'
       _version = 'dnh'   if version.start_with? 'DNH-'
+      _version = 'ndnh'  if version == 'DNH-2022.5.30'
       _version = 'slth'  if version.start_with? 'slth-'
       _version = 'slex'  if version.start_with? 'slex-'
       _version = '3.6'   if version == '3.6.1'

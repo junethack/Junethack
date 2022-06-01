@@ -261,3 +261,9 @@ DataMapper::MigrationRunner.migration( 4, :remove_duplicate_gnollhack_servers ) 
     Server.all(id: [67, 66, 65]).destroy
   end
 end
+
+DataMapper::MigrationRunner.migration( 5, :fix_notdnethack ) do
+  up do
+    execute "UPDATE games set version = 'ndnh' where old_version = 'DNH-2022.5.30'"
+  end
+end
