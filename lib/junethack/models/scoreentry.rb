@@ -35,7 +35,17 @@ class Individualtrophy
                                 icon: icon)
         text = Trophy.first(trophy: trophy).text
         user = User.first(:id => user_id).login
-        Event.create(:text => "Achievement \"#{text}\" unlocked by #{user}!")
+        event_text = "Achievement \"#{text}\" unlocked by #{user}!"
+
+        sightseeing_tour = /Sightseeing Tour: finish a game in (one|two|three|four) variants?/
+        globetrotter = /Globetrotter: get a trophy in (one|two|three|four) variants?/
+        spam_protection = text =~ sightseeing_tour || text =~ globetrotter
+        first_day_of_tournament = Time.at($tournament_starttime).to_date == Date.today
+        if first_day_of_tournament && spam_protection
+          puts "Spam protection for #{event_text}"
+        else
+          Event.create(text: event_text)
+        end
       end
     end
 end
