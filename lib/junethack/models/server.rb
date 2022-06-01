@@ -255,3 +255,9 @@ DataMapper::MigrationRunner.migration( 3, :add_hdf_gnollhack ) do
       }
   end
 end
+
+DataMapper::MigrationRunner.migration( 4, :remove_duplicate_gnollhack_servers ) do
+  up do
+    Server.all(id: [67, 66, 65]).destroy
+  end
+end
