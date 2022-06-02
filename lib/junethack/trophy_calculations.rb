@@ -504,7 +504,7 @@ def update_scores(game)
   end
 
   if game.ascended && [xnethack].include?(game.version)
-    conducts = conductX&.split(",")
+    conducts = game.conductX&.split(",")
     [
       [:ascended_petless,      "petless"],
       [:ascended_artifactless, "artifactless"],
