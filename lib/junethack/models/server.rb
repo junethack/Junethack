@@ -269,3 +269,18 @@ DataMapper::MigrationRunner.migration( 5, :fix_notdnethack ) do
     execute "UPDATE games set version = 'ndnh' where old_version = 'DNH-2022.5.30'"
   end
 end
+
+DataMapper::MigrationRunner.migration( 6, :fix_hdf_gnollhack_accounts ) do
+  up do
+      Account.all(server_id: 58).each { |account|
+          [62, 63, 64].each { |server|
+              if !Account.first(user: account.user, server: Server.first(id: server))
+binding.pry
+                Account.create(user: account.user, server: Server.first(id: server), name: account.name, verified: true)
+              end
+          }
+      }
+
+      execute "UPDATE games SET user_id = (SELECT user_id FROM accounts WHERE server_id = games.server_id AND accounts.name = games.name) WHERE user_id IS NULL AND server_id IN (62,63,64)"
+  end
+end
