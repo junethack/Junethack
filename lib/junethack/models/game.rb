@@ -336,6 +336,10 @@ class Game
     property :difficulty, String
     property :demo, String
 
+    # fourk specific properties
+    property :gameidnum, Integer
+    property :gengold, String
+
     property :killed_medusa, Integer,
       :default => -> (r,p) { r.defeated_medusa? ? 1 : 0 }
 

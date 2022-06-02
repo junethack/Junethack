@@ -114,5 +114,9 @@ class JunkGame
     property :difficulty, String
     property :demo, String
 
+    # fourk specific properties
+    property :gameidnum, Integer
+    property :gengold, String
+
     property :killed_medusa, Integer
 end
