@@ -119,6 +119,8 @@ class Server
             "https://#{prefix}.hardfought.org/userdata/#{player}/slashem/dumplog/#{game.starttime}.slashem.txt"
         when "NH-1.3d"
             "https://#{prefix}.hardfought.org/userdata/#{player}/nh13d/dumplog/#{game.starttime}.nh13d.txt"
+        when "slth"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/slashthem/dumplog/#{game.starttime}.slth.txt"
         end
       when "em.slashem.me"
         case game.version
