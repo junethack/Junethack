@@ -39,9 +39,11 @@ class Individualtrophy
 
         sightseeing_tour = /Sightseeing Tour: finish a game in (one|two|three|four) variants?/
         globetrotter = /Globetrotter: get a trophy in (one|two|three|four) variants?/
-        spam_protection = text =~ sightseeing_tour || text =~ globetrotter
-        first_day_of_tournament = Time.at($tournament_starttime).to_date == Date.today
-        if first_day_of_tournament && spam_protection
+        medusa = /Anti-Stoner: defeated Medusa in one variant/
+        ascender = /Diversity Ascender: Ascended one variant/
+        spam_protection = text =~ sightseeing_tour || text =~ globetrotter || text =~ medusa || text =~ ascender
+
+        if spam_protection
           puts "Spam protection for #{event_text}"
         else
           Event.create(text: event_text)
