@@ -551,17 +551,34 @@ get %r{/games/?(\d{4}-\d{2}-\d{2})?/?([-0-9a-zNH.]+)?} do |date, variant|
     hash[:limit] = 100 unless (date && variant)
 
     @games_played = Game.all(hash)
-    @games_played_title = "Last #{@games_played.size} games played" + title_variant + title_date
+    @games_played_title = "Last #{@games_played.count} games played" + title_variant + title_date
 
     haml :last_games_played, :layout => @layout
 end
 
-get "/ascensions" do
+get %r{/ascensions/?(\d{4}-\d{2}-\d{2})?/?([-0-9a-zNH.]+)?} do |date, variant|
     caching_check_last_played_game
 
-    @games_played = Game.all(:conditions => [ "user_id is not null and ascended='t'" ], :order => [ :endtime.desc ])
+    @games_played = Game.all(:conditions => ["user_id is not null and ascended='t'"], :order => [:endtime.desc])
     @games_played_user_links = true
-    @games_played_title = "#{@games_played.size} ascended games"
+    title_variant = '';
+    title_date = '';
+
+    if variant
+      title_variant = " for #{$variants_mapping[variant]}"
+      @games_played = @games_played.all(version: variant)
+    end
+
+    if date
+      title_date = " on #{date}"
+      date = Time.parse("#{date} 00:00:00Z").to_i
+      @games_played = @games_played.all(conditions: ["endtime >= #{date} and endtime < #{date+86400}"])
+    end
+
+    @games_played = @games_played.all(limit: 100) unless (date && variant)
+
+    @games_played_title = "Last #{@games_played.count} ascended games" + title_variant + title_date
+
     haml :last_games_played, :layout => @layout
 end
 
