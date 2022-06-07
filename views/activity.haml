@@ -36,6 +36,30 @@
                 - finished_variant_games = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ?;", v)[0]
                 %td.table_number= "<a class='hidden_link' href='/games/#{v}'>#{finished_variant_games}</a>"
 
+    - cache_fragment("games_#{Game.max_endtime}") do
+      - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null) group by datum order by datum asc;"
+      .text_content.non_top_post
+        %h2 Finished Games per Day
+        .scorelisting
+          %table.greytable.misc
+            %tr
+              %th Date (UTC)
+              %th
+            - graph = Graph.new
+            - @finished_games_per_day.each_with_index do |game, index|
+              - graph.add_data_point(game.datum, game.count)
+              %tr
+                %td.table_date= h game.datum
+                %td.table_number= game.count
+                - if index == 0
+                  %td.chart{:rowspan => @finished_games_per_day.size}
+                    %div{:id => "chart_finished_games_per_day"}
+            -# Total number of played tournament games
+            %tr
+              %td.table_date= "Total"
+              %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0;")[0]
+          - graph.write("finished_games_per_day")
+
     - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
       // Ugly SQL to also get days with zero ascensions. Will only work
       // as long there are any games for each day
@@ -62,30 +86,6 @@
               %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0 and ascended='t';")[0]
           - graph.write("activity")
 
-
-    - cache_fragment("games_#{Game.max_endtime}") do
-      - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null) group by datum order by datum asc;"
-      .text_content.non_top_post
-        %h2 Finished Games per Day
-        .scorelisting
-          %table.greytable.misc
-            %tr
-              %th Date (UTC)
-              %th
-            - graph = Graph.new
-            - @finished_games_per_day.each_with_index do |game, index|
-              - graph.add_data_point(game.datum, game.count)
-              %tr
-                %td.table_date= h game.datum
-                %td.table_number= game.count
-                - if index == 0
-                  %td.chart{:rowspan => @finished_games_per_day.size}
-                    %div{:id => "chart_finished_games_per_day"}
-            -# Total number of played tournament games
-            %tr
-              %td.table_date= "Total"
-              %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0;")[0]
-          - graph.write("finished_games_per_day")
 
     - cache_fragment("users_#{User.max_created_at}") do
       - @new_users_per_day = repository.adapter.select "select date(created_at) as date, count(1) as count from users group by date(created_at);"
