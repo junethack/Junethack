@@ -378,7 +378,8 @@ class Game
     end
 
     def ascended_without_elbereth?
-        (ascended && (Integer(conduct) & 0x01000 > 0)) || (ascended && elbereths == 0)
+      return true if ascended && conductX&.split(",").include?("elberethless")
+      (ascended && (Integer(conduct) & 0x01000 > 0)) || (ascended && elbereths == 0)
     end
 
     def ascended_without_unfairly_scaring_monsters?
