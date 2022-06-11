@@ -121,6 +121,8 @@ class Server
             "https://#{prefix}.hardfought.org/userdata/#{player}/nh13d/dumplog/#{game.starttime}.nh13d.txt"
         when "slth"
             "https://#{prefix}.hardfought.org/userdata/#{player}/slashthem/dumplog/#{game.starttime}.slth.txt"
+        when "gnl"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/gnollhack/dumplog/#{game.starttime}.gnoll.txt"
         end
       when "em.slashem.me"
         case game.version
