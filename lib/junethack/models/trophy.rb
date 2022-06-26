@@ -677,3 +677,9 @@ DataMapper::MigrationRunner.migration( 3, :fix_notdnethack_trophies ) do
     Trophy.all(variant: notdnethack, trophy: [:anarcho_alchemist, :half_overload, :did_demo]).destroy
   end
 end
+
+DataMapper::MigrationRunner.migration( 4, :fix_gnollhack_trophies2 ) do
+  up do
+    execute "DELETE FROM trophies WHERE variant = 'gnl' AND trophy in ('consulted_the_oracle', 'entered_a_shop', 'entered_a_temple', 'entered_bigroom', 'entered_mine_town', 'entered_sokoban', 'entered_the_gnomish_mines', 'read_a_discworld_novel')"
+  end
+end
