@@ -199,7 +199,6 @@ def Trophy.check_trophies_for_variant variant_description
 
     if variant == unnethack
       achievements = [
-        [:bought_oracle_consultation,         'got an Oracle consultation', '4-oracle-consult.png', 3],
         [:mini_croesus,                       "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 3],
         [:better_than_croesus,                "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 3],
         [:ascended_without_defeating_cthulhu, "Too good for a brain (ascended without defeating Cthulhu)", "m-no-cthulhu.png", 3],
