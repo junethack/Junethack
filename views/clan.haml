@@ -28,9 +28,10 @@
       #clan_banner
         %img{src: @clan.gravatar_link}
 
-        #clan_description
-          :escaped
-            #{ p @clan.description }
+        - if @clan.description != nil && @clan.description != ""
+          #clan_description
+            :escaped
+              #{ p @clan.description }
 
         - if !@logged_in
           - if @user.login == @clan.get_admin.login

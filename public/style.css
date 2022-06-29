@@ -742,16 +742,67 @@ th.competition_placing {
     background-color: #dadada;
     text-decoration: none;
 }
+
+#clan_banner {
+  width: fit-content;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 1em;
+  border-radius: 1em;
+
+  padding: 30px;
+  padding-bottom: 20px;
+
+  background-color: white; /* TODO andere Farbe */
+  background-image: url('/background.jpg'); /* oder so */
+  box-shadow: 1px 1px 5px #bbb;
+}
+
+#clan_banner img {
+  filter: drop-shadow(0 0 0.75em black);
+}
+
 #clan_description {
-    border-bottom: 3px double #bbb;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    width: fit-content;
+    margin: 0.2em;
+    margin-top: 1em;
+    text-shadow: 2px 2px 2px #999;
+
+    padding-top: 0.2em;
+    padding-bottom: 0.25em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 10px;
+
+    /* center text */
+    margin-left: auto;
+    margin-right: auto;
+
+    color: black;
+    box-shadow:  2px  2px 10px #aaa,
+                -2px  2px 10px #aaa,
+                 2px -2px 10px #aaa,
+                -2px -2px 10px #aaa;
+
+    background-color: rgba(128, 128, 128, 0.25);
+
 }
 #clan_description_input form {
     border-bottom: 3px double #bbb;
     padding-bottom: 10px;
     margin-bottom: 10px;
+
+    /* center text */
+    margin-left: auto;
+    margin-right: auto;
 }
+
+.scorelisting #clan_banner {
+  position: absolute;
+  top: 120px;
+  right: 20%;
+}
+
 /**************************
 **                       **
 ** Display trophy images **
@@ -760,7 +811,7 @@ th.competition_placing {
 **                       **
 **************************/
 
-/* 
+/*
 structure for a trophy cabinet:
 
 .trophy_cabinet
