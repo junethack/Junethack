@@ -2,11 +2,11 @@
   %table.greytable.misc
     %tr
       %th{style: 'width: 1.25em'}
-      %th 
+      %th
         Clan
-      %th 
+      %th
         Score
-      %th 
+      %th
         Rank
     - ClanScoreEntry.all(:order => [:rank.asc], :trophy => 'clan_winner').each do |entry|
       %tr
@@ -20,3 +20,14 @@
           #{h "%.2f" % entry.points}
         %td.table_number
           #{h entry.rank}
+
+  - clan_winners = ClanScoreEntry.all(rank: 1, trophy: 'clan_winner')
+  - if clan_winners.count == 1
+    #clan_banner
+      - @clan = ClanScoreEntry.all(:order => [:rank.asc], trophy: 'clan_winner').first.clan
+      %img{src: @clan.gravatar_link}
+
+      - if @clan.description != nil && @clan.description != ""
+        #clan_description
+          :escaped
+            #{ p @clan.description }
