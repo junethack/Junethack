@@ -36,8 +36,38 @@
                 - finished_variant_games = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ?;", v)[0]
                 %td.table_number= "<a class='hidden_link' href='/games/#{v}'>#{finished_variant_games}</a>"
 
+    - cache_fragment("games_players_#{Game.max_endtime}") do
+      .text_content.non_top_post
+        %h2 Unique Players per Day and Variant
+        .scorelisting
+          %table.greytable.misc
+            -# table header
+            %tr.rotated
+              %th
+                %div Date (UTC)
+              - $variant_order.each do |v|
+                %th
+                  %div= $variants_mapping[v]
+
+            -# table data
+            - today = Time.now.to_i
+            - $tournament_starttime.step($tournament_endtime,86400).each do |datum|
+              - if today > datum && datum < $tournament_endtime then
+                %tr
+                  - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
+                  %td.table_date= "<a class='hidden_link' href='/games/#{formatted_date}'>#{formatted_date}</a>"
+                  - $variant_order.each do |v|
+                    - finished_variant_games_per_day = (repository.adapter.select "SELECT count(DISTINCT user_id) FROM games WHERE user_id > 0 AND version = ? AND endtime >= ? AND endtime < ?;", v, datum, datum+86400)[0]
+                    %td.table_number= "<a class='hidden_link' href='/games/#{formatted_date}/#{v}'>#{finished_variant_games_per_day}</a>"
+            -# Total number of tournament games per variant
+            %tr
+              %td.table_date= "Total"
+              - $variant_order.each do |v|
+                - finished_variant_games = (repository.adapter.select "SELECT count(DISTINCT user_id) FROM games WHERE user_id > 0 AND version = ?;", v)[0]
+                %td.table_number= "<a class='hidden_link' href='/games/#{v}'>#{finished_variant_games}</a>"
+
     - cache_fragment("games_variants_ascended_#{Game.max_endtime}") do
-      .text_content
+      .text_content.non_top_post
         %h2 Ascensions per Day and Variant
         .scorelisting
           %table.greytable.misc
