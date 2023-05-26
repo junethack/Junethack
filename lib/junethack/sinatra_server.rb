@@ -147,7 +147,7 @@ post "/login" do
     if user = User.authenticate(params["username"], params["password"])
         session['user_id'] = user.id
         #puts "Id is #{user.id}"
-        session["messages"] 
+        session["messages"]
         redirect "/home"
     else
         session["errors"] = ["Could not log in"]
@@ -270,7 +270,7 @@ post "/create" do
         if user.save
             session['messages'] << "Registration successful. Please log in."
             Event.new(:text => "New user #{user.login} registered!", :url => "#{base_url}/user/#{user.login}").save
-            redirect "/login" and return 
+            redirect "/login" and return
         else
             session['errors'] << "Could not register account"
             puts "could not register user #{params[:username]}"
