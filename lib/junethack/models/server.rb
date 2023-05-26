@@ -152,7 +152,7 @@ class Server
 
     def self.create_servers
       [
-        [:nao_nh36, 'NetHack 3.6.6', 'https://alt.org/nethack/xlogfile.nh363+'],
+        [:nao_nh36, 'NetHack 3.6.7', 'https://alt.org/nethack/xlogfile.nh363+'],
       ].each {|server|
         url = 'https://nethack.alt.org/'
         configfileurl = 'https://alt.org/nethack/userdata/random_user/random_user.nh366rc'
@@ -169,21 +169,21 @@ class Server
           [:hdf_nao,  'NetHack 3.4.3-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
           [:hdf_nh37, 'NetHack 3.7.0-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack/xlogfile-370-hdf"],
           #[:hdf_nh37s, 'NetHack 3.7.0-hdf (seed)', "https://#{prefix}.hardfought.org/xlogfiles/setseed/xlogfile"],
-          [:hdf_shc,  'SporkHack 0.6.5',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
-          [:hdf_gho,  'GruntHack 0.2.4',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
-          [:hdf_unh,  'UnNetHack 6.0.5',         "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
-          [:hdf_dnh,  'dNetHack 3.21.2',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
+          [:hdf_shc,  'SporkHack 0.7.0',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
+          [:hdf_gho,  'GruntHack 0.3.0',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
+          [:hdf_unh,  'UnNetHack 6.0.8',         "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
+          [:hdf_dnh,  'dNetHack 3.22.0',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
           [:hdf_nh4,  'NetHack4 4.3.0',          "https://#{prefix}.hardfought.org/xlogfiles/nethack4/xlogfile"],
           [:hdf_nh4k, 'NetHack Fourk 4.3.0.5',   "https://#{prefix}.hardfought.org/xlogfiles/4k/xlogfile"],
           [:hdf_fiq,  'FIQHack 4.3.1',           "https://#{prefix}.hardfought.org/xlogfiles/fh/xlogfile"],
           [:hdf_dyn,  'DynaHack 0.6.0',          "https://#{prefix}.hardfought.org/xlogfiles/dynahack/xlogfile"],
-          [:hdf_xnh,  'xNetHack 7.1.0',          "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
+          [:hdf_xnh,  'xNetHack 8.0.0',          "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
           [:hdf_spl,  'SpliceHack 1.2.0',        "https://#{prefix}.hardfought.org/xlogfiles/splicehack/xlogfile"],
-          [:hdf_ndnh, 'notdNetHack 2022.03.22',  "https://#{prefix}.hardfought.org/xlogfiles/notdnethack/xlogfile"],
-          [:hdf_evh,  'EvilHack 0.8.0',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
+          [:hdf_ndnh, 'notdNetHack 2023.05.15',  "https://#{prefix}.hardfought.org/xlogfiles/notdnethack/xlogfile"],
+          [:hdf_evh,  'EvilHack 0.8.2',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
           [:hdf_slsh, "Slash'EM 0.0.8E0F2",      "https://#{prefix}.hardfought.org/xlogfiles/slashem/xlogfile"],
-          [:hdf_slth, "SlashTHEM 0.9.6",         "https://#{prefix}.hardfought.org/xlogfiles/slashthem/xlogfile"],
-          [:hdf_gnl,  "GnollHack",               "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
+          [:hdf_slth, "SlashTHEM 0.9.7",         "https://#{prefix}.hardfought.org/xlogfiles/slashthem/xlogfile"],
+          [:hdf_gnl,  "GnollHack 4.1.1",         "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
           [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
 
         ].each {|server|
@@ -201,7 +201,7 @@ class Server
       [:us, :eu, :au].each {|location|
         prefix = prefixes[location]
         [
-          [:gnl_hck, 'GnollHack', "http://#{prefix}.gnollhack.com/xlogfile"]
+          [:gnl_hck, 'GnollHack 4.1.1', "http://#{prefix}.gnollhack.com/xlogfile"]
         ].each {|server|
           url = "http://#{prefix}.gnollhack.com/"
 
@@ -223,66 +223,5 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
   down do
     Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 2, :remove_em_slashem_me ) do
-  up do
-    Server.all(url: "https://em.slashem.me/").destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 3, :add_hdf_gnollhack ) do
-  up do
-      prefixes = { us: :www, eu: :eu, au: :au }
-      [:us, :eu, :au].each {|location|
-          prefix = prefixes[location]
-          [
-              [:hdf_gnl, "GnollHack", "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
-          ].each {|server|
-              url = "https://#{prefix}.hardfought.org/nethack"
-
-              server[0] = server[0].to_s.sub('h', 'euh').to_sym if location == :eu
-              server[0] = server[0].to_s.sub('h', 'auh').to_sym if location == :au
-
-              configfileurl = "https://#{prefix}.hardfought.org/userdata/random_user_initial/random_user/nh343/random_user.nh343rc"
-              Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
-          }
-      }
-
-      servers = Server.last(3)
-      server_id = Server.first(name: "hdf_nao").id
-      Account.all(server_id: server_id).each { |account|
-          servers.each { |server|
-              Account.create(user: account.user, server: server, name: account.name, verified: true)
-          }
-      }
-  end
-end
-
-DataMapper::MigrationRunner.migration( 4, :remove_duplicate_gnollhack_servers ) do
-  up do
-    Server.all(id: [67, 66, 65]).destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 5, :fix_notdnethack ) do
-  up do
-    execute "UPDATE games set version = 'ndnh' where old_version = 'DNH-2022.5.30'"
-  end
-end
-
-DataMapper::MigrationRunner.migration( 6, :fix_hdf_gnollhack_accounts ) do
-  up do
-      Account.all(server_id: 58).each { |account|
-          [62, 63, 64].each { |server|
-              if !Account.first(user: account.user, server: Server.first(id: server))
-binding.pry
-                Account.create(user: account.user, server: Server.first(id: server), name: account.name, verified: true)
-              end
-          }
-      }
-
-      execute "UPDATE games SET user_id = (SELECT user_id FROM accounts WHERE server_id = games.server_id AND accounts.name = games.name) WHERE user_id IS NULL AND server_id IN (62,63,64)"
   end
 end
