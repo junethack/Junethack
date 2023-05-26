@@ -12,7 +12,7 @@ gem "data_mapper"
 gem 'dm-migrations'
 
 gem "json"
-gem "haml"
+gem "haml", "< 6.0.0"
 
 gem "sinatra"
 gem "nokogiri"
