@@ -1019,8 +1019,11 @@ h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a,
 }
 #clan_banner.user_page {
   position: absolute;
-  right: 2em;
-  top: 2em;
+  right: 1em;
+  top: 1em;
+}
+#clan_banner.user_page img {
+  width: 40%;
 }
 
 nav .fas {
