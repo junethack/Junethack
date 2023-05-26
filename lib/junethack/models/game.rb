@@ -469,6 +469,10 @@ class Game
         gold >= 25_000
     end
 
+    def croesus_buddy?
+        gold >= 100_000
+    end
+
     def better_than_croesus?
         gold >= 200_000
     end

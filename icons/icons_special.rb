@@ -103,9 +103,31 @@ def entered_bigroom
   write_image(image, :gray, 'entered_bigroom')
 end
 
+def croesus_buddy
+  image = setup_image(:yellow)
+
+  image = image.color_floodfill(0,0, 'rgb(6,6,6)')
+
+  #                     color   size   x    y
+  draw_text(image, '$', :yellow, 16, -13, -15, bold: true)
+  draw_text(image, '$', :yellow, 16, -13,   0, bold: true)
+  draw_text(image, '$', :yellow, 16, -13,  15, bold: true)
+
+  draw_text(image, '$', :yellow, 16,  13,   0, bold: true)
+  draw_text(image, '$', :yellow, 16,  13, -15, bold: true)
+  draw_text(image, '$', :yellow, 16,  13,  15, bold: true)
+
+  draw_text(image, '$', :yellow, 16,   0, -15, bold: true)
+  draw_text(image, '$', :yellow, 16,   0,   0, bold: true)
+  draw_text(image, '$', :yellow, 16,   0,  15, bold: true)
+
+  write_image(image, :yellow, 'croesus-buddy')
+end
+
 defeated_all_riders
 defeated_all_demon_lords_princes
 defeated_all_quest_leaders
 defeated_all_quest_nemeses
 entered_bigroom
 read_a_discworld_novel
+croesus_buddy

@@ -271,6 +271,13 @@ def update_scores(game)
                                  trophy: :mini_croesus
                                 ).save if game.mini_croesus?
     end
+    # Croesus' Buddy
+    if Trophy.first variant: game.version, trophy: :croesus_buddy
+      Scoreentry.first_or_create(user_id: game.user_id,
+                                 variant: game.version,
+                                 trophy: :croesus_buddy
+                                ).save if game.croesus_buddy?
+    end
     # Better than Croesus
     if Trophy.first variant: game.version, trophy: :better_than_croesus
       Scoreentry.first_or_create(user_id: game.user_id,
