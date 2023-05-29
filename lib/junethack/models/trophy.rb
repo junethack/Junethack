@@ -261,6 +261,7 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:defeated_baphomet,       "defeated Baphomet", "defeated_baphomet.png", 7]
         achievements << [:defeated_mephistopheles, "defeated Mephistopheles", "defeated_mephistopheles.png", 7]
         achievements << [:defeated_tiamat,         "defeated Tiamat", "defeated_tiamat.png", 7]
+        achievements << [:defeated_lucifer,        "defeated Lucifer", "defeated_lucifer.png", 7]
       end
 
       # quest leader
@@ -308,6 +309,8 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:defeated_white_horse, 'defeated the White Horse', nil, 10]
         achievements << [:defeated_pale_horse,  'defeated the Pale Horse',  nil, 10]
         achievements << [:defeated_black_horse, 'defeated the Black Horse', nil, 10]
+        achievements << [:defeated_saint_michael, "defeated Saint Michael", "defeated_saint_michael.png", 10]
+        achievements << [:defeated_gollum,        "defeated Gollum", "defeated_gollum.png", 10]
         achievements << [:defeated_croesus,     'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
         achievements << [:mini_croesus,         "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
         achievements << [:croesus_buddy,        "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus-buddy.png", 6]
@@ -371,6 +374,7 @@ def Trophy.check_trophies_for_variant variant_description
 
     if variant == evilhack then
       achievements = []
+      achievements << [:entered_purgatory, "entered Purgatory", 2]
       achievements << [:consulted_the_oracle, "consulted the Oracle", 2]
       achievements << [:never_abused_alignment, "never abused alignment", 2]
 
