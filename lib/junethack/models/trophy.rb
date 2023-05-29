@@ -679,5 +679,6 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "slashthem"
     Trophy.check_trophies_for_variant "oldhack"
     Trophy.check_trophies_for_variant "hackem"
+    Trophy.check_trophies_for_variant "acehack"
   end
 end

@@ -28,6 +28,7 @@ $variants_mapping["slashem"] = "Slash'EM"
 $variants_mapping["gnl"]     = "GnollHack"
 $variants_mapping["slth"]    = "SlashTHEM"
 $variants_mapping["hck"]     = "HackEM"
+$variants_mapping["ace"]     = "AceHack"
 $variants_mapping["NH-1.3d"] = "NetHack 1.3d"
 
 # hard coded ordering of variants with competition score entries
@@ -53,6 +54,7 @@ $variant_order << "slashem"
 $variant_order << "gnl"
 $variant_order << "slth"
 $variant_order << "hck"
+$variant_order << "ace"
 
 $numbers = [
   'zero', 'one', 'two', 'three', 'four', 'five',
