@@ -196,7 +196,7 @@ def update_scores(game)
   end
 
   killed_uniques = (game.killed_uniques||'').split(',').map {|unique|
-    "defeated_#{unique.downcase.gsub(' ', '_').gsub("'",'')}"
+    "defeated_#{unique.downcase.gsub(/[- ]/, '_').gsub("'",'')}"
   }
   generic_achievements(game, killed_uniques)
 
@@ -603,7 +603,7 @@ def update_scores(game)
 end
 
 def generic_achievements(game, achievements)
-  achievements.each {|achievement|
+  achievements.each { |achievement|
     if Trophy.first variant: game.version, trophy: achievement
       entry = Scoreentry.first(user_id: game.user_id,
                                variant: game.version,

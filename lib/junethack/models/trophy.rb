@@ -157,6 +157,7 @@ def Trophy.check_trophies_for_variant variant_description
     notdnethack = helper_get_variant_for 'notdnethack'
     slashem = helper_get_variant_for 'slashem'
     gnollhack = helper_get_variant_for 'gnollhack'
+    hackem = helper_get_variant_for 'hackem'
 
     if [acehack, nethack4, nh4k, dynahack, fiqhack].include? variant then
       # these variants don't have standard xlogfile achievement flags
@@ -323,7 +324,7 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 6]
       end
 
-      achievements.each {|achievement|
+      achievements.each { |achievement|
         icon = achievement[2] || "u-#{achievement[0].to_s.gsub(' ', '_')}.png"
         Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[3]
       }
@@ -381,6 +382,61 @@ def Trophy.check_trophies_for_variant variant_description
       achievements.each { |achievement|
         icon = "#{achievement[0].to_s}.png"
         Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[2]
+      }
+    end
+
+    if variant == hackem then
+      achievements = []
+      achievements << [:entered_quest_portal_level, 'entered Quest Home', nil, 2]
+      achievements << [:consulted_the_oracle, 'consulted the Oracle', nil, 2]
+      achievements << [:never_abused_alignment, 'never abused alignment', nil, 2]
+
+      # riders
+      achievements << [:defeated_all_riders, 'You Are War! (defeated Death, Famine, and Pestilence)', 'defeated_all_riders.png', 5]
+      achievements << [:defeated_death,      'defeated Death', nil, 5]
+      achievements << [:defeated_famine,     'defeated Famine', nil, 5]
+      achievements << [:defeated_pestilence, 'defeated Pestilence', nil, 5]
+
+      # uncategorized unique monsters
+      achievements << [:defeated_cthulhu,          'defeated Cthulhu', nil, 6]
+      achievements << [:defeated_wizard_of_yendor, 'defeated the Wizard of Yendor', nil, 6]
+      achievements << [:defeated_one_eyed_sam,     'No membership card (defeated One-Eyed Sam)', 'm-sam.png', 6]
+      achievements << [:defeated_aphrodite,        'Make War Not Love (defeated Aphrodite)', nil, 6]
+      achievements << [:defeated_vlad_the_impaler, 'defeated Vlad the Impaler', nil, 6]
+      achievements << [:defeated_oracle,           'No Further Knowledge Required (defeated the Oracle)', nil, 6]
+
+      # demons
+      achievements << [:defeated_asmodeus,   'defeated Asmodeus', nil, 7]
+      achievements << [:defeated_baalzebub,  'defeated Baalzebub', nil, 7]
+      achievements << [:defeated_demogorgon, 'defeated Demogorgon', nil, 7]
+      achievements << [:defeated_dispater,   'defeated Dispater', nil, 7]
+      achievements << [:defeated_geryon,     'defeated Geryon', nil, 7]
+      achievements << [:defeated_juiblex,    'defeated Juiblex', nil, 7]
+      achievements << [:defeated_orcus,      'defeated Orcus', nil, 7]
+      achievements << [:defeated_yeenoghu,   'defeated Yeenoghu', nil, 7]
+      achievements << [:defeated_grazzt,         "defeated Graz'zt", 'defeated_grazzt.png', 7]
+      achievements << [:defeated_lolth,          'defeated Lolth', 'defeated_lolth.png', 7]
+      achievements << [:defeated_baphomet,       'defeated Baphomet', 'defeated_baphomet.png', 7]
+      achievements << [:defeated_mephistopheles, 'defeated Mephistopheles', 'defeated_mephistopheles.png', 7]
+      achievements << [:defeated_tiamat,         'defeated Tiamat', nil, 7]
+
+      achievements << [:defeated_kathryn_the_ice_queen, 'defeated Kathryn the Ice Queen', "defeated_kathryn_the_ice_queen.png", 10]
+      achievements << [:defeated_abominable_snowman, 'defeated Abominable Snowman', "defeated_abominable_snowman.png", 10]
+      achievements << [:defeated_vecna,       'defeated Vecna', "defeated_vecna.png", 10]
+      achievements << [:defeated_kas,         'defeated Kas', "defeated_kas.png", 10]
+      achievements << [:defeated_cerberus,    'defeated Cerberus', nil, 10]
+      achievements << [:defeated_rat_king,    'defeated the Rat King', nil, 10]
+
+      # gold
+      achievements << [:defeated_croesus,     'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
+      achievements << [:mini_croesus,         "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
+      achievements << [:croesus_buddy,        "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus-buddy.png", 6]
+      achievements << [:better_than_croesus,  "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 6]
+
+      achievements.each { |achievement|
+        icon = achievement[2] || "#{achievement[0]}.png"
+        icon = achievement[2] || "u-#{achievement[0].to_s}.png" unless File.exist?("icons/#{icon}")
+        Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[3]
       }
     end
 
@@ -622,5 +678,6 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "gnollhack"
     Trophy.check_trophies_for_variant "slashthem"
     Trophy.check_trophies_for_variant "oldhack"
+    Trophy.check_trophies_for_variant "hackem"
   end
 end

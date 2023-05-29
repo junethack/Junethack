@@ -184,6 +184,7 @@ class Server
           [:hdf_slsh, "Slash'EM 0.0.8E0F2",      "https://#{prefix}.hardfought.org/xlogfiles/slashem/xlogfile"],
           [:hdf_slth, "SlashTHEM 0.9.7",         "https://#{prefix}.hardfought.org/xlogfiles/slashthem/xlogfile"],
           [:hdf_gnl,  "GnollHack 4.1.1",         "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
+          [:hdf_hck,  'HackEM 1.1.4',            "https://#{prefix}.hardfought.org/xlogfiles/hackem/xlogfile"],
           [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
 
         ].each {|server|
