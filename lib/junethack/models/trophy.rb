@@ -420,8 +420,6 @@ def Trophy.check_trophies_for_variant variant_description
       achievements << [:defeated_mephistopheles, 'defeated Mephistopheles', 'defeated_mephistopheles.png', 7]
       achievements << [:defeated_tiamat,         'defeated Tiamat', nil, 7]
 
-      achievements << [:defeated_kathryn_the_ice_queen, 'defeated Kathryn the Ice Queen', "defeated_kathryn_the_ice_queen.png", 10]
-      achievements << [:defeated_abominable_snowman, 'defeated Abominable Snowman', "defeated_abominable_snowman.png", 10]
       achievements << [:defeated_vecna,       'defeated Vecna', "defeated_vecna.png", 10]
       achievements << [:defeated_kas,         'defeated Kas', "defeated_kas.png", 10]
       achievements << [:defeated_cerberus,    'defeated Cerberus', nil, 10]
@@ -680,5 +678,12 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "oldhack"
     Trophy.check_trophies_for_variant "hackem"
     Trophy.check_trophies_for_variant "acehack"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 4, :fix_hackem_trophies ) do
+  up do
+    Trophy.all(variant: 'hck', trophy: :defeated_kathryn_the_ice_queen).destroy
+    Trophy.all(variant: 'hck', trophy: :defeated_abominable_snowman).destroy
   end
 end
