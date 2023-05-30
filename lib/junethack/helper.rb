@@ -10,7 +10,7 @@ $competition_trophy_order = [
 
 $variants_mapping = {}
 $variants_mapping["3.4.3"]   = "NetHack 3.4.3"
-$variants_mapping["3.6"]     = "NetHack 3.6.6"
+$variants_mapping["3.6"]     = "NetHack 3.6.7"
 $variants_mapping["3.7"]     = "NetHack 3.7.0"
 $variants_mapping["shc"]     = "SporkHack"
 $variants_mapping["unh"]     = "UnNetHack"
@@ -76,6 +76,7 @@ def helper_get_variant_for(description)
     return '3.6' if description.downcase == '3.6.2'
     return '3.6' if description.downcase == '3.6.3'
     return '3.6' if description.downcase == '3.6.6'
+    return '3.6' if description.downcase == '3.6.7'
     return '3.7' if description.downcase == '3.7'
     return '3.7' if description.downcase == '3.7.0'
     return 'slashem' if description.downcase == 'slashem'

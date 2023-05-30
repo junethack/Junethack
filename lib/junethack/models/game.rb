@@ -231,6 +231,7 @@ class Game
       _version = '3.6'   if version == '3.6.2'
       _version = '3.6'   if version == '3.6.3'
       _version = '3.6'   if version == '3.6.6'
+      _version = '3.6'   if version == '3.6.7'
       _version = '3.4.3' if version == '3.4.3'
       _version = '3.7'   if version == '3.7.0'
       _version = 'NH-1.3d' if version == 'NH-1.3d'
