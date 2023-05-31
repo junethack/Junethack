@@ -80,3 +80,4 @@ defeated_kathryn_the_ice_queen lcyan @
 defeated_abominable_snowman lcyan Y
 defeated_vecna lmagenta L
 defeated_kas gray V
+defeated_goblin_king lmagenta ŏ
