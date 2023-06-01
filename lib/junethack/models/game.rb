@@ -341,6 +341,9 @@ class Game
     property :gameidnum, Integer
     property :gengold, String
 
+    # gnollhack specific properties
+    property :scoring, String
+
     property :killed_medusa, Integer,
       :default => -> (r,p) { r.defeated_medusa? ? 1 : 0 }
 

@@ -118,5 +118,8 @@ class JunkGame
     property :gameidnum, Integer
     property :gengold, String
 
+    # gnollhack specific properties
+    property :scoring, String
+
     property :killed_medusa, Integer
 end
