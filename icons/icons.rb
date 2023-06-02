@@ -16,6 +16,7 @@ def write_icon(filename, color, symbol=nil)
              when 's' then -3
              when '_' then -1
              when '|' then -3
+             when 'ŏ' then  2
              else           0
              end
   x_offset = case symbol
