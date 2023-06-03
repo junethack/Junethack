@@ -13,24 +13,25 @@
             %a{href: "##{link_id variant_name}"}= variant_name
 
     %section.text_content.trophycabinet
-      =h3 'Cross-Variant'
-      %ul
-        - Trophy.cross_variant_trophies.each do |trophy|
-          %li
-            - next_higher_trophy = trophy.trophy.split('_').tap {|t| t[-1] = t[-1].to_i+1 }.join('_')
-            - users = repository.adapter.select "SELECT (SELECT login FROM users WHERE user_id = id) AS user, user_id, icon FROM individualtrophies a WHERE trophy = ? AND NOT EXISTS (SELECT 1 FROM individualtrophies b WHERE trophy = ? AND a.user_id = b.user_id) ORDER BY UPPER(user);", trophy.trophy, next_higher_trophy
-            - icon = (users.size > 0) ? trophy.icon : trophy.light_icon
-            %a.imagelink{:title => trophy.text, :href => "/trophies##{trophy.anchor}"}
-              %img.trophyleft{:src => "/icons/#{icon}", :alt => trophy.text}
-            .trophyright
-              - users.each do |u|
-                %span
-                  %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
+      =h3_with_expand_icon 'Cross-Variant'
+      - Trophy.cross_variant_trophies.group_by(&:row).each do |_, trophies|
+        %ul
+          - trophies.each do |trophy|
+            %li
+              - next_higher_trophy = trophy.trophy.split('_').tap {|t| t[-1] = t[-1].to_i+1 }.join('_')
+              - users = repository.adapter.select "SELECT (SELECT login FROM users WHERE user_id = id) AS user, user_id, icon FROM individualtrophies a WHERE trophy = ? AND NOT EXISTS (SELECT 1 FROM individualtrophies b WHERE trophy = ? AND a.user_id = b.user_id) ORDER BY UPPER(user);", trophy.trophy, next_higher_trophy
+              - icon = (users.size > 0) ? trophy.icon : trophy.light_icon
+              %a.imagelink{:title => trophy.text, :href => "/trophies##{trophy.anchor}"}
+                %img.trophyleft{:src => "/icons/#{icon}", :alt => trophy.text}
+              .trophyright
+                - users.each do |u|
+                  %span
+                    %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
 
     - variant_and_bonus_games_order.each do |variant|
       - variant_name = $variants_mapping[variant]
       %section.text_content.trophycabinet
-        =h3 variant_name
+        =h3_with_expand_icon variant_name
         %ul
           - count = Trophy.achieved_user_all_stuff_trophies_count variant
           - if count > 0
@@ -46,15 +47,15 @@
                     %span
                       %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
 
-          - trophies = Trophy.user_trophies variant
-          - trophies.each do |trophy|
-            %li
-              - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id from scoreentries where variant = ? and trophy = ? order by upper(user);", variant, trophy.trophy
-              - icon = (users.size > 0) ? trophy.icon : trophy.light_icon
-              %a.imagelink{:title => trophy.text, :href => "/trophies/#{variant_name.downcase}##{trophy.trophy}"}
-                %img.trophyleft{:src => "/icons/#{icon}", :alt => trophy.text}
-              .trophyright
-                - users.each do |u|
-                  %span
-                    %a{:href => "/user/" + CGI::escape(u.user)}=h u.user
-
+          - Trophy.user_trophies(variant).group_by(&:row).each do |_, trophies|
+            %ul
+              - trophies.each do |trophy|
+                %li
+                  - users = repository.adapter.select "select (select login from users where user_id = id) as user, user_id from scoreentries where variant = ? and trophy = ? order by upper(user);", variant, trophy.trophy
+                  - icon = (users.size > 0) ? trophy.icon : trophy.light_icon
+                  %a.imagelink{:title => trophy.text, :href => "/trophies/#{variant_name.downcase}##{trophy.trophy}"}
+                    %img.trophyleft{:src => "/icons/#{icon}", :alt => trophy.text}
+                  .trophyright
+                    - users.each do |u|
+                      %span
+                        %a{:href => "/user/" + CGI::escape(u.user)}=h u.user

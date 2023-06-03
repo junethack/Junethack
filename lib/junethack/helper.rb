@@ -114,9 +114,15 @@ end
 def h2 text, id=nil
   hn 2, text, id
 end
+
 def h3 text, id=nil
   hn 3, text, id
 end
+
+def h3_with_expand_icon text
+  hn 3, text, nil, other: '<i class="min-max-trophies fa-regular fa-compress fa-xs"></i>'
+end
+
 def h4 text, id=nil
   hn 4, text, id
 end
@@ -125,9 +131,9 @@ def link_id id
   id = h id.to_s.tr(" _'", '-').downcase
 end
 
-def hn(level, text, id)
+def hn(level, text, id, other: nil)
   id = link_id(id || text)
   link = "<a href='##{id}'>#{h text}</a>"
   tag = level >= 1 ? "h#{level}" : "span"
-  "<#{tag} id='#{id}'>#{link}</#{tag}>"
+  "<#{tag} id='#{id}'>#{link}#{other}</#{tag}>"
 end

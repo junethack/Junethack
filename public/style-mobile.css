@@ -571,7 +571,7 @@ th.competition_placing {
 **                       **
 **************************/
 
-/* 
+/*
 structure for a trophy cabinet:
 
 .trophy_cabinet
@@ -633,7 +633,7 @@ ul.trophypage.indented > li {
 }
 /* finer-grained display styles */
 .trophycabinet .trophyright, .trophycabinet .trophyleft {
-    margin: 5px 0px 5px 5px;
+    margin: 5px 0px 5px 0px;
 }
 .trophycabinet h2,
 .trophycabinet h3 {
@@ -647,6 +647,28 @@ ul.trophypage.indented > li {
 .trophycabinet .endofcabinetrow,
 .trophycabinet > ul li {
     border-bottom: 1px solid #ccc;
+}
+
+.trophycabinet .min-max-trophies {
+  margin-left: 0.25em;
+  font-size: 0.5em;
+  color: #888;
+  line-height: inherit;
+}
+.trophycabinet .min-max-trophies:hover {
+  color: #444;
+  transform: scale(1.1);
+}
+
+/* collapsed trophy page */
+ul.collapsed li {
+  display: inline-block;
+}
+ul.collapsed .trophyright {
+  display: none;
+}
+ul.collapsed img.trophyleft {
+  margin-left: 0px;
 }
 
 /**************************
