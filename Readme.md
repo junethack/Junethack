@@ -50,7 +50,8 @@ Go through the list of servers and variants and add new ones and remove old ones
 
 ### Archival of a finished tournament
 
-Use the script scripts/archive.sh to make a static copy of the website.
+Start the webserver with ARCHIVE_MODE=1 and
+use the script scripts/archive.sh to make a static copy of the website.
 
 Edit the archive links to the previous Junethack tournaments in public/archive/2023/index.html.
 Also add a link to the the new Junethack archive in views/splash.haml.

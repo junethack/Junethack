@@ -66,33 +66,34 @@
                 - if Time.now.to_i > $tournament_endtime
                   %li
                     %a{:href => "/post_tournament_statistics"} Post Tournament Statistics
-            %li
-              %a{href: '/archive/2022/index.html'} Archives
-              %ul.nested
-                %li
-                  %a{:href => "/archive/2022/index.html"} 2022 tournament
-                %li
-                  %a{:href => "/archive/2021/index.html"} 2021 tournament
-                %li
-                  %a{:href => "/archive/2020/index.html"} 2020 tournament
-                %li
-                  %a{:href => "/archive/2019/index.html"} 2019 tournament
-                %li
-                  %a{:href => "/archive/2018/index.html"} 2018 tournament
-                %li
-                  %a{:href => "/archive/2017/index.html"} 2017 tournament
-                %li
-                  %a{:href => "/archive/2016/index.html"} 2016 tournament
-                %li
-                  %a{:href => "/archive/2015/index.html"} 2015 tournament
-                %li
-                  %a{:href => "/archive/2014/index.html"} 2014 tournament
-                %li
-                  %a{:href => "/archive/2013/index.html"} 2013 tournament
-                %li
-                  %a{:href => "/archive/2012/index.html"} 2012 tournament
-                %li
-                  %a{:href => "/archive/2011/index.html"} 2011 tournament
+            - if ENV["ARCHIVE_MODE"].nil?
+              %li
+                %a{href: '/archive/2022/index.html'} Archives
+                %ul.nested
+                  %li
+                    %a{:href => "/archive/2022/index.html"} 2022 tournament
+                  %li
+                    %a{:href => "/archive/2021/index.html"} 2021 tournament
+                  %li
+                    %a{:href => "/archive/2020/index.html"} 2020 tournament
+                  %li
+                    %a{:href => "/archive/2019/index.html"} 2019 tournament
+                  %li
+                    %a{:href => "/archive/2018/index.html"} 2018 tournament
+                  %li
+                    %a{:href => "/archive/2017/index.html"} 2017 tournament
+                  %li
+                    %a{:href => "/archive/2016/index.html"} 2016 tournament
+                  %li
+                    %a{:href => "/archive/2015/index.html"} 2015 tournament
+                  %li
+                    %a{:href => "/archive/2014/index.html"} 2014 tournament
+                  %li
+                    %a{:href => "/archive/2013/index.html"} 2013 tournament
+                  %li
+                    %a{:href => "/archive/2012/index.html"} 2012 tournament
+                  %li
+                    %a{:href => "/archive/2011/index.html"} 2011 tournament
 
             %li
               %a{:href => "/about"} About
@@ -120,7 +121,7 @@
                   %i.fas.fa-sign-out-alt
             - if @logged_in then
               %li
-                %a{href: "/login"} Login
+                %a{href: "/login"}= ENV["ARCHIVE_MODE"].nil? ? "Login" : $tournament_year
           %span.clear
       #page_content
         %section#welcome.hcenter
