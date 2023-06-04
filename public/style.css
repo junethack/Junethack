@@ -692,6 +692,12 @@ th.competition_placing {
   border-bottom-left-radius: 0.4em;
   border-bottom-right-radius: 0.4em;
 }
+#variant_navigation_list .collapsed li:first-child,
+#variant_navigation_list .collapsed li:last-child {
+  padding-top: inherit;
+  padding-bottom: inherit;
+  border-radius: inherit;
+}
 #variant_navigation_list li {
   padding-left: 1em;
   padding-right: 1em;
@@ -889,13 +895,20 @@ ul.trophypage.indented > li {
     border-bottom: 1px solid #ccc;
 }
 
+h2 .min-max-trophies,
+.trophycabinet .min-max-trophies {
+  margin-left: 0.25em;
+  font-size: 0.7em;
+  color: #888;
+  line-height: inherit;
+}
 .trophycabinet .min-max-trophies {
   margin-left: 0.25em;
   font-size: 0.5em;
   color: #888;
   line-height: inherit;
 }
-.trophycabinet .min-max-trophies:hover {
+.min-max-trophies:hover {
   color: #444;
   transform: scale(1.1);
 }

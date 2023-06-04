@@ -119,6 +119,10 @@ def h3 text, id=nil
   hn 3, text, id
 end
 
+def h2_with_expand_icon text
+  hn 2, text, nil, other: '<i class="min-max-trophies fa-regular fa-compress fa-xs"></i>'
+end
+
 def h3_with_expand_icon text
   hn 3, text, nil, other: '<i class="min-max-trophies fa-regular fa-compress fa-xs"></i>'
 end
