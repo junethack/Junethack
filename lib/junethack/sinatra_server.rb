@@ -261,6 +261,7 @@ post "/create" do
     errors = []
     errors.push("Password and confirmation do not match.") if params["confirm"] != params["password"]
     errors.push("Username already exists.") if User.first(:login => params[:username])
+    errors.push("Password needs at least 8 characters.") if params[:password].to_s.length < 8
     session['errors'] = errors
     puts "session errors are #{session['errors'].inspect}"
     redirect "/register" and return unless session['errors'].flatten.empty?
