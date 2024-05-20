@@ -1,0 +1,1082 @@
+/* MEYER RESET
+http://meyerweb.com/eric/tools/css/reset/ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+nav,
+table, caption, tbody, tfoot, thead, tr, th, td,
+input, label {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    color: #222;
+    color: inherit;
+    vertical-align: baseline;
+    background: transparent;
+}
+body {
+    line-height: 1;
+    font-family: Helvetica, Arial, sans-serif;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/**************************
+**                       **
+**     project styles    **
+**                       **
+**************************/
+
+body {
+    color: #222;
+    overflow-y: scroll;
+    background-color: #eee;
+    background-image: url('background.jpg');
+    background-repeat: repeat;
+    background-position: top center;
+    text-shadow: none;
+}
+a {
+    text-decoration: none;
+    color: #34f;
+}
+a.active, a.active:hover,
+a:hover {
+    color: #800;
+    text-decoration: underline;
+}
+a.active.imagelink, a.active.imagelink:hover,
+a.imagelink:hover {
+    text-decoration: none;
+}
+/* misc */
+#container {
+  width: 96%;
+  margin: 0 auto;
+}
+
+/*****************************************
+**                                      **
+**         fiddly css3 properties       **
+**                                      **
+*****************************************/
+.footer,
+.text_content_wrapper, #topnav {
+  background-color: #ddd;
+  background-image: linear-gradient(left, #eee 0%, #ddd 15%, #ddd 85%, #eee 100%);
+  border-radius: 10px;
+}
+/* typical inset rounding and shadowing */
+#topnav,
+.footer,
+.text_content_wrapper {
+  box-shadow: 0px 0px 8px #222;
+  opacity: 0.9;
+
+  border-top-left-radius:     0px;
+  border-top-right-radius:    0px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius:  6px;
+}
+
+/* slightly larger and darker rounding/shadowing, eg error messages...? */
+#errors,
+#messages {
+  border-radius: 5px;
+  box-shadow: 0px 5px 20px #555;
+}
+/* massive bigred rounding */
+input[type=submit].bigred,
+form#login_form > fieldset > input[type=submit],
+.signup_text a {
+  border-radius: 50px;
+  box-shadow: 0px 5px 20px #555;
+}
+
+::selection{ background: #aaa; color:#fff; text-shadow: none; }
+
+/**************************
+**                       **
+**       Navigation      **
+**                       **
+**************************/
+
+#container > .navigation {
+  position: relative;
+  z-index: 200;
+}
+/*
+ * Using #topnav not .navigation because of possible 2ndary navigation at a later date, and don't want topnav styles to apply there as well
+ * */
+#topnav {
+    font-size: 0.8em;
+    margin: 0 auto;
+    padding: 0;
+}
+#topnav .main > li {
+  /* Any li in main can be a label for a submenu */
+  position: relative;
+  width: auto;
+  line-height: 55px;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+}
+#topnav .main > li.first {
+    margin: 0px;
+    /*margin-top: 5px;*/
+}
+#topnav .main > li.first > a {
+    background: url(logo-sprite.png) no-repeat top left;
+    display: block;
+    width: 100px;
+    height: 51px;
+}
+#topnav .main > li.first img {
+    display: none;
+}
+
+#topnav .main li a {
+    color: #555;
+    padding-right: 10px;
+    padding-left: 10px;
+    display: block;
+    text-decoration: none;
+}
+#topnav .main > li > a.active, #topnav .main > li > a.active:hover,
+#topnav .main > li > a:hover {
+  color: #000;
+  background-color: #ccc;
+  box-shadow: 0px 0px 2px #222;
+}
+#topnav .main > li.first > a.active,
+#topnav .main > li.first > a.active:hover,
+#topnav .main > li.first > a:hover {
+  /* if we don't want the home to have a highlight */
+  background-color: #ddd;
+  background-color: transparent;
+  background: url(logo-sprite.png) no-repeat bottom left;
+  box-shadow: none;
+}
+
+/*******
+submenus
+********/
+#topnav .main li ul {
+  background-image: url(menu-arrow.png);
+  background-repeat: no-repeat;
+  background-position: 25px 0;
+  padding-top: 5px;
+  position: absolute;
+  display: none;
+  min-width: 175px;
+  width: max-content;
+  line-height: 30px;
+}
+/* Also, if the position of the arrow is wrong, put a class on it :) */
+#topnav .main li.longer ul {  background-position: 30px 0;  }
+#topnav .main li.shorter ul {  background-position: 20px 0;  }
+/* add more with more numbers at the end as necessary */
+#topnav .main li.longer1 ul {  background-position: 27px 0;  }
+#topnav .main li.shorter1 ul {  background-position: 22px 0;  }
+
+#topnav li:hover ul {
+  display: block;
+}
+/* Specificity in case we decide we want to add 2ndary menus */
+#topnav .main > li > ul > li {
+  /* line height is inherited from .main > li */
+  background-color: #555;
+  background-image: url(blacktransparent.png);
+  background-repeat: no-repeat;
+  text-align: left;
+}
+#topnav .main > li > ul > li > a {
+  border-top: 1px solid #444;
+  color: #fff;
+}
+#topnav .main > li > ul > li.first a {
+  border-top: 0;
+}
+#topnav .main > li > ul > li > a:active,
+#topnav .main > li > ul > li > a.active:hover,
+#topnav .main > li > ul > li > a:hover {
+    background-color: #666;
+}
+
+/**************************
+**                       **
+**      title styles     **
+**                       **
+**************************/
+
+.hcenter {
+    clear: both;
+    text-align: center;
+    /* space between nav and title */
+    margin-top: 1em;
+}
+
+/* The texts around the logo itself */
+.logotitles:first-child {
+  margin-top: 2.0em;
+}
+.logotitles {
+  color: #000;
+  margin: 0.5em 0em 0.5em 0em;
+}
+
+.logotitles h1 {
+  font-size: 2.6em;
+}
+.logotitles h2 {
+  font-size: 2em;
+}
+.logoimage {
+  margin: -1em;
+}
+
+/* The text below the logo on the front page. */
+.title_text {
+    margin: 1.5em;
+    font-weight: bold;
+    font-size: 1.25em;
+    clear: both;
+    text-align: center;
+}
+
+/**************************
+**                       **
+**     signup styles     **
+**                       **
+**************************/
+
+/* space between title and rest of content */
+/*  locate space here to avoid future margin collapse */
+.content_bulk {
+  /* not sure if position is needed for z-index, but ie would probably complain anyway */
+    position: relative;
+    z-index: 1;
+    margin-top: 1em;
+}
+
+.signup_text {
+    text-align: center;
+    width: 170px;
+    margin: 0 auto;
+}
+.signup_text p {
+    height: 60px;
+    line-height: 60px;
+}
+.signup_text a {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    background-color: #a00;
+}
+.signup_text a:hover,
+.signup_text a.active,
+.signup_text a.active:hover {
+    color: #fff;
+    background-color: #c22;
+}
+
+/**
+ Messages and errors
+ (those that come, e.g. when you fail to log in
+ */
+
+#errors
+{
+    margin: 5px;
+    padding: 5px;
+    background-color: #f55;
+}
+#messages
+{
+    margin: 5px;
+    padding: 5px;
+    background-color: #5ff;
+}
+
+/**************************
+**                       **
+**    body text styles   **
+**                       **
+**************************/
+
+.text_content_wrapper {
+    /* space between the main content and the element before - eg signup button */
+    margin-top: 1.5em;
+    padding-top: 1px;
+    padding-bottom: 30px;
+}
+.text_content {
+    margin: 35px 30px 0 30px;
+    line-height: 1.5em;
+}
+.text_content p {
+    margin-bottom: 10px;
+}
+.text_content h1 {
+    font-size: 200%;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+}
+.text_content h2 {
+    font-size: 150%;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+}
+.text_content.non_top_post {
+    margin-top: 0;
+}
+.text_content.non_top_post:before {
+    content: url(pale-logo.png);
+    width: 114px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+/**************************
+**                       **
+**      scoreboard       **
+**                       **
+**************************/
+
+.greytable { /* replaces .scorelisting table and #accountlist */
+    font-size: 85%;
+    border-collapse: collapse;
+    width: 100%; /* there's an inline style here.. */
+    text-align: left;
+    vertical-align: middle;
+    margin: 10px 0;
+}
+
+.greytable td a.hidden_link {
+  color: inherit;
+}
+
+table.misc,
+table.compact,
+.greytable.misc {
+    width: auto;
+}
+.greytable th {
+    text-align: left;
+    padding-right: 20px;
+    padding-left: 8px;
+}
+.greytable td
+{
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
+    padding-right: 10px;
+    padding-left: 10px;
+    vertical-align: middle;
+}
+.greytable tr:nth-child(odd) td
+{
+    background-color: #ccc;
+}
+.greytable tr:nth-child(even) td
+{
+    background-color: #bbb;
+}
+
+.greytable tr:hover td
+{
+    background-color: #9f9f9f;
+    color: #000;
+}
+
+.greytable td.chart
+{
+    background-color: inherit;
+    border: 0;
+    padding-left: 1em;
+}
+.greytable td.table_number
+{
+    text-align: right;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
+}
+.greytable td.table_date
+{
+    text-align: center;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.greytable td.variant,
+.greytable td.table_date,
+.greytable td.table_character {
+    white-space: nowrap;
+}
+/* next two declarations are probably deprecated */
+.greytable input[type="text"]
+{
+    width: 6em;
+    margin: 3px 3px 3px 3px;
+    padding: 0;
+}
+.greytable select
+{
+    font-size: 100%;
+}
+.greytable td.dllink
+{
+    text-align: center;
+    width: 1em;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+/**************************
+**                       **
+**      small forms      **
+**                       **
+**************************/
+
+.smallform {
+  margin-bottom: 10px;
+}
+.smallform label,
+.smallform input,
+.smallform select {
+    margin-right: 10px;
+    float:left;
+}
+.smallform input,
+.smallform select,
+.smallform label,
+.smallform input[type=submit] {
+  margin-top: 10px;
+  height: 30px;
+}
+.smallform select {
+  padding: 0;
+}
+
+.smallform input {
+  padding: 5px 5px 5px 5px;
+  height: 20px;
+}
+
+.smallform input[type=submit] {
+  padding: 5px 10px;
+  margin-left: 0;
+}
+/* cascading from label...maybe? or maybe i should make label into #login label and #register label */
+.smallform label {
+  margin-left: 0;
+  width: auto;
+  line-height: 30px;
+  clear: none;
+}
+
+
+/**************************
+**                       **
+**      /home styles     **
+**                       **
+**************************/
+
+.account-clan {
+  margin-top: 10px;
+}
+
+
+/**************************
+**                       **
+**      form styles      **
+**                       **
+**************************/
+/* add form#login_form (>) in front of each line and you're set */
+fieldset {
+    width: 400px;
+    margin: 0 auto;
+    /* to avoid margin collaspe with submit button below */
+    padding-bottom: 1px;
+}
+
+.form_msg,
+input,
+label {
+    margin-top: 5px;
+    margin-left: 10px;
+    display: block;
+    float: left;
+    height: 20px;
+    line-height: 20px;
+}
+label {
+    width: 120px;
+    clear: both;
+    text-align: right;
+}
+input {
+    padding: 1px;
+    width: 120px;
+    background-color: #fff;
+    border: 1px inset #eee;
+}
+.form_msg {
+    width: 120px;
+    color: red;
+    font-size: 85%;
+}
+input[type=submit] {
+    padding: 5px 10px;
+    height: auto;
+    line-height: auto;
+    width: auto;
+    background-color: #bbb;
+    border: 1px outset #eee;
+}
+input[type=submit]:hover {
+    background-color: #b6b6b6;
+}
+input[type=submit]:active {
+    margin-top: 11px;
+    margin-left: 1px;
+}
+/* use this class on a submit button if you would like it to be big and red. */
+input[type=submit].bigred,
+form#login_form > fieldset > input[type=submit] {
+    padding: 0;
+    height: 50px;
+    width: 120px;
+    float: none;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 0;
+    text-decoration: none;
+    color: #fff;
+    background-color: #a00;
+}
+input[type=submit].bigred:hover,
+input[type=submit].bigred.active:hover,
+input[type=submit].bigred.active:hover,
+form#login_form > fieldset > input[type=submit]:hover,
+form#login_form > fieldset > input[type=submit].active,
+form#login_form > fieldset > input[type=submit].active:hover {
+    cursor: pointer;
+    color: #fff;
+    background-color: #c22;
+}
+
+/**************************
+**                       **
+**     footer styles     **
+**                       **
+**************************/
+
+.footer {
+  height: auto;
+  margin-top: 20px;
+
+  border-top-right-radius:    6px;
+  border-top-left-radius:     6px;
+  border-bottom-left-radius:  0px;
+  border-bottom-right-radius: 0px;
+}
+.footer ul {
+    text-align: center;
+}
+.footer h3 {
+    font-size: 1.2em;
+}
+.footer img {
+    padding: 0px;
+    margin: 0px;
+}
+.footer li {
+    display: inline-block;
+    text-align: left;
+    margin: 10px;
+}
+.footer_column li {
+    display: block;
+}
+.footer_column a {
+    margin: 0px;
+    padding: 0px;
+
+}
+
+/**************************
+**                       **
+**      tabular data     **
+**    (currently only    **
+**      table#clans      **
+**   and table#servers)  **
+**                       **
+**************************/
+.prettytable,
+/* /clans */
+#clans,
+/* /servers */
+#servers {
+    width:100%;
+    font-size: .9em;
+}
+table.prettytable th,
+/* specificity override for padding */
+#clan_page table.clan_members tr/*<--extraspecific*/ th,
+table#clans th,
+table#servers th {
+    text-align: left;
+    border-bottom: 4px double #aaa;
+    padding: 8px;
+}
+.prettytable th,
+.prettytable td,
+#clans th,
+#clans td,
+#servers th,
+#servers td {
+    padding: 5px 8px;
+}
+.prettytable tr,
+#clans tr,
+#servers tr {
+    border-bottom: 1px solid #ccc;
+}
+
+/* tables for competition score entries */
+th.competition_value {
+    width: 10em;
+}
+th.competition_placing {
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 3em;
+}
+
+/* variant inter page navigational link list */
+#variant_navigation_list {
+  display: inline-block;
+  margin-top: 0;
+}
+#variant_navigation_list li:first-child {
+  padding-top: 0.2em;
+  border-top-left-radius: 0.4em;
+  border-top-right-radius: 0.4em;
+}
+#variant_navigation_list li:last-child {
+  padding-top: 0.2em;
+  border-bottom-left-radius: 0.4em;
+  border-bottom-right-radius: 0.4em;
+}
+#variant_navigation_list .collapsed li:first-child,
+#variant_navigation_list .collapsed li:last-child {
+  padding-top: inherit;
+  padding-bottom: inherit;
+  border-radius: inherit;
+}
+#variant_navigation_list li {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#variant_navigation_list li:nth-child(odd) {
+  background-color: #ccc;
+}
+#variant_navigation_list li:nth-child(even) {
+  background-color: #bbb;
+}
+
+/**************************
+**                       **
+**   clan page display   **
+**                       **
+**************************/
+
+#clan_header {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+#clan_header > div,
+#clan_header > h1 {
+    margin-bottom: 0;
+    height: 50px;
+    line-height: 50px;
+}
+
+#clan_header > h1 {
+    line-height: 50px;
+    width: auto;
+    text-align: center;
+    float: left;
+}
+/* the group of right hand things */
+#clan_header > div {
+    border-left: 1px solid #ccc;
+    float: right;
+    padding: 0 20px;
+    text-align: center;
+}
+/* links only - no spans here please */
+#clan_header > div a {
+    display: block;
+}
+#clan_header > div a:hover {
+    background-color: #dadada;
+    text-decoration: none;
+}
+
+#clan_banner {
+  width: fit-content;
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 1em;
+  border-radius: 1em;
+
+  padding: 30px;
+  padding-bottom: 20px;
+
+  background-color: white; /* TODO andere Farbe */
+  background-image: url('background.jpg'); /* oder so */
+  box-shadow: 1px 1px 5px #bbb;
+}
+
+#clan_banner img {
+  filter: drop-shadow(0 0 0.75em black);
+}
+
+#clan_description {
+    width: fit-content;
+    margin: 0.2em;
+    margin-top: 1em;
+    text-shadow: 2px 2px 2px #999;
+
+    padding-top: 0.2em;
+    padding-bottom: 0.25em;
+    padding-left: 1em;
+    padding-right: 1em;
+    border-radius: 10px;
+
+    /* center text */
+    margin-left: auto;
+    margin-right: auto;
+
+    color: black;
+    box-shadow:  2px  2px 10px #aaa,
+                -2px  2px 10px #aaa,
+                 2px -2px 10px #aaa,
+                -2px -2px 10px #aaa;
+
+    background-color: rgba(128, 128, 128, 0.25);
+
+}
+#clan_description_input form {
+    border-bottom: 3px double #bbb;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+
+    /* center text */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.scorelisting #clan_banner {
+  position: absolute;
+  top: 120px;
+  right: 20%;
+}
+
+/**************************
+**                       **
+** Display trophy images **
+** (everywhere, not just **
+**    on trophy page)    **
+**                       **
+**************************/
+
+/*
+structure for a trophy cabinet:
+
+.trophy_cabinet
+  h3
+  ul
+    li
+      .trophyleft
+      .trophyright
+- all a's to have .imagelink
+- all img's to have no inline styles
+*/
+.trophycabinet {
+    padding-top: 1px;/* for margin collapse */
+    margin-bottom: 30px;
+}
+
+ul.trophypage > li > img,
+.trophycabinet img {
+    height: 2em;
+    width: 2em;
+}
+ul.trophypage.indented > li {
+    list-style: none;
+    padding-left: 0.8em;
+}
+
+/* exception for clan page trophies */
+#clan_trophies .trophyicon {
+    margin-left: 5px;
+    margin-top: 5px;
+    background: #eee;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+
+
+/* vertically align text and images */
+.trophycabinet .trophyleft {
+    vertical-align: top;
+}
+.trophycabinet .trophyright {
+    width: 90%;
+}
+/* exception for /user/name..bleh */
+/* text cabinet, as in the text is the fixed info and the images are expandable */
+.text_cabinet.trophycabinet .trophyleft {
+    width: 20%;
+}
+.text_cabinet.trophycabinet .trophyright {
+  /* quick fix for i dunno what's happening with that a height */
+    margin-bottom: 0px;
+    width: 75%;
+}
+.trophycabinet .trophyleft,
+.trophycabinet .trophyright {
+    display: inline-block;
+    vertical-align: top;
+}
+/* finer-grained display styles */
+.trophycabinet .trophyright, .trophycabinet .trophyleft {
+    margin: 5px 0px 5px 0px;
+}
+.trophycabinet h2,
+.trophycabinet h3 {
+    line-height: 2.5em;
+}
+.trophycabinet h2,
+.trophycabinet h3 {
+    margin-bottom: 0;
+    border-bottom: 3px double #bbb;
+}
+.trophycabinet .endofcabinetrow,
+.trophycabinet > ul li {
+    border-bottom: 1px solid #ccc;
+}
+
+h2 .min-max-trophies,
+.trophycabinet .min-max-trophies {
+  margin-left: 0.25em;
+  font-size: 0.7em;
+  color: #888;
+  line-height: inherit;
+}
+.trophycabinet .min-max-trophies {
+  margin-left: 0.25em;
+  font-size: 0.5em;
+  color: #888;
+  line-height: inherit;
+}
+.min-max-trophies:hover {
+  color: #444;
+  transform: scale(1.1);
+}
+
+/* collapsed trophy page */
+ul.collapsed li {
+  display: inline-block;
+}
+ul.collapsed .trophyright {
+  display: none;
+}
+ul.collapsed img.trophyleft {
+  margin-left: 0px;
+}
+
+/**************************
+**                       **
+**      trophy page      **
+** (partially obsolete   **
+**     - please use      **
+** .trophy_cabinet where **
+**        possible)      **
+**                       **
+**************************/
+
+/* give dots to trophy lists */
+ul.trophypage {
+    list-style: disc;
+}
+ul.trophypage > li {
+    margin-top: 5px;
+}
+/* vertically align text and images */
+li.multiline > img {
+    vertical-align: middle;
+}
+li.multiline > span {
+    display: inline-block;
+    vertical-align: middle;
+    width: 500px;
+}
+
+/**************************
+**                       **
+**     helper styles     **
+**                       **
+**************************/
+
+.clear {
+    display: block;
+    clear: both;
+}
+#end_of_content_spacer {
+    height: 30px;
+}
+#small_content_spacer {
+    height: 15px;
+}
+#tiny_content_spacer {
+    height: 5px;
+}
+.center {
+    text-align: center;
+}
+.flat {
+    height: 0;
+}
+
+.small_print {
+    font-size: 0.9em;
+}
+
+/*
+ * rules reset and stylesheet
+ */
+#page_rules {
+  font-size: 1.25em;
+}
+
+#page_rules ul{
+  list-style-type: disc;
+}
+
+#page_rules h1 {
+  font-size: 1.6em;
+  line-height: 2em;
+}
+#page_rules h2 { /* do/don't subheadings */
+  font-size: 1.3em;
+  line-height: 2em;
+}
+
+#page_rules .text_content {
+  margin: 3em;
+}
+
+#page_rules .description {
+  margin-top:20px;
+}
+
+/* styling trophy tables with text */
+th.trophy,
+.trophies td.trophy {
+  padding: 0;
+  width: 1px;
+}
+.trophies td.trophy {
+  border: 1px solid #888;
+}
+th.trophy img,
+.trophies td.trophy img {
+  vertical-align: middle;
+  width:  2em;
+  height: 2em;
+}
+th.trophy img {
+  vertical-align: bottom;
+  margin-bottom: 3px;
+  width:  2em;
+  height: 2em;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+.trophyleft a {
+  color: inherit;
+}
+h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a,
+.trophyleft a:hover {
+  color: #888;
+}
+
+#clan_banner fieldset {
+  width: 100%;
+}
+#clan_banner input[type=text] {
+  width: 20em;
+  margin-left: 7.5px;
+  margin-right: 7.5px;
+}
+#clan_banner input[type=submit] {
+  width: 10em;
+  margin: 5px;
+}
+#clan_banner.user_page {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
+#clan_banner.user_page img {
+  width: 40%;
+}
+
+nav .fas {
+  font-size: 1.1em;
+}
+nav .settings {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* rotate table header */
+table.greytable tr.rotated {
+  height: 8em;
+  white-space: nowrap;
+}
+
+tr.rotated th div {
+  transform: translate(1.5em, 5em) rotate(310deg);
+  width: 2em;
+}
