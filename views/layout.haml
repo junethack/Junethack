@@ -6,11 +6,11 @@
     %link{href: "/back-to-top.css", rel: "stylesheet", type: "text/css"}/
     - games_count = Game.count :conditions => [ 'user_id > 0' ]
     - if Time.now.to_i < $tournament_signupstarttime
-      %title= 'Junethack 2023'
+      %title= 'Junethack 2024'
     - elsif games_count == 0 then
-      %title= "Junethack 2023 - #{User.count} players already registered!"
+      %title= "Junethack 2024 - #{User.count} players already registered!"
     - else
-      %title= "Junethack 2023 - #{User.count} players registered - #{games_count} games played!"
+      %title= "Junethack 2024 - #{User.count} players registered - #{games_count} games played!"
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Junethack" />
     <meta property="og:url" content="#{request.scheme}://junethack.net/" />

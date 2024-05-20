@@ -24,7 +24,7 @@ $(document).ready(function() {
 			enabled: false
 		},
 	};
-	
+
 	/* Load the data from the CSV file. */
 	$.get('/tmp/activity.csv', function(data) {
 		// Split the lines
@@ -34,19 +34,16 @@ $(document).ready(function() {
 			var items = line.split(',');
 			var series = {
 				data: [],
-				pointStart: Date.UTC(2021, 05, 01), // 2021-06-01
+				pointStart: Date.UTC(2024, 05, 01), // 2024-06-01
 				pointInterval: 24 * 3600 * 1000, // one day
 			};
 			$.each(items, function(itemNo, item) {
 				series.data.push(parseFloat(item));
 			});
-			
+
 			options.series.push(series);
 			}
 		});
-		
 		var chart = new Highcharts.Chart(options);
 	});
-	
-	
 });
