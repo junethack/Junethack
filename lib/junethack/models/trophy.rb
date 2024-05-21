@@ -489,7 +489,7 @@ def Trophy.check_trophies_for_variant variant_description
         [:mithardir_quest, "Chasing after the wind (Completed the mithardir quest)", "dnh_mithardir_quest.png", 6],
         [:mordor_quest, "Fossil of the First Age (Completed the mordor quest)", "dnh_mordor_quest.png", 6],
         [:second_thoughts, "Second thoughts (Completed a drow shared quest loyally before completing the traitor's quest)", "dnh_second_thoughts.png", 5],
-        [:illuminated, "Illuminated (Learned every word of creation and accumulated 30 passive sylabel bonuses)", "dnh_illuminated.png", 5],
+        [:illuminated, "Illuminated (Learned every word of creation and accumulated 30 passive syllable bonuses)", "dnh_illuminated.png", 5],
         [:exodus, "Exodus (Ascended with a pet android commander or operator android)", "dnh_exodus.png", 5],
         [:fully_upgraded, "Super Fighting Robot (Acquried all clockwork upgrades (except high-tension spring))", "dnh_fully_upgraded.png", 5],
         [:hunter_of_nightmares, "Hunter of Nightmares (Defeated at least one of each of the secret insight bosses)", "dnh_hunter_of_nightmares.png", 5],
