@@ -306,8 +306,11 @@ class Game
     property :starttimeus, Integer
     property :endtimeus,   Integer
 
-    # dnethack-specific properties
+    # dnethack and variants specific properties
     property :dnetachieve, String
+    property :inherited, String
+    property :species, String
+    property :species0, String
 
     # nh4k-specific properties
     property :variant, String
@@ -343,6 +346,12 @@ class Game
 
     # gnollhack specific properties
     property :scoring, String
+    property :edit, String
+    property :cname, String
+    property :collapse, String
+    property :tournament, String
+    property :starttimeUTC, Integer
+    property :endtimeUTC, Integer
 
     property :killed_medusa, Integer,
       :default => -> (r,p) { r.defeated_medusa? ? 1 : 0 }
