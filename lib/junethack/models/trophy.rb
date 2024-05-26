@@ -680,10 +680,3 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "acehack"
   end
 end
-
-DataMapper::MigrationRunner.migration( 4, :fix_hackem_trophies ) do
-  up do
-    Trophy.all(variant: 'hck', trophy: :defeated_kathryn_the_ice_queen).destroy
-    Trophy.all(variant: 'hck', trophy: :defeated_abominable_snowman).destroy
-  end
-end

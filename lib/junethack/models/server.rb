@@ -157,7 +157,7 @@ class Server
         [:nao_nh36, 'NetHack 3.6.7', 'https://alt.org/nethack/xlogfile.nh363+'],
       ].each {|server|
         url = 'https://nethack.alt.org/'
-        configfileurl = 'https://alt.org/nethack/userdata/random_user/random_user.nh366rc'
+        configfileurl = 'https://alt.org/nethack/userdata/random_user_initial/random_user/random_user.nh367rc'
         Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
       }
 
@@ -227,12 +227,5 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
   down do
     Server.destroy
-  end
-end
-
-DataMapper::MigrationRunner.migration( 2, :fix_nao_2023 ) do
-  up do
-    server = Server.first(name: 'nao_nh36')
-    server.update(configfileurl: "https://alt.org/nethack/userdata/random_user_initial/random_user/random_user.nh367rc")
   end
 end
