@@ -770,6 +770,7 @@ th.competition_placing {
 
 #clan_description {
     width: fit-content;
+    overflow-wrap: anywhere;
     margin: 0.2em;
     margin-top: 1em;
     text-shadow: 2px 2px 2px #999;
