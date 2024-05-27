@@ -2,6 +2,7 @@ require 'rubygems'
 require 'data_mapper'
 require 'dm-serializer'
 require 'dm-timestamps'
+require 'dm-validations'
 require 'sinatra'
 
 # raise exception on error when saving
