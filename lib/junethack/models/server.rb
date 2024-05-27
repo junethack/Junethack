@@ -188,7 +188,7 @@ class Server
           [:hdf_gnl,  "GnollHack 4.1.3.52",      "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
           [:hdf_hck,  'HackEM 1.2.2',            "https://#{prefix}.hardfought.org/xlogfiles/hackem/xlogfile"],
           [:hdf_ace,  'AceHack 3.6.0',           "https://#{prefix}.hardfought.org/xlogfiles/acehack/xlogfile"],
-          [:hdf_ndnh, 'notnotdNetHack 2024.05.15',
+          [:hdf_nndnh, 'notnotdNetHack 2024.05.15',
                                                  "https://#{prefix}.hardfought.org/xlogfiles/notnotdnethack/xlogfile"],
           [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
 
@@ -229,5 +229,19 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
   down do
     Server.destroy
+  end
+end
+
+
+DataMapper::MigrationRunner.migration( 2, :fix_nndnh ) do
+  up do
+    execute "UPDATE servers SET name = 'hdf_nndnh' WHERE name = 'hdf_ndnh' AND variant = 'notnotdNetHack 2024.05.15'"
+    execute "UPDATE servers SET name = 'euhdf_nndnh' WHERE name = 'euhdf_ndnh' AND variant = 'notnotdNetHack 2024.05.15'"
+    execute "UPDATE servers SET name = 'auhdf_nndnh' WHERE name = 'auhdf_ndnh' AND variant = 'notnotdNetHack 2024.05.15'"
+    execute 'CREATE UNIQUE INDEX "index_servers_unique_name" ON "servers" ("name")'
+  end
+
+  down do
+    execute 'DROP INDEX "index_servers_unique_name"'
   end
 end
