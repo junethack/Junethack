@@ -941,7 +941,6 @@ end
 
 def defeated_all_quest_nemeses?(game)
   nemeses = [
-    :defeated_minion_of_huhetotl,
     :defeated_thoth_amon,
     :defeated_tiamat,
     :defeated_cyclops,
@@ -958,6 +957,9 @@ def defeated_all_quest_nemeses?(game)
   unnethack = helper_get_variant_for 'unnethack'
   if game.version == unnethack
     nemeses << :defeated_warden_arianna
+    nemeses << :defeated_schliemann
+  elsif game.version == evilhack
+    nemeses << :defeated_minion_of_huhetotl
   end
   Scoreentry.count(user_id: game.user_id,
                    variant: game.version,

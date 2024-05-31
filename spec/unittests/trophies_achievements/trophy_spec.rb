@@ -37,7 +37,7 @@ describe TrophyScore do
     t = TrophyScore.new
     streaks = t.longest_ascension_streaks("streak1")
     streaks[0]['streaks'].should == 3
- 
+
     u = UserScore.new(1)
     streaks = u.longest_ascension_streak("streak1")
     streaks.should == 3
@@ -131,7 +131,7 @@ describe TrophyScore do
     end
 
     describe '#defeated_all_quest_nemeses?' do
-      let(:killed_uniques) { 'minion_of_huhetotl,thoth_amon,tiamat,warden_arianna,cyclops,ixoth,master_kaen,nalzok,scorpius,master_assassin,ashikaga_takauji,lord_surtur,dark_one' }
+      let(:killed_uniques) { 'schliemann,thoth_amon,tiamat,warden_arianna,cyclops,ixoth,master_kaen,nalzok,scorpius,master_assassin,ashikaga_takauji,lord_surtur,dark_one' }
       it 'creates a Scoreentry for defeated_all_quest_nemeses' do
         expect(Scoreentry.first(trophy: :defeated_all_quest_nemeses, user_id: user.id)).to be
       end
