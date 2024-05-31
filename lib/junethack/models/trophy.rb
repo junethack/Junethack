@@ -155,6 +155,7 @@ def Trophy.check_trophies_for_variant variant_description
     evilhack = helper_get_variant_for 'evilhack'
     dnhslex = helper_get_variant_for 'dnethack slex'
     notdnethack = helper_get_variant_for 'notdnethack'
+    notnotdnethack = helper_get_variant_for 'notnotdnethack'
     slashem = helper_get_variant_for 'slashem'
     gnollhack = helper_get_variant_for 'gnollhack'
     hackem = helper_get_variant_for 'hackem'
@@ -445,7 +446,7 @@ def Trophy.check_trophies_for_variant variant_description
     end
 
     # DNetHack specific achievements
-    if [dnethack, dnhslex, notdnethack].include? variant then
+    if [dnethack, dnhslex, notdnethack, notnotdnethack].include? variant then
       Trophy.create variant: variant, trophy: "one_key", text: "That was the easy one (obtained at least one alignment key)", icon: "m-one-key.png", row: 2
       Trophy.create variant: variant, trophy: "three_keys", text: "Through the gates of Gehennom (obtained at least three alignment keys)", icon: "m-three-keys.png", row: 2
       Trophy.create variant: variant, trophy: "nine_keys", text: "Those were for replay value... (obtained all nine alignment keys)", icon: "m-nine-keys.png", row: 2
@@ -457,7 +458,7 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: "dn_tour", text: "dNethack Tour: Played a game (at least 1000 turns) with all the shiny new races/roles in dNethack", icon: "m-dn-tour.png", row: 4
     end
 
-    if [dnethack, notdnethack].include? variant then
+    if [dnethack, notdnethack, notnotdnethack].include? variant then
       achievements = [
         [:archeologist_quest, "Walking international incident (Completed the revised archeologist quest)", "dnh_archeologist_quest.png", 6],
         [:caveman_quest, "Serpent slayer (Completed the revised caveman quest)", "dnh_caveman_quest.png", 6],
@@ -546,7 +547,7 @@ def Trophy.check_trophies_for_variant variant_description
       }
     end
 
-    if [notdnethack].include? variant then
+    if [notdnethack, notnotdnethack].include? variant then
       achievements = [
         [:get_kroo,          "Kroo's Bling (Acquire the dismal swamp completion prize)", nil, 2],
         [:get_poplar,        "Punishing Poplars (Acquire the black forest completion prize)", nil, 2],
@@ -678,5 +679,12 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "oldhack"
     Trophy.check_trophies_for_variant "hackem"
     Trophy.check_trophies_for_variant "acehack"
+  end
+end
+
+
+DataMapper::MigrationRunner.migration( 4, :fix_nndnh_trophies ) do
+  up do
+    Trophy.check_trophies_for_variant "notnotdnethack"
   end
 end
