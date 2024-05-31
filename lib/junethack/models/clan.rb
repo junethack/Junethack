@@ -9,7 +9,7 @@ class Clan
   property :gravatar, String, length: 32
   property :description, String, length: 500, :default => ""
 
-  validates_format_of :name, :with => /^\w*$/, :message => "Clan name may only contain a-z, A-Z and 0-9"
+  validates_format_of :name, with: /\A[a-zA-Z0-9_.]+\z/, message: "Clan name may only contain a-z, A-Z, . and 0-9"
   def get_invitation_response invitation
     if index = self.invitations.index{|i| i['token'] == invitation['token'] and i['account'] == invitation['account']}
       self.invitations.delete_at index
@@ -18,6 +18,7 @@ class Clan
     end
     return false
   end
+
   def get_admin
     return User.get(self.admin[0])
   end
