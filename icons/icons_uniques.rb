@@ -106,7 +106,7 @@ def write_icon(symbol, color, name, type=nil, small_symbol=nil, small_color=nil,
     self.font_weight = Magick::BoldWeight
   }
 
-  img.border(2, 2, fg).write("u_defeated_#{name.downcase.gsub(' ', '_')}.png")
+  img.border(2, 2, fg).write("u-defeated_#{name.downcase.gsub(' ', '_')}.png")
 end
 
 write_icon *$_.split(',').map(&:strip) while DATA.gets
@@ -137,6 +137,7 @@ V,  magenta,   Vlad the Impaler    ,      , (, yellow
 @,  magenta,   Norn,                leader,  Val, white
 @,  green,     Neferet the Green,   leader,  Wiz, white
 &,  red,       Minion of Huhetotl,  nemesis, Arc, white, dark
+@,  magenta,   Schliemann,          nemesis, Arc, white, dark
 @,  magenta,   Thoth Amon,          nemesis, Bar, white, dark
 D,  magenta,   Tiamat,              nemesis, Cav, white, dark
 H,  magenta,   Annam,               nemesis, Cav, white, dark

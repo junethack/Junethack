@@ -282,7 +282,11 @@ def Trophy.check_trophies_for_variant variant_description
       achievements << [:defeated_norn,               'defeated Norn, the Valkyrie quest leader', nil, 8]
       achievements << [:defeated_neferet_the_green,  'defeated Neferet the Green, the Wizard quest leader', nil, 8]
       # quest nemesis
-      achievements << [:defeated_minion_of_huhetotl, 'defeated the Minion of Huhetotl, the Archeologist quest nemesis', nil, 9]
+      if [xnethack, unnethack].include? variant then
+        achievements << [:defeated_schliemann, 'defeated Schliemann, the Archeologist quest nemesis', nil, 9]
+      else
+        achievements << [:defeated_minion_of_huhetotl, 'defeated the Minion of Huhetotl, the Archeologist quest nemesis', nil, 9]
+      end
       achievements << [:defeated_thoth_amon,         'defeated Thoth Amon, the Barbarian quest nemesis', nil, 9]
       if variant != evilhack
         achievements << [:defeated_tiamat,           'defeated Tiamat, the Caveman quest nemesis', nil, 9]
@@ -686,5 +690,17 @@ end
 DataMapper::MigrationRunner.migration( 4, :fix_nndnh_trophies ) do
   up do
     Trophy.check_trophies_for_variant "notnotdnethack"
+  end
+end
+
+DataMapper::MigrationRunner.migration( 4, :fix_schliemann_trophies ) do
+  up do
+    execute <<~SQL
+      UPDATE trophies
+      SET trophy = 'defeated_schliemann',
+          text = 'defeated Schliemann, the Archeologist quest nemesis',
+          icon = 'u-defeated_schliemann.png'
+      WHERE variant IN ('unh', 'xnh') AND trophy = 'defeated_minion_of_huhetotl'
+    SQL
   end
 end
