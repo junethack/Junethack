@@ -489,7 +489,7 @@ def Trophy.check_trophies_for_variant variant_description
         [:yuki_onna_ascension, "Snow in heaven (Ascended a yuki-onna)", "dnh_yuki_onna_ascension.png", 5],
         [:half_dragon_ascension, "Three halves (Ascended a half-dragon)", "dnh_half_dragon_ascension.png", 5],
         [:law_quest, "Ripple-resistant tower (Completed the law quest)", "dnh_law_quest.png", 6],
-        [:neutral_quest, "Key to the (corpse) city (Completed the neutral quest)", "dnh_neutral_quest.png", 6],
+        [:neutral_quest, "Key to the (corpse) city (Completed the neutral quest)", "dnh_corpse_key.png", 6],
         [:chaos_temple_quest, "Asinine paradigm (Completed the chaos temple quest)", "dnh_chaos_temple_quest.png", 6],
         [:mithardir_quest, "Chasing after the wind (Completed the mithardir quest)", "dnh_mithardir_quest.png", 6],
         [:mordor_quest, "Fossil of the First Age (Completed the mordor quest)", "dnh_mordor_quest.png", 6],
@@ -499,14 +499,16 @@ def Trophy.check_trophies_for_variant variant_description
         [:fully_upgraded, "Super Fighting Robot (Acquried all clockwork upgrades (except high-tension spring))", "dnh_fully_upgraded.png", 5],
         [:hunter_of_nightmares, "Hunter of Nightmares (Defeated at least one of each of the secret insight bosses)", "dnh_hunter_of_nightmares.png", 5],
         [:two_keys, "Two Keys (Ascended having only touched two alignment keys)", "dnh_two_keys.png", 5],
-        [:quite_mad, "Quite Mad (Suffered from at least 6 madnesses)", "dnh_quite_mad.png", 5],
+        [:quite_mad, "Quite Mad (Suffered from at least 6 madnesses)", "dnh_all_mad.png", 5],
         [:booze_hound, "Booze Hound (Maxed out your drunkard score by drinking at least 90 potions of booze)", "dnh_booze_hound.png", 5],
         [:madman_quest, "Oh good. I'm not crazy. (Completed the madman quest)", "dnh_madman_quest.png", 6],
         [:lamashtu_kill, "Does this count as a paradox? (Destroyed Lamashtu (Demon Queen of the future))", "dnh_lamashtu_kill.png", 5],
         [:baalphegor_kill, "A universe without motion (Destroyed Baalphegor)", "dnh_baalphegor_kill.png", 5],
         [:bokrug_ascension, "Detestable gods (Completed Bokrug's ascension ritual)", "dnh_bokrug_ascension.png", 5],
-        [:opened_one_hellish_seal, "Relics of a bygone era (Opened one type of hellish seal)", "dnh_opened_one_hellish_seal.png", 4],
-        [:opened_all_hellish_seals, "There are a lot of these… (Opened all three types of hellish seal (across all games played))", "dnh_opened_all_hellish_seals.png", 4],
+        [:healer_quest, "Plague of stolen lives (Completed healer quest)", "dnh_healer_quest.png", 6],
+        [:drow_healer_quest, "Twisted by dreams (Completed drow healer quest)", "dnh_drow_healer_quest.png", 6],
+        [:monk_quest, "You must defeat Sheng Long to stand a chance (Completed monk quest)", "dnh_monk_quest.png", 6],
+        [:iea_upgraded, "The Elfdalorian (15+ upgrades on a set of imperial elven armor)", "dnh_iea_upgraded.png", 5],
       ]
 
       achievements.each {|achievement|
@@ -554,6 +556,7 @@ def Trophy.check_trophies_for_variant variant_description
     if [notdnethack, notnotdnethack].include? variant then
       achievements = [
         [:get_kroo,          "Kroo's Bling (Acquire the dismal swamp completion prize)", nil, 2],
+        [:get_raggo,         "Pet Rock (Acquire the gnomish mines completion prize)", nil, 2],
         [:get_poplar,        "Punishing Poplars (Acquire the black forest completion prize)", nil, 2],
         [:get_abominable,    "Snowplow (Acquire the ice caves completion prize)", nil, 2],
         [:get_gilly,         "Gillywhatnow (Acquire the archipelago completion prize)", nil, 2],
@@ -566,6 +569,11 @@ def Trophy.check_trophies_for_variant variant_description
         [:inked_up,          "Inked Up (Get a tattoo in The Sigil from Fell)", nil, 2],
         [:new_races,         "New Races. New Faces. (Ascend either a salamander, a symbiote, or an etheraloid)", nil, 2],
       ]
+      if [notnotdnethack].include? variant
+        achievements << [:new_races, "New Races. New Faces. (Ascend either a salamander, a symbiote, or an etheraloid)", nil, 2]
+      elsif [notnotdnethack].include? variant
+        achievements << [:new_races, "New Races. New Faces. (Ascend either a salamander, an etherealoid, an ent, or an octopode)", nil, 2]
+      end
       achievements.each {|achievement|
         icon = achievement[2] || "#{achievement[0].to_s.gsub(' ', '_')}.png"
         Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[3]
@@ -689,7 +697,7 @@ end
 
 DataMapper::MigrationRunner.migration( 4, :fix_nndnh_trophies ) do
   up do
-    Trophy.check_trophies_for_variant "notnotdnethack"
+    # Trophy.check_trophies_for_variant "notnotdnethack"
   end
 end
 
