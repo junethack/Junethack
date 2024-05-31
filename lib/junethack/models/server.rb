@@ -245,3 +245,15 @@ DataMapper::MigrationRunner.migration( 2, :fix_nndnh ) do
     execute 'DROP INDEX "index_servers_unique_name"'
   end
 end
+
+DataMapper::MigrationRunner.migration( 2, :add_gnollhack_mobile ) do
+  up do
+    [
+      [:acc_gnl, 'GnollHack 4.1.3.52', 'https://account.gnollhack.com/xlogfile'],
+    ].each {|server|
+      url = 'https://account.gnollhack.com/'
+      configfileurl = 'https://account.gnollhack.com/junethack/random_user'
+      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+    }
+  end
+end
