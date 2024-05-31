@@ -8,10 +8,10 @@ require_relative 'icons_utils'
 
 def write_icon(text, color, name, number)
   puts name
-  20.times {|number|
+  21.times {|number|
     filename = "#{name.downcase.gsub(' ', '_')}_#{number+1}.png"
 
-    level = (100*number/15).round
+    level = (100*number/20).round
     puts "#{number} #{level}"
     `convert #{text} -modulate #{[level/2+50,100].min},100 #{filename}`
 

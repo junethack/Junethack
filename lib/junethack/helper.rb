@@ -55,12 +55,14 @@ $variant_order << "gnl"
 $variant_order << "slth"
 $variant_order << "hck"
 $variant_order << "ace"
+$variant_order << "nndnh"
 
 $numbers = [
   'zero', 'one', 'two', 'three', 'four', 'five',
   'six', 'seven', 'eight', 'nine', 'ten',
   'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen',
   'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty',
+  'twenty-one', 'twenty-two', 'twenty-three', 'twenty-four',
 ]
 
 # order of variants and bonus games
