@@ -955,6 +955,7 @@ def defeated_all_quest_nemeses?(game)
   ]
 
   unnethack = helper_get_variant_for 'unnethack'
+  evilhack = helper_get_variant_for 'evilhack'
   if game.version == unnethack
     nemeses << :defeated_warden_arianna
     nemeses << :defeated_schliemann
