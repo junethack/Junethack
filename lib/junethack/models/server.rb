@@ -169,7 +169,7 @@ class Server
         prefix = prefixes[location]
         [
           [:hdf_nao,  'NetHack 3.4.3-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
-          [:hdf_nh37, 'NetHack 3.7.0-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack/xlogfile-370-hdf"],
+          [:hdf_nh37, 'NetHack 3.7.0-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack37/xlogfile"],
           #[:hdf_nh37s, 'NetHack 3.7.0-hdf (seed)', "https://#{prefix}.hardfought.org/xlogfiles/setseed/xlogfile"],
           [:hdf_shc,  'SporkHack 0.7.0',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
           [:hdf_gho,  'GruntHack 0.3.0',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
@@ -254,6 +254,22 @@ DataMapper::MigrationRunner.migration( 2, :add_gnollhack_mobile ) do
       url = 'https://account.gnollhack.com/'
       configfileurl = 'https://account.gnollhack.com/junethack/random_user'
       Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+    }
+  end
+end
+
+DataMapper::MigrationRunner.migration( 3, :fix_hdf_37_xlogfile ) do
+  up do
+    prefixes = { us: :www, eu: :eu, au: :au }
+    [:us, :eu, :au].each { |location|
+      prefix = prefixes[location]
+      xlogurl = "https://#{prefix}.hardfought.org/xlogfiles/nethack37/xlogfile"
+
+      name = 'hdf_nh37'
+      name = name.to_s.sub('h', 'euh').to_sym if location == :eu
+      name = name.to_s.sub('h', 'auh').to_sym if location == :au
+
+      execute "UPDATE servers SET xlogurl = '#{xlogurl}' WHERE name = '#{name}'"
     }
   end
 end
