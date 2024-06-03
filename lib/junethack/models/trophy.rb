@@ -712,3 +712,16 @@ DataMapper::MigrationRunner.migration( 4, :fix_schliemann_trophies ) do
     SQL
   end
 end
+
+DataMapper::MigrationRunner.migration( 5, :fix_nndh_user_competition_trophies ) do
+  up do
+    variant = helper_get_variant_for 'notnotdnethack'
+    Trophy.create :variant => variant, :trophy => "most_ascensions", :text => "Most ascensions", :icon => "c-most-ascensions.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "fastest_ascension_gametime", :text => "Fastest ascension (by turns)", :icon => "c-fastest-gametime.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "fastest_ascension_realtime", :text => "Fastest ascension (by wall-clock time)", :icon => "c-fastest-realtime.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "highest_scoring_ascension", :text => "Highest scoring ascension", :icon => "c-highest-score.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "lowest_scoring_ascension", :text => "Lowest scoring ascension", :icon => "c-lowest-score.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "most_conducts_ascension", :text => "Most conducts in a single ascension", :icon => "c-most-conducts.png", :user_competition => true
+    Trophy.create :variant => variant, :trophy => "longest_ascension_streaks", :text => "Longest ascension streak", :icon => "c-longest-streak.png", :user_competition => true
+  end
+end
