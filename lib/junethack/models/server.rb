@@ -115,6 +115,8 @@ class Server
             "https://#{prefix}.hardfought.org/userdata/#{player}/evilhack/dumplog/#{game.starttime}.evil.html"
         when "ndnh"
             "https://#{prefix}.hardfought.org/userdata/#{player}/notdnethack/dumplog/#{game.starttime}.ndnh.txt"
+        when "nndnh"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/notnotdnethack/dumplog/#{game.starttime}.nndnh.txt"
         when "slashem"
             "https://#{prefix}.hardfought.org/userdata/#{player}/slashem/dumplog/#{game.starttime}.slashem.txt"
         when "NH-1.3d"
