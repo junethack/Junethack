@@ -129,6 +129,11 @@ class JunkGame
     property :tournament, String
     property :starttimeUTC, Integer
     property :endtimeUTC, Integer
+    property :platform, String
+    property :platformversion, String
+    property :port, String
+    property :portversion, String
+    property :portbuild, String
 
     property :killed_medusa, Integer
 end
