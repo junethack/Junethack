@@ -725,3 +725,53 @@ DataMapper::MigrationRunner.migration( 5, :fix_nndh_user_competition_trophies ) 
     Trophy.create :variant => variant, :trophy => "longest_ascension_streaks", :text => "Longest ascension streak", :icon => "c-longest-streak.png", :user_competition => true
   end
 end
+
+DataMapper::MigrationRunner.migration( 6, :fix_dnethack_trophies ) do
+  def fix_dnethack_trophies_for variant_description
+    # get variant designator by description
+    variant = helper_get_variant_for variant_description
+
+    raise "#{variant_description} not found" if variant.nil?
+
+    dnethack = helper_get_variant_for 'dnethack'
+    notdnethack = helper_get_variant_for 'notdnethack'
+    notnotdnethack = helper_get_variant_for 'notnotdnethack'
+
+    if [dnethack, notdnethack, notnotdnethack].include? variant then
+      achievements = [
+        [:healer_quest, "Plague of stolen lives (Completed healer quest)", "dnh_healer_quest.png", 6],
+        [:drow_healer_quest, "Twisted by dreams (Completed drow healer quest)", "dnh_drow_healer_quest.png", 6],
+        [:monk_quest, "You must defeat Sheng Long to stand a chance (Completed monk quest)", "dnh_monk_quest.png", 6],
+        [:iea_upgraded, "The Elfdalorian (15+ upgrades on a set of imperial elven armor)", "dnh_iea_upgraded.png", 5],
+      ]
+
+      achievements.each {|achievement|
+        begin
+        Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: achievement[2], row: achievement[3]
+        rescue => e
+          binding.pry
+          raise e;
+        end
+      }
+    end
+
+
+    if [notdnethack, notnotdnethack].include? variant then
+      achievements = []
+      if [notnotdnethack].include? variant
+        achievements << [:new_races, "New Races. New Faces. (Ascend either a salamander, a symbiote, or an etheraloid)", nil, 2]
+      elsif [notnotdnethack].include? variant
+        achievements << [:new_races, "New Races. New Faces. (Ascend either a salamander, an etherealoid, an ent, or an octopode)", nil, 2]
+      end
+      achievements.each {|achievement|
+        icon = achievement[2] || "#{achievement[0].to_s.gsub(' ', '_')}.png"
+        Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[3]
+      }
+    end
+  end
+
+  up do
+    fix_dnethack_trophies_for "dnethack"
+    fix_dnethack_trophies_for "notdnethack"
+  end
+end
