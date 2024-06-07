@@ -124,7 +124,7 @@ class Server
         when "slth"
             "https://#{prefix}.hardfought.org/userdata/#{player}/slashthem/dumplog/#{game.starttime}.slth.txt"
         when "gnl"
-            "https://#{prefix}.hardfought.org/userdata/#{player}/gnollhack/dumplog/#{game.starttime}.gnoll.txt"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/gnollhack/dumplog/#{game.starttime}.gnoll.html"
         when "hck"
             "https://#{prefix}.hardfought.org/userdata/#{player}/hackem/dumplog/#{game.starttime}.hackem.html"
         end
@@ -149,6 +149,9 @@ class Server
         "http://eu-server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.log"
       when "au-server.gnollhack.com"
         "http://au-server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.log"
+      when "account.gnollhack.com"
+        gnollhack_account = Account.first(server_id: game.server_id, user_id: game.user_id)&.name
+        "https://account.gnollhack.com/dumplog/byname/#{gnollhack_account}/#{game.starttime}"
       else
         return nil
       end
