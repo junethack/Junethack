@@ -775,3 +775,27 @@ DataMapper::MigrationRunner.migration( 6, :fix_dnethack_trophies ) do
     fix_dnethack_trophies_for "notdnethack"
   end
 end
+
+DataMapper::MigrationRunner.migration( 7, :fix_cross_variant_trophies ) do
+  up do
+    # Cross Variant
+    i = 21
+    variants = "variant#{i == 1 ? '' : 's'}"
+
+    trophy = "ascended_variants_#{i}".to_sym
+    text = "Diversity Ascender: Ascended #{$numbers[i]} #{variants}"
+    Trophy.create trophy: trophy, text: text, icon: "#{trophy}.png", row: 1
+
+    trophy = "anti_stoner_#{i}".to_sym
+    text = "Anti-Stoner: defeated Medusa in #{$numbers[i]} #{variants}"
+    Trophy.create trophy: trophy, text: text, icon: "#{trophy}.png", row: 2
+
+    trophy = "globetrotter_#{i}".to_sym
+    text = "Globetrotter: get a trophy in #{$numbers[i]} #{variants}"
+    Trophy.create trophy: trophy, text: text, icon: "#{trophy}.png", row: 3
+
+    trophy = "sightseeing_tour_#{i}".to_sym
+    text = "Sightseeing Tour: finish a game in #{$numbers[i]} #{variants}"
+    Trophy.create trophy: trophy, text: text, icon: "#{trophy}.png", row: 4
+  end
+end
