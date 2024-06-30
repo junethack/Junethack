@@ -74,33 +74,34 @@
 
     .text_content.non_top_post#clan_members
       =h2 'Clan members'
-      %table.prettytable.clan_members
-        %tr
-          %th
-            Player
-          %th
-            Role
-          %th
-            User trophies
-          %th
-            Last game played (UTC)
-        - (User.all clan_name: @clan.name, order: [:login.asc]).each do |user|
+      - cache_fragment("#{@clan.name}_members_#{@clan.users.max_by(&:updated_at).updated_at}") do
+        %table.prettytable.clan_members
           %tr
-            %td
-              %a{:href => "/user/" + user.login}
-                #{ h user.login }
-            %td
-              - if @clan.get_admin.login == user.login
-                admin
-              - else
-                member
-            %td.table_number
-              #{h user.scoreentries.count}
-            %td
-              - if user.games.length != 0
-                #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
-              - else
-                no games played
+            %th
+              Player
+            %th
+              Role
+            %th
+              User trophies
+            %th
+              Last game played (UTC)
+          - (User.all clan_name: @clan.name, order: [:login.asc]).each do |user|
+            %tr
+              %td
+                %a{:href => "/user/" + user.login}
+                  #{ h user.login }
+              %td
+                - if @clan.get_admin.login == user.login
+                  admin
+                - else
+                  member
+              %td.table_number
+                #{h user.scoreentries.count}
+              %td
+                - if user.games.length != 0
+                  #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
+                - else
+                  no games played
 
     .text_content.non_top_post
       =haml :clan_points_summary
@@ -129,7 +130,8 @@
       =haml :games_played
 
     .text_content.non_top_post
-      =haml :clan_games
+      - cache_fragment("#{@clan.name}_#{@clan.users.max_by(&:updated_at).updated_at}") do
+        =haml :clan_games
 
     - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
     .text_content.non_top_post
