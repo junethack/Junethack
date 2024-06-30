@@ -92,6 +92,27 @@ namespace :update do
             update_all_stuff(Game.get(game.id))
         }
     end
+
+    task :fix_gnollhack_entering_sokoban do
+      i = 0
+      variant = helper_get_variant_for 'gnollhack'
+      sql = "SELECT version, id, achieve, user_id FROM games WHERE version = 'gnl' AND user_id IS NOT NULL ORDER BY id"
+      (repository.adapter.select(sql)).each { |game|
+        i += 1
+        achievements = []
+        achievements << [:entered_sokoban, "entered Sokoban", 2]
+
+        achievements.each { |achievement|
+          icon = "#{achievement[0].to_s}.png"
+          if (game.achieve.to_i(16) & 0x100000)
+            puts "#{i} #{game.id} #{game.version} #{User.first(id: game.user_id).login}"
+            Trophy.first_or_create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[2]
+          end
+        }
+
+        update_scores(Game.get(game.id))
+      }
+    end
 end
 
 namespace :db do
