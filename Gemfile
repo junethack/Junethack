@@ -25,7 +25,7 @@ gem 'eventmachine', git: 'https://github.com/eventmachine/eventmachine.git'
 
 gem "rack-mobile-detect"
 
-gem "thin"
+gem 'thin', '~> 1.8'
 
 # charts
 gem "fastercsv"
