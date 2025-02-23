@@ -224,6 +224,14 @@ class Server
           Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
         }
       }
+
+      [
+        [:acc_gnl, 'GnollHack 4.1.3.52', 'https://account.gnollhack.com/xlogfile'],
+      ].each {|server|
+        url = 'https://account.gnollhack.com/'
+        configfileurl = 'https://account.gnollhack.com/junethack/random_user'
+        Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
+      }
     end
 end
 
@@ -234,47 +242,5 @@ DataMapper::MigrationRunner.migration( 1, :create_servers ) do
 
   down do
     Server.destroy
-  end
-end
-
-
-DataMapper::MigrationRunner.migration( 2, :fix_nndnh ) do
-  up do
-    execute "UPDATE servers SET name = 'hdf_nndnh' WHERE name = 'hdf_ndnh' AND variant = 'notnotdNetHack 2024.05.15'"
-    execute "UPDATE servers SET name = 'euhdf_nndnh' WHERE name = 'euhdf_ndnh' AND variant = 'notnotdNetHack 2024.05.15'"
-    execute "UPDATE servers SET name = 'auhdf_nndnh' WHERE name = 'auhdf_ndnh' AND variant = 'notnotdNetHack 2024.05.15'"
-    execute 'CREATE UNIQUE INDEX "index_servers_unique_name" ON "servers" ("name")'
-  end
-
-  down do
-    execute 'DROP INDEX "index_servers_unique_name"'
-  end
-end
-
-DataMapper::MigrationRunner.migration( 2, :add_gnollhack_mobile ) do
-  up do
-    [
-      [:acc_gnl, 'GnollHack 4.1.3.52', 'https://account.gnollhack.com/xlogfile'],
-    ].each {|server|
-      url = 'https://account.gnollhack.com/'
-      configfileurl = 'https://account.gnollhack.com/junethack/random_user'
-      Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
-    }
-  end
-end
-
-DataMapper::MigrationRunner.migration( 3, :fix_hdf_37_xlogfile ) do
-  up do
-    prefixes = { us: :www, eu: :eu, au: :au }
-    [:us, :eu, :au].each { |location|
-      prefix = prefixes[location]
-      xlogurl = "https://#{prefix}.hardfought.org/xlogfiles/nethack37/xlogfile"
-
-      name = 'hdf_nh37'
-      name = name.to_s.sub('h', 'euh').to_sym if location == :eu
-      name = name.to_s.sub('h', 'auh').to_sym if location == :au
-
-      execute "UPDATE servers SET xlogurl = '#{xlogurl}' WHERE name = '#{name}'"
-    }
   end
 end
