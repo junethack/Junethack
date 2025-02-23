@@ -3,7 +3,11 @@
     - if (Time.new.to_i > $tournament_endtime)
       .text_content
         %h1.hcenter Sorry, this year's tournament has ended.
-    - elsif (Time.new.to_i < $tournament_signupstarttime)
+    - elsif $tournament_signupstarttime.nil?
+      .text_content
+        %h1.hcenter
+          Registration has not opened yet.
+    - elsif (Time.new.to_i < $tournament_signupstarttime.to_i)
       .text_content
         %h1.hcenter
           =haml :registrationdate

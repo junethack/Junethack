@@ -152,9 +152,11 @@
     - cache_fragment("users_#{User.max_created_at}") do
       - @new_users_per_day = repository.adapter.select "select date(created_at) as date, count(1) as count from users group by date(created_at);"
 
-      - signupstarttime = Time.at($tournament_signupstarttime).to_date
-      - endtime = Time.at([$tournament_endtime, Time.now.to_i].min).to_date
-      - @days = (signupstarttime..endtime).collect {|d| d.to_s}
+      - @days = []
+      - if $tournament_signupstarttime
+        - signupstarttime = Time.at($tournament_signupstarttime).to_date
+        - endtime = Time.at([$tournament_endtime, Time.now.to_i].min).to_date
+        - @days = (signupstarttime..endtime).collect { |d| d.to_s}
 
       .text_content.non_top_post
         %h2 New Players per Day

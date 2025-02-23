@@ -3,7 +3,9 @@
     .text_content
       - if (Time.new.to_i > $tournament_endtime)
         %h1.hcenter Sorry, this year's tournament has ended.
-      - elsif (Time.new.to_i < $tournament_signupstarttime)
+      - if $tournament_signupstarttime.nil?
+        %h1.hcenter Registration has not opened yet.
+      - elsif (Time.new.to_i < $tournament_signupstarttime.to_i)
         %h1.hcenter
           =haml :registrationdate
       - else
@@ -28,7 +30,6 @@
                 Field required
               %span.clear
             %input#submit.bigred{:name => "submit", :type => "submit", :value => "Register!"}/
-    %span#end_of_content_spacer.clear
 / end of container
 %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"}
 %script{:src => "/scripts.js"}

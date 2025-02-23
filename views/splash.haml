@@ -13,14 +13,15 @@
       .title_text
         %p= "Only #{parse_seconds $tournament_endtime - now} until the tournament ends!"
     - if @logged_in
-      - if now > $tournament_signupstarttime and now < $tournament_endtime
-        .signup_text
-          %p
-            %a{:href => "register"} Sign up now!
-      - if now < $tournament_signupstarttime
-        .title_text
-          %p
-            =haml :registrationdate
+      - if $tournament_signupstarttime
+        - if now > $tournament_signupstarttime && now < $tournament_endtime
+          .signup_text
+            %p
+              %a{:href => "register"} Sign up now!
+        - if now < $tournament_signupstarttime.to_i
+          .title_text
+            %p
+              =haml :registrationdate
   .text_content_wrapper
     %section#news.text_content
       =haml :news
