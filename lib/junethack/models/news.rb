@@ -16,6 +16,8 @@ end
 
 DataMapper::MigrationRunner.migration(1, :create_announcements) do
   up do
+    return unless $tournament_signupstarttime
+
     dates = [
       ["<a href='/register'>Registration for Junethack #{Date.today.year}</a> has opened!", $tournament_signupstarttime],
       ["Junethack #{Date.today.year} has started! Happy splatting!",  $tournament_starttime],
