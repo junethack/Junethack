@@ -36,7 +36,7 @@
                     %td{colspan: 2}
                       %a{:href => "/user/" + CGI::escape(user)}=h user
                     - if $competition_trophy_order[i] == :fastest_ascension_realtime
-                      %td.table_number= h parse_seconds(c[j].value)
+                      %td.table_number= parse_seconds(c[j].value)
                     - else
                       %td.table_number= c[j].value.html_formatted
                     %td.table_number= h c[j].rank
