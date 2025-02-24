@@ -100,17 +100,19 @@ def helper_get_score(key, variant)
     return repository.adapter.select "select (select login from users where user_id = id) as user, user_id, value, value_display from scoreentries where trophy = ? and variant = ? order by user;", key, variant
 end
 
-def parse_seconds(duration=nil)
+def parse_seconds(duration = nil, separator: ' ')
     return "" if not duration
+
     s = duration;
     m = s / 60;
     h = m / 60;
     d = h / 24;
     str = []
-    str << "#{d} d" if d>0
-    str << "#{h % 24} h" if h>0
-    str << "#{m % 60} m" if m>0
-    str << "#{s % 60} s" if s>0
+    str << "<span class='duration'>#{d}#{separator}d</span>" if d > 0
+    str << "<span class='duration'>#{h % 24}#{separator}h</span>" if h > 0
+    str << "<span class='duration'>#{m % 60}#{separator}m</span>" if m > 0
+    str << "<span class='duration'>#{s % 60}#{separator}s</span>" if s > 0
+
     return str.join " "
 end
 
