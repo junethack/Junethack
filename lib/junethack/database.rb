@@ -11,24 +11,31 @@ DataMapper::Model.raise_on_save_failure = true # globally
 # set all String properties to have a default length of 255
 DataMapper::Property::String.length(255)
 
+USER = ENV['POSTGRES_USER'] || 'junethack'
+PASSWORD = ENV['POSTGRES_PASSWORD'] || 'test'
+HOST = ENV['POSTGRES_HOST'] || 'localhost'
+
 configure :production do
   puts "Configuring production database"
+  DATABASE = ENV['POSTGRES_DATABASE'] || 'junethack_production'
   # for debugging: print all generated SQL statemtens
   #DataMapper::Logger.new("logs/db.log", :debug)
-  DataMapper.setup(:default, 'postgres://localhost/junethack')
+  DataMapper.setup(:default, "postgres://#{USER}:#{PASSWORD}@#{HOST}/#{DATABASE}")
 end
 
 configure :development do
   puts "Configuring development database"
+  DATABASE = ENV['POSTGRES_DATABASE'] || 'junethack_developmnet'
   # for debugging: print all generated SQL statemtens
   DataMapper::Logger.new("logs/dev_db.log", :debug)
-  DataMapper.setup(:default, 'postgres://localhost/junethack')
+  DataMapper.setup(:default, "postgres://#{USER}:#{PASSWORD}@#{HOST}/#{DATABASE}")
 end
 
 configure :test do
   puts "Configuring test database"
+  DATABASE = ENV['POSTGRES_DATABASE'] || 'junethack_text'
   DataMapper::Logger.new("logs/test_db.log", :debug)
-  DataMapper.setup(:default, "postgres://#{user}:#{password}@localhost/junethack_test")
+  DataMapper.setup(:default, "postgres://#{USER}:#{PASSWORD}@#{HOST}/#{DATABASE}")
 
   # suppress migration output.
   # it would be written at every run as we use a in-memory db
