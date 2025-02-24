@@ -36,7 +36,7 @@ describe Individualtrophy do
 end
 
 describe Game,"saving of cross variant achievements" do
- 
+
   before :each do
     clean_database
     $user = User.create(:login => "test_user")
@@ -60,24 +60,41 @@ describe Game,"saving of cross variant achievements" do
     expect(Event.count).to eq 0
 
     Game.create(params)
-    repository.adapter.execute "UPDATE games SET version= 'v'||id"
+    repository.adapter.execute "UPDATE games SET version = 'v' || id"
     update_games
+
     expect(Individualtrophy.count).to eq 4
-    expect(Individualtrophy.all.map(&:trophy).sort).to eq ["anti_stoner_1", "ascended_variants_1", "globetrotter_1", "sightseeing_tour_1"]
-    expect(Event.count).to eq 4
-    expect(Event.all.map(&:text).sort).to eq(
-      ['Achievement "Diversity Ascender: Ascended one variant" unlocked by test_user!',
-       'Achievement "Sightseeing Tour: finish a game in one variant" unlocked by test_user!',
-       'Achievement "Anti-Stoner: defeated Medusa in one variant" unlocked by test_user!',
-       'Achievement "Globetrotter: get a trophy in one variant" unlocked by test_user!'].sort
-    )
+    expect(Individualtrophy.all.map(&:trophy).sort).to match_array([
+      'anti_stoner_1',
+      'ascended_variants_1',
+      'globetrotter_1',
+      'sightseeing_tour_1'
+    ])
+
+    # spam protection, no events generated
+    expect(Event.count).to eq 0
 
     Game.create(params)
-    repository.adapter.execute "UPDATE games SET version= 'v'||id"
+    repository.adapter.execute "UPDATE games SET version = 'v' || id"
     update_games
-    expect(Individualtrophy.all.map(&:trophy)).to include "anti_stoner_2"
+
+    expect(Individualtrophy.all.map(&:trophy).sort).to match_array([
+      'anti_stoner_1',
+      'anti_stoner_2',
+      'ascended_variants_1',
+      'ascended_variants_2',
+      'globetrotter_1',
+      'globetrotter_2',
+      'sightseeing_tour_1',
+      'sightseeing_tour_2'
+    ])
+
     expect(Individualtrophy.count).to eq 8
-    expect(Event.all.map(&:text)).to include 'Achievement "Anti-Stoner: defeated Medusa in two variants" unlocked by test_user!'
-    expect(Event.count).to eq 8
+    expect(Event.all.map(&:text)).to match_array([
+      'Achievement "Anti-Stoner: defeated Medusa in two variants" unlocked by test_user!',
+      'Achievement "Diversity Ascender: Ascended two variants" unlocked by test_user!'
+    ])
+    # because of spam protection, only the 2 last achievements generated events
+    expect(Event.count).to eq 2
   end
 end
