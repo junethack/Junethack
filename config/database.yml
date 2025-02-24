@@ -1,13 +1,20 @@
-development:
-  adapter: postgresql
-  database: junethack-dev
-
 production:
   adapter: postgresql
-  database: junethack-prod
+  database: <%= ENV['JUNETHACK_POSTGRES_DATABASE'] || 'junethack' %>
+  host: <%= ENV['JUNETHACK_POSTGRES_HOST'] || 'localhost' %>
+  username: <%= ENV['JUNETHACK_POSTGRES_USER'] || 'junethack' %>
+  password: <%= ENV['JUNETHACK_POSTGRES_PASSWORD'] || 'test' %>
+
+development:
+  adapter: postgresql
+  database: <%= ENV['JUNETHACK_POSTGRES_DATABASE'] || 'junethack-dev' %>
+  host: <%= ENV['JUNETHACK_POSTGRES_HOST'] || 'localhost' %>
+  username: <%= ENV['JUNETHACK_POSTGRES_USER'] || 'junethack' %>
+  password: <%= ENV['JUNETHACK_POSTGRES_PASSWORD'] || 'test' %>
 
 test:
   adapter: postgresql
-  database: junethack-test
-  user: junethack
-  password: junethack
+  database: <%= ENV['JUNETHACK_POSTGRES_DATABASE'] || 'junethack-test' %>
+  host: <%= ENV['JUNETHACK_POSTGRES_HOST'] || 'localhost' %>
+  username: <%= ENV['JUNETHACK_POSTGRES_USER'] || 'junethack' %>
+  password: <%= ENV['JUNETHACK_POSTGRES_PASSWORD'] || 'test' %>
