@@ -201,9 +201,6 @@ def Trophy.check_trophies_for_variant variant_description
 
     if variant == unnethack
       achievements = [
-        [:mini_croesus,                       "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 3],
-        [:croesus_buddy,                      "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus-buddy.png", 3],
-        [:better_than_croesus,                "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 3],
         [:ascended_without_defeating_cthulhu, "Too good for a brain (ascended without defeating Cthulhu)", "m-no-cthulhu.png", 3],
         [:heaven_or_hell,                     "Heaven or Hell (ascend in 1 HP mode)",                      "heaven-or-hell.png", 3],
       ]
@@ -319,14 +316,14 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:defeated_gollum,        "defeated Gollum", "defeated_gollum.png", 10]
         achievements << [:defeated_croesus,     'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
         achievements << [:mini_croesus,         "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
-        achievements << [:croesus_buddy,        "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus-buddy.png", 6]
-        achievements << [:better_than_croesus,  "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 6]
+        achievements << [:croesus_buddy,        "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus_buddy.png", 6]
+        achievements << [:better_than_croesus,  "Better than Croesus (finish a game with at least 200,000 gold pieces)", "better_than_croesus.png", 6]
       end
 
       if [slashem].include? variant then
         achievements << [:mini_croesus,          "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
-        achievements << [:croesus_buddy,         "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus-buddy.png", 6]
-        achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 6]
+        achievements << [:croesus_buddy,         "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus_buddy.png", 6]
+        achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "better_than_croesus.png", 6]
       end
 
       achievements.each { |achievement|
@@ -370,6 +367,13 @@ def Trophy.check_trophies_for_variant variant_description
       if variant == gnollhack
         achievements << [:defeated_yacc, "killed Yacc", 2]
         achievements << [:obtained_the_prime_codex, "touched the Prime Codex", 2]
+      end
+
+      if ![gnollhack].include?(variant)
+        achievements << [:mini_croesus, "Mini-Croesus (finish a game with at least 25,000 gold pieces)", 3]
+        achievements << [:croesus_buddy, "Croesus' buddy (finish a game with at least 100,000 gold pieces)", 3]
+        achievements << [:better_than_croesus, "Better than Croesus (finish a game with at least 200,000 gold pieces)",
+                         3]
       end
 
       achievements.each { |achievement|
@@ -433,8 +437,8 @@ def Trophy.check_trophies_for_variant variant_description
       # gold
       achievements << [:defeated_croesus,     'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
       achievements << [:mini_croesus,         "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
-      achievements << [:croesus_buddy,        "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus-buddy.png", 6]
-      achievements << [:better_than_croesus,  "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 6]
+      achievements << [:croesus_buddy,        "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus_buddy.png", 6]
+      achievements << [:better_than_croesus,  "Better than Croesus (finish a game with at least 200,000 gold pieces)", "better_than_croesus.png", 6]
 
       achievements.each { |achievement|
         icon = achievement[2] || "#{achievement[0]}.png"
@@ -583,8 +587,8 @@ def Trophy.check_trophies_for_variant variant_description
     if [slashem].include? variant then
       achievements = []
       achievements << [:mini_croesus,          "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 2]
-      achievements << [:croesus_buddy,         "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus-buddy.png", 2]
-      achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "m-better-than-croesus.png", 2]
+      achievements << [:croesus_buddy,         "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus_buddy.png", 2]
+      achievements << [:better_than_croesus,   "Better than Croesus (finish a game with at least 200,000 gold pieces)", "better_than_croesus.png", 2]
 
       achievements.each {|achievement|
         Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: achievement[2], row: achievement[3]
