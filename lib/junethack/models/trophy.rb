@@ -521,6 +521,8 @@ def Trophy.check_trophies_for_variant variant_description
         [:drow_healer_quest, "Twisted by dreams (Completed drow healer quest)", "dnh_drow_healer_quest.png", 6],
         [:monk_quest, "You must defeat Sheng Long to stand a chance (Completed monk quest)", "dnh_monk_quest.png", 6],
         [:iea_upgraded, "The Elfdalorian (15+ upgrades on a set of imperial elven armor)", "dnh_iea_upgraded.png", 5],
+        [:undead_hunter_ascension, "I guess this counts as transcendence (Ascended an undead hunter)", "dnh_undead_hunter_ascension.png", 5],
+        [:undead_hunter_quest, "Don't think too hard about all of this (Completed undead hunter quest)", "dnh_undead_hunter_quest.png", 6],
       ]
 
       achievements.each {|achievement|
