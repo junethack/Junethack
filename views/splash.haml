@@ -22,6 +22,10 @@
           .title_text
             %p
               =haml :registrationdate
+      - else
+        .title_text
+          %p
+            =haml :registrationdate_unknown
   .text_content_wrapper
     %section#news.text_content
       =haml :news
