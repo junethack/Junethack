@@ -426,12 +426,12 @@ class Game
     end
 
     def ascended_without_elbereth?
-      return true if ascended && conductX&.split(",").include?("elberethless")
+      return true if ascended && conductX&.split(",")&.include?("elberethless")
       (ascended && (Integer(conduct) & 0x01000 > 0)) || (ascended && elbereths == 0)
     end
 
     def ascended_without_unfairly_scaring_monsters?
-      ascended && (conductX&.split(",").include?("unfairscareless"))
+      ascended && (conductX&.split(",")&.include?("unfairscareless"))
     end
 
     # Heaven or Hell
