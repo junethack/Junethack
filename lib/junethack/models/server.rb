@@ -217,8 +217,6 @@ class Server
           url = "http://#{prefix}.gnollhack.com/"
 
           server[0] = :us_gnl if location == :us
-          server[0] = :eu_gnl if location == :eu
-          server[0] = :au_gnl if location == :au
 
           configfileurl = "http://#{prefix}.gnollhack.com/userdata/random_user/random_user_gnollhack.gnhrc"
           Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
