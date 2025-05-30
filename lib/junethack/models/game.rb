@@ -121,12 +121,12 @@ $xnethack_achievements = [
 $splicehack_achievements = [
   "", #[2, :defeated_the_yellow_king, 'defeated the yellow king',                 's-defeated-yellow-king.png'],
   "", # defeated demogorgon
-  [2, :ascended_permadeaf,       'ascended being permanently deaf',          's-conduct-permadeaf.png'],
+  [3, :ascended_permadeaf,       'ascended being permanently deaf',          's-conduct-permadeaf.png'],
   "", # clumsy
-  [2, :ascended_permahallu,      'ascended while hallucinating permanently', 's-conduct-permahallu.png'],
+  [3, :ascended_permahallu,      'ascended while hallucinating permanently', 's-conduct-permahallu.png'],
   "", # illfated
   "", # killed_reaper
-  [2, :ascended_marathon,        'ascended in marathon mode',                's-conduct-marathon.png'],
+  [3, :ascended_marathon,        'ascended in marathon mode',                's-conduct-marathon.png'],
 ]
 
 $trophy_names = {

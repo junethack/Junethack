@@ -195,6 +195,8 @@ class Server
           [:hdf_ace,  'AceHack 3.6.0',           "https://#{prefix}.hardfought.org/xlogfiles/acehack/xlogfile"],
           [:hdf_nndnh, 'notnotdNetHack 2025.05.16',
                                                  "https://#{prefix}.hardfought.org/xlogfiles/notnotdnethack/xlogfile"],
+          [:hdf_nerf, 'NerfHack 2.2.1',          "https://#{prefix}.hardfought.org/xlogfiles/nerfhack/xlogfile"],
+          [:hdf_crec, 'CrecelleHack 1.0.1',      "https://#{prefix}.hardfought.org/xlogfiles/crecellehack/xlogfile"],
           [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
 
         ].each {|server|

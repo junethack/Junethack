@@ -159,6 +159,8 @@ def Trophy.check_trophies_for_variant variant_description
     slashem = helper_get_variant_for 'slashem'
     gnollhack = helper_get_variant_for 'gnollhack'
     hackem = helper_get_variant_for 'hackem'
+    nerfhack = helper_get_variant_for 'nerfhack'
+    crecellehack = helper_get_variant_for 'crecellehack'
 
     if [acehack, nethack4, nh4k, dynahack, fiqhack].include? variant then
       # these variants don't have standard xlogfile achievement flags
@@ -336,11 +338,17 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: :ascended_marathon, text: 'ascended in marathon mode', icon: 's-conduct-marathon.png', row: 3
     end
 
-    if [nethack37,  nethack36, splicehack, xnethack, evilhack].include? variant then
+    if [splicehack].include? variant then
+      $splicehack_achievements.reject(&:empty?).each {|trophy|
+        Trophy.create variant: variant, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
+      }
+    end
+
+    if [nethack37, nethack36, splicehack, xnethack, evilhack, nerfhack, crecellehack].include? variant then
       Trophy.create variant: variant, trophy: :killed_by_molochs_indifference, text: "killed by Moloch's indifference", icon: "killed_by_molochs_indifference.png", row: 2
     end
 
-    if [nethack37, unnethack, splicehack, xnethack, gnollhack].include? variant then
+    if [nethack37, unnethack, splicehack, xnethack, gnollhack, nerfhack, crecellehack].include? variant then
       achievements = []
       if variant != unnethack
         achievements << [:read_a_discworld_novel, "read a Discworld novel", 2]
@@ -551,12 +559,6 @@ def Trophy.check_trophies_for_variant variant_description
       }
     end
 
-    if [splicehack].include? variant then
-      $splicehack_achievements.reject(&:empty?).each {|trophy|
-        Trophy.create variant: variant, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
-      }
-    end
-
     if [notdnethack, notnotdnethack].include? variant then
       achievements = [
         [:get_kroo,          "Kroo's Bling (Acquire the dismal swamp completion prize)", nil, 2],
@@ -571,9 +573,8 @@ def Trophy.check_trophies_for_variant variant_description
         [:max_punch,         "Not Pulling Punches (Land a punch with all 4 offensive mystic powers active)", nil, 2],
         [:garnet_spear,      "Garnet Rod (Land a hit with a garnet tipped spear)", nil, 2],
         [:inked_up,          "Inked Up (Get a tattoo in The Sigil from Fell)", nil, 2],
-        [:new_races,         "New Races. New Faces. (Ascend either a salamander, a symbiote, or an etheraloid)", nil, 2],
       ]
-      if [notnotdnethack].include? variant
+      if [notdnethack].include? variant
         achievements << [:new_races, "New Races. New Faces. (Ascend either a salamander, a symbiote, or an etheraloid)", nil, 2]
       elsif [notnotdnethack].include? variant
         achievements << [:new_races, "New Races. New Faces. (Ascend either a salamander, an etherealoid, an ent, or an octopode)", nil, 2]
@@ -695,5 +696,8 @@ DataMapper::MigrationRunner.migration( 3, :create_variant_trophies ) do
     Trophy.check_trophies_for_variant "oldhack"
     Trophy.check_trophies_for_variant "hackem"
     Trophy.check_trophies_for_variant "acehack"
+    Trophy.check_trophies_for_variant "notnotdnethack"
+    Trophy.check_trophies_for_variant "nerfhack"
+    Trophy.check_trophies_for_variant "crecellehack"
   end
 end
