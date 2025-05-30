@@ -178,22 +178,22 @@ class Server
           #[:hdf_nh37s, 'NetHack 3.7.0-hdf (seed)', "https://#{prefix}.hardfought.org/xlogfiles/setseed/xlogfile"],
           [:hdf_shc,  'SporkHack 0.7.0',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
           [:hdf_gho,  'GruntHack 0.3.0',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
-          [:hdf_unh,  'UnNetHack 6.0.12',        "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
-          [:hdf_dnh,  'dNetHack 3.23.0',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
+          [:hdf_unh,  'UnNetHack 6.0.14',        "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
+          [:hdf_dnh,  'dNetHack 3.24.0',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
           [:hdf_nh4,  'NetHack4 4.3.0',          "https://#{prefix}.hardfought.org/xlogfiles/nethack4/xlogfile"],
           [:hdf_nh4k, 'NetHack Fourk 4.3.0.5',   "https://#{prefix}.hardfought.org/xlogfiles/4k/xlogfile"],
           [:hdf_fiq,  'FIQHack 4.3.1',           "https://#{prefix}.hardfought.org/xlogfiles/fh/xlogfile"],
           [:hdf_dyn,  'DynaHack 0.6.0',          "https://#{prefix}.hardfought.org/xlogfiles/dynahack/xlogfile"],
-          [:hdf_xnh,  'xNetHack 8.0.0',          "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
+          [:hdf_xnh,  'xNetHack 9.0.0',          "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
           [:hdf_spl,  'SpliceHack 1.2.0',        "https://#{prefix}.hardfought.org/xlogfiles/splicehack/xlogfile"],
-          [:hdf_ndnh, 'notdNetHack 2024.05.15',  "https://#{prefix}.hardfought.org/xlogfiles/notdnethack/xlogfile"],
-          [:hdf_evh,  'EvilHack 0.8.4',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
+          [:hdf_ndnh, 'notdNetHack 2025.05.15',  "https://#{prefix}.hardfought.org/xlogfiles/notdnethack/xlogfile"],
+          [:hdf_evh,  'EvilHack 0.9.1',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
           [:hdf_slsh, "Slash'EM 0.0.8E0F2",      "https://#{prefix}.hardfought.org/xlogfiles/slashem/xlogfile"],
           [:hdf_slth, "SlashTHEM 0.9.7",         "https://#{prefix}.hardfought.org/xlogfiles/slashthem/xlogfile"],
-          [:hdf_gnl,  "GnollHack 4.1.3.52",      "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
-          [:hdf_hck,  'HackEM 1.2.2',            "https://#{prefix}.hardfought.org/xlogfiles/hackem/xlogfile"],
+          [:hdf_gnl,  "GnollHack 4.2.0.41",      "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
+          [:hdf_hck,  "Hack'EM 1.3.2",           "https://#{prefix}.hardfought.org/xlogfiles/hackem/xlogfile"],
           [:hdf_ace,  'AceHack 3.6.0',           "https://#{prefix}.hardfought.org/xlogfiles/acehack/xlogfile"],
-          [:hdf_nndnh, 'notnotdNetHack 2024.05.15',
+          [:hdf_nndnh, 'notnotdNetHack 2025.05.16',
                                                  "https://#{prefix}.hardfought.org/xlogfiles/notnotdnethack/xlogfile"],
           [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
 
@@ -212,7 +212,7 @@ class Server
       [:us, :eu, :au].each {|location|
         prefix = prefixes[location]
         [
-          [:gnl_hck, 'GnollHack 4.1.3.52', "http://#{prefix}.gnollhack.com/xlogfile"]
+          [:gnl_hck, 'GnollHack 4.2.0.41', "http://#{prefix}.gnollhack.com/xlogfile"]
         ].each {|server|
           url = "http://#{prefix}.gnollhack.com/"
 
@@ -224,7 +224,7 @@ class Server
       }
 
       [
-        [:acc_gnl, 'GnollHack 4.1.3.52', 'https://account.gnollhack.com/xlogfile'],
+        [:acc_gnl, 'GnollHack 4.2.0.41', 'https://account.gnollhack.com/xlogfile'],
       ].each {|server|
         url = 'https://account.gnollhack.com/'
         configfileurl = 'https://account.gnollhack.com/junethack/random_user'
