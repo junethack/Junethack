@@ -224,7 +224,8 @@ class Game
     def version=(version)
       _version = 'unh'   if version.start_with? 'UNH-'
       _version = 'dnh'   if version.start_with? 'DNH-'
-      _version = 'ndnh'  if version == 'DNH-2022.5.30'
+      _version = 'ndnh'  if version.start_with? 'NDNH-'
+      _version = 'nndnh' if version.start_with? 'NNDNH-'
       _version = 'slth'  if version.start_with? 'slth-'
       _version = 'slex'  if version.start_with? 'slex-'
       _version = '3.6'   if version == '3.6.1'
@@ -362,7 +363,36 @@ class Game
       :default => -> (r,p) { r.defeated_medusa? ? 1 : 0 }
 
     def defeated_medusa?
-        (achieve and achieve.hex & 0x00800 > 0) or (event_defeated_medusa?)
+      most_variants_defeated_medusa? || dnh_defeated_medusa?
+    end
+
+    # just check the killed medusa achievement bit
+    def defeated_medusa_achieve?
+      achieve && (achieve.hex & 0x00800 > 0)
+    end
+
+    # is this variant a dnh derivative?
+    def dnhalike?
+      version.start_with?('dnh', 'ndnh', 'nndnh')
+    end
+
+    # is this game Ana Dwarf or Ana Elf?  Medusa defeat is different for those games
+    def anaspecial?
+      (role == 'Ana') && (race == 'Elf' || race == 'Dwa')
+    end
+
+    def defeated_medusa_and_ascended?
+      defeated_medusa_achieve? && ascended
+    end
+
+    # dnh variants only count medusa kills for some race/role combos if you ascend
+    def dnh_defeated_medusa?
+      dnhalike? && ((anaspecial? && defeated_medusa_and_ascended?) || ((!anaspecial?) && defeated_medusa_achieve?))
+    end
+
+    # most variants count medusa kills for all games
+    def most_variants_defeated_medusa?
+      (!dnhalike?) && ((achieve && defeated_medusa_achieve?) || (event_defeated_medusa?))
     end
 
     ## AceHack and UnNetHack specific
