@@ -210,8 +210,8 @@ class Server
         }
       }
 
-      prefixes = { us: :server, eu: 'eu-server', au: 'au-server' }
-      [:us, :eu, :au].each {|location|
+      prefixes = { us: :server }
+      [:us].each {|location|
         prefix = prefixes[location]
         [
           [:gnl_hck, 'GnollHack 4.2.0.41', "http://#{prefix}.gnollhack.com/xlogfile"]

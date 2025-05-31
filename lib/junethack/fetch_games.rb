@@ -69,7 +69,10 @@ def fetch_all
 
                             start_scummed = hgame['turns'].to_i <= 10 && ['escaped','quit'].include?(hgame['death'])
                             junk = (ignored_game_modes & modes).size > 0
-                            junk ||= hgame['tournament'] == 'no' && server.name == 'acc_gnl' # Gnollhack tournament mode
+                            if server.name == 'acc_gnl'
+                              junk ||= hgame['tournament'] == 'no' # Gnollhack tournament mode
+                              junk ||= hgame['seclvl'] < 1 # Gnollhack security level
+                            end
 
                             if start_scummed then
                                 game = StartScummedGame.create({server: server}.merge(hgame))

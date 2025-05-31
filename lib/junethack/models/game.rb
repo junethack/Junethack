@@ -358,6 +358,10 @@ class Game
     property :port, String
     property :portversion, String
     property :portbuild, String
+    property :store, String
+    property :xplvl, Integer
+    property :seclvl, Integer, default: -1
+    property :portseclvl, Integer
 
     property :killed_medusa, Integer,
       :default => -> (r,p) { r.defeated_medusa? ? 1 : 0 }

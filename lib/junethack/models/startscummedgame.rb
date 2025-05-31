@@ -134,6 +134,10 @@ class StartScummedGame
     property :port, String
     property :portversion, String
     property :portbuild, String
+    property :store, String
+    property :xplvl, Integer
+    property :seclvl, Integer, default: -1
+    property :portseclvl, Integer
 
     property :killed_medusa, Integer
 end
