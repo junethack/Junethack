@@ -11,6 +11,7 @@ describe 'fetching games' do
       @fetch_logger_error = Logger.new("/dev/null")
       @stop_fetching_games = "stop_fetching_games"
 
+      Server.destroy
       Server.create(:name => "test_server")
 
       # mock out fetched headers

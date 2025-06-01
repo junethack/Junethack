@@ -29,7 +29,7 @@ class XLog
       if head.start_with?('HTTP/2 405')
         # web server not supporting HEAD
         puts "workaround for #{xlog_url}"
-        head = %x{ curl -L -i -s #{xlog_url}}.split("\r\n\r\n").first
+        head = %x{ curl -L -i -s --http2 -H "Range: bytes=0-4095" #{xlog_url}}.split("\r\n\r\n").first
       end
       head
     end
@@ -40,14 +40,16 @@ class XLog
   end
 
   def self.fetch_from_xlog xlog_url, startp, endp
-    return false if startp.to_i >= endp.to_i-1
+    return false if endp != nil && startp.to_i >= endp.to_i-1
+    # open end for byte range if content length is unknown
+    endp = endp ? endp.to_i-1 : nil
 
     if ENV['JUNETHACK_TRACE']
       time = Time.new.iso8601
-      xlogdiff = %x{ curl -L --trace-time --trace-ascii "trace/#{time}_trace.log" -s -r #{startp}-#{endp.to_i-1} #{xlog_url}}
+      xlogdiff = %x{ curl -L --trace-time --trace-ascii "trace/#{time}_trace.log" -s -r #{startp}-#{endp} #{xlog_url}}
       File.open("trace/#{time}_xlogfile.txt", 'w') {|f| f.write(xlogdiff) }
     else
-      xlogdiff = %x{ curl -L -s -r #{startp}-#{endp.to_i-1} #{xlog_url}}
+      xlogdiff = %x{ curl -L -s -r #{startp}-#{endp} #{xlog_url}}
     end
     StringIO.new xlogdiff
   end

@@ -23,6 +23,7 @@ def fetch_all
       @fetch_logger.info "File #{@stop_fetching_games} exists, don't get new games."
       return
     end
+
     @fetch_logger.info "Looking for new games..."
     for server in Server.all
       begin
@@ -37,10 +38,10 @@ def fetch_all
         @fetch_logger.debug "fetched header #{header.inspect}"
         @fetch_logger.debug "current offset: #{server.xlogcurrentoffset}"
         if server.xlogcurrentoffset == nil
-            server.xlogcurrentoffset = header['content-length'].to_i
-            server.xloglastmodified = header['last-modified'] || 'Thu, 01 Jan 1970 00:00:00 GMT'
-            $db_access.synchronize { server.save }
-            next
+          server.xlogcurrentoffset = header['content-length'].to_i
+          server.xloglastmodified = header['last-modified'] || 'Thu, 01 Jan 1970 00:00:00 GMT'
+          $db_access.synchronize { server.save }
+          next
         end
 
         # in case the web server doesn't send Last-Modified, use current time
@@ -75,21 +76,21 @@ def fetch_all
                             junk = (ignored_game_modes & modes).size > 0
                             if server.name == 'acc_gnl'
                               junk ||= hgame['tournament'] == 'no' # Gnollhack tournament mode
-                              junk ||= hgame['seclvl'] < 1 # Gnollhack security level
+                              junk ||= hgame['seclvl'].to_i < 1 # Gnollhack security level
                             end
 
                             if start_scummed then
-                                game = StartScummedGame.create({server: server}.merge(hgame))
-                                @fetch_logger.debug "start scummed game"
-                                count_scummed_games += 1
+                              game = StartScummedGame.create({server: server}.merge(hgame))
+                              @fetch_logger.debug "start scummed game"
+                              count_scummed_games += 1
                             elsif junk then
-                                game = JunkGame.create({server: server}.merge(hgame))
-                                @fetch_logger.debug "junk game"
-                                count_junk_games += 1
+                              game = JunkGame.create({server: server}.merge(hgame))
+                              @fetch_logger.debug "junk game"
+                              count_junk_games += 1
                             elsif ([nil, 'hah', 'hoh', 'normal', 'solo', 'challenge'] & modes) != [] then
                               game = Game.create({server: server}.merge(hgame))
-                                count_games += 1
-                                regular_game = true
+                              count_games += 1
+                              regular_game = true
                             else
                               raise "Unknown 'mode' value: #{modes.inspect}"
                             end
@@ -130,8 +131,16 @@ def fetch_all
                       end
                     end
                     #repository.adapter.execute("COMMIT");
-                raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['content-length'].to_i}" if server.xlogcurrentoffset != header['content-length'].to_i
-                @fetch_logger.info "Inserted #{count_games} tournament, #{count_non_tournament_games} non tournament, #{count_scummed_games} start scummed, and #{count_junk_games} junk games on #{server.name}."
+                if header['content-length'] && server.xlogcurrentoffset != header['content-length'].to_i
+                  raise "xlogcurrentoffset mismatch: #{server.xlogcurrentoffset} != #{header['content-length'].to_i}"
+                end
+
+                @fetch_logger.info([
+                  "Inserted #{count_games} tournament",
+                  "#{count_non_tournament_games} non tournament",
+                  "#{count_scummed_games} start scummed",
+                  "and #{count_junk_games} junk games on #{server.name}."
+                ].join(', '))
             else
                 @fetch_logger.debug "No games at all on #{server.name}!"
             end
@@ -141,8 +150,8 @@ def fetch_all
             @fetch_logger.debug "No new games on #{server.name}."
         end
       rescue Exception => e
-          @fetch_logger.error e.to_s
-          @fetch_logger_error.error e
+        @fetch_logger.error e.to_s
+        @fetch_logger_error.error e
       end
     end
 end
