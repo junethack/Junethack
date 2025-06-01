@@ -274,7 +274,7 @@ post "/create" do
             redirect "/login" and return
         else
             session['errors'] << "Could not register account"
-            puts "could not register user #{params[:username]}"
+            puts "Could not register user #{params[:username]}"
             redirect "/register" and return
         end
     rescue
@@ -302,7 +302,7 @@ get "/user/:name" do
 
         haml :user, :layout => @layout
     else
-        session['errors'] << "Could not find user #{params[:name]}"
+        session['errors'] << "Could not find user #{CGI::escape(params[:name])}"
     end
 end
 
