@@ -7,7 +7,11 @@ require 'logger'
 require 'tournament_times'
 
 Dir.mkdir('logs') unless File.exists?('logs')
-@fetch_logger = Logger.new('logs/fetch_games.log', 'daily')
+if $stdout.tty?
+  @fetch_logger = Logger.new($stdout)
+else
+  @fetch_logger = Logger.new('logs/fetch_games.log', 'daily')
+end
 @fetch_logger_error = Logger.new('logs/fetch_games_errors.log', 'daily')
 
 @stop_fetching_games = "stop_fetching_games"
