@@ -23,7 +23,7 @@ class User
     property :created_at, DateTime
     property :updated_at, DateTime
 
-    validates_format_of :login, with: /^\w+$/, message: "login name may only contain a-z, A-Z, 0-9 and _"
+    validates_format_of :login, with: /\A\w+\z/, message: "login name may only contain a-z, A-Z, 0-9 and _"
 
     def password=(pw)
         self.salt = Digest::SHA256.hexdigest("#{rand}") #generate random hash
