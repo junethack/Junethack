@@ -127,6 +127,10 @@ class Server
             "https://#{prefix}.hardfought.org/userdata/#{player}/gnollhack/dumplog/#{game.starttime}.gnoll.html"
         when "hck"
             "https://#{prefix}.hardfought.org/userdata/#{player}/hackem/dumplog/#{game.starttime}.hackem.html"
+        when "nerf"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/nerfhack/dumplog/#{game.starttime}.nerf.html"
+        when "crec"
+            "https://#{prefix}.hardfought.org/userdata/#{player}/crecellehack/dumplog/#{game.starttime}.cre.html"
         end
       when "em.slashem.me"
         case game.version
