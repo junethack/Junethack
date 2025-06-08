@@ -148,11 +148,7 @@ class Server
           "https://em.slashem.me/userdata/#{game.name}/slashem-008/dumplog/#{starttime}.txt"
         end
       when "server.gnollhack.com"
-        "http://server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.log"
-      when "eu-server.gnollhack.com"
-        "http://eu-server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.log"
-      when "au-server.gnollhack.com"
-        "http://au-server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.log"
+        "http://server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.html"
       when "account.gnollhack.com"
         gnollhack_account = Account.first(server_id: game.server_id, user_id: game.user_id)&.name
         "https://account.gnollhack.com/dumplog/byname/#{gnollhack_account}/#{game.starttime}"
