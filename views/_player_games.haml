@@ -20,7 +20,7 @@
                 =haml :trophy, locals: {trophy: trophy, achieved: (user_competition_trophies.include? trophy.trophy)}
               %td= h trophy.text
               - if competition_trophy == :fastest_ascension_realtime
-                %td.table_number= h parse_seconds(c.value)
+                %td.table_number= parse_seconds(c.value)
               - else
                 %td.table_number= c.value.html_formatted
               %td.table_number= h c.rank
