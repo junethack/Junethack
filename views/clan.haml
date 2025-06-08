@@ -130,7 +130,7 @@
       =haml :games_played
 
     .text_content.non_top_post
-      - cache_fragment("#{@clan.name}_#{@clan.users.max_by(&:updated_at).updated_at}") do
+      - cache_fragment("#{@clan.name}_#{Game.all(user_id: @clan.users.map(&:id)).max_by(&:endtime).endtime}") do
         =haml :clan_games
 
     - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
