@@ -72,9 +72,10 @@
               %img.trophyicon{:src => "/icons/" + trophy.light_icon}
         %span.clear.endofcabinetrow
 
+    - max_endtime_clan_game = Game.all(user_id: @clan.users.map(&:id)).max_by(&:endtime).endtime
     .text_content.non_top_post#clan_members
       =h2 'Clan members'
-      - cache_fragment("#{@clan.name}_members_#{@clan.users.max_by(&:updated_at).updated_at}") do
+      - cache_fragment("#{@clan.name}_members_#{max_endtime_clan_game}") do
         %table.prettytable.clan_members
           %tr
             %th
@@ -130,7 +131,7 @@
       =haml :games_played
 
     .text_content.non_top_post
-      - cache_fragment("#{@clan.name}_#{Game.all(user_id: @clan.users.map(&:id)).max_by(&:endtime).endtime}") do
+      - cache_fragment("#{@clan.name}_games_#{max_endtime_clan_game}") do
         =haml :clan_games
 
     - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
