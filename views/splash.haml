@@ -1,5 +1,5 @@
-.content_bulk
-  %section.branding
+%section.mb-4
+  .text-center
     .title_text
       %p
         Running from 1 June until the end of 30 June 2026
@@ -26,63 +26,62 @@
         .title_text
           %p
             =haml :registrationdate_unknown
-  .text_content_wrapper
-    %section#news.text_content
-      =haml :news
-    %section.text_content
-      %h2
-        Welcome to Junethack!
-      %p
-        Are you ready to embark on a perilous journey through
-        the Dungeons of Doom?
-        Ready to collect all the treasures their chthonic depths have to offer?
-        Ready to kill all your enemies and EAT their corpses?
-        Ready to challenge the mightiest demons of Gehennom and battle
-        the mighty Wizard of Yendor?
-        And BADASS enough to travel the Heavens themselves while kicking
-        angels in the face?
-      %p
-        Then play NetHack.
-      %p
-        And also play in Junethack,
-        the NetHack Cross-Variant Summer Tournament (mostly) held in June.
-    %section.text_content
-      %p
-        You can view the results of the
-        <a href='/archive/2025/index.html'>Junethack 2025</a>,
-        <a href='/archive/2024/index.html'>Junethack 2024</a>,
-        <a href='/archive/2023/index.html'>Junethack 2023</a>,
-        <a href='/archive/2022/index.html'>Junethack 2022</a>,
-        <a href='/archive/2021/index.html'>Junethack 2021</a>,
-        <a href='/archive/2020/index.html'>Junethack 2020</a>,
-        <a href='/archive/2019/index.html'>Junethack 2019</a>,
-        <a href='/archive/2018/index.html'>Junethack 2018</a>,
-        <a href='/archive/2017/index.html'>Junethack 2017</a>,
-        <a href='/archive/2016/index.html'>Junethack 2016</a>,
-        <a href='/archive/2015/index.html'>Junethack 2015</a>,
-        <a href='/archive/2014/index.html'>Junethack 2014</a>,
-        <a href='/archive/2013/index.html'>Junethack 2013</a>,
-        <a href='/archive/2012/index.html'>Junethack 2012</a>,
-        <a href='/archive/2011/index.html'>Junethack 2011</a>
-        tournaments.
-      %p
-        And the tournament rules at the
-        %a{:href => "/rules"} Rules page.
-      %p
-        Or stare longingly at the competitions and trophies up
-        for grabs at the
-        %a{:href => "/trophies"} Trophies page.
-      %p
-        Games played on the servers listed on the
-        %a{:href => "/servers"} Servers page
-        are eligible for the tournament.
-    %section.text_content
-      %h2
-        Huh?
-      %p
-        What's
-        %a{:href => "http://en.wikipedia.org/wiki/NetHack"} NetHack?
-        What's
-        %a{:href => "about"} this all about?
-    %span#end_of_content_spacer.clear
-/ end of container
+  .card.junethack-card
+    .card-body
+      %section.mb-4
+        =haml :news
+      %section.mb-4
+        %h2
+          Welcome to Junethack!
+        %p
+          Are you ready to embark on a perilous journey through
+          the Dungeons of Doom?
+          Ready to collect all the treasures their chthonic depths have to offer?
+          Ready to kill all your enemies and EAT their corpses?
+          Ready to challenge the mightiest demons of Gehennom and battle
+          the mighty Wizard of Yendor?
+          And BADASS enough to travel the Heavens themselves while kicking
+          angels in the face?
+        %p
+          Then play NetHack.
+        %p
+          And also play in Junethack,
+          the NetHack Cross-Variant Summer Tournament (mostly) held in June.
+      %section.mb-4
+        %p
+          You can view the results of the
+          <a href='/archive/2025/index.html'>Junethack 2025</a>,
+          <a href='/archive/2024/index.html'>Junethack 2024</a>,
+          <a href='/archive/2023/index.html'>Junethack 2023</a>,
+          <a href='/archive/2022/index.html'>Junethack 2022</a>,
+          <a href='/archive/2021/index.html'>Junethack 2021</a>,
+          <a href='/archive/2020/index.html'>Junethack 2020</a>,
+          <a href='/archive/2019/index.html'>Junethack 2019</a>,
+          <a href='/archive/2018/index.html'>Junethack 2018</a>,
+          <a href='/archive/2017/index.html'>Junethack 2017</a>,
+          <a href='/archive/2016/index.html'>Junethack 2016</a>,
+          <a href='/archive/2015/index.html'>Junethack 2015</a>,
+          <a href='/archive/2014/index.html'>Junethack 2014</a>,
+          <a href='/archive/2013/index.html'>Junethack 2013</a>,
+          <a href='/archive/2012/index.html'>Junethack 2012</a>,
+          <a href='/archive/2011/index.html'>Junethack 2011</a>
+          tournaments.
+        %p
+          And the tournament rules at the
+          %a{:href => "/rules"} Rules page.
+        %p
+          Or stare longingly at the competitions and trophies up
+          for grabs at the
+          %a{:href => "/trophies"} Trophies page.
+        %p
+          Games played on the servers listed on the
+          %a{:href => "/servers"} Servers page
+          are eligible for the tournament.
+      %section.mb-4
+        %h2
+          Huh?
+        %p
+          What's
+          %a{:href => "http://en.wikipedia.org/wiki/NetHack"} NetHack?
+          What's
+          %a{:href => "about"} this all about?

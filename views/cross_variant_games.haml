@@ -1,23 +1,24 @@
 =h3 'Cross-Variant Progress'
-.scorelisting#no-more-tables
-  %table.greytable.cf
-    %thead.cf
+.no-more-tables
+  %table.table.table-hover.table-sm.table-junethack
+    %thead
       %tr
         %th Variant
         %th{style: 'text-align: right'} Turns (max)
         %th Trophy
         %th Medusa
         %th Ascended
-    - $variant_order.each do |variant|
-      %tr
-        %td{"data-title" => "Name"}= h $variants_mapping[variant]
-        - if Game.all(:user_id => @user_id, :version => variant).count > 0
-          %td.table_number{"data-title" => "Turns"}= (repository.adapter.select "select max(turns) from games where version = ? and user_id = ?", variant, @user_id).first.html_formatted
-          %td.small_cell{"data-title" => "Trophies"}= Scoreentry.count(:user_id => @user_id, :variant => variant) > 0 ? "yes" : "no"
-          %td.small_cell{"data-title" => "Medusa"}= (Game.all(:user_id => @user_id, :version => variant).any? {|g| g.defeated_medusa? } ? "yes" : "no")
-          %td.small_cell{"data-title" => "Ascension"}= (Game.all(:user_id => @user_id, :version => variant).any? {|g| g.ascended? } ? "yes" : "no")
-        - else
-          %td
-          %td
-          %td
-          %td
+    %tbody
+      - $variant_order.each do |variant|
+        %tr
+          %td{"data-title" => "Name"}= h $variants_mapping[variant]
+          - if Game.all(:user_id => @user_id, :version => variant).count > 0
+            %td.table_number{"data-title" => "Turns"}= (repository.adapter.select "select max(turns) from games where version = ? and user_id = ?", variant, @user_id).first.html_formatted
+            %td.small_cell{"data-title" => "Trophies"}= Scoreentry.count(:user_id => @user_id, :variant => variant) > 0 ? "yes" : "no"
+            %td.small_cell{"data-title" => "Medusa"}= (Game.all(:user_id => @user_id, :version => variant).any? {|g| g.defeated_medusa? } ? "yes" : "no")
+            %td.small_cell{"data-title" => "Ascension"}= (Game.all(:user_id => @user_id, :version => variant).any? {|g| g.ascended? } ? "yes" : "no")
+          - else
+            %td
+            %td
+            %td
+            %td

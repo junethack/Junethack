@@ -1,61 +1,60 @@
 - cache_fragment("#{Game.max :endtime, :user_id => @player.id}_#{@player.updated_at}_#{@player.accounts.count}") do
-    .content_bulk
-        .text_content_wrapper
-            .text_content
-                %h2
-                    Junethack 2026
-                %h2
-                    #{h @player.login}
-                %h2
-                    #{@player.display_game_statistics}
-                - if @player.clan
-                    #clan_banner.user_page
-                        %a{:href => "/clan/#{CGI::escape @player.clan.name}"}
-                            %img{src: @player.clan.gravatar_link}
+  .card.junethack-card
+    .card-body.position-relative
+      %h2
+        Junethack 2026
+      %h2
+        #{h @player.login}
+      %h2
+        #{@player.display_game_statistics}
+      - if @player.clan
+        #clan_banner.user_page
+          %a{:href => "/clan/#{CGI::escape @player.clan.name}"}
+            %img{src: @player.clan.gravatar_link}
 
-            .text_content.non_top_post
-                .trophycabinet.text_cabinet
-                    =h3 'Trophies'
-                    %ul
-                        =haml :user_cross_variant_trophies
-                        - for @variant in variant_and_bonus_games_order
-                            / only show achievements for games that the player actually played
-                            - if Game.count(user_id: @player.id, version: @variant) > 0
-                                =haml :user_trophies
+    .card-body.border-top
+      .trophycabinet.text_cabinet
+        =h3 'Trophies'
+        %ul
+          =haml :user_cross_variant_trophies
+          - for @variant in variant_and_bonus_games_order
+            / only show achievements for games that the player actually played
+            - if Game.count(user_id: @player.id, version: @variant) > 0
+              =haml :user_trophies
 
-            .text_content.non_top_post
-                =haml :_player_games
+    .card-body.border-top
+      =haml :_player_games
 
-            .text_content.non_top_post
-                =haml :games_played
+    .card-body.border-top
+      =haml :games_played
 
-            .text_content.non_top_post
-                =haml :cross_variant_games
+    .card-body.border-top
+      =haml :cross_variant_games
 
-            .text_content.non_top_post
-                - @ascended_combinations_sql = ascended_combinations_user_sql
-                - @ascended_combinations_value = @player.id
-                =haml :ascended_combinations
+    .card-body.border-top
+      - @ascended_combinations_sql = ascended_combinations_user_sql
+      - @ascended_combinations_value = @player.id
+      =haml :ascended_combinations
 
-            .text_content.non_top_post
-                =h2 :Accounts
-                %table.greytable
-                    %tr
-                        %th Server
-                        %th Account
-                    - accounts = @player.accounts.map {|acc| [acc.server.hostname, acc.name] }.uniq.sort
-                    - accounts.each do |server, name|
-                        %tr.account
-                            %td= server
-                            %td= name
+    .card-body.border-top
+      =h2 :Accounts
+      .table-responsive
+        %table.table.table-hover.table-sm.table-junethack
+          %thead
+            %tr
+              %th Server
+              %th Account
+          %tbody
+            - accounts = @player.accounts.map {|acc| [acc.server.hostname, acc.name] }.uniq.sort
+            - accounts.each do |server, name|
+              %tr.account
+                %td= server
+                %td= name
 
-            #clanmanager.text_content.non_top_post
-                =h2 :Clan
-                - if @player.clan
-                    %img{src: @player.clan.gravatar_link, style: 'vertical-align: middle; width: 2em'}
-                    %a{:href => "/clan/#{CGI::escape @player.clan.name}"}= @player.clan.name
-                    %span#small_content_spacer.clear
-                - else
-                    No clan
-                    %span#small_content_spacer.clear
-
+    .card-body.border-top
+      =h2 :Clan
+      - if @player.clan
+        %img{src: @player.clan.gravatar_link, style: 'vertical-align: middle; width: 2em'}
+        %a{:href => "/clan/#{CGI::escape @player.clan.name}"}= @player.clan.name
+      - else
+        No clan

@@ -1,29 +1,27 @@
-.content_bulk
-  .text_content_wrapper
-    .text_content
-      %h2
-        Clans
-      %table.prettytable
-        %tr
-          %th{style: 'width: 1.5em'}
-          %th
-            Clan name
-          %th
-            Clan admin
-          %th
-            Members
-        - @clans.each do |clan|
-          %tr{style: 'vertical-alig: middle'}
-            %td
-              %span
-                %img{src: clan.gravatar_link, style: 'vertical-align: middle; width: 100%'}
-            %td
-              %span
+.card.junethack-card
+  .card-body
+    %h2 Clans
+    .table-responsive
+      %table.table.table-hover.table-sm.table-junethack
+        %thead
+          %tr
+            %th{style: 'width: 1.5em'}
+            %th
+              Clan name
+            %th
+              Clan admin
+            %th
+              Members
+        %tbody
+          - @clans.each do |clan|
+            %tr
+              %td
+                %img.img-fluid{src: clan.gravatar_link, style: 'width: 1.5em; vertical-align: middle'}
+              %td
                 %a{:href => "/clan/#{CGI::escape clan.name}"}
                   #{h clan.name}
-            %td
-              %a{:href => "/user/" + clan.get_admin.login}
-                #{h clan.get_admin.login}
-            %td
-              #{h clan.users.uniq.length}
-    %span#end_of_content_spacer.clear
+              %td
+                %a{:href => "/user/" + clan.get_admin.login}
+                  #{h clan.get_admin.login}
+              %td
+                #{h clan.users.uniq.length}

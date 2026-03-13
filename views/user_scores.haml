@@ -1,9 +1,6 @@
-.content_bulk
-  .text_content_wrapper
-    .text_content
-      %h2
-        Scores for player
-        = h @username + "."
-      =haml :generic_scores
-    %span#end_of_content_spacer.clear
-/ end of container
+.card.junethack-card
+  .card-body
+    %h2
+      Scores for player
+      = h @username + "."
+    =haml :generic_scores

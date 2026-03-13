@@ -1,36 +1,24 @@
-.content_bulk
-  .text_content_wrapper
+.card.junethack-card
+  .card-body
     - if (Time.new.to_i > $tournament_endtime)
-      .text_content
-        %h1.hcenter Sorry, this year's tournament has ended.
+      %h1.text-center Sorry, this year's tournament has ended.
     - elsif $tournament_signupstarttime.nil?
-      .text_content
-        %h1.hcenter
-          Registration has not opened yet.
+      %h1.text-center Registration has not opened yet.
     - elsif (Time.new.to_i < $tournament_signupstarttime.to_i)
-      .text_content
-        %h1.hcenter
-          =haml :registrationdate
+      %h1.text-center
+        =haml :registrationdate
     - else
-      .text_content
-        %p.center
-          If you haven't signed up yet,
-          %a{:href => "/register"} register here!
-      .text_content
-        %form#login_form{:action => "", :method => "post"}
-          %fieldset
-            #username_row
-              %label{:for => "username"} Username:
-              %input#username{:name => "username", :type => "text", :value => "", :autofocus => "", :placeholder => "username"}/
-              .form_msg
-                Field required
-              %span.clear
-            #password_row
-              %label{:for => "password"} Password:
-              %input#password{:name => "password", :type => "password", :value => "", :placeholder => "password"}/
-              .form_msg
-                Field required
-              %span.clear
-            %input#submit{:name => "submit", :type => "submit", :value => "Log in!"}/
-      %span#end_of_content_spacer.clear
-/ end of container
+      %p.text-center
+        If you haven't signed up yet,
+        %a{:href => "/register"} register here!
+      .row.justify-content-center
+        .col-md-6.col-lg-4
+          %form#login_form{:action => "", :method => "post"}
+            .mb-3
+              %label.form-label{:for => "username"} Username
+              %input#username.form-control{:name => "username", :type => "text", :value => "", :autofocus => "", :placeholder => "username", :required => "required"}/
+            .mb-3
+              %label.form-label{:for => "password"} Password
+              %input#password.form-control{:name => "password", :type => "password", :value => "", :placeholder => "password", :required => "required"}/
+            .text-center
+              %input#submit.btn.btn-junethack-red{:name => "submit", :type => "submit", :value => "Log in!"}/

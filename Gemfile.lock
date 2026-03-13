@@ -115,8 +115,6 @@ GEM
     raabro (1.4.0)
     racc (1.8.1)
     rack (2.2.16)
-    rack-mobile-detect (0.4.0)
-      rack
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
@@ -184,7 +182,6 @@ DEPENDENCIES
   json
   nokogiri
   pry
-  rack-mobile-detect
   rack-test
   rake
   rspec

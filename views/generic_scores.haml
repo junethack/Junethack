@@ -1,11 +1,12 @@
-%h2
-  Most ascensions
-.scorelisting
-  %table.greytable
-    %tr
-      %th Name
-      %th Ascensions
-    - @most_ascended_users.each do |u|
+%h2 Most ascensions
+.table-responsive
+  %table.table.table-sm.table-junethack
+    %thead
       %tr
-        %td= h u.name
-        %td= u.ascensions
+        %th Name
+        %th Ascensions
+    %tbody
+      - @most_ascended_users.each do |u|
+        %tr
+          %td= h u.name
+          %td= u.ascensions

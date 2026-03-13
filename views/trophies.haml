@@ -1,156 +1,147 @@
-.content_bulk
-  .text_content_wrapper
-    .text_content
-      %h1
-        Trophies and competitions
-      %p
-        =h2 'Trophies'
-        %h3
-          Cross-Variant
-        %ul.trophypage.indented
-          %li#sightseeing
-            %img{style: "vertical-align:middle", alt: "", src: "/icons/sightseeing_tour_#{$variant_order.size}.png"}
-            %span
-              Sightseeing Tour: finish a game in several variants (played for at least 1000 turns).
-          %li#globetrotter
-            %img{style: "vertical-align:middle", alt: "", src: "/icons/globetrotter_#{$variant_order.size}.png"}
-            %span
-              Globetrotter: get a trophy in several variants.
-          %li#anti-stoner
-            %img{style: "vertical-align:middle", alt: "", src: "/icons/anti_stoner_#{$variant_order.size}.png"}
-            %span
-              Anti-Stoner: defeat Medusa in several variants.
-          %li#ascended_variants
-            %img{style: "vertical-align:middle", alt: "", src: "/icons/ascended_variants_#{$variant_order.size}.png"}
-            %span
-              Diversity Ascender: ascend in several variants.
+.card.junethack-card
+  .card-body
+    %h1 Trophies and competitions
+    %p
+      =h2 'Trophies'
+      %h3
+        Cross-Variant
+      %ul.trophypage.indented
+        %li#sightseeing
+          %img{style: "vertical-align:middle", alt: "", src: "/icons/sightseeing_tour_#{$variant_order.size}.png"}
+          %span
+            Sightseeing Tour: finish a game in several variants (played for at least 1000 turns).
+        %li#globetrotter
+          %img{style: "vertical-align:middle", alt: "", src: "/icons/globetrotter_#{$variant_order.size}.png"}
+          %span
+            Globetrotter: get a trophy in several variants.
+        %li#anti-stoner
+          %img{style: "vertical-align:middle", alt: "", src: "/icons/anti_stoner_#{$variant_order.size}.png"}
+          %span
+            Anti-Stoner: defeat Medusa in several variants.
+        %li#ascended_variants
+          %img{style: "vertical-align:middle", alt: "", src: "/icons/ascended_variants_#{$variant_order.size}.png"}
+          %span
+            Diversity Ascender: ascend in several variants.
+      %p.small_print
+        NetHack 1.3d does not contribute to the completion of these trophies.
 
-        %p.small_print
-          NetHack 1.3d does not contribute to the completion of these trophies.
-        .text_content.non_top_post
-        =h3 'All Variants'
-        %p
-          These trophies apply separately to each variant (excluding NetHack 1.3d).
-          %br
-          %span.small_print In variants with additional roles or races only 13 roles resp. 5 races (i.e. as many as in vanilla) must be ascended to achieve this trophy.
-        %ul.trophypage.indented
-          %li#all-conducts
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/all-conducts.png"}
-            %span
-              All conducts: follow each conduct in at least one ascension.
-          %li#all-roles
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/all-roles.png"}
-            %span
-              All roles: ascend a character for each role.
-          %li#all-races
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/all-races.png"}
-            %span
-              All races: ascend a character of every race.
-          %li#all-alignments
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/all-alignments.png"}
-            %span
-              All alignments: ascend a character of every alignment (the starting
-              alignment is considered).
-          %li#all-genders
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/all-genders.png"}
-            %span
-              All genders: ascend a character of each gender (the starting gender
-              is considered).
-          %li#ascension
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/ascension.png"}
-            %span
-              Ascension: ascend a character.
-        .text_content.non_top_post
-        =h3 'Variant specific achievements'
-        %p
-          These variant specific achievements are listed on their own pages:
-          .trophypage
-          - variant_and_bonus_games_order.each do |variant|
-            - variant_name = $variants_mapping[variant]
-            %span{style: 'padding-left: 1em'}
-              %a{href: "/trophies/#{variant_name.downcase}"}= h variant_name
-              = "(#{Trophy.all(variant: variant, conditions: ["trophy not like 'all_%' AND user_competition = 'f'"]).count} achievements)"
-            %br
-        .text_content.non_top_post
+  .card-body.border-top
+    =h3 'All Variants'
+    %p
+      These trophies apply separately to each variant (excluding NetHack 1.3d).
+      %br
+      %span.small_print
+        In variants with additional roles or races only 13 roles resp. 5 races (i.e. as many as in vanilla) must be ascended to achieve this trophy.
+    %ul.trophypage.indented
+      %li#all-conducts
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/all-conducts.png"}
+        %span
+          All conducts: follow each conduct in at least one ascension.
+      %li#all-roles
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/all-roles.png"}
+        %span
+          All roles: ascend a character for each role.
+      %li#all-races
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/all-races.png"}
+        %span
+          All races: ascend a character of every race.
+      %li#all-alignments
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/all-alignments.png"}
+        %span
+          All alignments: ascend a character of every alignment (the starting alignment is considered).
+      %li#all-genders
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/all-genders.png"}
+        %span
+          All genders: ascend a character of each gender (the starting gender is considered).
+      %li#ascension
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/ascension.png"}
+        %span
+          Ascension: ascend a character.
 
-        =h2 'Competitions'
-        %h3
-          All Variants
-        %p
-          These trophies apply separately to each variant (excluding NetHack 1.3d).
-        %ul.trophypage.indented
-          %li#c-most-ascensions
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/c-most-ascensions.png"}
-            %span
-              Most ascensions
-          %li#c-fastest-gametime
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/c-fastest-gametime.png"}
-            %span
-              Fastest ascension (by turns)
-          %li#c-fastest-realtime
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/c-fastest-realtime.png"}
-            %span
-              Fastest ascension (by wall-clock time)
-          %li#c-highest-score
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/c-highest-score.png"}
-            %span
-              Highest scoring ascension
-          %li#c-lowest-score
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/c-lowest-score.png"}
-            %span
-              Lowest scoring ascension (not counting negative scores)
-          %li#c-most-conducts
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/c-most-conducts.png"}
-            %span
-              Most conducts in a single ascension (only the <a href="https://nethackwiki.com/wiki/Junethack/FAQ#Conducts">12 standard conducts</a> are monitored)
-          %li#c-longest-streak
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/c-longest-streak.png"}
-            %span
-              Longest ascension streak
-              (non-overlapping games played on a single game server
-              account with no games in-between.)
-        .text_content.non_top_post
-        =h3 'Clan Competitions Trophies'
-        %p
-          Each player of a clan contributes to the total clan score.
-          Clans are ranked according to clan score.
-        %p
-          First place is awarded 4 points, second place is awarded 3,
-          2 for third place. The remaining clans get points according
-          to the ratio of their best evaluated score to the winner clan's best
-          evaluated score.
-        %p
-          In case of a tie, all clans with the same evaluation get
-          the same amount of points; in the ranking, they're considered
-          as one clan.
-        -# example?
-        %ul.trophypage.indented
-          %li#clan-24h
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/clan-24h.png"}
-            %span
-              Most ascensions in a 24 hour period
-          %li#clan-combinations
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/clan-combinations.png"}
-            %span
-              Most ascended variant/role/race/alignment/gender combinations (starting)
-          %li#clan-deaths
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/clan-deaths.png"}
-            %span= "Most unique deaths (<a href='/deaths#unique_deaths'>look here for unique deaths of played games</a>)"
-          %li#clan-variant-trophies
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/clan-variant-trophies.png"}
-            %span
-              Most variant/trophy combinations
-          %li#clan-most-medusa-kills
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/clan-medusa-kills.png"}
-            %span
-              Most Medusa kills
-          %li#clan-full-conducts-broken
-            %img{:style => "vertical-align:middle", :alt => "", :src => "/icons/clan-full-conducts-broken.png"}
-            %span
-              Most games with all conducts broken (only the <a href="https://nethackwiki.com/wiki/Junethack/FAQ#Conducts">12 standard conducts</a> are monitored)
-          -#%li#clan-lowest-turns-for-monster-kills
-          -#  %img{style: "vertical-align:middle", alt: "", src: "/icons/clan-lowest-turns-for-monster-kills.png"}
-          -#  %span
-          -#    ="Lowest sum of the turns of the #{$clan_killed_by.count} games where clan members were getting killed by each of the monsters in this list: #{$clan_killed_by.sort.join ', '}."
-        .text_content.non_top_post
-    %span#end_of_content_spacer.clear
+  .card-body.border-top
+    =h3 'Variant specific achievements'
+    %p
+      These variant specific achievements are listed on their own pages:
+    .ms-3
+      - variant_and_bonus_games_order.each do |variant|
+        - variant_name = $variants_mapping[variant]
+        %span.d-block
+          %a{href: "/trophies/#{variant_name.downcase}"}= h variant_name
+          = "(#{Trophy.all(variant: variant, conditions: ["trophy not like 'all_%' AND user_competition = 'f'"]).count} achievements)"
+
+  .card-body.border-top
+    =h2 'Competitions'
+    %h3
+      All Variants
+    %p
+      These trophies apply separately to each variant (excluding NetHack 1.3d).
+    %ul.trophypage.indented
+      %li#c-most-ascensions
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/c-most-ascensions.png"}
+        %span
+          Most ascensions
+      %li#c-fastest-gametime
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/c-fastest-gametime.png"}
+        %span
+          Fastest ascension (by turns)
+      %li#c-fastest-realtime
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/c-fastest-realtime.png"}
+        %span
+          Fastest ascension (by wall-clock time)
+      %li#c-highest-score
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/c-highest-score.png"}
+        %span
+          Highest scoring ascension
+      %li#c-lowest-score
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/c-lowest-score.png"}
+        %span
+          Lowest scoring ascension (not counting negative scores)
+      %li#c-most-conducts
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/c-most-conducts.png"}
+        %span
+          Most conducts in a single ascension (only the <a href="https://nethackwiki.com/wiki/Junethack/FAQ#Conducts">12 standard conducts</a> are monitored)
+      %li#c-longest-streak
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/c-longest-streak.png"}
+        %span
+          Longest ascension streak
+          (non-overlapping games played on a single game server
+          account with no games in-between.)
+
+  .card-body.border-top
+    =h3 'Clan Competitions Trophies'
+    %p
+      Each player of a clan contributes to the total clan score.
+      Clans are ranked according to clan score.
+    %p
+      First place is awarded 4 points, second place is awarded 3,
+      2 for third place. The remaining clans get points according
+      to the ratio of their best evaluated score to the winner clan's best
+      evaluated score.
+    %p
+      In case of a tie, all clans with the same evaluation get
+      the same amount of points; in the ranking, they're considered
+      as one clan.
+    %ul.trophypage.indented
+      %li#clan-24h
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/clan-24h.png"}
+        %span
+          Most ascensions in a 24 hour period
+      %li#clan-combinations
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/clan-combinations.png"}
+        %span
+          Most ascended variant/role/race/alignment/gender combinations (starting)
+      %li#clan-deaths
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/clan-deaths.png"}
+        %span= "Most unique deaths (<a href='/deaths#unique_deaths'>look here for unique deaths of played games</a>)"
+      %li#clan-variant-trophies
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/clan-variant-trophies.png"}
+        %span
+          Most variant/trophy combinations
+      %li#clan-most-medusa-kills
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/clan-medusa-kills.png"}
+        %span
+          Most Medusa kills
+      %li#clan-full-conducts-broken
+        %img{style: "vertical-align:middle", alt: "", src: "/icons/clan-full-conducts-broken.png"}
+        %span
+          Most games with all conducts broken (only the <a href="https://nethackwiki.com/wiki/Junethack/FAQ#Conducts">12 standard conducts</a> are monitored)

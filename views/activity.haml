@@ -4,180 +4,163 @@
 %script{:type => "text/javascript", :src => "/graph/graph_finished_games_per_day.js"}
 %script{:type => "text/javascript", :src => "/graph/graph_new_users_per_day.js"}
 
-.content_bulk
-  .text_content_wrapper
-    - cache_fragment("games_variants_#{Game.max_endtime}") do
-      .text_content
-        %h2 Finished Games per Day and Variant
-        .scorelisting
-          %table.greytable.misc
-            -# table header
+.card.junethack-card
+  - cache_fragment("games_variants_#{Game.max_endtime}") do
+    .card-body
+      %h2 Finished Games per Day and Variant
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %thead
             %tr.rotated
               %th
                 %div Date (UTC)
               - $variant_order.each do |v|
                 %th
                   %div= $variants_mapping[v]
-
-            -# table data
             - today = Time.now.to_i
-            - $tournament_starttime.step($tournament_endtime,86400).each do |datum|
+          %tbody
+            - $tournament_starttime.step($tournament_endtime, 86400).each do |datum|
               - if today > datum && datum < $tournament_endtime then
                 %tr
                   - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
                   %td.table_date= "<a class='hidden_link' href='/games/#{formatted_date}'>#{formatted_date}</a>"
                   - $variant_order.each do |v|
-                    - finished_variant_games_per_day = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and endtime >= ? and endtime < ?;", v, datum, datum+86400)[0]
+                    - finished_variant_games_per_day = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and endtime >= ? and endtime < ?;", v, datum, datum + 86400)[0]
                     %td.table_number= "<a class='hidden_link' href='/games/#{formatted_date}/#{v}'>#{finished_variant_games_per_day}</a>"
-            -# Total number of tournament games per variant
+          %tfoot
             %tr
               %td.table_date= "Total"
               - $variant_order.each do |v|
                 - finished_variant_games = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ?;", v)[0]
                 %td.table_number= "<a class='hidden_link' href='/games/#{v}'>#{finished_variant_games}</a>"
 
-    - cache_fragment("games_players_#{Game.max_endtime}") do
-      .text_content.non_top_post
-        %h2 Unique Players per Day and Variant
-        .scorelisting
-          %table.greytable.misc
-            -# table header
-            %tr.rotated
+  - cache_fragment("games_players_#{Game.max_endtime}") do
+    .card-body.border-top
+      %h2 Unique Players per Day and Variant
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %tr.rotated
+            %th
+              %div Date (UTC)
+            - $variant_order.each do |v|
               %th
-                %div Date (UTC)
-              - $variant_order.each do |v|
-                %th
-                  %div= $variants_mapping[v]
-
-            -# table data
-            - today = Time.now.to_i
-            - $tournament_starttime.step($tournament_endtime,86400).each do |datum|
-              - if today > datum && datum < $tournament_endtime then
-                %tr
-                  - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
-                  %td.table_date= "<a class='hidden_link' href='/games/#{formatted_date}'>#{formatted_date}</a>"
-                  - $variant_order.each do |v|
-                    - finished_variant_games_per_day = (repository.adapter.select "SELECT count(DISTINCT user_id) FROM games WHERE user_id > 0 AND version = ? AND endtime >= ? AND endtime < ?;", v, datum, datum+86400)[0]
-                    %td.table_number= "<a class='hidden_link' href='/games/#{formatted_date}/#{v}'>#{finished_variant_games_per_day}</a>"
-            -# Total number of tournament games per variant
-            %tr
-              %td.table_date= "Total"
-              - $variant_order.each do |v|
-                - finished_variant_games = (repository.adapter.select "SELECT count(DISTINCT user_id) FROM games WHERE user_id > 0 AND version = ?;", v)[0]
-                %td.table_number= "<a class='hidden_link' href='/games/#{v}'>#{finished_variant_games}</a>"
-
-    - cache_fragment("games_variants_ascended_#{Game.max_endtime}") do
-      .text_content.non_top_post
-        %h2 Ascensions per Day and Variant
-        .scorelisting
-          %table.greytable.misc
-            -# table header
-            %tr.rotated
-              %th
-                %div Date (UTC)
-              - $variant_order.each do |v|
-                %th
-                  %div= $variants_mapping[v]
-
-            -# table data
-            - today = Time.now.to_i
-            - $tournament_starttime.step($tournament_endtime,86400).each do |datum|
-              - if today > datum && datum < $tournament_endtime then
-                %tr
-                  - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
-                  %td.table_date= "<a class='hidden_link' href='/ascensions/#{formatted_date}'>#{formatted_date}</a>"
-                  - $variant_order.each do |v|
-                    - ascended_variant_games_per_day = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and endtime >= ? and endtime < ? and ascended = 't';", v, datum, datum+86400)[0]
-                    - ascended_variant_games_per_day = '' if ascended_variant_games_per_day == 0
-                    %td.table_number= "<a class='hidden_link' href='/ascensions/#{formatted_date}/#{v}'>#{ascended_variant_games_per_day}</a>"
-            -# Total number of tournament games per variant
-            %tr
-              %td.table_date= "Total"
-              - $variant_order.each do |v|
-                - ascended_variant_games = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and ascended = 't';", v)[0]
-                - ascended_variant_games = '' if ascended_variant_games == 0
-                %td.table_number= "<a class='hidden_link' href='/ascensions/#{v}'>#{ascended_variant_games}</a>"
-
-    - cache_fragment("games_#{Game.max_endtime}") do
-      - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null) group by datum order by datum asc;"
-      .text_content.non_top_post
-        %h2 Finished Games per Day
-        .scorelisting
-          %table.greytable.misc
-            %tr
-              %th Date (UTC)
-              %th
-            - graph = Graph.new
-            - @finished_games_per_day.each_with_index do |game, index|
-              - graph.add_data_point(game.datum, game.count)
+                %div= $variants_mapping[v]
+          - today = Time.now.to_i
+          - $tournament_starttime.step($tournament_endtime,86400).each do |datum|
+            - if today > datum && datum < $tournament_endtime then
               %tr
-                %td.table_date= h game.datum
-                %td.table_number= game.count
-                - if index == 0
-                  %td.chart{:rowspan => @finished_games_per_day.size}
-                    %div{:id => "chart_finished_games_per_day"}
-            -# Total number of played tournament games
-            %tr
-              %td.table_date= "Total"
-              %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0;")[0]
-          - graph.write("finished_games_per_day")
+                - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
+                %td.table_date= "<a class='hidden_link' href='/games/#{formatted_date}'>#{formatted_date}</a>"
+                - $variant_order.each do |v|
+                  - finished_variant_games_per_day = (repository.adapter.select "SELECT count(DISTINCT user_id) FROM games WHERE user_id > 0 AND version = ? AND endtime >= ? AND endtime < ?;", v, datum, datum+86400)[0]
+                  %td.table_number= "<a class='hidden_link' href='/games/#{formatted_date}/#{v}'>#{finished_variant_games_per_day}</a>"
+          %tr
+            %td.table_date= "Total"
+            - $variant_order.each do |v|
+              - finished_variant_games = (repository.adapter.select "SELECT count(DISTINCT user_id) FROM games WHERE user_id > 0 AND version = ?;", v)[0]
+              %td.table_number= "<a class='hidden_link' href='/games/#{v}'>#{finished_variant_games}</a>"
 
-    - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
-      // Ugly SQL to also get days with zero ascensions. Will only work
-      // as long there are any games for each day
-      - @ascensions_per_day = repository.adapter.select "select days.datum, endtime, count from (select endtime, date(endtime, 'unixepoch') as datum from games group by datum) days left join (select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum) counts on counts.datum = days.datum;"
-      .text_content.non_top_post
-        %h2 Ascensions per Day
-        .scorelisting
-          %table.greytable.misc
-            %tr
-              %th Date (UTC)
+  - cache_fragment("games_variants_ascended_#{Game.max_endtime}") do
+    .card-body.border-top
+      %h2 Ascensions per Day and Variant
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %tr.rotated
+            %th
+              %div Date (UTC)
+            - $variant_order.each do |v|
               %th
-            - graph = Graph.new
-            - @ascensions_per_day.each_with_index do |game, index|
-              - graph.add_data_point(game.datum, game.count)
+                %div= $variants_mapping[v]
+          - today = Time.now.to_i
+          - $tournament_starttime.step($tournament_endtime,86400).each do |datum|
+            - if today > datum && datum < $tournament_endtime then
               %tr
-                %td.table_date= h game.datum
-                %td.table_number= game.count ? game.count : 0
-                - if index == 0
-                  %td.chart{:rowspan => @ascensions_per_day.size}
-                    %div{:id => "chart_ascensions"}
-            -# Total number of ascended tournament games
+                - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
+                %td.table_date= "<a class='hidden_link' href='/ascensions/#{formatted_date}'>#{formatted_date}</a>"
+                - $variant_order.each do |v|
+                  - ascended_variant_games_per_day = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and endtime >= ? and endtime < ? and ascended = 't';", v, datum, datum+86400)[0]
+                  - ascended_variant_games_per_day = '' if ascended_variant_games_per_day == 0
+                  %td.table_number= "<a class='hidden_link' href='/ascensions/#{formatted_date}/#{v}'>#{ascended_variant_games_per_day}</a>"
+          %tr
+            %td.table_date= "Total"
+            - $variant_order.each do |v|
+              - ascended_variant_games = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and ascended = 't';", v)[0]
+              - ascended_variant_games = '' if ascended_variant_games == 0
+              %td.table_number= "<a class='hidden_link' href='/ascensions/#{v}'>#{ascended_variant_games}</a>"
+
+  - cache_fragment("games_#{Game.max_endtime}") do
+    - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null) group by datum order by datum asc;"
+    .card-body.border-top
+      %h2 Finished Games per Day
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %tr
+            %th Date (UTC)
+            %th
+          - graph = Graph.new
+          - @finished_games_per_day.each_with_index do |game, index|
+            - graph.add_data_point(game.datum, game.count)
             %tr
-              %td.table_date= "Total"
-              %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0 and ascended='t';")[0]
-          - graph.write("activity")
+              %td.table_date= h game.datum
+              %td.table_number= game.count
+              - if index == 0
+                %td.chart{:rowspan => @finished_games_per_day.size}
+                  %div{:id => "chart_finished_games_per_day"}
+          %tr
+            %td.table_date= "Total"
+            %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0;")[0]
+        - graph.write("finished_games_per_day")
 
-
-    - cache_fragment("users_#{User.max_created_at}") do
-      - @new_users_per_day = repository.adapter.select "select date(created_at) as date, count(1) as count from users group by date(created_at);"
-
-      - @days = []
-      - if $tournament_signupstarttime
-        - signupstarttime = Time.at($tournament_signupstarttime).to_date
-        - endtime = Time.at([$tournament_endtime, Time.now.to_i].min).to_date
-        - @days = (signupstarttime..endtime).collect { |d| d.to_s}
-
-      .text_content.non_top_post
-        %h2 New Players per Day
-        .scorelisting
-          %table.greytable.misc
+  - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
+    // Ugly SQL to also get days with zero ascensions. Will only work
+    // as long there are any games for each day
+    - @ascensions_per_day = repository.adapter.select "select days.datum, endtime, count from (select endtime, date(endtime, 'unixepoch') as datum from games group by datum) days left join (select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum) counts on counts.datum = days.datum;"
+    .card-body.border-top
+      %h2 Ascensions per Day
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %tr
+            %th Date (UTC)
+            %th
+          - graph = Graph.new
+          - @ascensions_per_day.each_with_index do |game, index|
+            - graph.add_data_point(game.datum, game.count)
             %tr
-              %th Date (UTC)
-              %th
-            - graph = Graph.new
-            - @days.each_with_index do |day, index|
-              - game = @new_users_per_day.select{|g| g.date == day}.first || (Struct.new :date, :count).new(day, 0)
+              %td.table_date= h game.datum
+              %td.table_number= game.count ? game.count : 0
+              - if index == 0
+                %td.chart{:rowspan => @ascensions_per_day.size}
+                  %div{:id => "chart_ascensions"}
+          %tr
+            %td.table_date= "Total"
+            %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0 and ascended='t';")[0]
+        - graph.write("activity")
 
-              - graph.add_data_point(game.date, game.count)
-              %tr
-                %td.table_date= h game.date
-                %td.table_number= game.count ? game.count : 0
-                - if index == 0
-                  %td.chart{:rowspan => @days.size}
-                    %div{:id => "chart_new_users_per_day"}
-            -# Total number of registered users
+  - cache_fragment("users_#{User.max_created_at}") do
+    - @new_users_per_day = repository.adapter.select "select date(created_at) as date, count(1) as count from users group by date(created_at);"
+    - @days = []
+    - if $tournament_signupstarttime
+      - signupstarttime = Time.at($tournament_signupstarttime).to_date
+      - endtime = Time.at([$tournament_endtime, Time.now.to_i].min).to_date
+      - @days = (signupstarttime..endtime).collect { |d| d.to_s}
+    .card-body.border-top
+      %h2 New Players per Day
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %tr
+            %th Date (UTC)
+            %th
+          - graph = Graph.new
+          - @days.each_with_index do |day, index|
+            - game = @new_users_per_day.select{|g| g.date == day}.first || (Struct.new :date, :count).new(day, 0)
+            - graph.add_data_point(game.date, game.count)
             %tr
-              %td.table_date= "Total"
-              %td.table_number= (repository.adapter.select "select count(1) from users;")[0]
-          - graph.write("new_users_per_day")
+              %td.table_date= h game.date
+              %td.table_number= game.count ? game.count : 0
+              - if index == 0
+                %td.chart{:rowspan => @days.size}
+                  %div{:id => "chart_new_users_per_day"}
+          %tr
+            %td.table_date= "Total"
+            %td.table_number= (repository.adapter.select "select count(1) from users;")[0]
+        - graph.write("new_users_per_day")

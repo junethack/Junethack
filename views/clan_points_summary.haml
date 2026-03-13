@@ -1,21 +1,23 @@
 =h2 'Clan Points Summary'
-.scorelisting
-  %table.greytable
-    %tr
-      %th
-        Trophy
-      %th.competition_value
-      %th.competition_value
-        Clan Points
-      %th.competition_placing
-        Rank
-    - ClanScoreEntry.all(:clan_name => @clan.name, :trophy.not => 'clan_winner').each do |entry|
+.table-responsive
+  %table.table.table-sm.table-junethack
+    %thead
       %tr
-        %td
-          #{h Trophy.first(:trophy => entry.trophy).text}
-        %td.table_number
-          #{h entry.value}
-        %td.table_number
-          #{h entry.points}
-        %td.table_number
-          #{h entry.rank}
+        %th
+          Trophy
+        %th.competition_value
+        %th.competition_value
+          Clan Points
+        %th.competition_placing
+          Rank
+    %tbody
+      - ClanScoreEntry.all(:clan_name => @clan.name, :trophy.not => 'clan_winner').each do |entry|
+        %tr
+          %td.clan-banner-small
+            #{h Trophy.first(:trophy => entry.trophy).text}
+          %td.table_number
+            #{h entry.value}
+          %td.table_number
+            #{h entry.points}
+          %td.table_number
+            #{h entry.rank}

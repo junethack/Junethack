@@ -1,36 +1,24 @@
-.content_bulk
-  .text_content_wrapper
-    .text_content
-      - if (Time.new.to_i > $tournament_endtime)
-        %h1.hcenter Sorry, this year's tournament has ended.
-      - if $tournament_signupstarttime.nil?
-        %h1.hcenter Registration has not opened yet.
-      - elsif (Time.new.to_i < $tournament_signupstarttime.to_i)
-        %h1.hcenter
-          =haml :registrationdate
-      - else
-        %form#register_form{:action => "/create", :method => "post"}
-          %fieldset
-            #username_row
-              %label{:for => "username"} Username:
-              %input#username{:name => "username", :type => "textbox", :value => "", :autofocus => "", :placeholder => "username", :required => "required"}/
-              .form_msg
-                Field required
-              %span.clear
-            #password_row
-              %label{:for => "password"} Password:
-              %input#password{:name => "password", :type => "password", :value => "", :placeholder => "password", :required => "required"}/
-              .form_msg
-                Field required
-              %span.clear
-            #confirm_row
-              %label{:for => "confirm"} Confirm Password:
-              %input#confirm{:name => "confirm", :type => "password", :value => "", :placeholder => "password"}/
-              .form_msg
-                Field required
-              %span.clear
-            %input#submit.bigred{:name => "submit", :type => "submit", :value => "Register!"}/
-/ end of container
-%script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"}
-%script{:src => "/scripts.js"}
-
+.card.junethack-card
+  .card-body
+    - if (Time.new.to_i > $tournament_endtime)
+      %h1.text-center Sorry, this year's tournament has ended.
+    - if $tournament_signupstarttime.nil?
+      %h1.text-center Registration has not opened yet.
+    - elsif (Time.new.to_i < $tournament_signupstarttime.to_i)
+      %h1.text-center
+        =haml :registrationdate
+    - else
+      .row.justify-content-center
+        .col-md-6.col-lg-4
+          %form#register_form{:action => "/create", :method => "post"}
+            .mb-3
+              %label.form-label{:for => "username"} Username
+              %input#username.form-control{:name => "username", :type => "text", :value => "", :autofocus => "", :placeholder => "username", :required => "required"}/
+            .mb-3
+              %label.form-label{:for => "password"} Password
+              %input#password.form-control{:name => "password", :type => "password", :value => "", :placeholder => "password", :required => "required"}/
+            .mb-3
+              %label.form-label{:for => "confirm"} Confirm Password
+              %input#confirm.form-control{:name => "confirm", :type => "password", :value => "", :placeholder => "password", :required => "required"}/
+            .text-center
+              %input#submit.btn.btn-junethack-red{:name => "submit", :type => "submit", :value => "Register!"}/

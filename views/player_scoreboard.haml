@@ -1,42 +1,44 @@
-%section.content_bulk
-  .text_content_wrapper
-    %section.text_content
+%section
+  .card.junethack-card
+    .card-body
       %h2
         Player scoreboard
-    %section#variant_navigation_list.text_content
+    .card-body#variant_navigation_list
       %ul.list
         - $variant_order.each do |variant|
-        - variant_name = $variants_mapping[variant]
+          - variant_name = $variants_mapping[variant]
           %li
             %a{href: "##{link_id variant_name}"}= variant_name
 
     - $variant_order.each do |variant|
       - variant_name = $variants_mapping[variant]
-      %section.text_content.non_top_post
+      .card-body.border-top
         =h3 variant_name
         - if (CompetitionScoreEntry.count :variant => variant) == 0
           %div
             No ascensions yet
         - else
           - for i in 0..$competition_trophy_order.size-1 do
-            .scorelisting
-              %table.greytable
+            .table-responsive.mb-3
+              %table.table.table-sm.table-junethack
                 - trophy = Trophy.first variant: variant, trophy: $competition_trophy_order[i]
-                %tr
-                  %th.trophy
-                    =haml :trophy, locals: { trophy: trophy, achieved: true }
-                  %th= trophy.text
-                  %th.competition_value
-                  %th.competition_placing Rank
-                / only show the first 3 places
-                - c = CompetitionScoreEntry.all variant: variant, trophy: $competition_trophy_order[i], order: :rank.asc, conditions: [ 'rank <= 3' ]
-                - for j in 0..c.size-1 do
+                %thead
                   %tr
-                    - user = User.get(c[j].user_id).login
-                    %td{colspan: 2}
-                      %a{:href => "/user/" + CGI::escape(user)}=h user
-                    - if $competition_trophy_order[i] == :fastest_ascension_realtime
-                      %td.table_number= parse_seconds(c[j].value)
-                    - else
-                      %td.table_number= c[j].value.html_formatted
-                    %td.table_number= h c[j].rank
+                    %th.trophy
+                      =haml :trophy, locals: { trophy: trophy, achieved: true }
+                    %th= trophy.text
+                    %th.competition_value
+                    %th.competition_placing Rank
+                %tbody
+                  / only show the first 3 places
+                  - c = CompetitionScoreEntry.all variant: variant, trophy: $competition_trophy_order[i], order: :rank.asc, conditions: [ 'rank <= 3' ]
+                  - for j in 0..c.size-1 do
+                    %tr
+                      - user = User.get(c[j].user_id).login
+                      %td{colspan: 2}
+                        %a{:href => "/user/" + CGI::escape(user)}=h user
+                      - if $competition_trophy_order[i] == :fastest_ascension_realtime
+                        %td.table_number= parse_seconds(c[j].value)
+                      - else
+                        %td.table_number= c[j].value.html_formatted
+                      %td.table_number= h c[j].rank

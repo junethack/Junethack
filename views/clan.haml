@@ -1,159 +1,154 @@
-.content_bulk#clan_page
-  .text_content_wrapper
-    .text_content#clan_about
-      #clan_header
-        %h1
-          #{ h @clan.name }
+.card.junethack-card#clan_page
+  .card-body
+    #clan_header.d-flex.justify-content-between.align-items-center.flex-wrap.mb-3
+      %h1.mb-0 #{ h @clan.name }
+      .d-flex.gap-3.align-items-center
         - if !@logged_in
           -if @user.login == @clan.get_admin.login
             #clan_disband
-              %a{:href => "/clan/disband/#{@clan.name}"} Disband
+              %a.btn.btn-outline-danger.btn-sm{:href => "/clan/disband/#{@clan.name}"} Disband
             #clan_invite
-              %a{:href => "#invite_account"} Invite
+              %a.btn.btn-outline-primary.btn-sm{:href => "#invite_account"} Invite
         - clan_score_entry = ClanScoreEntry.first(:clan_name => @clan.name, :trophy => 'clan_winner')
         #clan_placing
-          Rank:
-          - if clan_score_entry
-            #{h clan_score_entry.rank}
-          - else
-            no games
-        #clan_points
-          Clan Points:
-          - if clan_score_entry
-            #{h clan_score_entry.points}
-          - else
-            no games
-        %span.clear
-
-      #clan_banner
-        %img{src: @clan.gravatar_link}
-
-        - if @clan.description != nil && @clan.description != ""
-          #clan_description
-            :escaped
-              #{ p @clan.description }
-
-        - if !@logged_in
-          - if @user.login == @clan.get_admin.login
-            %p
-              Type a description for your clan (maximum length 500 characters).
-            #clan_description_input
-              %form{action: "/clan_description/#{@clan.name}", method: :post}
-                %fieldset
-                  .description
-                    %input{name: :description, type: :text, value: "", maxlength: 500}/
-                  .buttons
-                    %input{name: :submit, type: :submit, value: "set description"}/
-            %p
-              Enter the email address of a
-              %a{href: 'https://en.gravatar.com/'}Gravatar
-              associated image to set it as your clan banner.
-            %p
-              Your email address is not saved in plain text but only in the
-              hashed form necessary for getting it from the Gravatar servers.
-            %form{action: "/clan_banner/#{@clan.name}", method: :post}
-              %fieldset
-                .mail
-                  %input{name: :mail, type: :text, value: "", autofocus: ""}/
-                %br
-                .buttons
-                  %input{name: :submit, type: :submit, value: "set clan banner"}/
-                  %input{name: :clear, type: :submit, value: "clear clan banner"}/
-
-      #clan_trophies.trophycabinet
-        =h2 'Clan trophies'
-        / TODO: trophy image for clan competition winner
-        - ClanScoreEntry.all(clan_name: @clan.name, :trophy.not => 'clan_winner').each do |clan_trophy|
-          - trophy = Trophy.first trophy: clan_trophy.trophy
-          %a.imagelink{:href => "/trophies#" + trophy.anchor, title: trophy.text}
-            - if clan_trophy.rank == 1
-              %img.trophyicon{:src => "/icons/" + trophy.icon}
+          %span.badge.bg-secondary
+            Rank:
+            - if clan_score_entry
+              #{h clan_score_entry.rank}
             - else
-              %img.trophyicon{:src => "/icons/" + trophy.light_icon}
-        %span.clear.endofcabinetrow
+              no games
+        #clan_points
+          %span.badge.bg-secondary
+            Clan Points:
+            - if clan_score_entry
+              #{h clan_score_entry.points}
+            - else
+              no games
 
-    - max_endtime_clan_game = Game.all(user_id: @clan.users.map(&:id)).max_by(&:endtime).endtime
-    .text_content.non_top_post#clan_members
-      =h2 'Clan members'
-      - cache_fragment("#{@clan.name}_members_#{max_endtime_clan_game}") do
-        %table.prettytable.clan_members
-          %tr
-            %th
-              Player
-            %th
-              Role
-            %th
-              User trophies
-            %th
-              Last game played (UTC)
-          - (User.all clan_name: @clan.name, order: [:login.asc]).each do |user|
+    #clan_banner
+      %img{src: @clan.gravatar_link}
+      - if @clan.description != nil && @clan.description != ""
+        #clan_description
+          :escaped
+            #{ p @clan.description }
+      - if !@logged_in
+        - if @user.login == @clan.get_admin.login
+          %p.mt-3
+            Type a description for your clan (maximum length 500 characters).
+          #clan_description_input
+            %form{action: "/clan_description/#{@clan.name}", method: :post}
+              .mb-2
+                %input.form-control{name: :description, type: :text, value: "", maxlength: 500}
+              %input.btn.btn-primary.btn-sm{name: :submit, type: :submit, value: "set description"}
+          %p.mt-3
+            Enter the email address of a
+            %a{href: 'https://en.gravatar.com/'}Gravatar
+            associated image to set it as your clan banner.
+          %p
+            Your email address is not saved in plain text but only in the
+            hashed form necessary for getting it from the Gravatar servers.
+          %form{action: "/clan_banner/#{@clan.name}", method: :post}
+            .mb-2
+              %input.form-control{name: :mail, type: :text, value: "", autofocus: ""}
+            .d-flex.gap-2
+              %input.btn.btn-primary.btn-sm{name: :submit, type: :submit, value: "set clan banner"}
+              %input.btn.btn-outline-secondary.btn-sm{name: :clear, type: :submit, value: "clear clan banner"}
+
+    #clan_trophies.trophycabinet.mt-3
+      =h2 'Clan trophies'
+      / TODO: trophy image for clan competition winner
+      - ClanScoreEntry.all(clan_name: @clan.name, :trophy.not => 'clan_winner').each do |clan_trophy|
+        - trophy = Trophy.first trophy: clan_trophy.trophy
+        %a.imagelink{:href => "/trophies#" + trophy.anchor, title: trophy.text}
+          - if clan_trophy.rank == 1
+            %img.trophyicon{:src => "/icons/" + trophy.icon}
+          - else
+            %img.trophyicon{:src => "/icons/" + trophy.light_icon}
+
+  - max_endtime_clan_game = Game.all(user_id: @clan.users.map(&:id)).max_by(&:endtime).endtime
+
+  .card-body.border-top
+    =h2 'Clan members'
+    - cache_fragment("#{@clan.name}_members_#{max_endtime_clan_game}") do
+      .table-responsive
+        %table.table.table-hover.table-sm.table-junethack
+          %thead
             %tr
-              %td
-                %a{:href => "/user/" + user.login}
-                  #{ h user.login }
-              %td
-                - if @clan.get_admin.login == user.login
-                  admin
-                - else
-                  member
-              %td.table_number
-                #{h user.scoreentries.count}
-              %td
-                - if user.games.length != 0
-                  #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
-                - else
-                  no games played
+              %th
+                Player
+              %th
+                Role
+              %th
+                User trophies
+              %th
+                Last game played (UTC)
+          %tbody
+            - (User.all clan_name: @clan.name, order: [:login.asc]).each do |user|
+              %tr
+                %td
+                  %a{:href => "/user/" + user.login}
+                    #{ h user.login }
+                %td
+                  - if @clan.get_admin.login == user.login
+                    admin
+                  - else
+                    member
+                %td.table_number
+                  #{h user.scoreentries.count}
+                %td
+                  - if user.games.length != 0
+                    #{h Time.at(user.games.last().endtime).getutc.strftime("%Y-%m-%d %H:%M")}
+                  - else
+                    no games played
 
-    .text_content.non_top_post
-      =haml :clan_points_summary
+  .card-body.border-top
+    =haml :clan_points_summary
 
-    .text_content.non_top_post
-      - @ascended_combinations_sql = ascended_combinations_sql
-      - @ascended_combinations_value = @clan.name
-      =haml :ascended_combinations
+  .card-body.border-top
+    - @ascended_combinations_sql = ascended_combinations_sql
+    - @ascended_combinations_value = @clan.name
+    =haml :ascended_combinations
 
-    .text_content.non_top_post#clan_variant_trophy
-      .trophycabinet.text_cabinet
-        =h2 'Clan variant/trophy combinations'
-        %ul
-          - user_ids = Clan.first(name: @clan.name).users.map {|user| user.id }.uniq
-          =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => "NH-1.3d"}
-          - for variant in $variant_order
-            =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
+  .card-body.border-top#clan_variant_trophy
+    .trophycabinet.text_cabinet
+      =h2 'Clan variant/trophy combinations'
+      %ul
+        - user_ids = Clan.first(name: @clan.name).users.map {|user| user.id }.uniq
+        =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => "NH-1.3d"}
+        - for variant in $variant_order
+          =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
 
-    -#.text_content.non_top_post
-    -#  =haml :turns_killed_by_monsters
+  .card-body.border-top
+    - @games_played = Game.all(user_id: User.all(clan_name: @clan.name), conditions: [ "ascended='t'" ], order: [ :endtime.desc ])
+    - @games_played_title = "Ascended Clan Games"
+    - @games_played_user_links = true
+    =haml :games_played
 
-    .text_content.non_top_post
-      - @games_played = Game.all(user_id: User.all(clan_name: @clan.name), conditions: [ "ascended='t'" ], order: [ :endtime.desc ])
-      - @games_played_title = "Ascended Clan Games"
-      - @games_played_user_links = true
-      =haml :games_played
+  .card-body.border-top
+    - cache_fragment("#{@clan.name}_games_#{max_endtime_clan_game}") do
+      =haml :clan_games
 
-    .text_content.non_top_post
-      - cache_fragment("#{@clan.name}_games_#{max_endtime_clan_game}") do
-        =haml :clan_games
-
-    - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
-    .text_content.non_top_post
-      =h2 "#{unique_deaths.count} unique death#{'s' if unique_deaths.count != 1}", 'unique_deaths'
-      .scorelisting
-        %table.greytable.misc
+  - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
+  .card-body.border-top
+    =h2 "#{unique_deaths.count} unique death#{'s' if unique_deaths.count != 1}", 'unique_deaths'
+    .table-responsive
+      %table.table.table-sm.table-junethack{style: "width: auto"}
+        %thead
           %tr
             %th
               Unique death
+        %tbody
           - unique_deaths.each do |death|
             %tr
               %td= h death
 
-    - if !@logged_in
-      - if @user.login == @clan.get_admin.login
-        .text_content.non_top_post#clan_invite
-          %h2
-            Invite
-          %form#invite_account.smallform{:method => "POST", :action => "/clan/invite"}
-            %input#accountname{:name => 'accountname', :type => 'text', :placeholder => "junethack username", :style => "width: 20ex;"}
-            %input{:type => 'hidden', :name => :clan, :value => @clan.name}
-            %input{:type => 'submit', :value => "Invite Account"}
-            %span.clear
-    %span#end_of_content_spacer.clear
+  - if !@logged_in
+    - if @user.login == @clan.get_admin.login
+      .card-body.border-top#clan_invite
+        %h2 Invite
+        %form#invite_account.row.g-2.align-items-end{method: "POST", action: "/clan/invite"}
+          .col-auto
+            %input#accountname.form-control{name: 'accountname', type: 'text', placeholder: "junethack username"}
+          %input{type: 'hidden', name: :clan, value: @clan.name}
+          .col-auto
+            %input.btn.btn-primary{type: 'submit', value: "Invite Account"}

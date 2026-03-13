@@ -1,7 +1,9 @@
-.scorelisting
-  %table.greytable
-    %tr
-      %th= "Trophies"
-    - @scoreentries.select {|s| s.variant == @variant and $trophy_names[s.trophy] }.each do |scoreentry|
+.table-responsive
+  %table.table.table-sm.table-junethack
+    %thead
       %tr
-        %td= h $trophy_names[scoreentry.trophy]
+        %th= "Trophies"
+    %tbody
+      - @scoreentries.select {|s| s.variant == @variant and $trophy_names[s.trophy] }.each do |scoreentry|
+        %tr
+          %td= h $trophy_names[scoreentry.trophy]

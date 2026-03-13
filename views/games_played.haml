@@ -1,7 +1,7 @@
 =h2 @games_played_title
-.scorelisting#no-more-tables
-  %table.greytable.cf
-    %thead.cf
+.no-more-tables
+  %table.table.table-hover.table-sm.table-junethack
+    %thead
       %tr
         %th Name
         %th Variant
@@ -9,24 +9,24 @@
         %th Server
         %th Points
         %th Killer
-        -# download column
         %th
         %th Time (UTC)
-    - @games_played.each do |game|
-      %tr
-        %td{:id => "game-#{game.id}"}
-          - if @games_played_user_links
-            %a{:href => "/user_id/#{game.user_id}"}= h game.name
-          - else
-            = h game.name
-        %td.variant{"data-title" => "Name"}= h game.variant_name
-        %td.table_character{"data-title" => "Character"}= h [game.role, game.race, game.gender, game.align].compact.join('-')
-        %td{"data-title" => "Server"}= h game.server.hostname
-        %td.table_number{"data-title" => "Points"}= game.points.html_formatted
-        %td{"data-title" => "Killer"}= h game.death
-        %td.dllink
-          -# link to the dumplog of the game if possible
-          - link = game.server.dumplog_link(game)
-          - if link then
-            (<a href="#{link}">d</a>)
-        %td.table_date{"data-title" => "Time"}= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")
+    %tbody
+      - @games_played.each do |game|
+        %tr
+          %td{:id => "game-#{game.id}"}
+            - if @games_played_user_links
+              %a{:href => "/user_id/#{game.user_id}"}= h game.name
+            - else
+              = h game.name
+          %td.variant{"data-title" => "Name"}= h game.variant_name
+          %td.table_character{"data-title" => "Character"}= h [game.role, game.race, game.gender, game.align].compact.join('-')
+          %td{"data-title" => "Server"}= h game.server.hostname
+          %td.table_number{"data-title" => "Points"}= game.points.html_formatted
+          %td{"data-title" => "Killer"}= h game.death
+          %td.dllink
+            -# link to the dumplog of the game if possible
+            - link = game.server.dumplog_link(game)
+            - if link then
+              (<a href="#{link}">d</a>)
+          %td.table_date{"data-title" => "Time"}= Time.at(game.endtime.to_i).getutc.strftime("%Y-%m-%d&nbsp;%H:%M")

@@ -1,29 +1,30 @@
 - trophy = Trophy.first :trophy => @trophy
 %h3{:id => trophy.anchor}
-  %img{:src => "/icons/#{trophy.icon}", :alt => trophy.text}
+  %img{:src => "/icons/#{trophy.icon}", :alt => trophy.text, style: "height: 2em; width: 2em; vertical-align: middle"}
   #{trophy.text}
-.scorelisting
-  %table.greytable
-    %tr
-      %th{style: 'width: 1.25em'}
-      %th
-        Clan
-      %th.competition_value
-      %th.competition_value
-        Clan Points
-      %th.competition_placing
-        Rank
-    - ClanScoreEntry.all(:order => [:rank.asc], :trophy => @trophy, :value.gt => 0).each do |entry|
+.table-responsive
+  %table.table.table-sm.table-junethack
+    %thead
       %tr
-        %td
-          %span
+        %th{style: 'width: 1.25em'}
+        %th
+          Clan
+        %th.competition_value
+        %th.competition_value
+          Clan Points
+        %th.competition_placing
+          Rank
+    %tbody
+      - ClanScoreEntry.all(:order => [:rank.asc], :trophy => @trophy, :value.gt => 0).each do |entry|
+        %tr
+          %td.clan-banner-small
             %img{src: entry.clan.gravatar_link, style: 'vertical-align: middle; width: 100%'}
-        %td
-          %a{:href => "/clan/#{CGI::escape entry.clan.name}"}
-            #{h entry.clan.name}
-        %td.table_number
-          #{entry.value.to_i.html_formatted}
-        %td.table_number
-          #{h "%.2f" % entry.points}
-        %td.table_number
-          #{h entry.rank}
+          %td
+            %a{:href => "/clan/#{CGI::escape entry.clan.name}"}
+              #{h entry.clan.name}
+          %td.table_number
+            #{entry.value.to_i.html_formatted}
+          %td.table_number
+            #{h "%.2f" % entry.points}
+          %td.table_number
+            #{h entry.rank}

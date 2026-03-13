@@ -1,33 +1,32 @@
-.scorelisting
-  %table.greytable.misc
-    %tr
-      %th{style: 'width: 1.25em'}
-      %th
-        Clan
-      %th
-        Score
-      %th
-        Rank
-    - ClanScoreEntry.all(:order => [:rank.asc], :trophy => 'clan_winner').each do |entry|
+- clan_winners = ClanScoreEntry.all(rank: 1, trophy: 'clan_winner')
+- if clan_winners.count == 1
+  #clan_banner.clan_winner
+    - @clan = ClanScoreEntry.all(:order => [:rank.asc], trophy: 'clan_winner').first.clan
+    %img{src: @clan.gravatar_link}
+    - if @clan.description != nil && @clan.description != ""
+      #clan_description
+        :escaped
+          #{ p @clan.description }
+.table-responsive
+  %table.table.table-sm.table-junethack{style: "width: auto"}
+    %thead
       %tr
-        %td
-          %span
+        %th{style: 'width: 1.25em'}
+        %th
+          Clan
+        %th
+          Score
+        %th
+          Rank
+    %tbody
+      - ClanScoreEntry.all(:order => [:rank.asc], :trophy => 'clan_winner').each do |entry|
+        %tr
+          %td.clan-banner-small
             %img{src: entry.clan.gravatar_link, style: 'vertical-align: middle; width: 100%'}
-        %td
-          %a{:href => "/clan/#{CGI::escape entry.clan.name}"}
-            #{h entry.clan.name}
-        %td.table_number
-          #{h "%.2f" % entry.points}
-        %td.table_number
-          #{h entry.rank}
-
-  - clan_winners = ClanScoreEntry.all(rank: 1, trophy: 'clan_winner')
-  - if clan_winners.count == 1
-    #clan_banner
-      - @clan = ClanScoreEntry.all(:order => [:rank.asc], trophy: 'clan_winner').first.clan
-      %img{src: @clan.gravatar_link}
-
-      - if @clan.description != nil && @clan.description != ""
-        #clan_description
-          :escaped
-            #{ p @clan.description }
+          %td
+            %a{:href => "/clan/#{CGI::escape entry.clan.name}"}
+              #{h entry.clan.name}
+          %td.table_number
+            #{h "%.2f" % entry.points}
+          %td.table_number
+            #{h entry.rank}

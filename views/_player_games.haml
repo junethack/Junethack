@@ -6,8 +6,8 @@
     - trophies = Trophy.user_competition_trophies @variant
     - user_competition_trophies = repository.adapter.select "select trophy from competition_score_entries where user_id = ? and variant = ? and rank = 1", @player.id, @variant
     =h4 $variants_mapping[variant], "competition_#{variant}"
-    .scorelisting
-      %table.greytable.trophies
+    .table-responsive
+      %table.table.table-sm.table-junethack.trophies
         %tr
           %th{colspan: 2} Competition
           %th

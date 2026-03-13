@@ -2,29 +2,32 @@
   - @deaths = repository.adapter.select "SELECT death, count(1) AS count, group_concat(version) AS versions FROM games WHERE user_id IS NOT NULL GROUP BY death ORDER BY count DESC;"
   - @unique_deaths = repository.adapter.select "SELECT death, count(1) AS count FROM normalized_deaths GROUP BY death ORDER BY count DESC;"
 
-  .content_bulk
-    .text_content_wrapper
-      .text_content
-        =h2 'All deaths (unfiltered)', 'deaths'
-        .scorelisting
-          %table.greytable.misc
+  .card.junethack-card
+    .card-body
+      =h2 'All deaths (unfiltered)', 'deaths'
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %thead
             %tr
               %th Count
               %th Death
+          %tbody
             - @deaths.each do |death|
               %tr
                 %td.table_number= death.count
                 - variants = (["NH-1.3d"]+$variant_order) & death.versions.split(",").uniq
                 - variant_names = variants.map { |v| $variants_mapping[v] }
                 %td= h "#{death.death} (#{variant_names.join(", ")})"
-      .text_content.non_top_post
-        =h2 'Unique deaths (filtered)', 'unique_deaths'
-        %h3= "(eligible for <a href='/trophies#clan-deaths'>Most unique deaths for Clan Competition</a>)"
-        .scorelisting
-          %table.greytable.misc
+    .card-body.border-top
+      =h2 'Unique deaths (filtered)', 'unique_deaths'
+      %h3= "(eligible for <a href='/trophies#clan-deaths'>Most unique deaths for Clan Competition</a>)"
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %thead
             %tr
               %th Count
               %th Death
+          %tbody
             - @unique_deaths.each do |death|
               %tr
                 %td.table_number= death.count

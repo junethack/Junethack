@@ -1,37 +1,37 @@
-.content_bulk
-  .text_content_wrapper
-    .text_content
-      %table.greytable.cf
-        %tr
-          %th
-            Server name
-          %th
-            Abbreviation
-          %th
-            Variant name
-          - if verbose
-            %th
-              Last modified
-            %th
-              Xlogfile offset
-        - servers = Server.all(order: :name)
-        - servers.each_with_index do |server, index|
+.card.junethack-card
+  .card-body
+    .table-responsive
+      %table.table.table-hover.table-sm.table-junethack
+        %thead
           %tr
-            %td{"data-title": "Server name"}
-              - if index == 0 || (index > 0 && servers[index-1].url != server.url)
-                %a{href: server.url}=server.hostname
-            %td{"data-title": "Abbreviation"}
-              %a{href: "/server/#{server.name}"}="#{server.name}"
-            %td{"data-title": "Variant name"}
-              #{server.variant}
+            %th
+              Server name
+            %th
+              Abbreviation
+            %th
+              Variant name
             - if verbose
-              %td{"data-title": "Last modified"}
-                %a{href: server.xlogurl}=server&.xloglastmodified
-              %td.table_number{"data-title": "Xlogfile offset"}
-                #{server.xlogcurrentoffset&.html_formatted}
-              %td{"data-title": "Last games"}
-                - endtime = Game.first(server_id: server.id, order: :endtime.desc)&.endtime
-                - if endtime
-                  #{Time.at(endtime).getutc.strftime("%Y-%m-%d %H:%M")}
-
-      %span#end_of_content_spacer.clear
+              %th
+                Last modified
+              %th
+                Xlogfile offset
+        %tbody
+          - servers = Server.all(order: :name)
+          - servers.each_with_index do |server, index|
+            %tr
+              %td{"data-title": "Server name"}
+                - if index == 0 || (index > 0 && servers[index-1].url != server.url)
+                  %a{href: server.url}=server.hostname
+              %td{"data-title": "Abbreviation"}
+                %a{href: "/server/#{server.name}"}="#{server.name}"
+              %td{"data-title": "Variant name"}
+                #{server.variant}
+              - if verbose
+                %td{"data-title": "Last modified"}
+                  %a{href: server.xlogurl}=server&.xloglastmodified
+                %td.table_number{"data-title": "Xlogfile offset"}
+                  #{server.xlogcurrentoffset&.html_formatted}
+                %td{"data-title": "Last games"}
+                  - endtime = Game.first(server_id: server.id, order: :endtime.desc)&.endtime
+                  - if endtime
+                    #{Time.at(endtime).getutc.strftime("%Y-%m-%d %H:%M")}
