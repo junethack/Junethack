@@ -72,6 +72,7 @@ end
 after do
     $db_access.unlock :SH
     #puts $db_access.inspect
+    ActiveRecord::Base.connection_handler.clear_active_connections!
 end
 
 def caching_check_last_played_game
