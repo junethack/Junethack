@@ -12,6 +12,7 @@ describe 'the Junethack server' do
 
   before :all do
     clean_database
+    Trophy.seed_trophies
   end
 
   it "should render empty pages" do
@@ -25,8 +26,29 @@ describe 'the Junethack server' do
     end
   end
 
-end
+  describe "GET /ascensions" do
+    let(:server) { Server.create(url: 'http://server.test') }
+    let(:user) { User.create!(login: 'testplayer', ) }
+    let(:ascended_game) { Game.create!(version: '3.4.3', server:, user:, death: 'ascended', points: 123) }
+    let(:non_ascended_game) { Game.create!(version: '3.4.3', server:, user:, death: 'died', points: 234) }
 
+    before do
+      expect(ascended_game).to be_valid
+      expect(non_ascended_game).to be_valid
+    end
+
+    it "displays only ascended games" do
+      get "/ascensions"
+
+      expect(last_response).to be_ok
+      expect(last_response.body).to include('ascended')
+      expect(last_response.body).not_to include('died')
+      expect(last_response.body).to include('123')
+      expect(last_response.body).not_to include('234')
+      expect(last_response.body).to include('Last 1 ascended games')
+    end
+  end
+end
 
 # get "/home"
 # get "/register"

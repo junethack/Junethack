@@ -9,6 +9,7 @@ require 'normalize_death'
 
 require 'sync'
 require 'rake/dsl_definition'
+require 'sinatra/activerecord/rake'
 require 'rake'
 
 $db_access = Sync.new
@@ -23,19 +24,19 @@ namespace :update do
     i = 0
     desc "recalculate scores"
     task :scores do
-      (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
+      ActiveRecord::Base.connection.select_all("select version,id,ascended from games where user_id is not null order by endtime").each {|game|
         i += 1
-        puts "#{i} #{game.id} #{game.version}"
-        update_scores(Game.get(game.id))
+        puts "#{i} #{game['id']} #{game['version']}"
+        update_scores(Game.find(game['id']))
       }
     end
 
     desc "recalculate competition scores"
     task :user_competition do
-        (repository.adapter.select "select version,id,ascended from games where user_id is not null and ascended='t' order by endtime").each {|game|
+        ActiveRecord::Base.connection.select_all("select version,id,ascended from games where user_id is not null and ascended = true order by endtime").each {|game|
             i += 1
-            puts "#{i} #{game.version}"
-            update_competition_scores_ascended(Game.get(game.id))
+            puts "#{i} #{game['version']}"
+            update_competition_scores_ascended(Game.find(game['id']))
         }
     end
 
@@ -72,24 +73,24 @@ namespace :update do
     task :clan_scores do
       Clan.all.each {|clan|
         puts clan.name
-        game = Game.all(user_id: clan.users.map(&:id)).last
+        game = Game.where(user_id: clan.users.map(&:id)).last
         update_clan_scores(game) if game
       }
     end
 
     task :normalize_deaths do
-        (repository.adapter.select "select version,id,ascended from games where user_id is not null order by endtime").each {|game|
+        ActiveRecord::Base.connection.select_all("select version,id,ascended from games where user_id is not null order by endtime").each {|game|
             i += 1
-            puts "#{i} #{game.version}"
-            local_normalize_death(Game.get(game.id))
+            puts "#{i} #{game['version']}"
+            local_normalize_death(Game.find(game['id']))
         }
     end
 
     task :all_stuff do
-        (repository.adapter.select "select version,id,ascended from games where user_id is not null and ascended='t' order by endtime").each {|game|
+        ActiveRecord::Base.connection.select_all("select version,id,ascended from games where user_id is not null and ascended = true order by endtime").each {|game|
             i += 1
-            puts "#{i} #{game.version}"
-            update_all_stuff(Game.get(game.id))
+            puts "#{i} #{game['version']}"
+            update_all_stuff(Game.find(game['id']))
         }
     end
 
@@ -97,20 +98,20 @@ namespace :update do
       i = 0
       variant = helper_get_variant_for 'gnollhack'
       sql = "SELECT version, id, achieve, user_id FROM games WHERE version = 'gnl' AND user_id IS NOT NULL ORDER BY id"
-      (repository.adapter.select(sql)).each { |game|
+      ActiveRecord::Base.connection.select_all(sql).each { |game|
         i += 1
         achievements = []
         achievements << [:entered_sokoban, "entered Sokoban", 2]
 
         achievements.each { |achievement|
           icon = "#{achievement[0].to_s}.png"
-          if (game.achieve.to_i(16) & 0x100000)
-            puts "#{i} #{game.id} #{game.version} #{User.first(id: game.user_id).login}"
-            Trophy.first_or_create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[2]
+          if (game['achieve'].to_i(16) & 0x100000)
+            puts "#{i} #{game['id']} #{game['version']} #{User.find(game['user_id']).login}"
+            Trophy.find_or_create_by(variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[2])
           end
         }
 
-        update_scores(Game.get(game.id))
+        update_scores(Game.find(game['id']))
       }
     end
 end
@@ -125,14 +126,14 @@ namespace :db do
     # Create registered users by using player names.
     # Combine players on different servers by the common name.
     task :create_users_heuristically do
-        (repository.adapter.select "select distinct name,server_id from games where user_id is null").each {|u|
+        ActiveRecord::Base.connection.select_all("select distinct name,server_id from games where user_id is null").each {|u|
             name = u['name']
-            server = Server.get(u['server_id'])
+            server = Server.find(u['server_id'])
             puts "#{name}, #{server.name}"
-            user = User.first_or_create(:login => name)
-            account = Account.first_or_create(:user => user, :server => server, :name => name, :verified => true)
-            Game.all(:name => name, :server => server).update(:user_id => user.id) if account
-            repository.adapter.execute "UPDATE start_scummed_games set user_id = ? where name = ? and server_id = ?", user.id, name, server.id
+            user = User.find_or_create_by(login: name)
+            account = Account.find_or_create_by(user: user, server: server, name: name, verified: true)
+            Game.where(name: name, server: server).update_all(user_id: user.id) if account
+            ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array(["UPDATE start_scummed_games SET user_id = ? WHERE name = ? AND server_id = ?", user.id, name, server.id]))
         }
     end
 
@@ -152,19 +153,19 @@ namespace :db do
 
     desc "reset a server's xlogfile modification date"
     task :reset_server, :name do |t, args|
-        Server.all(name: args[:name]).update(xloglastmodified: "Sat Jan 01 00:00:00 UTC 2000",
+        Server.where(name: args[:name]).update_all(xloglastmodified: "Sat Jan 01 00:00:00 UTC 2000",
                                              xlogcurrentoffset: 0)
-        puts Server.all(name: args[:name]).inspect
+        puts Server.where(name: args[:name]).inspect
     end
     desc "reset all servers' xlogfile modification date"
     task :reset_all_servers do
-        Server.all.update(xloglastmodified: "Sat Jan 01 00:00:00 UTC 2000",
+        Server.update_all(xloglastmodified: "Sat Jan 01 00:00:00 UTC 2000",
                                              xlogcurrentoffset: 0)
     end
 
     desc "change a user's password"
     task :change_password, :user, :password do |t, args|
-        user = User.first(:login => args[:user])
+        user = User.find_by(login: args[:user])
         puts "User #{args[:user]} not found!" if not user
         puts "No password given!" if not args[:password]
         if user and args[:password] then
@@ -178,19 +179,19 @@ namespace :db do
         puts "Some boring statistics:"
         puts
         puts "#{User.count} players registered on the server,"
-        puts "#{User.all(:accounts.not => nil).count} linked their account with the public servers,"
-        puts "and #{Game.all(:fields => [:user_id]).map {|g| g.user_id}.uniq.count} actually played at least one game."
+        puts "#{User.joins(:accounts).distinct.count} linked their account with the public servers,"
+        puts "and #{Game.where.not(user_id: nil).distinct.pluck(:user_id).count} actually played at least one game."
         puts
-        puts "#{Game.all(:user_id.not => nil).count} games were played on all #{Server.count} public servers during the tournament by registered users,"
+        puts "#{Game.where.not(user_id: nil).count} games were played on all #{Server.count} public servers during the tournament by registered users,"
         puts "#{Game.count} were played by all players including those not taking part in the tournament."
         puts
-        games_ascended = Game.all(:conditions => [ "user_id is not null and ascended='t'" ])
-        puts "#{games_ascended.collect {|g| g.user_id}.uniq.count} different players ascended a total of #{games_ascended.count} games."
+        games_ascended = Game.where('user_id is not null and ascended = true')
+        puts "#{games_ascended.distinct.pluck(:user_id).count} different players ascended a total of #{games_ascended.count} games."
 
         puts
         puts "Tournament games by variant"
         $variant_order.each do |v|
-            puts "#{$variants_mapping[v]}: #{Game.all(:conditions => [ "user_id > 0 and version = '#{v}'" ]).count}"
+            puts "#{$variants_mapping[v]}: #{Game.where("user_id > 0 and version = ?", v).count}"
         end
     end
 end
@@ -211,13 +212,13 @@ namespace :news do
 
   desc "delete a new news entry"
   task :delete, :id do |t, args|
-    News.get(args[:id]).destroy
+    News.find(args[:id]).destroy
   end
 
   desc "update a new news entry"
   task :update, :id, :html_snippet, :url do |t, args|
     ARGV.each {|a| task a.to_sym do ; end }
-    news = News.get(args[:id])
+    news = News.find(args[:id])
     news.html = args[:html_snippet] || ARGV[1]
     news.url = args[:url] || ARGV[2]
     news.save
@@ -225,7 +226,7 @@ namespace :news do
 
   desc "list all news entries"
   task :list do |t, args|
-    news = News.all order: [ :created_at.desc ]
+    news = News.order(created_at: :desc)
     news.each {|n| puts n.inspect}
   end
 end
@@ -253,20 +254,20 @@ namespace :test do
   desc 'Import a local xlogfile'
   task :import, :file, :server do |t, args|
     require 'parse'
-    server = Server.first(name: args[:server])
+    server = Server.find_by(name: args[:server])
     lines = File.open(args[:file]).readlines
     lines.each {|line|
       hgame = XLog.parse_xlog line.force_encoding(Encoding::UTF_8).encode("utf-8", invalid: :replace)
       game = Game.create({server: server}.merge(hgame))
 
-      account = Account.first(name: hgame["name"], server_id: server.id)
+      account = Account.find_by(name: hgame["name"], server_id: server.id)
       game.update(user_id: account.user_id) if account
     }
   end
 
   desc 'Verify all supported variants have a correct setup'
   task :variants do
-    versions = repository.adapter.select 'SELECT DISTINCT version FROM games'
+    versions = ActiveRecord::Base.connection.select_values('SELECT DISTINCT version FROM games')
     versions.each {|version|
       if $variants_mapping[version].nil?
         puts "Version #{version} has unknown mapping!"
@@ -274,7 +275,7 @@ namespace :test do
       if version != 'NH-1.3d' && !$variant_order.include?(version)
         puts "Version #{version} has no known order!"
       end
-      if Trophy.count(variant: version) == 0
+      if Trophy.where(variant: version).count == 0
         puts "Version #{version} has no trophies!"
       end
     }
@@ -283,4 +284,3 @@ namespace :test do
 end
 
 task :default => ["run:server"]
-

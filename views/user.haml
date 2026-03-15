@@ -1,4 +1,4 @@
-- cache_fragment("#{Game.max :endtime, :user_id => @player.id}_#{@player.updated_at}_#{@player.accounts.count}") do
+- cache_fragment("#{Game.where(user_id: @player.id).maximum(:endtime)}_#{@player.updated_at}_#{@player.accounts.count}") do
   .card.junethack-card
     .card-body.position-relative
       %h2
@@ -19,7 +19,7 @@
           =haml :user_cross_variant_trophies
           - for @variant in variant_and_bonus_games_order
             / only show achievements for games that the player actually played
-            - if Game.count(user_id: @player.id, version: @variant) > 0
+            - if Game.where(user_id: @player.id, version: @variant).count > 0
               =haml :user_trophies
 
     .card-body.border-top

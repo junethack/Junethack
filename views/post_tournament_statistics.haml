@@ -1,4 +1,4 @@
-- tournament_games = Game.all(conditions: ['user_id IS NOT NULL'])
+- tournament_games = Game.where('user_id IS NOT NULL')
 - tournament_games_count = tournament_games.count
 - all_games = Game.all
 - all_games_count = all_games.count
@@ -12,14 +12,14 @@
     %div
       = "#{User.count.html_formatted} players registered on the server,"
       %br
-      = "#{User.all(:accounts.not => nil).count.html_formatted} linked their account with the public servers,"
+      = "#{User.joins(:accounts).distinct.count.html_formatted} linked their account with the public servers,"
       %br
-      = "and #{Game.all(fields: [:user_id]).map {|g| g.user_id}.uniq.count.html_formatted} actually played at least one game."
+      = "and #{Game.distinct.pluck(:user_id).compact.count.html_formatted} actually played at least one game."
 
   .card-body.border-top
     =h3 "Games"
     %div
-      = "#{tournament_games.count.html_formatted} games were played on #{Server.all.map(&:url).uniq.count.html_formatted} public servers during the tournament by registered users,"
+      = "#{tournament_games.count.html_formatted} games were played on #{Server.distinct.pluck(:url).count.html_formatted} public servers during the tournament by registered users,"
       %br
       = "#{Game.count.html_formatted} were played by all players including those not taking part in the tournament."
       %br
@@ -28,7 +28,7 @@
   .card-body.border-top
     =h3 "Ascensions"
     %div
-      - games_ascended = Game.all(conditions: [ "user_id IS NOT NULL AND ascended='t'" ])
+      - games_ascended = Game.where("user_id IS NOT NULL AND ascended = true")
       = "#{games_ascended.collect {|g| g.user_id}.uniq.count.html_formatted} different players ascended a total of #{games_ascended.count.html_formatted} games."
     .no-more-tables
       %table.table.table-sm.table-junethack{style: "width: auto"}
@@ -38,8 +38,8 @@
             %th
             %th
         %tbody
-          - sql = "SELECT count(1) AS count, version FROM games WHERE user_id IS NOT NULL and ascended='t' GROUP BY version ORDER BY 1 DESC"
-          - games_ascended_by_variant = repository.adapter.select sql
+          - sql = "SELECT count(1) AS count, version FROM games WHERE user_id IS NOT NULL AND ascended = true GROUP BY version ORDER BY 1 DESC"
+          - games_ascended_by_variant = sql_select(sql)
           - games_ascended_by_variant.each do |variant|
             %tr
               %td.variant{"data-title": "Variant"}
@@ -59,7 +59,7 @@
   .card-body.border-top
     =h3 "Start scummed games"
     %div
-      = "#{StartScummedGame.all(conditions: ['user_id IS NOT NULL']).count.html_formatted} games were start scummed by Junethack players,"
+      = "#{StartScummedGame.where('user_id IS NOT NULL').count.html_formatted} games were start scummed by Junethack players,"
       %br
       = "#{StartScummedGame.count.html_formatted} games were start scummed in total."
     .no-more-tables
@@ -71,8 +71,8 @@
             %th
         %tbody
           - sql = 'SELECT count(1) AS count, (SELECT login FROM users where id = user_id) AS username, user_id FROM start_scummed_games WHERE user_id IS NOT NULL GROUP BY user_id ORDER BY 1 DESC LIMIT 10'
-          - start_scummed_games = repository.adapter.select sql
-          - start_scummed_games_count = StartScummedGame.all(conditions: ['user_id IS NOT NULL']).count
+          - start_scummed_games = sql_select(sql)
+          - start_scummed_games_count = StartScummedGame.where('user_id IS NOT NULL').count
           - top10_count = start_scummed_games.map(&:count).inject(0) { |sum,i| sum += i }
           - start_scummed_games.each do |game|
             %tr
@@ -103,11 +103,11 @@
             %th Kills
             %th
         %tbody
-          - medusa_kills = Game.all(killed_medusa: 1, conditions: [ "user_id IS NOT NULL" ])
+          - medusa_kills = Game.where(killed_medusa: 1).where("user_id IS NOT NULL")
           - medusa_kills_count = medusa_kills.count
           = "Medusa was killed in #{medusa_kills_count.html_formatted} games."
           - sql = 'SELECT count(1) AS count,role,race FROM games WHERE killed_medusa >= 1 AND user_id IS NOT NULL GROUP BY role,race ORDER BY 1 DESC LIMIT 10'
-          - medusa_kills_combinations = repository.adapter.select sql
+          - medusa_kills_combinations = sql_select(sql)
           - top10_kills = medusa_kills_combinations.map(&:count).inject(0) {|sum,i| sum+=i}
           - percentage = '%.1f%%' % (100.0*top10_kills/medusa_kills.count)
           - medusa_kills_combinations.each do |kill|
@@ -133,7 +133,7 @@
             %th
         %tbody
           - sql = "SELECT count(1) AS count, version FROM games WHERE user_id IS NOT NULL GROUP BY version ORDER BY 1 DESC"
-          - games_by_variant = repository.adapter.select sql
+          - games_by_variant = sql_select(sql)
           - games_by_variant.each do |variant|
             %tr
               %td.variant{"data-title": "Variant"}
@@ -161,7 +161,7 @@
             %th
         %tbody
           - sql = "SELECT count(1) AS count, url FROM games LEFT JOIN servers ON servers.id = games.server_id WHERE user_id IS NOT NULL GROUP BY url ORDER BY 1 DESC"
-          - games_by_server = repository.adapter.select sql
+          - games_by_server = sql_select(sql)
           - games_by_server.each do |server|
             %tr
               %td.variant{"data-title": "Server"}

@@ -67,7 +67,7 @@
         - variant_name = $variants_mapping[variant]
         %span.d-block
           %a{href: "/trophies/#{variant_name.downcase}"}= h variant_name
-          = "(#{Trophy.all(variant: variant, conditions: ["trophy not like 'all_%' AND user_competition = 'f'"]).count} achievements)"
+          = "(#{Trophy.where(variant: variant).where("trophy not like 'all_%' AND user_competition = false").count} achievements)"
 
   .card-body.border-top
     =h2 'Competitions'

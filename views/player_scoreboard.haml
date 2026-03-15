@@ -14,14 +14,14 @@
       - variant_name = $variants_mapping[variant]
       .card-body.border-top
         =h3 variant_name
-        - if (CompetitionScoreEntry.count :variant => variant) == 0
+        - if CompetitionScoreEntry.where(variant:).count == 0
           %div
             No ascensions yet
         - else
           - for i in 0..$competition_trophy_order.size-1 do
             .table-responsive.mb-3
               %table.table.table-sm.table-junethack
-                - trophy = Trophy.first variant: variant, trophy: $competition_trophy_order[i]
+                - trophy = Trophy.find_by(variant:, trophy: $competition_trophy_order[i])
                 %thead
                   %tr
                     %th.trophy
@@ -31,10 +31,11 @@
                     %th.competition_placing Rank
                 %tbody
                   / only show the first 3 places
-                  - c = CompetitionScoreEntry.all variant: variant, trophy: $competition_trophy_order[i], order: :rank.asc, conditions: [ 'rank <= 3' ]
+                  - trophy_order = $competition_trophy_order[i]
+                  - c = CompetitionScoreEntry.where(variant:, trophy: trophy_order).where('rank <= 3').order(rank: :asc)
                   - for j in 0..c.size-1 do
                     %tr
-                      - user = User.get(c[j].user_id).login
+                      - user = User.find(c[j].user_id).login
                       %td{colspan: 2}
                         %a{:href => "/user/" + CGI::escape(user)}=h user
                       - if $competition_trophy_order[i] == :fastest_ascension_realtime

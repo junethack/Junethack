@@ -1,12 +1,10 @@
-class Account #join model
-    include DataMapper::Resource
+class Account < ActiveRecord::Base
+    self.primary_keys = :user_id, :server_id
 
-    belongs_to :user,   :key => true
-    belongs_to :server, :key => true
+    belongs_to :user
+    belongs_to :server
 
-    property :name,        String
-    property :verified,    Boolean, :default => false
-    validates_format_of :name, :with => /^\w*$/, :message => "Account name may only contain a-z, A-Z and 0-9"
+    validates :name, format: { with: /\A\w*\z/, message: "Account name may only contain a-z, A-Z and 0-9" }
 
     def get_games
         self.server.games.select{|game| game.name == self.name}
@@ -17,4 +15,3 @@ class Account #join model
                                         game.death == 'ascended'}
     end
 end
-

@@ -25,13 +25,13 @@
                   - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
                   %td.table_date= "<a class='hidden_link' href='/games/#{formatted_date}'>#{formatted_date}</a>"
                   - $variant_order.each do |v|
-                    - finished_variant_games_per_day = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and endtime >= ? and endtime < ?;", v, datum, datum + 86400)[0]
+                    - finished_variant_games_per_day = Game.where("user_id > 0 AND version = ? AND endtime >= ? AND endtime < ?", v, datum, datum + 86400).count
                     %td.table_number= "<a class='hidden_link' href='/games/#{formatted_date}/#{v}'>#{finished_variant_games_per_day}</a>"
           %tfoot
             %tr
               %td.table_date= "Total"
               - $variant_order.each do |v|
-                - finished_variant_games = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ?;", v)[0]
+                - finished_variant_games = Game.where("user_id > 0 AND version = ?", v).count
                 %td.table_number= "<a class='hidden_link' href='/games/#{v}'>#{finished_variant_games}</a>"
 
   - cache_fragment("games_players_#{Game.max_endtime}") do
@@ -52,12 +52,12 @@
                 - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
                 %td.table_date= "<a class='hidden_link' href='/games/#{formatted_date}'>#{formatted_date}</a>"
                 - $variant_order.each do |v|
-                  - finished_variant_games_per_day = (repository.adapter.select "SELECT count(DISTINCT user_id) FROM games WHERE user_id > 0 AND version = ? AND endtime >= ? AND endtime < ?;", v, datum, datum+86400)[0]
+                  - finished_variant_games_per_day = Game.where("user_id > 0 AND version = ? AND endtime >= ? AND endtime < ?", v, datum, datum+86400).distinct.count(:user_id)
                   %td.table_number= "<a class='hidden_link' href='/games/#{formatted_date}/#{v}'>#{finished_variant_games_per_day}</a>"
           %tr
             %td.table_date= "Total"
             - $variant_order.each do |v|
-              - finished_variant_games = (repository.adapter.select "SELECT count(DISTINCT user_id) FROM games WHERE user_id > 0 AND version = ?;", v)[0]
+              - finished_variant_games = Game.where("user_id > 0 AND version = ?", v).distinct.count(:user_id)
               %td.table_number= "<a class='hidden_link' href='/games/#{v}'>#{finished_variant_games}</a>"
 
   - cache_fragment("games_variants_ascended_#{Game.max_endtime}") do
@@ -78,18 +78,18 @@
                 - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
                 %td.table_date= "<a class='hidden_link' href='/ascensions/#{formatted_date}'>#{formatted_date}</a>"
                 - $variant_order.each do |v|
-                  - ascended_variant_games_per_day = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and endtime >= ? and endtime < ? and ascended = 't';", v, datum, datum+86400)[0]
+                  - ascended_variant_games_per_day = Game.where("user_id > 0 AND version = ? AND endtime >= ? AND endtime < ? AND ascended = true", v, datum, datum+86400).count
                   - ascended_variant_games_per_day = '' if ascended_variant_games_per_day == 0
                   %td.table_number= "<a class='hidden_link' href='/ascensions/#{formatted_date}/#{v}'>#{ascended_variant_games_per_day}</a>"
           %tr
             %td.table_date= "Total"
             - $variant_order.each do |v|
-              - ascended_variant_games = (repository.adapter.select "select count(1) from games where user_id > 0 and version = ? and ascended = 't';", v)[0]
+              - ascended_variant_games = Game.where("user_id > 0 AND version = ? AND ascended = true", v).count
               - ascended_variant_games = '' if ascended_variant_games == 0
               %td.table_number= "<a class='hidden_link' href='/ascensions/#{v}'>#{ascended_variant_games}</a>"
 
   - cache_fragment("games_#{Game.max_endtime}") do
-    - @finished_games_per_day = repository.adapter.select "select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null) group by datum order by datum asc;"
+    - @finished_games_per_day = Game.where.not(user_id: nil).select("date(endtime, 'unixepoch') as datum, count(1) as count").group("datum").order("datum asc")
     .card-body.border-top
       %h2 Finished Games per Day
       .table-responsive
@@ -108,13 +108,13 @@
                   %div{:id => "chart_finished_games_per_day"}
           %tr
             %td.table_date= "Total"
-            %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0;")[0]
+            %td.table_number= Game.where("user_id > 0").count
         - graph.write("finished_games_per_day")
 
   - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
     // Ugly SQL to also get days with zero ascensions. Will only work
     // as long there are any games for each day
-    - @ascensions_per_day = repository.adapter.select "select days.datum, endtime, count from (select endtime, date(endtime, 'unixepoch') as datum from games group by datum) days left join (select datum, count(1) as count from (select date(endtime, 'unixepoch') as datum from games where user_id is not null and ascended='t') group by datum) counts on counts.datum = days.datum;"
+    - @ascensions_per_day = Game.find_by_sql("SELECT days.datum, endtime, count FROM (SELECT endtime, date(endtime, 'unixepoch') AS datum FROM games GROUP BY datum) days LEFT JOIN (SELECT datum, count(1) AS count FROM (SELECT date(endtime, 'unixepoch') AS datum FROM games WHERE user_id IS NOT NULL AND ascended = true) GROUP BY datum) counts ON counts.datum = days.datum")
     .card-body.border-top
       %h2 Ascensions per Day
       .table-responsive
@@ -133,11 +133,11 @@
                   %div{:id => "chart_ascensions"}
           %tr
             %td.table_date= "Total"
-            %td.table_number= (repository.adapter.select "select count(1) from games where user_id > 0 and ascended='t';")[0]
+            %td.table_number= Game.where("user_id > 0 AND ascended = true").count
         - graph.write("activity")
 
   - cache_fragment("users_#{User.max_created_at}") do
-    - @new_users_per_day = repository.adapter.select "select date(created_at) as date, count(1) as count from users group by date(created_at);"
+    - @new_users_per_day = User.select("date(created_at) as date, count(1) as count").group("date(created_at)")
     - @days = []
     - if $tournament_signupstarttime
       - signupstarttime = Time.at($tournament_signupstarttime).to_date
@@ -162,5 +162,5 @@
                   %div{:id => "chart_new_users_per_day"}
           %tr
             %td.table_date= "Total"
-            %td.table_number= (repository.adapter.select "select count(1) from users;")[0]
+            %td.table_number= User.count
         - graph.write("new_users_per_day")

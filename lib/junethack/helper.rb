@@ -96,12 +96,25 @@ def helper_get_variant_for(description)
 end
 
 def helper_get_variants_for_user(id)
-    variants = repository.adapter.select "select distinct version from games where user_id = ?;", @id
+    variants = ActiveRecord::Base.connection.select_values("select distinct version from games where user_id = ?", "SQL", [id])
     $variants_mapping.dup.reject {|key,value| not variants.include? key }
 end
 
 def helper_get_score(key, variant)
-    return repository.adapter.select "select (select login from users where user_id = id) as user, user_id, value, value_display from scoreentries where trophy = ? and variant = ? order by user;", key, variant
+    return sql_select("select (select login from users where user_id = id) as user, user_id, value, value_display from scoreentries where trophy = ? and variant = ? order by user;", key, variant)
+end
+
+def sql_select(sql, *binds)
+  sanitized = ActiveRecord::Base.sanitize_sql_array([sql] + binds)
+  ActiveRecord::Base.connection.select_all(sanitized).to_a.map { |row|
+    row['ascended'] = ['t', 1, true].include?(row['ascended']) if row.key?('ascended')
+    OpenStruct.new(row)
+  }
+end
+
+def sql_select_values(sql, *binds)
+  sanitized = ActiveRecord::Base.sanitize_sql_array([sql] + binds)
+  ActiveRecord::Base.connection.select_values(sanitized)
 end
 
 def parse_seconds(duration = nil, separator: ' ')

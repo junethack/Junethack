@@ -2,7 +2,7 @@
   .trophyleft{id: link_id('Cross-Variant')}
     %a{href: "##{link_id('Cross-Variant')}"}= 'Cross-Variant'
   .trophyright
-    - trophies = repository.adapter.select "select trophy from individualtrophies where user_id = ?", @player.id
+    - trophies = sql_select_values("select trophy from individualtrophies where user_id = ?", @player.id)
     - row = 1
     - for individualtrophy in Trophy.cross_variant_trophies
       - newline = individualtrophy.row != row

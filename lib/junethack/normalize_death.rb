@@ -1,5 +1,6 @@
-require 'pry'
-class Game
+require 'active_record'
+
+class Game < ActiveRecord::Base
   def normalize_monster
     normalize_death monster: true
   end
@@ -18,7 +19,7 @@ class Game
 
     death = death.gsub /uninjured /, ""
     death = death.gsub /(moderately|critically|badly|seriously|slightly) wounded /, ""
-    
+
     death = death.gsub(/ (her|his) /, " eir ")
     death = death.gsub(/ (herself|himself) /, " eirself ")
     death = death.gsub(/ (herself|himself)$/, " eirself")

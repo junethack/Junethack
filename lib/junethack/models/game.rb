@@ -1,7 +1,4 @@
-require 'dm-migrations'
-require 'dm-migrations/migration_runner'
 require 'trophy_calculations'
-require 'pry'
 
 $conducts = [
     [0x001, "Foodless", "Foo"],
@@ -83,8 +80,6 @@ $slash_achievements = [
   [2, :defeated_croesus, "defeated Croesus", "s-croesus.png"],
   [2, :defeated_dagon, "defeated Dagon", "s-dagon.png"],
   [2, :defeated_hydra, "defeated Hydra", "s-hydra.png"],
-  #[3, :imbued_bell, "imbued the Bell of Opening", "m-slex-bellimbued.png"],
-  #[3, :imbued_amulet, "imbued the Amulet of Yendor", "m-slex-amuletimbued.png"],
 ]
 
 $slex_extended_achievements = [
@@ -194,32 +189,18 @@ $trophy_names = {
     "most_variant_trophy_combinations" => "Most variant/trophy combinations",
 }
 
-class Game
-    include DataMapper::Resource
+class Game < ActiveRecord::Base
     belongs_to :server
-    belongs_to :user,   :required => false
+    belongs_to :user, optional: true
 
-    property :id,        Serial
-    property :name,      String
-    property :deaths,    Integer
-    property :deathlev,  Integer
-    property :realtime,  Integer
-    property :turns,     Integer
-    property :birthdate, String
-    property :conduct,   String, :default => "0"
-    property :nconducts, Integer,
-     :default => lambda { |r, p| (Integer(r.conduct) & 4095).to_s(2).count("1") } # count the number of bits set in conduct
-    property :conductX,  Text
-    property :role,      String
-    property :deathdnum, Integer
-    property :gender,    String
-    property :gender0,   String
-    property :uid,       Integer
-    property :maxhp,     Integer
-    property :points,    Integer
-    property :deathdate, String
-    property :version,   String, required: true
-    property :old_version, String
+    after_initialize :set_defaults, if: :new_record?
+    before_validation :set_defaults
+    after_update :trigger_update_scores
+
+    alias_attribute :achieveX, :achieve_x
+    alias_attribute :conductX, :conduct_x
+    alias_attribute :starttimeUTC, :starttime_utc
+    alias_attribute :endtimeUTC, :endtime_utc
 
     def version=(version)
       _version = 'unh'   if version.start_with? 'UNH-'
@@ -248,123 +229,24 @@ class Game
       super _version
     end
 
-    property :align,     String
-    property :align0,    String
-    property :starttime, Integer
-    property :endtime,   Integer
-    property :achieve,   String
-    property :nachieves, Integer
-    property :hp,        Integer
-    property :maxlvl,    Integer
-    property :death,     String
-    property :race,      String
-    property :flags,     String
-    property :ascended,  Boolean,
-     :default => lambda { |r, p| r.death.start_with? "ascended" or r.death == "escaped (with amulet)" or r.death.start_with? "defied" }
-
-    before :valid?, :trim_death
-    # we need to limit the size of deaths
-    def trim_death(context = :default)
-       self.death = death[0,255]
+    def set_defaults
+      self.conduct ||= "0"
+      self.nconducts ||= (Integer(self.conduct) & 4095).to_s(2).count("1")
+      if self.death
+        self.ascended = death.start_with?("ascended") ||
+                        death == "escaped (with amulet)" ||
+                        death.start_with?("defied")
+      end
+      self.killed_medusa ||= defeated_medusa? ? 1 : 0
     end
 
-    # acehack/unnethack-specific properties
-    property :carried,  String
-    property :event,    String
+    def death=(value)
+      super(value ? value[0, 255] : value)
+    end
+
     def get_conducts
         $conducts.map{|c| self.conduct & c[0] == c[0] ? c[2] : ""}.join
     end
-
-    # acehack/unnethack-specific properties
-    property :deathdname, String
-    property :dlev_name,  String
-    property :elbereths,  Integer, :default => -1
-    property :user_seed,  String
-    property :seed,       String
-
-    property :xplevel, Integer, :default => 0
-    property :exp,     Integer, :default => 0
-    property :mode,    String
-    property :gold,    Integer, :default => -1
-    property :killed_uniques, Text
-    property :killed_nazgul, Integer, default: 0
-    property :killed_erinyes, Integer, default: 0
-    property :killed_weeping_archangels, Integer, default: 0
-    property :killed_archangels, Integer, default: 0
-    property :wish_cnt,       Integer, default: -1
-    property :magic_wish_cnt, Integer, default: -1
-    property :arti_wish_cnt,  Integer, default: -1
-    property :bones,          Integer, default: -1
-
-    # nethack4-specific properties
-    property :charname, String
-    property :extrinsic, String
-    property :intrinsic, String
-    property :temporary, String
-    property :rngseed,   String
-    property :dumplog,   String
-    property :birthoption, String
-    property :starttimeus, Integer
-    property :endtimeus,   Integer
-
-    # dnethack and variants specific properties
-    property :dnetachieve, String
-    property :inherited, String
-    property :species, String
-    property :species0, String
-
-    # nh4k-specific properties
-    property :variant, String
-    property :versionstring, String
-
-    # fiqhack-specific properties
-    property :name64,     String
-    property :charname64, String
-    property :death64,    String
-    property :dumplog64,  String
-
-    # SlashTHEM/SlashEm Extended-specific properties
-    property :modes, String
-    property :hybrid, String
-    property :gamemode, String
-    property :achieveX, Text
-    property :alias, String
-    property :role0, String
-    property :race0, String
-
-    # xnethack-specific properties
-    property :polyinit, String
-
-    # new in 3.6.0
-    property :while, String
-
-    property :difficulty, String
-    property :demo, String
-
-    # fourk specific properties
-    property :gameidnum, Integer
-    property :gengold, String
-
-    # gnollhack specific properties
-    property :scoring, String
-    property :edit, String
-    property :cname, String
-    property :collapse, String
-    property :tournament, String
-    property :starttimeUTC, Integer
-    property :endtimeUTC, Integer
-    property :platform, String
-    property :platformversion, String
-    property :port, String
-    property :portversion, String
-    property :portbuild, String
-    property :store, String
-    property :xplvl, Integer
-    property :seclvl, Integer, default: -1
-    property :portseclvl, Integer
-
-    property :killed_medusa, Integer,
-      :default => -> (r,p) { r.defeated_medusa? ? 1 : 0 }
 
     def defeated_medusa?
       most_variants_defeated_medusa? || dnh_defeated_medusa?
@@ -377,7 +259,7 @@ class Game
 
     # is this variant a dnh derivative?
     def dnhalike?
-      version.start_with?('dnh', 'ndnh', 'nndnh')
+      version&.start_with?('dnh', 'ndnh', 'nndnh')
     end
 
     # is this game Ana Dwarf or Ana Elf?  Medusa defeat is different for those games
@@ -440,7 +322,7 @@ class Game
 
     # Heaven or Hell
     def ascended_heaven_or_hell?
-        ascended and mode and mode == "hoh"
+      !!(ascended && mode && mode == "hoh")
     end
 
     ## NetHack 1.3d specific
@@ -510,11 +392,11 @@ class Game
     end
 
     def Game.max_ascended_endtime
-        Game.max :endtime, :ascended => true, :conditions => [ 'user_id is not null' ]
+        Game.where(ascended: true).where('user_id is not null').maximum(:endtime)
     end
 
     def Game.max_endtime
-        Game.max :endtime, :conditions => [ 'user_id is not null' ]
+        Game.where('user_id is not null').maximum(:endtime)
     end
 
     def mini_croesus?
@@ -530,7 +412,7 @@ class Game
     end
 
     def completed_quest?
-      (achieveX&.split(",") & ["completed_quest", "quest_completed"]).size > 0
+      (achieve_x&.split(",") & ["completed_quest", "quest_completed"]).size > 0
     end
 
     # DNetHack
@@ -567,31 +449,16 @@ class Game
       event && event.to_i & 0x00080000 > 0
     end
 
-    after :update do
-        update_scores(self)
+    private
+
+    def trigger_update_scores
+      update_scores(self)
     end
 end
 
-DataMapper::MigrationRunner.migration( 1, :create_indexes ) do
-  up do
-    execute 'CREATE INDEX "index_games_endtime_user_id" ON "games" ("endtime" desc, "user_id");'
-    execute 'CREATE INDEX "index_games_highscore" ON "games" ("user_id", "death", "server_id", "points","endtime");'
-    execute 'CREATE INDEX "index_games_user_id_version" ON "games" ("user_id", "version");'
-    execute 'CREATE INDEX "index_trophy_ascensions" ON "games" ("ascended" desc, "user_id", "version");'
-  end
-  down do
-    execute 'DROP INDEX "index_games_endtime_user_id"';
-    execute 'DROP INDEX "index_games_highscore"';
-    execute 'DROP INDEX "index_games_user_id_version"';
-    execute 'DROP INDEX "index_trophy_ascensions"';
-  end
-end
+class NormalizedDeath < ActiveRecord::Base
+    self.primary_key = :game_id
 
-class NormalizedDeath
-    include DataMapper::Resource
-    belongs_to :game,  :key => true
-    belongs_to :user,  :required => false
-
-    property :death,     String
-    property :monster,   String
+    belongs_to :game
+    belongs_to :user, optional: true
 end

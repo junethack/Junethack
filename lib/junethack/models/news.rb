@@ -1,21 +1,7 @@
-require 'dm-migrations'
-require 'dm-migrations/migration_runner'
 require 'tournament_times'
 
-class News
-    include DataMapper::Resource
-
-    property :id,         Serial
-    property :html,       String, :required => true
-    property :text,       String # dummy, only used for compatibility with Event
-    property :url,        String # dummy, only used for compatibility with Event
-
-    property :created_at, DateTime
-    property :updated_at, DateTime
-end
-
-DataMapper::MigrationRunner.migration(1, :create_announcements) do
-  up do
+class News < ActiveRecord::Base
+  def self.seed_news
     if $tournament_signupstarttime
       dates = [
         ["<a href='/register'>Registration for Junethack #{Date.today.year}</a> has opened!", $tournament_signupstarttime],

@@ -22,45 +22,45 @@ def initialize(id)
 end
 
 def most_ascensions(variant=nil)
-    return (repository.adapter.select "select count(1) from games where version = ? and user_id = ?  and ascended='t'", variant, @id)[0]
+    return sql_select_values("select count(1) from games where version = ? and user_id = ?  and ascended = true", variant, @id)[0]
 end
 
 def highest_scoring_ascension(variant=nil)
-    return repository.adapter.select "select max(points) from games where version = ? and user_id = ? and ascended='t'", variant, @id
+    return sql_select_values("select max(points) from games where version = ? and user_id = ? and ascended = true", variant, @id)
 end
 
 def lowest_scoring_ascension(variant=nil)
-    return repository.adapter.select "select min(points) from games where version = ? and user_id = ? and ascended='t'", variant, @id
+    return sql_select_values("select min(points) from games where version = ? and user_id = ? and ascended = true", variant, @id)
 end
 
 def most_conducts_ascension(variant=nil)
-    return repository.adapter.select "select max(nconducts) from games where version = ? and user_id = ? and ascended='t'", variant, @id
+    return sql_select_values("select max(nconducts) from games where version = ? and user_id = ? and ascended = true", variant, @id)
 end
 
 # returns the min realtime duration of an ascension in milliseconds
 def fastest_ascension_realtime(variant=nil)
-    return (repository.adapter.select "select min(endtime-starttime) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0]
+    return sql_select_values("select min(endtime-starttime) from games where version = ? and user_id = ? and ascended = true", variant, @id)[0]
 end
 
 # returns the min in-game duration of an ascension in milliseconds
 def fastest_ascension_gametime(variant=nil)
-    return (repository.adapter.select "select min(turns) from games where version = ? and user_id = ? and ascended='t'", variant, @id)[0]
+    return sql_select_values("select min(turns) from games where version = ? and user_id = ? and ascended = true", variant, @id)[0]
 end
 
 def longest_ascension_streak(variant=nil)
-    games_ascended = (repository.adapter.select "select ascended, server_id from games where version = ? and user_id = ? order by server_id, endtime desc", variant, @id)
+    games_ascended = sql_select("select ascended, server_id from games where version = ? and user_id = ? order by server_id, endtime desc", variant, @id)
 
     max_asc = 0;
     asc = 0;
     # streaks are per server and per variant
     server_id = 0
     games_ascended.each {|game|
-        asc = 0 if game.ascended == 'f' or game.server_id != server_id
+        asc = 0 if !game.ascended or game.server_id != server_id
         server_id = game.server_id
 
-        asc += 1 if game.ascended == 't'
+        asc += 1 if game.ascended
 
-        max_asc = asc if asc > max_asc 
+        max_asc = asc if asc > max_asc
     }
     return max_asc
 end

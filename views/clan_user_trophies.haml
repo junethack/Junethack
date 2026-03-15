@@ -3,7 +3,7 @@
     .trophyright
         / user competition trophies
         - trophies = Trophy.user_competition_trophies variant
-        - user_competition_trophies = repository.adapter.select "select trophy from competition_score_entries where user_id in (#{user_ids.join(',')}) and variant = ? and rank = 1", variant
+        - user_competition_trophies = CompetitionScoreEntry.where(user_id: user_ids, variant: variant, rank: 1).pluck(:trophy)
         / only show if there are any
         - if user_competition_trophies.size > 0 then
             - for trophy in trophies
@@ -12,7 +12,7 @@
 
         / user "All Conducts/Roles/Races/Alignments/Genders" trophies
         - trophies = Trophy.user_all_stuff_trophies variant
-        - user_all_stuff_trophies = repository.adapter.select "select trophy from scoreentries where user_id in (#{user_ids.join(',')}) and variant = ? and trophy like 'all_%'", variant
+        - user_all_stuff_trophies = Scoreentry.where(user_id: user_ids, variant: variant).where("trophy LIKE 'all_%'").pluck(:trophy)
         / only show if there are any
         - if user_all_stuff_trophies.size > 0 then
             - for trophy in trophies
@@ -21,7 +21,7 @@
 
         / user trophies
         - trophies = Trophy.user_trophies variant
-        - user_trophies = repository.adapter.select "select trophy from scoreentries where user_id in (#{user_ids.join(',')}) and variant = ?", variant
+        - user_trophies = Scoreentry.where(user_id: user_ids, variant: variant).pluck(:trophy)
         - row = 1
         - for trophy in trophies
             - newline = trophy.row != row
@@ -30,5 +30,5 @@
                 %br
             =haml :trophy, locals: { trophy: trophy, achieved: (user_trophies.include? trophy.trophy)}
             -# workaround for the fact that the master of thieves is a quest leader and nemesis
-            - if trophy.trophy == 'defeated_ashikaga_takauji' && (trophy = Trophy.first(variant: variant, trophy: 'defeated_master_of_thieves'))
+            - if trophy.trophy == 'defeated_ashikaga_takauji' && (trophy = Trophy.find_by(variant: variant, trophy: 'defeated_master_of_thieves'))
                 =haml :trophy, locals: { trophy: trophy, achieved: (user_trophies.include? trophy.trophy)}

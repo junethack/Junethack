@@ -1,4 +1,4 @@
-- news = News.all order: [ :created_at.desc ], :created_at.lte => DateTime.now
+- news = News.where("created_at <= ?", DateTime.now).order(created_at: :desc)
 - if news.size > 0
   =h2 'News and Announcements'
   - for n in news

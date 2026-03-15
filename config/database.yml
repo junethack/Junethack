@@ -1,0 +1,11 @@
+development:
+  adapter: sqlite3
+  database: junethack_dev.db
+
+production:
+  adapter: sqlite3
+  database: junethack.db
+
+test:
+  adapter: sqlite3
+  database: ":memory:"

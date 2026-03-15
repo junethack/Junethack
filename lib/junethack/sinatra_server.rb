@@ -53,7 +53,7 @@ end
 
 
 before do
-    @user = User.get(session['user_id'])
+    @user = session['user_id'] ? User.find_by(id: session['user_id']) : nil
     @logged_in = @user.nil?
     @tournament_identifier = "junethack #{@user.login}" if @user
     @tournament_identifier_regexp = /junethack(2011)? #{Regexp.quote @user.login}/ if @user
@@ -123,7 +123,7 @@ end
 get "/users" do
     caching_check_last_played_game
 
-    @users = User.all
+    @users = User.all.to_a
     haml :users
 end
 
@@ -165,12 +165,12 @@ get "/home" do
 
     @userscore = UserScore.new session['user_id']
 
-    @user = User.get(session['user_id'])
+    @user = User.find(session['user_id'])
     @user_id = @user.id
 
-    @scoreentries = Scoreentry.all(:user_id => @user.id)
+    @scoreentries = Scoreentry.where(user_id: @user.id)
 
-    @games_played = Game.all(:user_id => @user.id, :order => [ :endtime.desc ])
+    @games_played = Game.where(user_id: @user.id).order(endtime: :desc)
     @games_played_title = @user.display_game_statistics
 
     haml :home
@@ -180,7 +180,7 @@ post "/add_server_account" do
     redirect "/" and return unless session['user_id']
 
   $db_access.synchronize {
-    server = Server.get(params[:server])
+    server = Server.find(params[:server])
 
     session['errors'] << "Add account name!" and redirect "/home" and return if params[:user].strip.empty?
 
@@ -188,13 +188,13 @@ post "/add_server_account" do
     begin
       if server.name.start_with?("hdf_")
         name = server.name
-        server = Server.first(name: "eu#{name}")
+        server = Server.find_by(name: "eu#{name}")
         verified = server.verify_user(params[:user], @tournament_identifier_regexp) rescue nil
 
-        server = Server.first(name: "au#{name}")
+        server = Server.find_by(name: "au#{name}")
         verified ||= server.verify_user(params[:user], @tournament_identifier_regexp) rescue nil
 
-        server = Server.first(name: "#{name}")
+        server = Server.find_by(name: "#{name}")
         verified ||= server.verify_user(params[:user], @tournament_identifier_regexp) rescue nil
       else
         verified = server.verify_user(params[:user], @tournament_identifier_regexp)
@@ -212,20 +212,20 @@ post "/add_server_account" do
       redirect "/home" and return
     end
     if server.name.include?('hdf_')
-      servers = Server.all.select {|s| s.name.include? 'hdf_' }
+      servers = Server.all.to_a.select {|s| s.name.include? 'hdf_' }
     else
-      servers = Server.all(url: server.url)
+      servers = Server.where(url: server.url).to_a
     end
     servers.each {|server|
       begin
-        account = Account.create(user: User.get(session['user_id']), server: server, name: params[:user], verified: true)
+        account = Account.create(user: User.find(session['user_id']), server: server, name: params[:user], verified: true)
       rescue => e
         session['errors'].push(e.to_s)
       end
       # set user_id on all already played games
-      Game.all(:name => params[:user], :server => server).update(:user_id => session['user_id']) if account
-      repository.adapter.execute "UPDATE start_scummed_games SET user_id = ? WHERE name = ? AND server_id = ?", session['user_id'], params[:user], server.id
-      repository.adapter.execute "UPDATE junk_games SET user_id = ? WHERE name = ? AND server_id = ?", session['user_id'], params[:user], server.id
+      Game.where(name: params[:user], server: server).update_all(user_id: session['user_id']) if account
+      ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array(["UPDATE start_scummed_games SET user_id = ? WHERE name = ? AND server_id = ?", session['user_id'], params[:user], server.id]))
+      ActiveRecord::Base.connection.execute(ActiveRecord::Base.sanitize_sql_array(["UPDATE junk_games SET user_id = ? WHERE name = ? AND server_id = ?", session['user_id'], params[:user], server.id]))
     }
   }
 
@@ -251,7 +251,7 @@ post "/create" do
   $db_access.synchronize {
     errors = []
     errors.push("Password and confirmation do not match.") if params["confirm"] != params["password"]
-    errors.push("Username already exists.") if User.first(:login => params[:username])
+    errors.push("Username already exists.") if User.find_by(login: params[:username])
     errors.push("Password needs at least 8 characters.") if params[:password].to_s.length < 8
     session['errors'] = errors
     puts "session errors are #{session['errors'].inspect}"
@@ -280,13 +280,13 @@ end
 get "/user/:name" do
     caching_check_last_played_game_by(params[:name])
 
-    @player = User.first(:login => params[:name])
+    @player = User.find_by(login: params[:name])
 
     if @player
         @userscore = UserScore.new @player.id
-        @scoreentries = Scoreentry.all(:user_id => @player.id)
+        @scoreentries = Scoreentry.where(user_id: @player.id)
 
-        @games_played = Game.all(:user_id => @player.id, :order => [ :endtime.desc ])
+        @games_played = Game.where(user_id: @player.id).order(endtime: :desc)
         @games_played_title = @player.display_game_statistics
 
         @user_id = @player.id
@@ -298,7 +298,7 @@ get "/user/:name" do
 end
 
 get "/user_id/:id" do
-    @player = User.first(:id => params[:id])
+    @player = User.find_by(id: params[:id])
     if @player
         redirect "/user/"+CGI::escape(@player.login)
     else
@@ -309,12 +309,12 @@ end
 get "/clans" do
     caching_check_last_played_game
 
-    @clans = Clan.all
+    @clans = Clan.all.to_a
     haml :clans
 end
 
 get "/clan/:name" do
-    @clan = Clan.get(params[:name])
+    @clan = Clan.find_by(name:params[:name])
     if @clan
         puts "Invitations: #{@clan.invitations.inspect}"
         @admin = @clan.get_admin
@@ -327,7 +327,7 @@ end
 
 post '/clan_description/:name' do
   $db_access.synchronize {
-    @clan = Clan.get(params[:name])
+    @clan = Clan.find_by(name:params[:name])
     redirect '/' if @clan.nil?
     redirect '/' if @user != @clan.get_admin
 
@@ -341,7 +341,7 @@ end
 
 post '/clan_banner/:name' do
   $db_access.synchronize {
-    @clan = Clan.get(params[:name])
+    @clan = Clan.find_by(name:params[:name])
     redirect '/' if @clan.nil?
     redirect '/' if @user != @clan.get_admin
 
@@ -376,11 +376,11 @@ post "/clan" do
 end
 post "/clan/invite" do
   $db_access.synchronize {
-    clan = Clan.get(params[:clan])
+    clan = Clan.find_by(name:params[:clan])
 
     # verify that clan admin is inviting other users
     if clan.admin[0] == @user.id
-        invited_user = User.first(:login => params[:accountname])
+        invited_user = User.find_by(login: params[:accountname])
         if not invited_user then
             session['errors'] << "Could not find Junethack username #{params[:accountname]}"
         else
@@ -406,16 +406,15 @@ get "/respond/:token" do #respond to invitation
       accept = (params[:accept] == "true")
       if @user.respond_invite invitation, accept
         session['messages'] << "Successfully #{accept ? "accepted" : "declined"} invitation"
-        @user.invitations.reject!{|inv| inv['token'] == params[:token]}
+        @user.invitations.reject! { |inv| inv['token'] == params[:token]}
         if accept
-          clan = Clan.first(:name => invitation['clan_id'])
+          clan = Clan.find_by(name: invitation['clan_id'])
           if clan
             @user.clan_name = clan.name
             @user.invitations = []
             @user.save
           end
         end
-        @user.invitations = @user.invitations.to_json
         @user.save
       end
     else
@@ -426,12 +425,12 @@ get "/respond/:token" do #respond to invitation
 end
 get "/clan/disband/:name" do
   $db_access.synchronize {
-    clan = Clan.get(params[:name])
+    clan = Clan.find_by(name:params[:name])
     if clan
         admin = clan.get_admin
         if clan.admin[0] == @user.id
-            ClanScoreEntry.all(:clan_name => clan.name).destroy
-            User.all(clan_name: clan.name).update(clan_name: nil)
+            ClanScoreEntry.where(clan_name: clan.name).delete_all
+            User.where(clan_name: clan.name).update_all(clan_name: nil)
             if clan.destroy
                 session['messages'] << "Successfully disbanded #{params[:name]}"
             else
@@ -469,7 +468,7 @@ end
 
 get "/scores/:name" do |name|
     # Is the user there? If not, just redirect to home
-    @u = User.first(:login => name)
+    @u = User.find_by(login: name)
     if @u.nil? then
         session['errors'] << "No such user."
         redirect "/"
@@ -485,20 +484,20 @@ end
 get "/servers" do
     caching_check_application_start_time
 
-    @servers = Server.all
+    @servers = Server.all.to_a
     haml :servers, locals: { verbose: false }
 end
 
 get "/servers/check" do
-    @servers = Server.all
+    @servers = Server.all.to_a
     haml :servers, locals: { verbose: true }
 end
 
 get "/server/:name" do
     caching_check_last_played_game
-    @server = Server.first(:name => params[:name])
+    @server = Server.find_by(name: params[:name])
     if @server
-        @games = @server.games :conditions => [ 'user_id > 0' ], :order => [ :endtime.desc ], :limit => 100
+        @games = @server.games.where('user_id > 0').order(endtime: :desc).limit(100)
         haml :server
     else
         session['errors'] << "Could not find server #{ params[:name] }"
@@ -508,11 +507,11 @@ end
 
 get "/server/:name/all" do
     caching_check_last_played_game
-    @server = Server.first(:name => params[:name])
+    @server = Server.find_by(name: params[:name])
     if @server
         # limit by date for not permanently showing users that haven't
         # added themselves to Junethack
-        @games = @server.games :conditions => [ "endtime > #{Time.new.to_i-7*60*60*24}" ], :order => [ :endtime.desc ], :limit => 100
+        @games = @server.games.where("endtime > #{Time.new.to_i-7*60*60*24}").order(endtime: :desc).limit(100)
         haml :server
     else
         session['errors'] << "Could not find server #{ params[:name] }"
@@ -539,10 +538,10 @@ get %r{/games/?(\d{4}-\d{2}-\d{2})?/?([-0-9a-zNH.]+)?} do |date, variant|
       where << "endtime >= #{date} and endtime < #{date+86400}"
     end
 
-    hash = { conditions: [where.join(' AND ')], order: [ :endtime.desc ] }
-    hash[:limit] = 100 unless (date && variant)
+    query = Game.where(where.join(' AND ')).order(endtime: :desc)
+    query = query.limit(100) unless (date && variant)
 
-    @games_played = Game.all(hash)
+    @games_played = query
     @games_played_title = "Last #{@games_played.count} games played" + title_variant + title_date
 
     haml :last_games_played
@@ -551,23 +550,23 @@ end
 get %r{/ascensions/?(\d{4}-\d{2}-\d{2})?/?([-0-9a-zNH.]+)?} do |date, variant|
     caching_check_last_played_game
 
-    @games_played = Game.all(:conditions => ["user_id is not null and ascended='t'"], :order => [:endtime.desc])
+    @games_played = Game.where("user_id is not null and ascended = true").order(endtime: :desc)
     @games_played_user_links = true
     title_variant = '';
     title_date = '';
 
     if variant
       title_variant = " for #{$variants_mapping[variant]}"
-      @games_played = @games_played.all(version: variant)
+      @games_played = @games_played.where(version: variant)
     end
 
     if date
       title_date = " on #{date}"
       date = Time.parse("#{date} 00:00:00Z").to_i
-      @games_played = @games_played.all(conditions: ["endtime >= #{date} and endtime < #{date+86400}"])
+      @games_played = @games_played.where("endtime >= #{date} and endtime < #{date+86400}")
     end
 
-    @games_played = @games_played.all(limit: 100) unless (date && variant)
+    @games_played = @games_played.limit(100) unless (date && variant)
 
     @games_played_title = "Last #{@games_played.count} ascended games" + title_variant + title_date
 
@@ -612,8 +611,8 @@ end
 
 get "/junethack.rss" do
   # determine date of last event or news
-  last_event = Event.first order: [ :created_at.desc ], :created_at.lte => DateTime.now
-  last_news  = News.first  order: [ :created_at.desc ], :created_at.lte => DateTime.now
+  last_event = Event.where("created_at <= ?", DateTime.now).order(created_at: :desc).first
+  last_news  = News.where("created_at <= ?", DateTime.now).order(created_at: :desc).first
   event = [last_event, last_news].compact.map(&:created_at).max
 
   etag "#{event}".hash if event

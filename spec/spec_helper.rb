@@ -25,16 +25,21 @@ require './lib/junethack'
 ENV['RACK_ENV'] = 'test'
 require 'database'
 
+# Load schema into in-memory test database
+require 'load_structure_sql'
+load_structure_sql(ActiveRecord::Base.connection)
+
 def clean_database
-  ClanScoreEntry.destroy!
-  ClanScoreHistory.destroy!
-  Individualtrophy.destroy!
-  Scoreentry.destroy!
-  NormalizedDeath.destroy!
-  CompetitionScoreEntry.destroy!
-  Event.destroy!
-  Game.destroy!
-  Clan.destroy!
-  User.destroy!
-  Server.destroy!
+  ClanScoreEntry.destroy_all
+  ClanScoreHistory.destroy_all
+  Individualtrophy.destroy_all
+  Scoreentry.destroy_all
+  NormalizedDeath.destroy_all
+  CompetitionScoreEntry.destroy_all
+  Event.destroy_all
+  Game.destroy_all
+  Clan.destroy_all
+  User.destroy_all
+  Server.destroy_all
+  Trophy.destroy_all
 end

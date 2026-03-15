@@ -1,29 +1,19 @@
-require 'dm-migrations/migration_runner'
-class User
-    include DataMapper::Resource
+class User < ActiveRecord::Base
+    has_many :scoreentries
+    has_many :individualtrophies
+    has_many :accounts
+    has_many :servers, through: :accounts
+    belongs_to :clan, foreign_key: :clan_name, primary_key: :name, optional: true
 
-    has n, :scoreentries
-    has n, :individualtrophies
-    has n, :accounts
-    has n, :servers, :through => :accounts
-    has n, :games, :through => :servers
+    serialize :invitations, JSON
 
-    belongs_to :clan,   :required => false
+    before_save :default_invitations
 
-    property :id,       Serial
-    property :login,    String
-    property :hashed,   String, :length => 64
-    property :salt,     String, :length => 64
+    validates :login, format: { with: /\A\w+\z/, message: "login name may only contain a-z, A-Z, 0-9 and _" }
 
-    property :invitations, Json
-    before :save do
+    def default_invitations
         self.invitations ||= []
     end
-
-    property :created_at, DateTime
-    property :updated_at, DateTime
-
-    validates_format_of :login, with: /\A\w+\z/, message: "login name may only contain a-z, A-Z, 0-9 and _"
 
     def password=(pw)
         self.salt = Digest::SHA256.hexdigest("#{rand}") #generate random hash
@@ -35,27 +25,27 @@ class User
     end
 
     def self.authenticate(login, pass)
-        u = User.first(:login => login)
+        u = User.find_by(login: login)
         return false unless u
         User.encrypt(pass, u.salt) == u.hashed ? u : false
     end
 
     # get all played games by this user
     def games
-        Game.all(:user_id => self.id)
+        Game.where(user_id: self.id)
     end
 
     # count of played games by this user
     def games_count
-        Game.count(:user_id => self.id)
+        Game.where(user_id: self.id).count
     end
     # count of start scummed games by this user
     def start_scummed_games_count
-        StartScummedGame.count(:user_id => self.id)
+        StartScummedGame.where(user_id: self.id).count
     end
     # count of start scummed games by this user
     def junk_games_count
-        JunkGame.count(:user_id => self.id)
+        JunkGame.where(user_id: self.id).count
     end
 
     def ascensions
@@ -63,7 +53,7 @@ class User
     end
 
     def most_variant_trophies_count
-        (repository.adapter.select "SELECT count(1) from ("+variant_trophy_combinations_user_sql+");", self.id)[0]
+        (ActiveRecord::Base.connection.select_values("SELECT count(1) from ("+variant_trophy_combinations_user_sql+");", "SQL", [self.id]))[0]
     end
 
     # user.to_i will return user.id or 0 if user == nil
@@ -72,7 +62,7 @@ class User
     end
 
     def User.max_created_at
-        repository.adapter.select "select strftime('%s',max(created_at)) from users"
+        ActiveRecord::Base.connection.select_values "select strftime('%s',max(created_at)) from users"
     end
 
     def display_game_statistics
@@ -89,7 +79,7 @@ class User
     end
 
     def respond_invite invitation, accept
-        if clan = Clan.first(:name => invitation['clan_id'])
+        if clan = Clan.find_by(name: invitation['clan_id'])
             invitation['status'] = accept ? 'accept' : 'decline'
             return clan.get_invitation_response invitation
         end

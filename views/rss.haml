@@ -6,8 +6,8 @@
     %link= "#{request.scheme}://junethack.net/"
     %description Junethack - NetHack Cross-Variant Summer Tournament
     <atom:link href="#{request.scheme}://junethack.net/junethack.rss" rel="self" type="application/rss+xml" />
-    - events = Event.all(:order => [ :created_at.desc ], :limit => 30)
-    - news = News.all order: [ :created_at.desc ], :created_at.lte => DateTime.now
+    - events = Event.order(created_at: :desc).limit(30)
+    - news = News.where("created_at <= ?", DateTime.now).order(created_at: :desc)
     - entries = (news.to_a  + events.to_a).sort {|e1, e2| e2['created_at'] <=> e1['created_at']}
     - entries.each do |event|
       %item

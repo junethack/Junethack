@@ -66,5 +66,34 @@ Go through the list of servers and variants and add new ones and remove old ones
  - add a link to the the new Junethack archive in views/splash.haml
  - add and commit the repository
 
+## Development
+
+### Database & Migrations
+
+Junethack uses ActiveRecord (via [sinatra-activerecord](https://github.com/sinatra-activerecord/sinatra-activerecord))
+with SQLite as the database backend. The database configuration is in `config/database.yml`.
+
+The schema format is SQL (`db/structure.sql`) rather than Ruby's `db/schema.rb`. This file is auto-generated after each
+migration and should be committed to the repository.
+
+#### Running migrations
+
+    bundle exec rake db:migrate
+
+#### Creating a new migration
+
+    bundle exec rake db:create_migration NAME=add_foo_to_bar
+
+This creates a timestamped file in `db/migrate/`. Edit it and run `db:migrate`.
+
+#### Other useful commands
+
+    bundle exec rake db:rollback          # undo last migration
+    bundle exec rake db:migrate:status    # show status of all migrations
+
+#### Fresh database setup
+
+When no database exists, `rake db:migrate` will run all migrations starting with the baseline migration
+(`db/migrate/20260101000000_baseline_schema.rb`), which loads `db/structure.sql` to create all tables.
 
 TODO: more documentation, distinction prod/dev env, maintenance mode, manually fetching games, dummy users

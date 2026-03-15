@@ -1,15 +1,9 @@
 source "https://rubygems.org"
 
-gem 'dm-sqlite-adapter'
-
-gem "dm-serializer",
-    git: "https://github.com/89mo/dm-serializer.git",
-    branch: "release-1.2-suishin"
-gem 'dm-types',
-  git: 'https://github.com/bhaak/dm-types.git',
-  branch: 'gem-v1.2.2-with-frozen-nilclass-fix'
-gem "data_mapper"
-gem 'dm-migrations'
+gem 'activerecord'
+gem 'sinatra-activerecord'
+gem 'sqlite3', '~> 1.4'
+gem 'composite_primary_keys', '>= 14.0.0'
 
 gem "json"
 gem "haml", "< 6.0.0"

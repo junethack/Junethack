@@ -1,15 +1,15 @@
 require 'digest/md5'
 
-class Clan
-  include DataMapper::Resource
-  property :admin,    Json
-  has n, :users
-  property :name,     String, :key => true, :length => 1...30
-  property :invitations,     Json, :default => []
-  property :gravatar, String, length: 32
-  property :description, String, length: 500, :default => ""
+class Clan < ActiveRecord::Base
+  self.primary_key = :name
 
-  validates_format_of :name, with: /\A[a-zA-Z0-9_.]+\z/, message: "Clan name may only contain a-z, A-Z, . and 0-9"
+  serialize :admin, JSON
+  serialize :invitations, JSON
+
+  has_many :users, foreign_key: :clan_name, primary_key: :name
+
+  validates :name, format: { with: /\A[a-zA-Z0-9_.]+\z/, message: "Clan name may only contain a-z, A-Z, . and 0-9" }
+
   def get_invitation_response invitation
     if index = self.invitations.index{|i| i['token'] == invitation['token'] and i['account'] == invitation['account']}
       self.invitations.delete_at index
@@ -20,7 +20,7 @@ class Clan
   end
 
   def get_admin
-    return User.get(self.admin[0])
+    return User.find(self.admin[0])
   end
 
   def gravatar_link

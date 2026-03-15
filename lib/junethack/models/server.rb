@@ -1,25 +1,10 @@
-require 'dm-migrations'
-require 'dm-migrations/migration_runner'
-
 require 'open-uri'
 
-class Server
-    include DataMapper::Resource
+class Server < ActiveRecord::Base
+    has_many :games
+    has_many :accounts
+    has_many :users, through: :accounts
 
-    has n, :games
-    has n, :accounts
-    has n, :users, :through => :accounts
-
-    property :id,                Serial
-    property :name,              String, :length => 255
-    property :url,               String, :length => 255
-    property :xlogurl,           String, :length => 255
-    property :xloglastmodified,  String, :default => "Sat Jan 01 00:00:00 UTC 2000"
-    property :variant,           String
-    property :xlogcurrentoffset, Integer
-    property :configfileurl,     String, :length => 255
-
-    # open the rc file for the user and return true if the regexp is found
     def verify_user(user, regexp)
         URI::open(configfileurl.gsub("random_user_initial", CGI::escape(user[0]))
                                .gsub("random_user", CGI::escape(user))) do |f|
@@ -137,8 +122,6 @@ class Server
         when "3.6"
           endtime = DateTime.strptime(game.endtime.to_s,"%s").strftime("%Y%m%d%H%M%S")
           "https://em.slashem.me/userdata/#{game.name}/nethack/dumplog/#{endtime}.txt"
-        #when "slex"
-        #  "https://em.slashem.me/userdata/#{game.name}/slex/dumplog/#{endtime}.txt"
         when "gho"
           "https://em.slashem.me/userdata/#{game.name}/grunthack/dumplog/#{game.starttime}.txt"
         when "shc"
@@ -150,14 +133,14 @@ class Server
       when "server.gnollhack.com"
         "http://server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.html"
       when "account.gnollhack.com"
-        gnollhack_account = Account.first(server_id: game.server_id, user_id: game.user_id)&.name
+        gnollhack_account = Account.find_by(server_id: game.server_id, user_id: game.user_id)&.name
         "https://account.gnollhack.com/dumplog/byname/#{gnollhack_account}/#{game.starttime}"
       else
         return nil
       end
     end
 
-    def self.create_servers
+    def self.seed_servers
       [
         [:nao_nh36, 'NetHack 3.6.7', 'https://alt.org/nethack/xlogfile.nh363+'],
       ].each {|server|
@@ -175,7 +158,6 @@ class Server
         [
           [:hdf_nao,  'NetHack 3.4.3-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
           [:hdf_nh37, 'NetHack 3.7.0-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack37/xlogfile"],
-          #[:hdf_nh37s, 'NetHack 3.7.0-hdf (seed)', "https://#{prefix}.hardfought.org/xlogfiles/setseed/xlogfile"],
           [:hdf_shc,  'SporkHack 0.7.0',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
           [:hdf_gho,  'GruntHack 0.3.0',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
           [:hdf_unh,  'UnNetHack 6.0.14',        "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
@@ -233,14 +215,4 @@ class Server
         Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
       }
     end
-end
-
-DataMapper::MigrationRunner.migration( 1, :create_servers ) do
-  up do
-    Server.create_servers
-  end
-
-  down do
-    Server.destroy
-  end
 end

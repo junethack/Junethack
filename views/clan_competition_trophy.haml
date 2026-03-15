@@ -1,4 +1,4 @@
-- trophy = Trophy.first :trophy => @trophy
+- trophy = Trophy.find_by(trophy: @trophy)
 %h3{:id => trophy.anchor}
   %img{:src => "/icons/#{trophy.icon}", :alt => trophy.text, style: "height: 2em; width: 2em; vertical-align: middle"}
   #{trophy.text}
@@ -15,7 +15,7 @@
         %th.competition_placing
           Rank
     %tbody
-      - ClanScoreEntry.all(:order => [:rank.asc], :trophy => @trophy, :value.gt => 0).each do |entry|
+      - ClanScoreEntry.where(trophy: @trophy).where("value > ?", 0).order(rank: :asc).each do |entry|
         %tr
           %td.clan-banner-small
             %img{src: entry.clan.gravatar_link, style: 'vertical-align: middle; width: 100%'}

@@ -6,7 +6,7 @@
     %meta{:name => "format-detection", :content => "telephone=no"}/
     %link{href: "/vendor/bootstrap/bootstrap.min.css", rel: "stylesheet"}/
     %link{href: "/style-custom.css", rel: "stylesheet"}/
-    - games_count = Game.count :conditions => [ 'user_id > 0' ]
+    - games_count = Game.where('user_id > 0').count
     - if $tournament_signupstarttime.nil? || Time.now.to_i < $tournament_signupstarttime
       %title= 'Junethack 2026'
     - elsif games_count == 0 then

@@ -4,7 +4,6 @@ require 'trophyscore'
 require 'userscore'
 
 describe TrophyScore do
-
   context "given 2 ascended games from the same user with identical score points" do
     server = Server.create(name: 'server_highscore')
     it "should only return one game for highest score trophy calculation" do
@@ -95,8 +94,8 @@ describe TrophyScore do
     describe 'with known and unknown achievements in killed_uniques' do
       let(:killed_uniques) { 'defeated_death,defeated_xxx' }
       it 'creates Scoreentry for known achievements' do
-        expect(Scoreentry.first(user_id: user.id).trophy).to eq 'defeated_death'
-        expect(Scoreentry.count(user_id: user)).to eq 1
+        expect(Scoreentry.find_by(user_id: user.id).trophy).to eq 'defeated_death'
+        expect(Scoreentry.where(user_id: user.id).count).to eq 1
       end
     end
   end
@@ -112,30 +111,29 @@ describe TrophyScore do
     describe '#defeated_all_riders?' do
       let(:killed_uniques) { 'death,famine,pestilence' }
       it 'creates a Scoreentry for defeated_all_riders' do
-        expect(Scoreentry.first(trophy: :defeated_all_riders, user_id: user.id)).to be
+        expect(Scoreentry.find_by(trophy: :defeated_all_riders, user_id: user.id)).to be
       end
     end
 
     describe '#defeated_all_demon_lords_princes?' do
       let(:killed_uniques) { 'asmodeus,baalzebub,demogorgon,dispater,geryon,juiblex,orcus,yeenoghu' }
       it 'creates a Scoreentry for defeated_all_demon_lords_princes' do
-        expect(Scoreentry.first(trophy: :defeated_all_demon_lords_princes, user_id: user.id)).to be
+        expect(Scoreentry.find_by(trophy: :defeated_all_demon_lords_princes, user_id: user.id)).to be
       end
     end
 
     describe '#defeated_all_quest_leaders?' do
       let(:killed_uniques) { 'lord_carnarvon,pelias,shaman_karnov,robert_the_lifer,hippocrates,king_arthur,grand_master,arch_priest,orion,master_of_thieves,lord_sato,twoflower,norn,neferet_the_green' }
       it 'creates a Scoreentry for defeated_all_quest_leaders' do
-        expect(Scoreentry.first(trophy: :defeated_all_quest_leaders, user_id: user.id)).to be
+        expect(Scoreentry.find_by(trophy: :defeated_all_quest_leaders, user_id: user.id)).to be
       end
     end
 
     describe '#defeated_all_quest_nemeses?' do
       let(:killed_uniques) { 'schliemann,thoth_amon,tiamat,warden_arianna,cyclops,ixoth,master_kaen,nalzok,scorpius,master_assassin,ashikaga_takauji,lord_surtur,dark_one' }
       it 'creates a Scoreentry for defeated_all_quest_nemeses' do
-        expect(Scoreentry.first(trophy: :defeated_all_quest_nemeses, user_id: user.id)).to be
+        expect(Scoreentry.find_by(trophy: :defeated_all_quest_nemeses, user_id: user.id)).to be
       end
     end
   end
-
 end

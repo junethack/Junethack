@@ -16,7 +16,7 @@
               %th
                 Xlogfile offset
         %tbody
-          - servers = Server.all(order: :name)
+          - servers = Server.order(:name)
           - servers.each_with_index do |server, index|
             %tr
               %td{"data-title": "Server name"}
@@ -31,7 +31,7 @@
                   %a{href: server.xlogurl}=server&.xloglastmodified
                 %td.table_number{"data-title": "Xlogfile offset"}
                   #{server.xlogcurrentoffset&.html_formatted}
-                %td{"data-title": "Last games"}
-                  - endtime = Game.first(server_id: server.id, order: :endtime.desc)&.endtime
+                %td{"data-title": "Last game"}
+                  - endtime = Game.where(server_id: server.id).maximum(:endtime)
                   - if endtime
                     #{Time.at(endtime).getutc.strftime("%Y-%m-%d %H:%M")}

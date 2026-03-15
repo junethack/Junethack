@@ -9,7 +9,7 @@
               %a.btn.btn-outline-danger.btn-sm{:href => "/clan/disband/#{@clan.name}"} Disband
             #clan_invite
               %a.btn.btn-outline-primary.btn-sm{:href => "#invite_account"} Invite
-        - clan_score_entry = ClanScoreEntry.first(:clan_name => @clan.name, :trophy => 'clan_winner')
+        - clan_score_entry = ClanScoreEntry.find_by(clan_name: @clan.name, trophy: 'clan_winner')
         #clan_placing
           %span.badge.bg-secondary
             Rank:
@@ -57,15 +57,15 @@
     #clan_trophies.trophycabinet.mt-3
       =h2 'Clan trophies'
       / TODO: trophy image for clan competition winner
-      - ClanScoreEntry.all(clan_name: @clan.name, :trophy.not => 'clan_winner').each do |clan_trophy|
-        - trophy = Trophy.first trophy: clan_trophy.trophy
+      - ClanScoreEntry.where(clan_name: @clan.name).where.not(trophy: 'clan_winner').each do |clan_trophy|
+        - trophy = Trophy.find_by(trophy: clan_trophy.trophy)
         %a.imagelink{:href => "/trophies#" + trophy.anchor, title: trophy.text}
           - if clan_trophy.rank == 1
             %img.trophyicon{:src => "/icons/" + trophy.icon}
           - else
             %img.trophyicon{:src => "/icons/" + trophy.light_icon}
 
-  - max_endtime_clan_game = Game.all(user_id: @clan.users.map(&:id)).max_by(&:endtime).endtime
+  - max_endtime_clan_game = Game.where(user_id: @clan.users.map(&:id)).maximum(:endtime)
 
   .card-body.border-top
     =h2 'Clan members'
@@ -83,7 +83,7 @@
               %th
                 Last game played (UTC)
           %tbody
-            - (User.all clan_name: @clan.name, order: [:login.asc]).each do |user|
+            - User.where(clan_name: @clan.name).order(login: :asc).each do |user|
               %tr
                 %td
                   %a{:href => "/user/" + user.login}
@@ -113,13 +113,13 @@
     .trophycabinet.text_cabinet
       =h2 'Clan variant/trophy combinations'
       %ul
-        - user_ids = Clan.first(name: @clan.name).users.map {|user| user.id }.uniq
+        - user_ids = Clan.find_by(name: @clan.name).users.map {|user| user.id }.uniq
         =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => "NH-1.3d"}
         - for variant in $variant_order
           =haml :clan_user_trophies, :locals => {:user_ids => user_ids, :variant => variant}
 
   .card-body.border-top
-    - @games_played = Game.all(user_id: User.all(clan_name: @clan.name), conditions: [ "ascended='t'" ], order: [ :endtime.desc ])
+    - @games_played = Game.where(user_id: User.where(clan_name: @clan.name).pluck(:id), ascended: true).order(endtime: :desc)
     - @games_played_title = "Ascended Clan Games"
     - @games_played_user_links = true
     =haml :games_played
@@ -128,7 +128,7 @@
     - cache_fragment("#{@clan.name}_games_#{max_endtime_clan_game}") do
       =haml :clan_games
 
-  - unique_deaths = (repository.adapter.select unique_deaths_sql+" order by death;", @clan.name)
+  - unique_deaths = ActiveRecord::Base.connection.select_values(ActiveRecord::Base.sanitize_sql_array([unique_deaths_sql+" order by death;", @clan.name]))
   .card-body.border-top
     =h2 "#{unique_deaths.count} unique death#{'s' if unique_deaths.count != 1}", 'unique_deaths'
     .table-responsive

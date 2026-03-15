@@ -11,7 +11,7 @@
         %th
         %th Time (UTC)
     %tbody
-      - games = Game.all(:user_id => User.all(clan_name: @clan.name))
+      - games = Game.where(user_id: User.where(clan_name: @clan.name).select(:id))
       - games.each do |game|
         %tr
           %td{:id => "game-#{game.id}"}

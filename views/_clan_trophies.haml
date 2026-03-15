@@ -1,7 +1,7 @@
-- clan_winners = ClanScoreEntry.all(rank: 1, trophy: 'clan_winner')
+- clan_winners = ClanScoreEntry.where(rank: 1, trophy: 'clan_winner')
 - if clan_winners.count == 1
   #clan_banner.clan_winner
-    - @clan = ClanScoreEntry.all(:order => [:rank.asc], trophy: 'clan_winner').first.clan
+    - @clan = ClanScoreEntry.where(trophy: 'clan_winner').order(rank: :asc).first.clan
     %img{src: @clan.gravatar_link}
     - if @clan.description != nil && @clan.description != ""
       #clan_description
@@ -19,7 +19,7 @@
         %th
           Rank
     %tbody
-      - ClanScoreEntry.all(:order => [:rank.asc], :trophy => 'clan_winner').each do |entry|
+      - ClanScoreEntry.where(trophy: 'clan_winner').order(rank: :asc).each do |entry|
         %tr
           %td.clan-banner-small
             %img{src: entry.clan.gravatar_link, style: 'vertical-align: middle; width: 100%'}

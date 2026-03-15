@@ -1,41 +1,21 @@
 require 'rubygems'
-require 'data_mapper'
-require 'dm-serializer'
-require 'dm-timestamps'
-require 'dm-validations'
+require 'active_record'
+require 'composite_primary_keys'
 require 'sinatra'
+require 'sinatra/activerecord'
 
-# raise exception on error when saving
-DataMapper::Model.raise_on_save_failure = true # globally
+set :database_file, File.expand_path('../../../config/database.yml', __FILE__)
 
-# set all String properties to have a default length of 255
-DataMapper::Property::String.length(255)
+ActiveRecord.schema_format = :sql
 
-configure :production do
-  puts "Configuring production database"
-  # for debugging: print all generated SQL statemtens
-  #DataMapper::Logger.new("logs/db.log", :debug)
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/junethack.db")
-end
 configure :development do
   puts "Configuring development database"
-  # for debugging: print all generated SQL statemtens
-  DataMapper::Logger.new("logs/dev_db.log", :debug)
-  DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/junethack_dev.db")
+  ActiveRecord::Base.logger = Logger.new("logs/dev_db.log")
 end
+
 configure :test do
   puts "Configuring test database"
-  DataMapper::Logger.new("logs/test_db.log", :debug)
-  DataMapper.setup(:default, "sqlite3::memory:")
-
-  # suppress migration output.
-  # it would be written at every run as we use a in-memory db
-  module DataMapper
-    class Migration
-      def write(text="")
-      end
-    end
-  end
+  ActiveRecord::Base.logger = Logger.new("logs/test_db.log")
 end
 
 require 'models/server'
@@ -49,7 +29,3 @@ require 'models/scoreentry'
 require 'models/trophy'
 require 'models/event'
 require 'models/news'
-
-DataMapper.finalize
-DataMapper.auto_upgrade!
-DataMapper::MigrationRunner.migrate_up!

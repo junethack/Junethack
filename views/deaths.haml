@@ -1,6 +1,6 @@
 - cache_fragment(Game.max_endtime) do
-  - @deaths = repository.adapter.select "SELECT death, count(1) AS count, group_concat(version) AS versions FROM games WHERE user_id IS NOT NULL GROUP BY death ORDER BY count DESC;"
-  - @unique_deaths = repository.adapter.select "SELECT death, count(1) AS count FROM normalized_deaths GROUP BY death ORDER BY count DESC;"
+  - @deaths = Game.where.not(user_id: nil).select("death, count(1) AS count, group_concat(version) AS versions").group(:death).order("count DESC")
+  - @unique_deaths = ActiveRecord::Base.connection.exec_query("SELECT death, count(1) AS count FROM normalized_deaths GROUP BY death ORDER BY count DESC").map { |row| OpenStruct.new(row) }
 
   .card.junethack-card
     .card-body

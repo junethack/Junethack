@@ -25,7 +25,7 @@ def fetch_all
     end
 
     @fetch_logger.info "Looking for new games..."
-    for server in Server.all
+    for server in Server.all.to_a
       begin
         count_games = 0
         count_scummed_games = 0
@@ -66,7 +66,7 @@ def fetch_all
                         hgame = XLog.parse_xlog line.force_encoding(Encoding::UTF_8).encode("utf-8", invalid: :replace)
                         if hgame['starttime'].to_i >= $tournament_starttime and
                             hgame['endtime'].to_i   <= $tournament_endtime
-                            acc = Account.first(:name => hgame["name"], :server_id => server.id)
+                            acc = Account.find_by(name: hgame["name"], server_id: server.id)
                             regular_game = false
                             hgame['modes'] ||= ""
                             hgame['gamemode'] ||= ""
@@ -101,7 +101,7 @@ def fetch_all
                                 Event.new(:text => "#{game.user.login} ascended a game of #{$variants_mapping[game.version]} on #{game.server.hostname}!").save if game.ascended
 
                                 # record some gaming milestones
-                                games_count = (Game.count :conditions => [ 'user_id > 0' ])+1
+                                games_count = Game.where('user_id > 0').count + 1
                                 if games_count == 100 or
                                    games_count == 500 or
                                    games_count % 1000 == 0 then

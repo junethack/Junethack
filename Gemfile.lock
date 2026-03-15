@@ -1,30 +1,4 @@
 GIT
-  remote: https://github.com/89mo/dm-serializer.git
-  revision: 3723cc7ef51b9b00e50da9f036d19efea4d2344c
-  branch: release-1.2-suishin
-  specs:
-    dm-serializer (1.2.2)
-      dm-core (~> 1.2.0)
-      fastercsv (~> 1.5)
-      json (~> 2.6)
-      json_pure (~> 2.6)
-      multi_json (~> 1.0)
-
-GIT
-  remote: https://github.com/bhaak/dm-types.git
-  revision: 14b3c3f295f6486ae1d16d47e918cc246a0b8651
-  branch: gem-v1.2.2-with-frozen-nilclass-fix
-  specs:
-    dm-types (1.2.2)
-      bcrypt-ruby (~> 3.0)
-      dm-core (~> 1.2.0)
-      fastercsv (~> 1.5)
-      json (~> 2.6)
-      multi_json (~> 1.0)
-      stringex (~> 1.4)
-      uuidtools (~> 2.1)
-
-GIT
   remote: https://github.com/eventmachine/eventmachine.git
   revision: e7320417cf291cc6a69471a64ecae5ddb5367715
   specs:
@@ -41,141 +15,133 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.8.7)
-      public_suffix (>= 2.0.2, < 7.0)
+    activemodel (7.0.10)
+      activesupport (= 7.0.10)
+    activerecord (7.0.10)
+      activemodel (= 7.0.10)
+      activesupport (= 7.0.10)
+    activesupport (7.0.10)
+      base64
+      benchmark (>= 0.3)
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      drb
+      i18n (>= 1.6, < 2)
+      logger (>= 1.4.2)
+      minitest (>= 5.1)
+      mutex_m
+      securerandom (>= 0.3)
+      tzinfo (~> 2.0)
     base64 (0.3.0)
-    bcrypt (3.1.20)
-    bcrypt-ruby (3.1.5)
-      bcrypt (>= 3.1.3)
+    benchmark (0.5.0)
+    bigdecimal (4.0.1)
     builder (3.3.0)
     ci_reporter (2.1.0)
       builder (>= 2.1.2)
       rexml
     coderay (1.1.3)
-    concurrent-ruby (1.3.5)
+    composite_primary_keys (14.0.10)
+      activerecord (~> 7.0.2)
+    concurrent-ruby (1.3.6)
     crass (1.0.6)
     daemons (1.4.1)
-    data_mapper (1.2.0)
-      dm-aggregates (~> 1.2.0)
-      dm-constraints (~> 1.2.0)
-      dm-core (~> 1.2.0)
-      dm-migrations (~> 1.2.0)
-      dm-serializer (~> 1.2.0)
-      dm-timestamps (~> 1.2.0)
-      dm-transactions (~> 1.2.0)
-      dm-types (~> 1.2.0)
-      dm-validations (~> 1.2.0)
-    data_objects (0.10.17)
-      addressable (~> 2.1)
     diff-lcs (1.6.2)
-    dm-aggregates (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-constraints (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-core (1.2.1)
-      addressable (~> 2.3)
-    dm-do-adapter (1.2.0)
-      data_objects (~> 0.10.6)
-      dm-core (~> 1.2.0)
-    dm-migrations (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-sqlite-adapter (1.2.0)
-      dm-do-adapter (~> 1.2.0)
-      do_sqlite3 (~> 0.10.6)
-    dm-timestamps (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-transactions (1.2.0)
-      dm-core (~> 1.2.0)
-    dm-validations (1.2.0)
-      dm-core (~> 1.2.0)
-    do_sqlite3 (0.10.17)
-      data_objects (= 0.10.17)
     docile (1.4.1)
-    et-orbi (1.2.11)
+    drb (2.2.3)
+    et-orbi (1.4.0)
       tzinfo
     fastercsv (1.5.5)
-    fugit (1.11.1)
-      et-orbi (~> 1, >= 1.2.11)
+    fugit (1.12.1)
+      et-orbi (~> 1.4)
       raabro (~> 1.4)
     haml (5.2.2)
       temple (>= 0.8.0)
       tilt
-    json (2.12.2)
-    json_pure (2.8.1)
+    i18n (1.14.8)
+      concurrent-ruby (~> 1.0)
+    io-console (0.8.2)
+    json (2.19.1)
+    logger (1.7.0)
     method_source (1.1.0)
-    multi_json (1.15.0)
-    mustermann (3.0.3)
+    mini_portile2 (2.8.9)
+    minitest (5.27.0)
+    mustermann (3.0.4)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.18.8-x86_64-linux-gnu)
+    mutex_m (0.3.0)
+    nokogiri (1.18.10-arm64-darwin)
       racc (~> 1.4)
-    pry (0.15.2)
+    pry (0.16.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    public_suffix (6.0.2)
+      reline (>= 0.6.0)
     raabro (1.4.0)
     racc (1.8.1)
-    rack (2.2.16)
+    rack (2.2.22)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
       rack (~> 2.2, >= 2.2.4)
     rack-test (2.2.0)
       rack (>= 1.3)
-    rake (13.3.0)
-    rexml (3.4.1)
-    rspec (3.13.1)
+    rake (13.3.1)
+    reline (0.6.3)
+      io-console (~> 0.5)
+    rexml (3.4.4)
+    rspec (3.13.2)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
       rspec-mocks (~> 3.13.0)
-    rspec-core (3.13.4)
+    rspec-core (3.13.6)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-mocks (3.13.5)
+    rspec-mocks (3.13.8)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-support (3.13.4)
+    rspec-support (3.13.7)
     ruby2_keywords (0.0.5)
     rufus-scheduler (3.9.2)
       fugit (~> 1.1, >= 1.11.1)
     sanitize (7.0.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.16.8)
+    securerandom (0.4.1)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
-    simplecov-html (0.13.1)
+    simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
     sinatra (3.2.0)
       mustermann (~> 3.0)
       rack (~> 2.2, >= 2.2.4)
       rack-protection (= 3.2.0)
       tilt (~> 2.0)
+    sinatra-activerecord (2.0.28)
+      activerecord (>= 4.1)
+      sinatra (>= 1.0)
     sinatra-outputbuffer (0.1.0)
       sinatra (>= 1.0.a)
-    stringex (1.5.1)
+    sqlite3 (1.7.3)
+      mini_portile2 (~> 2.8.0)
     sync (0.5.0)
-    temple (0.10.3)
+    temple (0.10.4)
     thin (1.8.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
-    tilt (2.6.0)
+    tilt (2.7.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uuidtools (2.2.0)
 
 PLATFORMS
-  x86_64-linux
+  arm64-darwin-21
+  arm64-darwin-25
 
 DEPENDENCIES
+  activerecord
   ci_reporter
-  data_mapper
-  dm-migrations
-  dm-serializer!
-  dm-sqlite-adapter
-  dm-types!
+  composite_primary_keys (>= 14.0.0)
   eventmachine!
   fastercsv
   haml (< 6.0.0)
@@ -189,7 +155,9 @@ DEPENDENCIES
   sanitize
   simplecov
   sinatra
+  sinatra-activerecord
   sinatra-cache!
+  sqlite3 (~> 1.4)
   sync
   thin (~> 1.8)
 

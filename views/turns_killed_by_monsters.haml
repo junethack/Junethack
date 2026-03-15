@@ -14,8 +14,8 @@
     - users = @clan.users.map(&:id)
     - $clan_killed_by.each do |monster|
       - game_ids = NormalizedDeath.all(user_id: users, monster: monster).map(&:game_id)
-      - turns = Game.all(id: game_ids).min(:turns)
-      - game = Game.first(id: game_ids, turns: turns)
+      - turns = Game.where(id: game_ids).minimum(:turns)
+      - game = Game.find_by(id: game_ids, turns: turns)
       - colspan = game ? 1 : 7
       %tr
         %td.small_cell{colspan: colspan, 'data-title': 'Monster'}= h monster

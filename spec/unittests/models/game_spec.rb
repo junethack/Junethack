@@ -10,8 +10,8 @@ describe Game do
              server_id: 1,
              death: 'ascended').save!
 
-    expect(Game.first(version: 'UNH-4.1.1')).to be_nil
-    expect(Game.first(version: 'unh')).to be
+    expect(Game.find_by(version: 'UNH-4.1.1')).to be_nil
+    expect(Game.find_by(version: 'unh')).to be
   end
 
   it "does not change the version info from variants without development" do
@@ -20,14 +20,14 @@ describe Game do
              server_id: 1,
              death: 'ascended').save!
 
-    expect(Game.first(version: '3.4.3')).to be
+    expect(Game.find_by(version: '3.4.3')).to be
   end
 
   describe 'for not unique version info' do
     it 'heuristically determines the version info from the server' do
       server = Server.new(name: 'server_variant').tap(&:save!)
       Game.new(server_id: server.id, version: 'unknown', death: 'ascended').save!
-      expect(Game.first(version: 'variant')).to be
+      expect(Game.find_by(version: 'variant')).to be
     end
   end
 end

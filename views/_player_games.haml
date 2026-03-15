@@ -1,10 +1,10 @@
 =h3 'Competition'
 - $variant_order.each do |variant|
   - @variant = variant
-  - entries = repository.adapter.select "SELECT * FROM competition_score_entries WHERE variant = ? AND user_id = ?", variant, @user_id
-  - if (CompetitionScoreEntry.count user_id: @user_id, variant: @variant) > 0
+  - entries = CompetitionScoreEntry.where(variant: variant, user_id: @user_id)
+  - if (CompetitionScoreEntry.where(user_id: @user_id, variant: @variant).count) > 0
     - trophies = Trophy.user_competition_trophies @variant
-    - user_competition_trophies = repository.adapter.select "select trophy from competition_score_entries where user_id = ? and variant = ? and rank = 1", @player.id, @variant
+    - user_competition_trophies = CompetitionScoreEntry.where(user_id: @player.id, variant: @variant, rank: 1).pluck(:trophy)
     =h4 $variants_mapping[variant], "competition_#{variant}"
     .table-responsive
       %table.table.table-sm.table-junethack.trophies
@@ -14,8 +14,8 @@
           %th{style: "padding-right: 0; width: 3em;" } Rank
           - $competition_trophy_order.each do|competition_trophy|
             %tr
-              - c = CompetitionScoreEntry.first user_id: @user_id, variant: @variant, trophy: competition_trophy
-              - trophy = Trophy.first(variant: c.variant, trophy: c.trophy)
+              - c = CompetitionScoreEntry.find_by(user_id: @user_id, variant: @variant, trophy: competition_trophy)
+              - trophy = Trophy.find_by(variant: c.variant, trophy: c.trophy)
               %td.trophy
                 =haml :trophy, locals: {trophy: trophy, achieved: (user_competition_trophies.include? trophy.trophy)}
               %td= h trophy.text

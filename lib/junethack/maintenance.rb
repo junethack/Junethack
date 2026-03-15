@@ -15,13 +15,13 @@ def not_a_number
   $not_numbers[Process.pid % $not_numbers.size]
 end
 
-class User
+class User < ActiveRecord::Base
   def User.count
     not_a_number
   end
 end
 
-class Game
+class Game < ActiveRecord::Base
   def Game.count(ignore)
     not_a_number
   end

@@ -39,6 +39,8 @@ describe Game,"saving of cross variant achievements" do
 
   before :each do
     clean_database
+    Trophy.seed_trophies
+
     $user = User.create(:login => "test_user")
     $server = Server.create(name: 'server_variant', url: "http://example.ignore/")
   end
@@ -60,7 +62,7 @@ describe Game,"saving of cross variant achievements" do
     expect(Event.count).to eq 0
 
     Game.create(params)
-    repository.adapter.execute "UPDATE games SET version = 'v' || id"
+    ActiveRecord::Base.connection.execute "UPDATE games SET version = 'v' || id"
     update_games
 
     expect(Individualtrophy.count).to eq 4
@@ -75,7 +77,7 @@ describe Game,"saving of cross variant achievements" do
     expect(Event.count).to eq 0
 
     Game.create(params)
-    repository.adapter.execute "UPDATE games SET version = 'v' || id"
+    ActiveRecord::Base.connection.execute "UPDATE games SET version = 'v' || id"
     update_games
 
     expect(Individualtrophy.all.map(&:trophy).sort).to match_array([
