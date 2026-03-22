@@ -1,0 +1,28 @@
+The following people have contributed to the development of Junethack.
+
+    Name               Nickname   E-mail
+    ========================================================
+    Edoardo Spadolini  'kerio'    <kerio00@gmail.com>
+    Christian Stegen   'stenno'   <junethack@app42.de>
+    Cheryl Chong       'xiella'   <cheryl@chongsworship.com>
+    Ryan Karl          'rawrmage' <rawrnix@rawrnix.com>
+    Mikko Juola        'Adeon'    <mikjuo@gmail.com>
+    Patric Mueller     'bhaak'    <bhaak@gmx.net>
+
+
+The Secret History of Junethack
+===============================
+Somewhen in late 2010, the original idea of conducting a NetHack tournament in
+June came to Casmith789 "Let's have a tournament in June!", only, it wasn't
+that original as others had that idea before.
+
+The only original bit of allowing NetHack Variants into the tournament
+caught Kerio's eyes and he began using exquisite marketing techniques usually
+commonly known as "trolling" to gather likewise minded people. Despite that Stenno made the
+first commit in May 2011 and Adeon provided first design sketches, shortly
+after that joined by Xiella, while Rawrmage provided server space.
+
+When Junethack was running late, Bhaak rushed it and single handedly saved
+Junethack, NetHack, and the world while NetHack players all over the net gasped at
+his programming skillz awesomenessness and then he went on to maintain
+Junethack for the next 50 years.
