@@ -388,7 +388,7 @@ def update_scores(game)
     end
   end
 
-  if [nethack36, splicehack, xnethack].include? game.version then
+  if Trophy.exists_for_variant?(game.version, :killed_by_molochs_indifference)
     if game.killed_by_molochs_indifference?
       Scoreentry.find_or_create_by(user_id: game.user_id,
                                    variant: game.version,

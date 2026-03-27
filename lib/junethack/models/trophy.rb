@@ -31,6 +31,10 @@ class Trophy < ActiveRecord::Base
     Scoreentry.where(variant: variant).where("trophy like 'all_%'").count
   end
 
+  def Trophy.exists_for_variant?(variant, trophy)
+    Trophy.exists?(variant:, trophy:)
+  end
+
   # used for href
   def anchor
     self.icon[0 ..-5]
