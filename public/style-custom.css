@@ -667,6 +667,20 @@ footer.junethack-footer {
   background-color: #c22;
 }
 
+/* user page */
+.clan-invitation  {
+  tr {
+    td:last-child {
+      text-align: right;
+    }
+    .btn {
+      width: 15%;
+      margin-top: 0.2rem;
+      margin-bottom: 0.2rem;
+    }
+  }
+}
+
 /* Section dividers */
 .section-divider {
   border-top: 1px solid #ccc;

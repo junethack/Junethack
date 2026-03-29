@@ -14,12 +14,12 @@
     %tbody
       - @games_played.each do |game|
         %tr
-          %td{:id => "game-#{game.id}"}
+          %td{:id => "game-#{game.id}", "data-title" => "Name"}
             - if @games_played_user_links
               %a{:href => "/user_id/#{game.user_id}"}= h game.name
             - else
               = h game.name
-          %td.variant{"data-title" => "Name"}= h game.variant_name
+          %td.variant{"data-title" => "Variant"}= h game.variant_name
           %td.table_character{"data-title" => "Character"}= h [game.role, game.race, game.gender, game.align].compact.join('-')
           %td{"data-title" => "Server"}= h game.server.hostname
           %td.table_number{"data-title" => "Points"}= game.points.html_formatted

@@ -101,6 +101,17 @@
                   - else
                     no games played
 
+  - if !@logged_in
+    - if @user.login == @clan.get_admin.login
+      .card-body.border-top#clan_invite
+        %h2 Invite
+        %form#invite_account.row.g-2.align-items-end{method: "POST", action: "/clan/invite"}
+          .col-auto
+            %input#accountname.form-control{name: 'accountname', type: 'text', placeholder: "junethack username"}
+          %input{type: 'hidden', name: :clan, value: @clan.name}
+          .col-auto
+            %input.btn.btn-primary{type: 'submit', value: "Invite Account"}
+
   .card-body.border-top
     =haml :clan_points_summary
 
@@ -141,14 +152,3 @@
           - unique_deaths.each do |death|
             %tr
               %td= h death
-
-  - if !@logged_in
-    - if @user.login == @clan.get_admin.login
-      .card-body.border-top#clan_invite
-        %h2 Invite
-        %form#invite_account.row.g-2.align-items-end{method: "POST", action: "/clan/invite"}
-          .col-auto
-            %input#accountname.form-control{name: 'accountname', type: 'text', placeholder: "junethack username"}
-          %input{type: 'hidden', name: :clan, value: @clan.name}
-          .col-auto
-            %input.btn.btn-primary{type: 'submit', value: "Invite Account"}

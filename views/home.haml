@@ -51,20 +51,24 @@
             = @user.invitations.length
             invitation(s)
           .table-responsive
-            %table.table.table-sm.table-junethack
+            %table.table.table-sm.table-junethack.clan-invitation
               %thead
                 %tr
                   %th Clan
-                  %th Accept
-                  %th Decline
+                  %th
+                  %th
               %tbody
                 - for invitation in @user.invitations
-                  %tr
-                    %td= invitation['clan_id']
-                    %td
-                      %a.btn.btn-success.btn-sm{:href => "/respond/#{invitation['token']}?accept=true"} Accept
-                    %td
-                      %a.btn.btn-outline-secondary.btn-sm{:href => "/respond/#{invitation['token']}?accept=false"} Decline
+                  - clan = Clan.find_by(name: invitation['clan_id'])
+                  - if clan
+                    %tr
+                      %td{style: 'width: 2em'}
+                        %img{src: clan.gravatar_link, style: 'vertical-align: middle; width: 2em'}
+                      %td
+                        %a{:href => "/clan/#{CGI::escape clan.name}"}= clan.name
+                      %td
+                        %a.btn.btn-sm.ms-2.btn-success{:href => "/respond/#{invitation['token']}?accept=true"} Accept
+                        %a.btn.btn-sm.ms-2.btn-danger{:href => "/respond/#{invitation['token']}?accept=false"} Decline
         - else
           %p
             No invitations for this user
