@@ -12,3 +12,5 @@ max_line_length=120
 [Makefile*]
 indent_style = tab
 
+[.git/COMMIT_EDITMSG]
+max_line_length=72
