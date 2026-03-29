@@ -16,7 +16,7 @@ describe 'server linking helper methods' do
 
       game = Game.new(:name => 'player', :starttime => 123456)
       grunthack = Server.new(url: 'http://grunthack.org/')
-      grunthack.dumplog_link(game).should == "http://grunthack.org/userdata/p/player/dumplog/123456.gh020.txt"
+      grunthack.dumplog_link(game).should == "https://grunthack.org/userdata/p/player/dumplog/123456.gh020.txt"
     end
 
     it 'returns a link to the european or american server of hardfought.org' do

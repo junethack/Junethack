@@ -41,7 +41,7 @@ scheduler = Rufus::Scheduler.new
 
 $application_start = Time.new
 
-# http://groups.google.com/group/rack-devel/browse_frm/thread/ffec93533180e98a
+# https://groups.google.com/group/rack-devel/browse_frm/thread/ffec93533180e98a
 class WorkaroundLogger < Logger
   alias write <<
 end
@@ -635,7 +635,7 @@ helpers do
     end
   end
 
-  # http://stackoverflow.com/questions/2950234/get-absolute-base-url-in-sinatra
+  # https://stackoverflow.com/questions/2950234/get-absolute-base-url-in-sinatra
   def base_url
     @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
   end

@@ -2,7 +2,7 @@ require 'helper'
 
 class UserScore
 
-# http://nethackwiki.com/wiki/User:Kerio/Junethack#Per-variant
+# https://nethackwiki.com/wiki/User:Kerio/Junethack#Per-variant
 # Per-variant
 # Competitions
 #  [X] Most ascensions

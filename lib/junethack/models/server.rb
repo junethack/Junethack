@@ -31,7 +31,7 @@ class Server < ActiveRecord::Base
           return "https://altorg.s3.amazonaws.com/dumplog/#{game.name}/#{game.starttime}.nh#{game.old_version.gsub('.','')}.txt"
         end
       when "grunthack.org"
-        return "http://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"
+        return "https://grunthack.org/userdata/#{game.name[0..0]}/#{game.name}/dumplog/#{game.starttime}.gh020.txt"
       when "nethack.dank.ninja", "ascension.run"
         case game.version
         when "3.4.3"
@@ -131,7 +131,7 @@ class Server < ActiveRecord::Base
           "https://em.slashem.me/userdata/#{game.name}/slashem-008/dumplog/#{starttime}.txt"
         end
       when "server.gnollhack.com"
-        "http://server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.html"
+        "https://server.gnollhack.com/userdata/#{game.name}/dumplog/gnollhack.#{game.name}.#{game.starttime}.html"
       when "account.gnollhack.com"
         gnollhack_account = Account.find_by(server_id: game.server_id, user_id: game.user_id)&.name
         "https://account.gnollhack.com/dumplog/byname/#{gnollhack_account}/#{game.starttime}"
@@ -196,13 +196,13 @@ class Server < ActiveRecord::Base
       [:us].each {|location|
         prefix = prefixes[location]
         [
-          [:gnl_hck, 'GnollHack 4.2.0.41', "http://#{prefix}.gnollhack.com/xlogfile"]
+          [:gnl_hck, 'GnollHack 4.2.0.41', "https://#{prefix}.gnollhack.com/xlogfile"]
         ].each {|server|
-          url = "http://#{prefix}.gnollhack.com/"
+          url = "https://#{prefix}.gnollhack.com/"
 
           server[0] = :us_gnl if location == :us
 
-          configfileurl = "http://#{prefix}.gnollhack.com/userdata/random_user/random_user_gnollhack.gnhrc"
+          configfileurl = "https://#{prefix}.gnollhack.com/userdata/random_user/random_user_gnollhack.gnhrc"
           Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
         }
       }
