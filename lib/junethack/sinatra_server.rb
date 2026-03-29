@@ -375,30 +375,32 @@ post "/clan" do
     end
   }
 end
+
 post "/clan/invite" do
   $db_access.synchronize {
     clan = Clan.find_by(name:params[:clan])
 
     # verify that clan admin is inviting other users
     if clan.admin[0] == @user.id
-        invited_user = User.find_by(login: params[:accountname])
-        if not invited_user then
-            session['errors'] << "Could not find Junethack username #{params[:accountname]}"
-        else
-            chars = ('a'..'z').to_a
-            invitation = {'clan_id' => clan.name, 'status' => 'open', 'user' => @user.id, 'token' => (0..30).map{ chars[rand 26] }.join}
-            clan.invitations.push(invitation)
-            clan.save!
-            invited_user.invitations.push(invitation)
-            invited_user.save!
-            session['messages'] << "Successfully invited #{invited_user.login} to #{clan.name}"
-        end
+      invited_user = User.find_by(login: params[:accountname])
+      if not invited_user then
+        session['errors'] << "Could not find Junethack username #{params[:accountname]}"
+      else
+        chars = ('a'..'z').to_a
+        invitation = {'clan_id' => clan.name, 'status' => 'open', 'user' => @user.id, 'token' => (0..30).map{ chars[rand 26] }.join}
+        clan.invitations.push(invitation)
+        clan.save!
+        invited_user.invitations.push(invitation)
+        invited_user.save!
+        session['messages'] << "Successfully invited #{invited_user.login} to #{clan.name}"
+      end
     else
-        sessions['errors'] << "You are not the clan admin"
+      session['errors'] << "You are not the clan admin"
     end
     redirect "/clan/#{CGI.escape(params[:clan])}"
   }
 end
+
 get "/respond/:token" do #respond to invitation
   $db_access.synchronize {
     puts "respond invite with params #{params.inspect}"
