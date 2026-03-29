@@ -52,7 +52,7 @@ def Trophy.check_trophies_for_variant variant_description
   raise "#{variant_description} not found" if variant.nil?
 
   # check if there are already trophies for this variant
-  if Trophy.find_by(variant: variant).nil? then
+  if Trophy.find_by(variant:).nil? then
     # NetHack 1.3d
     if variant == "NH-1.3d" then
       Trophy.create variant: "NH-1.3d", trophy: "ascended_old", text: "ascended", icon: "old-ascension.png"

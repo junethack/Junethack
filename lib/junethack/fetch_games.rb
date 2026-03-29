@@ -6,7 +6,7 @@ require 'parse'
 require 'logger'
 require 'tournament_times'
 
-Dir.mkdir('logs') unless File.exists?('logs')
+Dir.mkdir('logs') unless File.exist?('logs')
 if $stdout.tty?
   @fetch_logger = Logger.new($stdout)
 else
@@ -19,7 +19,7 @@ end
 def fetch_all
     ignored_game_modes = ['explore','multiplayer','debug','polyinit','setseed','abnormal',
                           'lostsoul','uberlostsoul','gmmode','supergmmode','wonderland']
-    if File.exists? @stop_fetching_games then
+    if File.exist?(@stop_fetching_games) then
       @fetch_logger.info "File #{@stop_fetching_games} exists, don't get new games."
       return
     end

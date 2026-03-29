@@ -4,7 +4,7 @@ require 'time'
 
 require 'singleton'
 
-Dir.mkdir('trace') unless File.exists?('trace')
+Dir.mkdir('trace') unless File.exist?('trace')
 
 class XLog
   include Singleton

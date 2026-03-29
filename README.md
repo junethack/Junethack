@@ -8,7 +8,7 @@ achievements and trophies for the participating players.
 
 ### Needed pre-installed software
 
- - ruby 3.1.7
+ - ruby 4.0.2
  - curl
  - sqlite3
 

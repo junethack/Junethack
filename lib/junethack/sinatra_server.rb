@@ -47,7 +47,7 @@ class WorkaroundLogger < Logger
 end
 # log http requests
 configure do
-    Dir.mkdir('logs') unless File.exists?('logs')
+    Dir.mkdir('logs') unless File.exist?('logs')
     use Rack::CommonLogger, WorkaroundLogger.new('logs/access.log', 'daily')
 end
 

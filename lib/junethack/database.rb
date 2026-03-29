@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'active_record'
 require 'composite_primary_keys'
+require 'ostruct'
 require 'sinatra'
 require 'sinatra/activerecord'
 

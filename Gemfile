@@ -10,6 +10,8 @@ gem "haml", "< 6.0.0"
 
 gem "sinatra"
 gem "nokogiri"
+gem 'ostruct'
+gem 'csv'
 
 gem "rufus-scheduler"
 gem 'sinatra-cache', git: 'https://github.com/kematzy/sinatra-cache.git'

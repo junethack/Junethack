@@ -8,7 +8,7 @@ class Graph
   def initialize(width=400)
     @data = []
 
-    Dir.mkdir(OUTPUT_DIRECTORY) unless File.exists?(OUTPUT_DIRECTORY)
+    Dir.mkdir(OUTPUT_DIRECTORY) unless File.exist?(OUTPUT_DIRECTORY)
   end
 
   def add_data_point(x, y)
