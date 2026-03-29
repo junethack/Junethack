@@ -96,4 +96,26 @@ This creates a timestamped file in `db/migrate/`. Edit it and run `db:migrate`.
 When no database exists, `rake db:migrate` will run all migrations starting with the baseline migration
 (`db/migrate/20260101000000_baseline_schema.rb`), which loads `db/structure.sql` to create all tables.
 
-TODO: more documentation, distinction prod/dev env, maintenance mode, manually fetching games, dummy users
+### Running the server
+
+By default, `rake` starts the server in development mode using `junethack_dev.db`:
+
+    rake
+
+For production (uses `junethack.db`):
+
+    RACK_ENV=production rake
+
+### Maintenance mode
+
+Show a maintenance page to all visitors instead of the regular site:
+
+    rake run:maintenance
+
+### Fetching games
+
+Manually fetch new xlogfile entries from all game servers:
+
+    rake db:get_games
+
+TODO: more documentation, dummy users
