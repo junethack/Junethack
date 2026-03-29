@@ -223,6 +223,7 @@ table.compact,
     border: 0;
     padding-left: 1em;
 }
+.table-junethack th.table_number,
 .table-junethack td.table_number
 {
     text-align: right;

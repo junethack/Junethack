@@ -13,8 +13,10 @@
             - if verbose
               %th
                 Last modified
-              %th
+              %th.table_number
                 Xlogfile offset
+              %th
+                Last game
         %tbody
           - servers = Server.order(:name)
           - servers.each_with_index do |server, index|
