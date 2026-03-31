@@ -9,6 +9,8 @@ set :database_file, File.expand_path('../../../config/database.yml', __FILE__)
 
 ActiveRecord.schema_format = :sql
 
+Dir.mkdir('logs') unless File.exist?('logs')
+
 configure :development do
   puts "Configuring development database"
   ActiveRecord::Base.logger = Logger.new("logs/dev_db.log")
