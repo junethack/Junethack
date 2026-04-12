@@ -11,6 +11,11 @@ ActiveRecord.schema_format = :sql
 
 Dir.mkdir('logs') unless File.exist?('logs')
 
+configure :production do
+  puts "Configuring production database"
+  ActiveRecord.dump_schema_after_migration = false
+end
+
 configure :development do
   puts "Configuring development database"
   ActiveRecord::Base.logger = Logger.new("logs/dev_db.log")

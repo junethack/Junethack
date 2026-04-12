@@ -9,6 +9,7 @@ gem "json"
 gem "haml", "< 6.0.0"
 
 gem "sinatra"
+gem "rack"
 gem "nokogiri"
 gem 'ostruct'
 gem 'csv'

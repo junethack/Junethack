@@ -201,6 +201,7 @@ DEPENDENCIES
   ostruct
   pg
   pry
+  rack
   rack-test
   rake
   rspec
