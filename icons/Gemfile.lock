@@ -1,13 +1,20 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    observer (0.1.2)
     rmagick (4.2.2)
 
 PLATFORMS
   ruby
+  x86_64-linux
 
 DEPENDENCIES
-  rmagick
+  observer
+  rmagick (~> 4)
+
+CHECKSUMS
+  observer (0.1.2) sha256=d8a3107131ba661138d748e7be3dbafc0d82e732fffba9fccb3d7829880950ac
+  rmagick (4.2.2) sha256=dca3355a3536ade4c2c4f64116b1dd743a9d73481fb0b34ce7b571c75fd95011
 
 BUNDLED WITH
-   2.2.18
+  4.0.10

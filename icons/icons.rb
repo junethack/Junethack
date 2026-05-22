@@ -70,6 +70,7 @@ entered_moria green o
 entered_the_dragon_caves white D
 entered_sheol lcyan 8
 entered_vlads_tower magenta V
+entered_wizards_tower magenta W
 entered_the_blackmarket gray @
 never_abused_alignment yellow ±
 defeated_grazzt magenta &
@@ -82,3 +83,11 @@ defeated_abominable_snowman lcyan Y
 defeated_vecna lmagenta L
 defeated_kas gray V
 defeated_goblin_king lmagenta ŏ
+entered_juiblex green ≋
+entered_baalzebub lcyan ≡
+entered_asmodeus red ^
+entered_orcus gray †
+visited_lawful_high_altar_on_astral_plane magenta <
+visited_neutral_high_altar_on_astral_plane magenta ∧
+visited_chaotic_high_altar_on_astral_plane magenta >
+visited_all_high_altars_on_astral_plane magenta Ω

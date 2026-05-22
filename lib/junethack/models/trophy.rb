@@ -296,7 +296,21 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:entered_the_dragon_caves, "entered the Dragon Caves", 2]
         achievements << [:entered_sheol, "entered Sheol", 2]
         achievements << [:entered_vlads_tower, "entered Vlad's tower", 2]
+        achievements << [:entered_wizards_tower, "entered the Wizard's tower", 2]
         achievements << [:entered_the_blackmarket, "entered the Blackmarket", 2]
+        achievements << [:entered_juiblex, "entered Juiblex' level", 2]
+        achievements << [:entered_baalzebub, "entered Baalzebub' level", 2]
+        achievements << [:entered_asmodeus, "entered Asmodeus' level", 2]
+        achievements << [:entered_orcus, "entered Orcus' level", 2]
+
+        achievements << [:visited_lawful_high_altar_on_astral_plane,
+                         "visited the lawful high altar on the Astral Plane", 3]
+        achievements << [:visited_neutral_high_altar_on_astral_plane,
+                         "visited the neutral high altar on the Astral Plane", 3]
+        achievements << [:visited_chaotic_high_altar_on_astral_plane,
+                         "visited the chaotic high altar on the Astral Plane", 3]
+        achievements << [:visited_all_high_altars_on_astral_plane,
+                         "visited all high altars on the Astral Plane", 3]
       end
 
       if variant == gnollhack

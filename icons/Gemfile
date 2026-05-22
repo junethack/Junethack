@@ -1,3 +1,4 @@
 source "http://rubygems.org"
 
-gem 'rmagick'
+gem 'rmagick', '~> 4'
+gem 'observer'
