@@ -13,6 +13,7 @@ require 'sinatra/activerecord/rake'
 require 'rake'
 
 load File.expand_path('spec/spec.rake')
+load File.expand_path('lib/tasks/structure_sql_prettify.rake')
 
 # default database is development
 ENV['RACK_ENV'] = "development" unless ENV['RACK_ENV']
