@@ -89,7 +89,7 @@
               %td.table_number= "<a class='hidden_link' href='/ascensions/#{v}'>#{ascended_variant_games}</a>"
 
   - cache_fragment("games_#{Game.max_endtime}") do
-    - @finished_games_per_day = Game.where.not(user_id: nil).select("date(endtime, 'unixepoch') as datum, count(1) as count").group("datum").order("datum asc")
+    - @finished_games_per_day = Game.where.not(user_id: nil).select("to_timestamp(endtime)::date AS datum, count(1) as count").group("datum").order("datum ASC")
     .card-body.border-top
       %h2 Finished Games per Day
       .table-responsive
@@ -114,7 +114,7 @@
   - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
     // Ugly SQL to also get days with zero ascensions. Will only work
     // as long there are any games for each day
-    - @ascensions_per_day = Game.find_by_sql("SELECT days.datum, endtime, count FROM (SELECT endtime, date(endtime, 'unixepoch') AS datum FROM games GROUP BY datum) days LEFT JOIN (SELECT datum, count(1) AS count FROM (SELECT date(endtime, 'unixepoch') AS datum FROM games WHERE user_id IS NOT NULL AND ascended = true) GROUP BY datum) counts ON counts.datum = days.datum")
+    - @ascensions_per_day = Game.find_by_sql("SELECT days.datum, endtime, count FROM (SELECT max(endtime) AS endtime, to_timestamp(endtime)::date AS datum FROM games GROUP BY datum) AS days LEFT JOIN (SELECT datum, count(1) AS count FROM (SELECT to_timestamp(endtime)::date AS datum FROM games WHERE user_id IS NOT NULL AND ascended = TRUE) AS ascended_games GROUP BY datum) counts ON counts.datum = days.datum")
     .card-body.border-top
       %h2 Ascensions per Day
       .table-responsive

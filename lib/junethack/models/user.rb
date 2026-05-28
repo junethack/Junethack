@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
     end
 
     def User.max_created_at
-        ActiveRecord::Base.connection.select_values "select strftime('%s',max(created_at)) from users"
+      ActiveRecord::Base.connection.select_values('SELECT EXTRACT(EPOCH FROM MAX(created_at))::int FROM users')
     end
 
     def display_game_statistics

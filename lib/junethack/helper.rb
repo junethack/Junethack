@@ -96,8 +96,8 @@ def helper_get_variant_for(description)
 end
 
 def helper_get_variants_for_user(id)
-    variants = ActiveRecord::Base.connection.select_values("select distinct version from games where user_id = ?", "SQL", [id])
-    $variants_mapping.dup.reject {|key,value| not variants.include? key }
+  variants = ActiveRecord::Base.connection.select_values("select distinct version from games where user_id = $1", "SQL", [id])
+  $variants_mapping.dup.reject {|key,value| not variants.include? key }
 end
 
 def helper_get_score(key, variant)

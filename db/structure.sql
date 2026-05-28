@@ -1,457 +1,639 @@
-CREATE TABLE IF NOT EXISTS "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY);
-CREATE TABLE IF NOT EXISTS "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
-CREATE TABLE IF NOT EXISTS "servers" (
-  "id"                  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "name"                VARCHAR(255),
-  "url"                 VARCHAR(255),
-  "xlogurl"             VARCHAR(255),
-  "xloglastmodified"    VARCHAR(255) DEFAULT 'Sat Jan 01 00:00:00 UTC 2000',
-  "variant"             VARCHAR(255),
-  "xlogcurrentoffset"   INTEGER,
-  "configfileurl"       VARCHAR(255)
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+CREATE TABLE public.accounts (
+    server_id integer NOT NULL,
+    user_id integer NOT NULL,
+    name character varying(255),
+    verified boolean DEFAULT false
 );
-CREATE TABLE sqlite_sequence(name,seq);
-CREATE TABLE IF NOT EXISTS "users" (
-  "id"          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "login"       VARCHAR(255),
-  "hashed"      VARCHAR(64),
-  "salt"        VARCHAR(64),
-  "invitations" TEXT,
-  "created_at"  TIMESTAMP,
-  "updated_at"  TIMESTAMP,
-  "clan_name"   VARCHAR(29)
+
+CREATE INDEX index_accounts_server ON public.accounts USING btree (server_id);
+CREATE INDEX index_accounts_user ON public.accounts USING btree (user_id);
+
+CREATE TABLE public.ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
 );
-CREATE INDEX "index_users_clan" ON "users" ("clan_name");
-CREATE TABLE IF NOT EXISTS "accounts" (
-  "name"      VARCHAR(255),
-  "verified"  BOOLEAN DEFAULT 0,
-  "user_id"   INTEGER NOT NULL,
-  "server_id" INTEGER NOT NULL,
-  PRIMARY KEY("user_id", "server_id")
+
+CREATE TABLE public.clan_score_entries (
+    clan_name character varying(29) NOT NULL,
+    icon character varying(255),
+    points double precision DEFAULT 0.0,
+    rank integer DEFAULT '-1'::integer,
+    trophy character varying(255) NOT NULL,
+    value integer
 );
-CREATE INDEX "index_accounts_user"   ON "accounts" ("user_id");
-CREATE INDEX "index_accounts_server"  ON "accounts" ("server_id");
-CREATE TABLE IF NOT EXISTS "games" (
-  "id"                          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "name"                        VARCHAR(255),
-  "deaths"                      INTEGER,
-  "deathlev"                    INTEGER,
-  "realtime"                    INTEGER,
-  "turns"                       INTEGER,
-  "birthdate"                   VARCHAR(255),
-  "conduct"                     VARCHAR(255) DEFAULT '0',
-  "nconducts"                   INTEGER,
-  "conduct_x"                   TEXT,
-  "role"                        VARCHAR(255),
-  "deathdnum"                   INTEGER,
-  "gender"                      VARCHAR(255),
-  "gender0"                     VARCHAR(255),
-  "uid"                         INTEGER,
-  "maxhp"                       INTEGER,
-  "points"                      INTEGER,
-  "deathdate"                   VARCHAR(255),
-  "version"                     VARCHAR(255) NOT NULL,
-  "old_version"                 VARCHAR(255),
-  "align"                       VARCHAR(255),
-  "align0"                      VARCHAR(255),
-  "starttime"                   INTEGER,
-  "endtime"                     INTEGER,
-  "achieve"                     VARCHAR(255),
-  "nachieves"                   INTEGER,
-  "hp"                          INTEGER,
-  "maxlvl"                      INTEGER,
-  "death"                       VARCHAR(255),
-  "race"                        VARCHAR(255),
-  "flags"                       VARCHAR(255),
-  "ascended"                    BOOLEAN DEFAULT 0,
-  "carried"                     VARCHAR(255),
-  "event"                       VARCHAR(255),
-  "deathdname"                  VARCHAR(255),
-  "dlev_name"                   VARCHAR(255),
-  "elbereths"                   INTEGER DEFAULT -1,
-  "user_seed"                   VARCHAR(255),
-  "seed"                        VARCHAR(255),
-  "xplevel"                     INTEGER DEFAULT 0,
-  "exp"                         INTEGER DEFAULT 0,
-  "mode"                        VARCHAR(255),
-  "gold"                        INTEGER DEFAULT -1,
-  "killed_uniques"              TEXT,
-  "killed_nazgul"               INTEGER DEFAULT 0,
-  "killed_erinyes"              INTEGER DEFAULT 0,
-  "killed_weeping_archangels"   INTEGER DEFAULT 0,
-  "killed_archangels"           INTEGER DEFAULT 0,
-  "wish_cnt"                    INTEGER DEFAULT -1,
-  "magic_wish_cnt"              INTEGER DEFAULT -1,
-  "arti_wish_cnt"               INTEGER DEFAULT -1,
-  "bones"                       INTEGER DEFAULT -1,
-  "charname"                    VARCHAR(255),
-  "extrinsic"                   VARCHAR(255),
-  "intrinsic"                   VARCHAR(255),
-  "temporary"                   VARCHAR(255),
-  "rngseed"                     VARCHAR(255),
-  "dumplog"                     VARCHAR(255),
-  "birthoption"                 VARCHAR(255),
-  "starttimeus"                 INTEGER,
-  "endtimeus"                   INTEGER,
-  "dnetachieve"                 VARCHAR(255),
-  "inherited"                   VARCHAR(255),
-  "species"                     VARCHAR(255),
-  "species0"                    VARCHAR(255),
-  "variant"                     VARCHAR(255),
-  "versionstring"               VARCHAR(255),
-  "name64"                      VARCHAR(255),
-  "charname64"                  VARCHAR(255),
-  "death64"                     VARCHAR(255),
-  "dumplog64"                   VARCHAR(255),
-  "modes"                       VARCHAR(255),
-  "hybrid"                      VARCHAR(255),
-  "gamemode"                    VARCHAR(255),
-  "achieve_x"                   TEXT,
-  "alias"                       VARCHAR(255),
-  "role0"                       VARCHAR(255),
-  "race0"                       VARCHAR(255),
-  "polyinit"                    VARCHAR(255),
-  "while"                       VARCHAR(255),
-  "difficulty"                  VARCHAR(255),
-  "demo"                        VARCHAR(255),
-  "gameidnum"                   INTEGER,
-  "gengold"                     VARCHAR(255),
-  "scoring"                     VARCHAR(255),
-  "edit"                        VARCHAR(255),
-  "cname"                       VARCHAR(255),
-  "collapse"                    VARCHAR(255),
-  "tournament"                  VARCHAR(255),
-  "starttime_utc"               INTEGER,
-  "endtime_utc"                 INTEGER,
-  "platform"                    VARCHAR(255),
-  "platformversion"             VARCHAR(255),
-  "port"                        VARCHAR(255),
-  "portversion"                 VARCHAR(255),
-  "portbuild"                   VARCHAR(255),
-  "store"                       VARCHAR(255),
-  "xplvl"                       INTEGER,
-  "seclvl"                      INTEGER DEFAULT -1,
-  "portseclvl"                  INTEGER,
-  "killed_medusa"               INTEGER,
-  "server_id"                   INTEGER NOT NULL,
-  "user_id"                     INTEGER
+
+CREATE INDEX index_clan_score_entries_clan ON public.clan_score_entries USING btree (clan_name);
+CREATE UNIQUE INDEX unique_clan_score_entries_key ON public.clan_score_entries USING btree (trophy, clan_name);
+
+CREATE TABLE public.clan_score_histories (
+    id integer NOT NULL,
+    clan_name character varying(29) NOT NULL,
+    icon character varying(255),
+    points double precision DEFAULT 0.0,
+    rank integer DEFAULT '-1'::integer,
+    trophy character varying(255),
+    value integer,
+    created_at timestamp with time zone
 );
-CREATE INDEX "index_games_server"          ON "games" ("server_id");
-CREATE INDEX "index_games_user"            ON "games" ("user_id");
-CREATE INDEX "index_games_endtime_user_id" ON "games" ("endtime" DESC, "user_id");
-CREATE INDEX "index_games_highscore"       ON "games" ("user_id", "death", "server_id", "points", "endtime");
-CREATE INDEX "index_games_user_id_version" ON "games" ("user_id", "version");
-CREATE INDEX "index_trophy_ascensions"     ON "games" ("ascended" DESC, "user_id", "version");
-CREATE TABLE IF NOT EXISTS "normalized_deaths" (
-  "death"   VARCHAR(255),
-  "monster" VARCHAR(255),
-  "game_id" INTEGER NOT NULL,
-  "user_id" INTEGER,
-  PRIMARY KEY("game_id")
+
+CREATE INDEX index_clan_score_histories_clan ON public.clan_score_histories USING btree (clan_name);
+
+ALTER TABLE public.clan_score_histories ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.clan_score_histories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
 );
-CREATE INDEX "index_normalized_deaths_game" ON "normalized_deaths" ("game_id");
-CREATE INDEX "index_normalized_deaths_user" ON "normalized_deaths" ("user_id");
-CREATE TABLE IF NOT EXISTS "start_scummed_games" (
-  "id"                          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "name"                        VARCHAR(255),
-  "deaths"                      INTEGER,
-  "deathlev"                    INTEGER,
-  "realtime"                    INTEGER,
-  "turns"                       INTEGER,
-  "birthdate"                   VARCHAR(255),
-  "conduct"                     VARCHAR(255) DEFAULT '0',
-  "nconducts"                   INTEGER,
-  "conduct_x"                   TEXT,
-  "role"                        VARCHAR(255),
-  "deathdnum"                   INTEGER,
-  "gender"                      VARCHAR(255),
-  "gender0"                     VARCHAR(255),
-  "uid"                         INTEGER,
-  "maxhp"                       INTEGER,
-  "points"                      INTEGER,
-  "deathdate"                   VARCHAR(255),
-  "version"                     VARCHAR(255),
-  "old_version"                 VARCHAR(255),
-  "align"                       VARCHAR(255),
-  "align0"                      VARCHAR(255),
-  "starttime"                   INTEGER,
-  "endtime"                     INTEGER,
-  "achieve"                     VARCHAR(255),
-  "nachieves"                   INTEGER,
-  "hp"                          INTEGER,
-  "maxlvl"                      INTEGER,
-  "death"                       VARCHAR(255),
-  "race"                        VARCHAR(255),
-  "flags"                       VARCHAR(255),
-  "ascended"                    BOOLEAN DEFAULT 0,
-  "carried"                     VARCHAR(255),
-  "event"                       VARCHAR(255),
-  "deathdname"                  VARCHAR(255),
-  "dlev_name"                   VARCHAR(255),
-  "elbereths"                   INTEGER DEFAULT -1,
-  "user_seed"                   VARCHAR(255),
-  "seed"                        VARCHAR(255),
-  "xplevel"                     INTEGER DEFAULT 0,
-  "exp"                         INTEGER DEFAULT 0,
-  "mode"                        VARCHAR(255),
-  "gold"                        INTEGER DEFAULT -1,
-  "killed_uniques"              TEXT,
-  "killed_nazgul"               INTEGER DEFAULT 0,
-  "killed_erinyes"              INTEGER DEFAULT 0,
-  "killed_weeping_archangels"   INTEGER DEFAULT 0,
-  "killed_archangels"           INTEGER DEFAULT 0,
-  "wish_cnt"                    INTEGER DEFAULT -1,
-  "magic_wish_cnt"              INTEGER DEFAULT -1,
-  "arti_wish_cnt"               INTEGER DEFAULT -1,
-  "bones"                       INTEGER DEFAULT -1,
-  "charname"                    VARCHAR(255),
-  "extrinsic"                   VARCHAR(255),
-  "intrinsic"                   VARCHAR(255),
-  "temporary"                   VARCHAR(255),
-  "rngseed"                     VARCHAR(255),
-  "dumplog"                     VARCHAR(255),
-  "birthoption"                 VARCHAR(255),
-  "starttimeus"                 INTEGER,
-  "endtimeus"                   INTEGER,
-  "dnetachieve"                 VARCHAR(255),
-  "inherited"                   VARCHAR(255),
-  "species"                     VARCHAR(255),
-  "species0"                    VARCHAR(255),
-  "variant"                     VARCHAR(255),
-  "versionstring"               VARCHAR(255),
-  "name64"                      VARCHAR(255),
-  "charname64"                  VARCHAR(255),
-  "death64"                     VARCHAR(255),
-  "dumplog64"                   VARCHAR(255),
-  "modes"                       VARCHAR(255),
-  "hybrid"                      VARCHAR(255),
-  "gamemode"                    VARCHAR(255),
-  "achieve_x"                   TEXT,
-  "alias"                       VARCHAR(255),
-  "role0"                       VARCHAR(255),
-  "race0"                       VARCHAR(255),
-  "polyinit"                    VARCHAR(255),
-  "while"                       VARCHAR(255),
-  "difficulty"                  VARCHAR(255),
-  "demo"                        VARCHAR(255),
-  "gameidnum"                   INTEGER,
-  "gengold"                     VARCHAR(255),
-  "scoring"                     VARCHAR(255),
-  "edit"                        VARCHAR(255),
-  "cname"                       VARCHAR(255),
-  "collapse"                    VARCHAR(255),
-  "tournament"                  VARCHAR(255),
-  "starttime_utc"               INTEGER,
-  "endtime_utc"                 INTEGER,
-  "platform"                    VARCHAR(255),
-  "platformversion"             VARCHAR(255),
-  "port"                        VARCHAR(255),
-  "portversion"                 VARCHAR(255),
-  "portbuild"                   VARCHAR(255),
-  "store"                       VARCHAR(255),
-  "xplvl"                       INTEGER,
-  "seclvl"                      INTEGER DEFAULT -1,
-  "portseclvl"                  INTEGER,
-  "killed_medusa"               INTEGER,
-  "server_id"                   INTEGER NOT NULL,
-  "user_id"                     INTEGER
+
+CREATE TABLE public.clans (
+    admin text,
+    description character varying(500) DEFAULT ''::character varying,
+    gravatar character varying(32),
+    invitations text DEFAULT '[]'::text,
+    name character varying(29) NOT NULL
 );
-CREATE INDEX "index_start_scummed_games_server" ON "start_scummed_games" ("server_id");
-CREATE INDEX "index_start_scummed_games_user"   ON "start_scummed_games" ("user_id");
-CREATE TABLE IF NOT EXISTS "junk_games" (
-  "id"                          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "name"                        VARCHAR(255),
-  "deaths"                      INTEGER,
-  "deathlev"                    INTEGER,
-  "realtime"                    INTEGER,
-  "turns"                       INTEGER,
-  "birthdate"                   VARCHAR(255),
-  "conduct"                     VARCHAR(255),
-  "nconducts"                   INTEGER,
-  "conduct_x"                   TEXT,
-  "role"                        VARCHAR(255),
-  "deathdnum"                   INTEGER,
-  "gender"                      VARCHAR(255),
-  "gender0"                     VARCHAR(255),
-  "uid"                         INTEGER,
-  "maxhp"                       INTEGER,
-  "points"                      INTEGER,
-  "deathdate"                   VARCHAR(255),
-  "version"                     VARCHAR(255),
-  "old_version"                 VARCHAR(255),
-  "align"                       VARCHAR(255),
-  "align0"                      VARCHAR(255),
-  "starttime"                   INTEGER,
-  "endtime"                     INTEGER,
-  "achieve"                     VARCHAR(255),
-  "nachieves"                   INTEGER,
-  "hp"                          INTEGER,
-  "maxlvl"                      INTEGER,
-  "death"                       VARCHAR(255),
-  "race"                        VARCHAR(255),
-  "flags"                       VARCHAR(255),
-  "ascended"                    BOOLEAN DEFAULT 0,
-  "carried"                     VARCHAR(255),
-  "event"                       VARCHAR(255),
-  "deathdname"                  VARCHAR(255),
-  "dlev_name"                   VARCHAR(255),
-  "elbereths"                   INTEGER DEFAULT -1,
-  "user_seed"                   VARCHAR(255),
-  "seed"                        VARCHAR(255),
-  "xplevel"                     INTEGER DEFAULT 0,
-  "exp"                         INTEGER DEFAULT 0,
-  "mode"                        VARCHAR(255),
-  "gold"                        INTEGER DEFAULT -1,
-  "killed_uniques"              TEXT,
-  "killed_nazgul"               INTEGER DEFAULT 0,
-  "killed_erinyes"              INTEGER DEFAULT 0,
-  "killed_weeping_archangels"   INTEGER DEFAULT 0,
-  "killed_archangels"           INTEGER DEFAULT 0,
-  "wish_cnt"                    INTEGER DEFAULT -1,
-  "magic_wish_cnt"              INTEGER DEFAULT -1,
-  "arti_wish_cnt"               INTEGER DEFAULT -1,
-  "bones"                       INTEGER DEFAULT -1,
-  "charname"                    VARCHAR(255),
-  "extrinsic"                   VARCHAR(255),
-  "intrinsic"                   VARCHAR(255),
-  "temporary"                   VARCHAR(255),
-  "rngseed"                     VARCHAR(255),
-  "dumplog"                     VARCHAR(255),
-  "birthoption"                 VARCHAR(255),
-  "starttimeus"                 INTEGER,
-  "endtimeus"                   INTEGER,
-  "dnetachieve"                 VARCHAR(255),
-  "inherited"                   VARCHAR(255),
-  "species"                     VARCHAR(255),
-  "species0"                    VARCHAR(255),
-  "variant"                     VARCHAR(255),
-  "versionstring"               VARCHAR(255),
-  "name64"                      VARCHAR(255),
-  "charname64"                  VARCHAR(255),
-  "death64"                     VARCHAR(255),
-  "dumplog64"                   VARCHAR(255),
-  "modes"                       VARCHAR(255),
-  "hybrid"                      VARCHAR(255),
-  "gamemode"                    VARCHAR(255),
-  "achieve_x"                   TEXT,
-  "alias"                       VARCHAR(255),
-  "role0"                       VARCHAR(255),
-  "race0"                       VARCHAR(255),
-  "polyinit"                    VARCHAR(255),
-  "while"                       VARCHAR(255),
-  "difficulty"                  VARCHAR(255),
-  "demo"                        VARCHAR(255),
-  "gameidnum"                   INTEGER,
-  "gengold"                     VARCHAR(255),
-  "scoring"                     VARCHAR(255),
-  "edit"                        VARCHAR(255),
-  "cname"                       VARCHAR(255),
-  "collapse"                    VARCHAR(255),
-  "tournament"                  VARCHAR(255),
-  "starttime_utc"               INTEGER,
-  "endtime_utc"                 INTEGER,
-  "platform"                    VARCHAR(255),
-  "platformversion"             VARCHAR(255),
-  "port"                        VARCHAR(255),
-  "portversion"                 VARCHAR(255),
-  "portbuild"                   VARCHAR(255),
-  "store"                       VARCHAR(255),
-  "xplvl"                       INTEGER,
-  "seclvl"                      INTEGER DEFAULT -1,
-  "portseclvl"                  INTEGER,
-  "killed_medusa"               INTEGER,
-  "server_id"                   INTEGER NOT NULL,
-  "user_id"                     INTEGER
+
+CREATE TABLE public.competition_score_entries (
+    user_id integer NOT NULL,
+    icon character varying(255),
+    rank integer DEFAULT '-1'::integer,
+    trophy character varying(255) NOT NULL,
+    value integer,
+    variant character varying(255) NOT NULL
 );
-CREATE INDEX "index_junk_games_server" ON "junk_games" ("server_id");
-CREATE INDEX "index_junk_games_user"   ON "junk_games" ("user_id");
-CREATE TABLE IF NOT EXISTS "clans" (
-  "admin"       TEXT,
-  "name"        VARCHAR(29) NOT NULL,
-  "invitations" TEXT DEFAULT '[]',
-  "gravatar"    VARCHAR(32),
-  "description" VARCHAR(500) DEFAULT '',
-  PRIMARY KEY("name")
+
+CREATE INDEX index_competition_score_entries_user ON public.competition_score_entries USING btree (user_id);
+CREATE UNIQUE INDEX unique_competition_score_entries_key ON public.competition_score_entries USING btree (trophy, variant, user_id);
+
+CREATE TABLE public.events (
+    id integer NOT NULL,
+    text character varying(255),
+    url character varying(255),
+    created_at timestamp with time zone
 );
-CREATE TABLE IF NOT EXISTS "scoreentries" (
-  "variant"         VARCHAR(255) NOT NULL,
-  "trophy"          VARCHAR(255) NOT NULL,
-  "trophy_display"  VARCHAR(255),
-  "value"           VARCHAR(255),
-  "value_display"   VARCHAR(255),
-  "icon"            VARCHAR(255),
-  "endtime"         INTEGER,
-  "user_id"         INTEGER NOT NULL,
-  PRIMARY KEY("variant", "trophy", "user_id")
+
+ALTER TABLE public.events ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.events_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
 );
-CREATE INDEX "index_scoreentries_user"  ON "scoreentries" ("user_id");
-CREATE UNIQUE INDEX "unique_scoreentries_key"  ON "scoreentries" ("variant", "trophy", "user_id");
-CREATE TABLE IF NOT EXISTS "individualtrophies" (
-  "trophy"  VARCHAR(255) NOT NULL,
-  "icon"    VARCHAR(255),
-  "user_id" INTEGER NOT NULL,
-  PRIMARY KEY("trophy", "user_id")
+
+CREATE TABLE public.games (
+    id integer NOT NULL,
+    server_id integer NOT NULL,
+    user_id integer,
+    achieve character varying(255),
+    achieve_x text,
+    alias character varying(255),
+    align character varying(255),
+    align0 character varying(255),
+    arti_wish_cnt integer DEFAULT '-1'::integer,
+    ascended boolean DEFAULT false,
+    birthdate character varying(255),
+    birthoption character varying(255),
+    bones integer DEFAULT '-1'::integer,
+    carried character varying(255),
+    charname character varying(255),
+    charname64 character varying(255),
+    cname character varying(255),
+    collapse character varying(255),
+    conduct character varying(255) DEFAULT '0'::character varying,
+    conduct_x text,
+    death character varying(255),
+    death64 character varying(255),
+    deathdate character varying(255),
+    deathdname character varying(255),
+    deathdnum integer,
+    deathlev integer,
+    deaths integer,
+    demo character varying(255),
+    difficulty character varying(255),
+    dlev_name character varying(255),
+    dnetachieve character varying(255),
+    dumplog character varying(255),
+    dumplog64 character varying(255),
+    edit character varying(255),
+    elbereths integer DEFAULT '-1'::integer,
+    endtime integer,
+    endtime_utc integer,
+    endtimeus bigint,
+    event character varying(255),
+    exp integer DEFAULT 0,
+    extrinsic character varying(255),
+    flags character varying(255),
+    gameidnum integer,
+    gamemode character varying(255),
+    gender character varying(255),
+    gender0 character varying(255),
+    gengold character varying(255),
+    gold integer DEFAULT '-1'::integer,
+    hp integer,
+    hybrid character varying(255),
+    inherited character varying(255),
+    intrinsic character varying(255),
+    killed_archangels integer DEFAULT 0,
+    killed_erinyes integer DEFAULT 0,
+    killed_medusa integer,
+    killed_nazgul integer DEFAULT 0,
+    killed_uniques text,
+    killed_weeping_archangels integer DEFAULT 0,
+    magic_wish_cnt integer DEFAULT '-1'::integer,
+    maxhp integer,
+    maxlvl integer,
+    mode character varying(255),
+    modes character varying(255),
+    nachieves integer,
+    name character varying(255),
+    name64 character varying(255),
+    nconducts integer,
+    old_version character varying(255),
+    platform character varying(255),
+    platformversion character varying(255),
+    points bigint,
+    polyinit character varying(255),
+    port character varying(255),
+    portbuild character varying(255),
+    portseclvl integer,
+    portversion character varying(255),
+    race character varying(255),
+    race0 character varying(255),
+    realtime integer,
+    rngseed character varying(255),
+    role character varying(255),
+    role0 character varying(255),
+    scoring character varying(255),
+    seclvl integer DEFAULT '-1'::integer,
+    seed character varying(255),
+    species character varying(255),
+    species0 character varying(255),
+    starttime integer,
+    starttime_utc integer,
+    starttimeus bigint,
+    store character varying(255),
+    temporary character varying(255),
+    tournament character varying(255),
+    turns integer,
+    uid integer,
+    user_seed character varying(255),
+    variant character varying(255),
+    version character varying(255) NOT NULL,
+    versionstring character varying(255),
+    while character varying(255),
+    wish_cnt integer DEFAULT '-1'::integer,
+    xplevel integer DEFAULT 0,
+    xplvl integer
 );
-CREATE INDEX "index_individualtrophies_user"  ON "individualtrophies" ("user_id");
-CREATE UNIQUE INDEX "unique_individualtrophies_key"  ON "individualtrophies" ("trophy", "user_id");
-CREATE TABLE IF NOT EXISTS "clan_score_entries" (
-  "trophy"    VARCHAR(255) NOT NULL,
-  "value"     INTEGER,
-  "icon"      VARCHAR(255),
-  "rank"      INTEGER DEFAULT -1,
-  "points"    FLOAT DEFAULT 0.0,
-  "clan_name" VARCHAR(29) NOT NULL,
-  PRIMARY KEY("trophy", "clan_name")
+
+CREATE INDEX index_games_endtime_user_id ON public.games USING btree (endtime DESC, user_id);
+CREATE INDEX index_games_highscore ON public.games USING btree (user_id, death, server_id, points, endtime);
+CREATE INDEX index_games_server ON public.games USING btree (server_id);
+CREATE INDEX index_games_user ON public.games USING btree (user_id);
+CREATE INDEX index_games_user_id_version ON public.games USING btree (user_id, version);
+CREATE INDEX index_trophy_ascensions ON public.games USING btree (ascended DESC, user_id, version);
+
+ALTER TABLE public.games ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.games_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
 );
-CREATE INDEX "index_clan_score_entries_clan"  ON "clan_score_entries" ("clan_name");
-CREATE UNIQUE INDEX "unique_clan_score_entries_key"  ON "clan_score_entries" ("trophy", "clan_name");
-CREATE TABLE IF NOT EXISTS "clan_score_histories" (
-  "id"         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "trophy"     VARCHAR(255),
-  "value"      INTEGER,
-  "icon"       VARCHAR(255),
-  "rank"       INTEGER DEFAULT -1,
-  "points"     FLOAT DEFAULT 0.0,
-  "created_at" TIMESTAMP,
-  "clan_name"  VARCHAR(29) NOT NULL
+
+CREATE TABLE public.individualtrophies (
+    user_id integer NOT NULL,
+    icon character varying(255),
+    trophy character varying(255) NOT NULL
 );
-CREATE INDEX "index_clan_score_histories_clan" ON "clan_score_histories" ("clan_name");
-CREATE TABLE IF NOT EXISTS "competition_score_entries" (
-  "trophy"  VARCHAR(255) NOT NULL,
-  "variant" VARCHAR(255) NOT NULL,
-  "value"   INTEGER,
-  "icon"    VARCHAR(255),
-  "rank"    INTEGER DEFAULT -1,
-  "user_id" INTEGER NOT NULL,
-  PRIMARY KEY("trophy", "variant", "user_id")
+
+CREATE INDEX index_individualtrophies_user ON public.individualtrophies USING btree (user_id);
+CREATE UNIQUE INDEX unique_individualtrophies_key ON public.individualtrophies USING btree (trophy, user_id);
+
+CREATE TABLE public.junk_games (
+    id integer NOT NULL,
+    server_id integer NOT NULL,
+    user_id integer,
+    achieve character varying(255),
+    achieve_x text,
+    alias character varying(255),
+    align character varying(255),
+    align0 character varying(255),
+    arti_wish_cnt integer DEFAULT '-1'::integer,
+    ascended boolean DEFAULT false,
+    birthdate character varying(255),
+    birthoption character varying(255),
+    bones integer DEFAULT '-1'::integer,
+    carried character varying(255),
+    charname character varying(255),
+    charname64 character varying(255),
+    cname character varying(255),
+    collapse character varying(255),
+    conduct character varying(255),
+    conduct_x text,
+    death character varying(255),
+    death64 character varying(255),
+    deathdate character varying(255),
+    deathdname character varying(255),
+    deathdnum integer,
+    deathlev integer,
+    deaths integer,
+    demo character varying(255),
+    difficulty character varying(255),
+    dlev_name character varying(255),
+    dnetachieve character varying(255),
+    dumplog character varying(255),
+    dumplog64 character varying(255),
+    edit character varying(255),
+    elbereths integer DEFAULT '-1'::integer,
+    endtime integer,
+    endtime_utc integer,
+    endtimeus bigint,
+    event character varying(255),
+    exp integer DEFAULT 0,
+    extrinsic character varying(255),
+    flags character varying(255),
+    gameidnum integer,
+    gamemode character varying(255),
+    gender character varying(255),
+    gender0 character varying(255),
+    gengold character varying(255),
+    gold integer DEFAULT '-1'::integer,
+    hp integer,
+    hybrid character varying(255),
+    inherited character varying(255),
+    intrinsic character varying(255),
+    killed_archangels integer DEFAULT 0,
+    killed_erinyes integer DEFAULT 0,
+    killed_medusa integer,
+    killed_nazgul integer DEFAULT 0,
+    killed_uniques text,
+    killed_weeping_archangels integer DEFAULT 0,
+    magic_wish_cnt integer DEFAULT '-1'::integer,
+    maxhp integer,
+    maxlvl integer,
+    mode character varying(255),
+    modes character varying(255),
+    nachieves integer,
+    name character varying(255),
+    name64 character varying(255),
+    nconducts integer,
+    old_version character varying(255),
+    platform character varying(255),
+    platformversion character varying(255),
+    points bigint,
+    polyinit character varying(255),
+    port character varying(255),
+    portbuild character varying(255),
+    portseclvl integer,
+    portversion character varying(255),
+    race character varying(255),
+    race0 character varying(255),
+    realtime integer,
+    rngseed character varying(255),
+    role character varying(255),
+    role0 character varying(255),
+    scoring character varying(255),
+    seclvl integer DEFAULT '-1'::integer,
+    seed character varying(255),
+    species character varying(255),
+    species0 character varying(255),
+    starttime integer,
+    starttime_utc integer,
+    starttimeus bigint,
+    store character varying(255),
+    temporary character varying(255),
+    tournament character varying(255),
+    turns integer,
+    uid integer,
+    user_seed character varying(255),
+    variant character varying(255),
+    version character varying(255),
+    versionstring character varying(255),
+    while character varying(255),
+    wish_cnt integer DEFAULT '-1'::integer,
+    xplevel integer DEFAULT 0,
+    xplvl integer
 );
-CREATE INDEX "index_competition_score_entries_user"  ON "competition_score_entries" ("user_id");
-CREATE UNIQUE INDEX "unique_competition_score_entries_key"  ON "competition_score_entries" ("trophy", "variant", "user_id");
-CREATE TABLE IF NOT EXISTS "trophies" (
-  "id"               INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "variant"          VARCHAR(255),
-  "trophy"           VARCHAR(255) NOT NULL,
-  "text"             VARCHAR(255) NOT NULL,
-  "icon"             VARCHAR(255) NOT NULL,
-  "row"              INTEGER DEFAULT 1,
-  "user_competition" BOOLEAN DEFAULT 0 NOT NULL
+
+CREATE INDEX index_junk_games_server ON public.junk_games USING btree (server_id);
+CREATE INDEX index_junk_games_user ON public.junk_games USING btree (user_id);
+
+ALTER TABLE public.junk_games ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.junk_games_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
 );
-CREATE UNIQUE INDEX "unique_trophy_variant" ON "trophies" ("variant", "trophy");
-CREATE TABLE IF NOT EXISTS "events" (
-  "id"         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "text"       VARCHAR(255),
-  "url"        VARCHAR(255),
-  "created_at" TIMESTAMP
+
+CREATE TABLE public.news (
+    id integer NOT NULL,
+    html character varying(255) NOT NULL,
+    text character varying(255),
+    url character varying(255),
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
 );
-CREATE TABLE IF NOT EXISTS "news" (
-  "id"         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  "html"       VARCHAR(255) NOT NULL,
-  "text"       VARCHAR(255),
-  "url"        VARCHAR(255),
-  "created_at" TIMESTAMP,
-  "updated_at" TIMESTAMP
+
+ALTER TABLE public.news ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.news_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
 );
+
+CREATE TABLE public.normalized_deaths (
+    game_id integer NOT NULL,
+    user_id integer,
+    death character varying(255),
+    monster character varying(255)
+);
+
+CREATE INDEX index_normalized_deaths_game ON public.normalized_deaths USING btree (game_id);
+CREATE INDEX index_normalized_deaths_user ON public.normalized_deaths USING btree (user_id);
+
+CREATE TABLE public.schema_migrations (
+    version character varying NOT NULL
+);
+
+CREATE TABLE public.scoreentries (
+    user_id integer NOT NULL,
+    endtime integer,
+    icon character varying(255),
+    trophy character varying(255) NOT NULL,
+    trophy_display character varying(255),
+    value character varying(255),
+    value_display character varying(255),
+    variant character varying(255) NOT NULL
+);
+
+CREATE INDEX index_scoreentries_user ON public.scoreentries USING btree (user_id);
+CREATE UNIQUE INDEX unique_scoreentries_key ON public.scoreentries USING btree (variant, trophy, user_id);
+
+CREATE TABLE public.servers (
+    id integer NOT NULL,
+    configfileurl character varying(255),
+    name character varying(255),
+    url character varying(255),
+    variant character varying(255),
+    xlogcurrentoffset bigint,
+    xloglastmodified character varying(255) DEFAULT 'Sat Jan 01 00:00:00 UTC 2000'::character varying,
+    xlogurl character varying(255)
+);
+
+ALTER TABLE public.servers ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.servers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+CREATE TABLE public.start_scummed_games (
+    id integer NOT NULL,
+    server_id integer NOT NULL,
+    user_id integer,
+    achieve character varying(255),
+    achieve_x text,
+    alias character varying(255),
+    align character varying(255),
+    align0 character varying(255),
+    arti_wish_cnt integer DEFAULT '-1'::integer,
+    ascended boolean DEFAULT false,
+    birthdate character varying(255),
+    birthoption character varying(255),
+    bones integer DEFAULT '-1'::integer,
+    carried character varying(255),
+    charname character varying(255),
+    charname64 character varying(255),
+    cname character varying(255),
+    collapse character varying(255),
+    conduct character varying(255) DEFAULT '0'::character varying,
+    conduct_x text,
+    death character varying(255),
+    death64 character varying(255),
+    deathdate character varying(255),
+    deathdname character varying(255),
+    deathdnum integer,
+    deathlev integer,
+    deaths integer,
+    demo character varying(255),
+    difficulty character varying(255),
+    dlev_name character varying(255),
+    dnetachieve character varying(255),
+    dumplog character varying(255),
+    dumplog64 character varying(255),
+    edit character varying(255),
+    elbereths integer DEFAULT '-1'::integer,
+    endtime integer,
+    endtime_utc integer,
+    endtimeus bigint,
+    event character varying(255),
+    exp integer DEFAULT 0,
+    extrinsic character varying(255),
+    flags character varying(255),
+    gameidnum integer,
+    gamemode character varying(255),
+    gender character varying(255),
+    gender0 character varying(255),
+    gengold character varying(255),
+    gold integer DEFAULT '-1'::integer,
+    hp integer,
+    hybrid character varying(255),
+    inherited character varying(255),
+    intrinsic character varying(255),
+    killed_archangels integer DEFAULT 0,
+    killed_erinyes integer DEFAULT 0,
+    killed_medusa integer,
+    killed_nazgul integer DEFAULT 0,
+    killed_uniques text,
+    killed_weeping_archangels integer DEFAULT 0,
+    magic_wish_cnt integer DEFAULT '-1'::integer,
+    maxhp integer,
+    maxlvl integer,
+    mode character varying(255),
+    modes character varying(255),
+    nachieves integer,
+    name character varying(255),
+    name64 character varying(255),
+    nconducts integer,
+    old_version character varying(255),
+    platform character varying(255),
+    platformversion character varying(255),
+    points bigint,
+    polyinit character varying(255),
+    port character varying(255),
+    portbuild character varying(255),
+    portseclvl integer,
+    portversion character varying(255),
+    race character varying(255),
+    race0 character varying(255),
+    realtime integer,
+    rngseed character varying(255),
+    role character varying(255),
+    role0 character varying(255),
+    scoring character varying(255),
+    seclvl integer DEFAULT '-1'::integer,
+    seed character varying(255),
+    species character varying(255),
+    species0 character varying(255),
+    starttime integer,
+    starttime_utc integer,
+    starttimeus bigint,
+    store character varying(255),
+    temporary character varying(255),
+    tournament character varying(255),
+    turns integer,
+    uid integer,
+    user_seed character varying(255),
+    variant character varying(255),
+    version character varying(255),
+    versionstring character varying(255),
+    while character varying(255),
+    wish_cnt integer DEFAULT '-1'::integer,
+    xplevel integer DEFAULT 0,
+    xplvl integer
+);
+
+CREATE INDEX index_start_scummed_games_server ON public.start_scummed_games USING btree (server_id);
+CREATE INDEX index_start_scummed_games_user ON public.start_scummed_games USING btree (user_id);
+
+ALTER TABLE public.start_scummed_games ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.start_scummed_games_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+CREATE TABLE public.trophies (
+    id integer NOT NULL,
+    "row" integer DEFAULT 1,
+    icon character varying(255) NOT NULL,
+    text character varying(255) NOT NULL,
+    trophy character varying(255) NOT NULL,
+    user_competition boolean DEFAULT false NOT NULL,
+    variant character varying(255)
+);
+
+CREATE UNIQUE INDEX unique_trophy_variant ON public.trophies USING btree (variant, trophy);
+
+ALTER TABLE public.trophies ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.trophies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    clan_name character varying(29),
+    hashed character varying(64),
+    invitations text,
+    login character varying(255),
+    salt character varying(64),
+    created_at timestamp with time zone,
+    updated_at timestamp with time zone
+);
+
+CREATE INDEX index_users_clan ON public.users USING btree (clan_name);
+
+ALTER TABLE public.users ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+ALTER TABLE ONLY public.accounts
+    ADD CONSTRAINT accounts_pkey PRIMARY KEY (user_id, server_id);
+
+ALTER TABLE ONLY public.ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+ALTER TABLE ONLY public.clan_score_entries
+    ADD CONSTRAINT clan_score_entries_pkey PRIMARY KEY (trophy, clan_name);
+
+ALTER TABLE ONLY public.clan_score_histories
+    ADD CONSTRAINT clan_score_histories_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.clans
+    ADD CONSTRAINT clans_pkey PRIMARY KEY (name);
+
+ALTER TABLE ONLY public.competition_score_entries
+    ADD CONSTRAINT competition_score_entries_pkey PRIMARY KEY (trophy, variant, user_id);
+
+ALTER TABLE ONLY public.events
+    ADD CONSTRAINT events_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.games
+    ADD CONSTRAINT games_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.individualtrophies
+    ADD CONSTRAINT individualtrophies_pkey PRIMARY KEY (trophy, user_id);
+
+ALTER TABLE ONLY public.junk_games
+    ADD CONSTRAINT junk_games_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.news
+    ADD CONSTRAINT news_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.normalized_deaths
+    ADD CONSTRAINT normalized_deaths_pkey PRIMARY KEY (game_id);
+
+ALTER TABLE ONLY public.schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+ALTER TABLE ONLY public.scoreentries
+    ADD CONSTRAINT scoreentries_pkey PRIMARY KEY (variant, trophy, user_id);
+
+ALTER TABLE ONLY public.servers
+    ADD CONSTRAINT servers_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.start_scummed_games
+    ADD CONSTRAINT start_scummed_games_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.trophies
+    ADD CONSTRAINT trophies_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+-- PostgreSQL database dump complete
+
+SET search_path TO "$user", public;
+
 INSERT INTO "schema_migrations" (version) VALUES
 ('20260101000000');
-
-
