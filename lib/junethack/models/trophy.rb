@@ -79,7 +79,7 @@ def Trophy.check_trophies_for_variant variant_description
     splicehack = helper_get_variant_for 'splicehack'
     xnethack = helper_get_variant_for 'xnethack'
     nethack36 = helper_get_variant_for '3.6.1'
-    nethack37 = helper_get_variant_for '3.7'
+    nethack37 = helper_get_variant_for '5.0.0'
     evilhack = helper_get_variant_for 'evilhack'
     dnhslex = helper_get_variant_for 'dnethack slex'
     notdnethack = helper_get_variant_for 'notdnethack'
@@ -622,7 +622,7 @@ def Trophy.seed_trophies
   # Variant trophies
   Trophy.check_trophies_for_variant "vanilla"
   Trophy.check_trophies_for_variant "3.6.0"
-  Trophy.check_trophies_for_variant "3.7"
+  Trophy.check_trophies_for_variant "5.0.0"
   Trophy.check_trophies_for_variant "sporkhack"
   Trophy.check_trophies_for_variant "unnethack"
   Trophy.check_trophies_for_variant "grunthack"

@@ -27,7 +27,7 @@ class Server < ActiveRecord::Base
       case hostname
       when "nethack.alt.org"
         case game.version
-        when "3.6"
+        when "3.6", "5.0"
           return "https://altorg.s3.amazonaws.com/dumplog/#{game.name}/#{game.starttime}.nh#{game.old_version.gsub('.','')}.txt"
         end
       when "grunthack.org"
@@ -64,13 +64,13 @@ class Server < ActiveRecord::Base
         player = "#{game.name[0..0]}/#{game.name}"
         prefix = 'eu' if hostname.start_with?('eu.')
         prefix = 'au' if hostname.start_with?('au.')
-        prefix ||= 'us'
+        prefix ||= 'www'
         case game.version
         when "dyn"
             "https://#{prefix}.hardfought.org/userdata/#{player}/dynahack/dumplog/#{game.dumplog}"
         when "gho"
             "https://#{prefix}.hardfought.org/userdata/#{player}/gh/dumplog/#{game.starttime}.gh.txt"
-        when "3.6", "3.7"
+        when "3.6", "3.7", "5.0"
           if game.server.name.end_with?("nh37s")
             "https://#{prefix}.hardfought.org/userdata/#{player}/setseed/dumplog/#{game.starttime}.seed.html"
           else
@@ -142,43 +142,44 @@ class Server < ActiveRecord::Base
 
     def self.seed_servers
       [
-        [:nao_nh36, 'NetHack 3.6.7', 'https://alt.org/nethack/xlogfile.nh363+'],
+        [:nao_nh50, 'NetHack 5.0.0', 'https://www.alt.org/nethack/xlogfile.nh500'],
       ].each {|server|
         url = 'https://nethack.alt.org/'
-        configfileurl = 'https://alt.org/nethack/userdata/random_user_initial/random_user/random_user.nh367rc'
+        configfileurl = 'https://alt.org/nethack/userdata/random_user_initial/random_user/random_user.nh500rc'
         Server.create name: server[0], variant: server[1], url: url, xlogurl: server[2], configfileurl: configfileurl
       }
 
       Server.create name: 'nh4', variant: 'NetHack4 4.3.0',
         url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
 
-      prefixes = { us: :us, eu: :eu, au: :au }
+      prefixes = { us: :www, eu: :eu, au: :au }
       [:us, :eu, :au].each {|location|
         prefix = prefixes[location]
         [
           [:hdf_nao,  'NetHack 3.4.3-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nh343/xlogfile"],
-          [:hdf_nh37, 'NetHack 3.7.0-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack37/xlogfile"],
+          [:hdf_nh50, 'NetHack 5.0.0-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack50/xlogfile"],
+          [:hdf_nh36, 'NetHack 3.6.7-hdf',       "https://#{prefix}.hardfought.org/xlogfiles/nethack36/xlogfile"],
           [:hdf_shc,  'SporkHack 0.7.0',         "https://#{prefix}.hardfought.org/xlogfiles/sporkhack/xlogfile"],
           [:hdf_gho,  'GruntHack 0.3.0',         "https://#{prefix}.hardfought.org/xlogfiles/gh/xlogfile"],
-          [:hdf_unh,  'UnNetHack 6.0.14',        "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
-          [:hdf_dnh,  'dNetHack 3.24.0',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
+          [:hdf_unh,  'UnNetHack 6.0.15',        "https://#{prefix}.hardfought.org/xlogfiles/unnethack/xlogfile"],
+          [:hdf_dnh,  'dNetHack 3.26.0',         "https://#{prefix}.hardfought.org/xlogfiles/dnethack/xlogfile"],
           [:hdf_nh4,  'NetHack4 4.3.0',          "https://#{prefix}.hardfought.org/xlogfiles/nethack4/xlogfile"],
           [:hdf_nh4k, 'NetHack Fourk 4.3.0.5',   "https://#{prefix}.hardfought.org/xlogfiles/4k/xlogfile"],
           [:hdf_fiq,  'FIQHack 4.3.1',           "https://#{prefix}.hardfought.org/xlogfiles/fh/xlogfile"],
           [:hdf_dyn,  'DynaHack 0.6.0',          "https://#{prefix}.hardfought.org/xlogfiles/dynahack/xlogfile"],
-          [:hdf_xnh,  'xNetHack 9.0.0',          "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
+          [:hdf_xnh,  'xNetHack 10.0.0',         "https://#{prefix}.hardfought.org/xlogfiles/xnethack/xlogfile"],
           [:hdf_spl,  'SpliceHack 1.2.0',        "https://#{prefix}.hardfought.org/xlogfiles/splicehack/xlogfile"],
           [:hdf_ndnh, 'notdNetHack 2025.05.15',  "https://#{prefix}.hardfought.org/xlogfiles/notdnethack/xlogfile"],
-          [:hdf_evh,  'EvilHack 0.9.1',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
+          [:hdf_evh,  'EvilHack 0.9.3',          "https://#{prefix}.hardfought.org/xlogfiles/evilhack/xlogfile"],
           [:hdf_slsh, "Slash'EM 0.0.8E0F2",      "https://#{prefix}.hardfought.org/xlogfiles/slashem/xlogfile"],
           [:hdf_slth, "SlashTHEM 0.9.7",         "https://#{prefix}.hardfought.org/xlogfiles/slashthem/xlogfile"],
-          [:hdf_gnl,  "GnollHack 4.2.0.41",      "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
+          [:hdf_gnl,  "GnollHack 4.2.0.128",     "https://#{prefix}.hardfought.org/xlogfiles/gnollhack/xlogfile"],
           [:hdf_hck,  "Hack'EM 1.3.2",           "https://#{prefix}.hardfought.org/xlogfiles/hackem/xlogfile"],
           [:hdf_ace,  'AceHack 3.6.0',           "https://#{prefix}.hardfought.org/xlogfiles/acehack/xlogfile"],
           [:hdf_nndnh, 'notnotdNetHack 2025.05.16',
                                                  "https://#{prefix}.hardfought.org/xlogfiles/notnotdnethack/xlogfile"],
           [:hdf_nerf, 'NerfHack 2.2.1',          "https://#{prefix}.hardfought.org/xlogfiles/nerfhack/xlogfile"],
-          [:hdf_crec, 'CrecelleHack 1.0.1',      "https://#{prefix}.hardfought.org/xlogfiles/crecellehack/xlogfile"],
+          [:hdf_crec, 'CrecelleHack 1.5.1',      "https://#{prefix}.hardfought.org/xlogfiles/crecellehack/xlogfile"],
           [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
 
         ].each {|server|
@@ -196,7 +197,7 @@ class Server < ActiveRecord::Base
       [:us].each {|location|
         prefix = prefixes[location]
         [
-          [:gnl_hck, 'GnollHack 4.2.0.41', "https://#{prefix}.gnollhack.com/xlogfile"]
+          [:gnl_hck, 'GnollHack 4.2.0.130', "https://#{prefix}.gnollhack.com/xlogfile"]
         ].each {|server|
           url = "https://#{prefix}.gnollhack.com/"
 
@@ -208,7 +209,7 @@ class Server < ActiveRecord::Base
       }
 
       [
-        [:acc_gnl, 'GnollHack 4.2.0.41', 'https://account.gnollhack.com/xlogfile'],
+        [:acc_gnl, 'GnollHack 4.2.0.130', 'https://account.gnollhack.com/xlogfile'],
       ].each {|server|
         url = 'https://account.gnollhack.com/'
         configfileurl = 'https://account.gnollhack.com/junethack/random_user'

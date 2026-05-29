@@ -216,6 +216,7 @@ class Game < ActiveRecord::Base
       _version = '3.6'   if version == '3.6.7'
       _version = '3.4.3' if version == '3.4.3'
       _version = '3.7'   if version == '3.7.0'
+      _version = '5.0'   if version == '5.0.0'
       _version = 'NH-1.3d' if version == 'NH-1.3d'
       _version = 'nh4' if version == '4.3.0'
       _version = 'slashem' if version == '0.0.8'
