@@ -62,6 +62,23 @@ RSpec.describe('Tasks::StructureSqlPrettifier') do
     SQL
   end
 
+  it 'preserves schema_migrations INSERT at the end' do
+    sql = <<~SQL
+      INSERT INTO "schema_migrations" (version) VALUES
+      ('20260000000001'),
+      ('20260000000002'),
+      ('20260000000003');
+    SQL
+
+    expect(prettify(sql)).to eq(<<~SQL)
+      INSERT INTO "schema_migrations" (version) VALUES
+       ('20260000000001')
+      ,('20260000000002')
+      ,('20260000000003')
+      ;
+    SQL
+  end
+
   it 'groups indexes immediately after their owning table, sorted' do
     sql = <<~SQL
       CREATE INDEX index_my_table_on_other_col ON public.my_table USING btree (other_col);

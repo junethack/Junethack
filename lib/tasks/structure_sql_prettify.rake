@@ -42,6 +42,20 @@ module Tasks
         sql.gsub!(/^(CREATE TABLE #{table}\b(:?[^;\n]*\n)+.*\);\n)/) { "#{Regexp.last_match(1)}\n#{indexes_for_table}" }
       end
 
+      # reformat schema_migrations INSERT to use leading commas
+      i = sql.lines.index { |l| l.include?('INSERT INTO "schema_migrations"') }
+      if i
+        lines = sql.lines
+        versions = lines[(i + 1)..].grep(/\('[^']*'\)/).map { |v| v.strip.delete_suffix(',').delete_suffix(';') }
+        lines[i..] = [
+          "INSERT INTO \"schema_migrations\" (version) VALUES\n",
+          " #{versions[0]}\n",
+          *versions[1..].map { |v| ",#{v}\n" },
+          ";\n"
+        ]
+        sql = lines.join
+      end
+
       output << sql.strip
       output << "\n"
     end
