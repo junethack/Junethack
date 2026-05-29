@@ -22,7 +22,7 @@ describe 'server linking helper methods' do
     it 'returns a link to the european or american server of hardfought.org' do
       hdf = Server.new(name: 'xxx_unh', url: 'https://www.hardfought.org')
       game = Game.new(name: 'player', starttime: 123456, server: hdf, version: '')
-      expect(hdf.dumplog_link(game)).to eq 'https://www.hardfought.org/userdata/p/player/unnethack/dumplog/123456.un.txt.html'
+      expect(hdf.dumplog_link(game)).to eq 'https://us.hardfought.org/userdata/p/player/unnethack/dumplog/123456.un.txt.html'
 
       hdf = Server.new(name: 'xxx_unh', url: 'https://eu.hardfought.org')
       game = Game.new(name: 'player', starttime: 123456, server: hdf, version: '')

@@ -64,7 +64,7 @@ class Server < ActiveRecord::Base
         player = "#{game.name[0..0]}/#{game.name}"
         prefix = 'eu' if hostname.start_with?('eu.')
         prefix = 'au' if hostname.start_with?('au.')
-        prefix ||= 'www'
+        prefix ||= 'us'
         case game.version
         when "dyn"
             "https://#{prefix}.hardfought.org/userdata/#{player}/dynahack/dumplog/#{game.dumplog}"
@@ -152,7 +152,7 @@ class Server < ActiveRecord::Base
       Server.create name: 'nh4', variant: 'NetHack4 4.3.0',
         url: 'http://nethack4.org/', xlogurl: 'http://nethack4.org/xlogfile.txt', configfileurl: 'http://nethack4.org/junethack-rc/random_user.rc'
 
-      prefixes = { us: :www, eu: :eu, au: :au }
+      prefixes = { us: :us, eu: :eu, au: :au }
       [:us, :eu, :au].each {|location|
         prefix = prefixes[location]
         [
@@ -182,7 +182,7 @@ class Server < ActiveRecord::Base
           [:hdf_13d,  'NetHack 1.3d',            "https://#{prefix}.hardfought.org/xlogfiles/nh13d/xlogfile"],
 
         ].each {|server|
-          url = "https://#{prefix}.hardfought.org/nethack"
+          url = "https://www.hardfought.org/nethack"
 
           server[0] = server[0].to_s.sub('h', 'euh').to_sym if location == :eu
           server[0] = server[0].to_s.sub('h', 'auh').to_sym if location == :au
