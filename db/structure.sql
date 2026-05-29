@@ -106,6 +106,7 @@ CREATE TABLE public.games (
     server_id integer NOT NULL,
     user_id integer,
     achieve character varying(255),
+    achieve2 character varying(255),
     achieve_x text,
     alias character varying(255),
     align character varying(255),
@@ -181,6 +182,7 @@ CREATE TABLE public.games (
     race character varying(255),
     race0 character varying(255),
     realtime integer,
+    rerolls integer DEFAULT 0,
     rngseed character varying(255),
     role character varying(255),
     role0 character varying(255),
@@ -237,6 +239,7 @@ CREATE TABLE public.junk_games (
     server_id integer NOT NULL,
     user_id integer,
     achieve character varying(255),
+    achieve2 character varying(255),
     achieve_x text,
     alias character varying(255),
     align character varying(255),
@@ -312,6 +315,7 @@ CREATE TABLE public.junk_games (
     race character varying(255),
     race0 character varying(255),
     realtime integer,
+    rerolls integer DEFAULT 0,
     rngseed character varying(255),
     role character varying(255),
     role0 character varying(255),
@@ -421,6 +425,7 @@ CREATE TABLE public.start_scummed_games (
     server_id integer NOT NULL,
     user_id integer,
     achieve character varying(255),
+    achieve2 character varying(255),
     achieve_x text,
     alias character varying(255),
     align character varying(255),
@@ -496,6 +501,7 @@ CREATE TABLE public.start_scummed_games (
     race character varying(255),
     race0 character varying(255),
     realtime integer,
+    rerolls integer DEFAULT 0,
     rngseed character varying(255),
     role character varying(255),
     role0 character varying(255),
@@ -636,4 +642,5 @@ ALTER TABLE ONLY public.users
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20260101000000');
+('20260101000000'),
+('20260529215216');
