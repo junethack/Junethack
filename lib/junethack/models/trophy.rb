@@ -331,6 +331,32 @@ def Trophy.check_trophies_for_variant variant_description
       }
     end
 
+    if variant == crecellehack then
+      achievements = [
+        [:pyro, "Pyromaniac (indirectly slay a monster with a bonfire)", "crecelle_pyro.png", 4],
+        [:dyer, "You dye... (dye an item)", "crecelle_dyer.png", 4],
+        [:blessless, "Bless Less (ascended without blessing an item with holy water)", "crecelle_blessless.png", 4],
+        [:conflictless, "Conflict Averse (ascended without generating conflict)", "crecelle_conflictless.png", 4],
+        [:petless, "No Pets Allowed (ascended without having a pet)", "crecelle_petless.png", 4],
+        #[:artifactless, "Artifactless (ascended without touching an artifact)", "crecelle_artifactless.png", 4],
+        [:elberethless, "Elberethless (ascended without writing Elbereth)", "crecelle_elberethless.png", 4],
+        [:deaf, "Deaf (ascended being permanently deaf)", "crecelle_deaf.png", 4],
+        [:ascended_kobold, "Tucker (ascended a kobold)", "crecelle_kobold.png", 4],
+        [:ascended_grappler, "From the Top Rope (ascended a grappler)", "crecelle_grappler.png", 4],
+        [:junior_alchemist, "Junior Alchemist (created an explosion by mixing potions on the floor)",
+         "crecelle_junior_alchemist.png", 4],
+        [:sokoban, "Played by the Rules (completed Sokoban without cheating)", "crecelle_sokoban.png", 4],
+        [:entered_maze, "Piranesi (transported to the Maze)", "crecelle_maze.png", 2],
+        [:entered_mtemple, "Congregant (entered the Temple of Moloch)", "crecelle_mtemple.png", 2],
+        [:lost_boot, "Sticky Feet (lost your boots due to honey)", "crecelle_lost_boot.png", 4],
+        [:banana_peel, "Peeled Out (slipped on a banana peel)", "crecelle_banana_peel.png", 4],
+      ]
+
+      achievements.each {
+        Trophy.create(variant:, trophy: _1[0], text: _1[1], icon: _1[2], row: _1[3])
+      }
+    end
+
     if variant == evilhack then
       achievements = []
       achievements << [:entered_purgatory, "entered Purgatory", 2]

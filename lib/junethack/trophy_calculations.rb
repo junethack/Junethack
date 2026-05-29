@@ -285,6 +285,7 @@ def update_scores(game)
   xnethack = helper_get_variant_for 'xnethack'
   nethack36 = helper_get_variant_for '3.6.1'
   evilhack = helper_get_variant_for 'evilhack'
+  crecellehack = helper_get_variant_for 'crecellehack'
 
   ## specific trophies as they don't track xlogfile achievements
   if [acehack, nethack4, nh4k, dynahack, fiqhack].include? game.version then
@@ -479,6 +480,19 @@ def update_scores(game)
                                    variant: game.version,
                                    trophy: trophy) if conducts.include?(conduct)
     }
+  end
+
+  if [crecellehack].include?(game.version) then
+    generic_achievements(game, (game.conduct_x||'').split(','))
+
+    if game.ascended
+      Scoreentry.find_or_create_by(user_id: game.user_id,
+                                    variant: game.version,
+                                    trophy: :ascended_kobold) if game.race == 'Kobold'
+      Scoreentry.find_or_create_by(user_id: game.user_id,
+                                    variant: game.version,
+                                    trophy: :ascended_grappler) if game.role == 'Grp'
+    end
   end
 
   if game.ascended && [evilhack].include?(game.version) then
