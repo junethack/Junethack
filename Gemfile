@@ -6,7 +6,7 @@ gem 'pg'
 gem 'composite_primary_keys', '>= 14.0.0'
 
 gem "json"
-gem "haml", "< 6.0.0"
+gem "haml"
 
 gem "sinatra"
 gem "rack"
@@ -20,7 +20,8 @@ gem 'sanitize'
 
 gem 'eventmachine', git: 'https://github.com/eventmachine/eventmachine.git'
 
-gem 'thin', '~> 1.8'
+gem "rackup"
+gem "puma"
 
 # charts
 gem "fastercsv"
