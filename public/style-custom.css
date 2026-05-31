@@ -374,6 +374,14 @@ th.competition_placing {
   color: #000;
 }
 
+#clans {
+  tr td:first-child {
+    padding: 1px;
+    vertical-align: middle;
+    text-align: center;
+  }
+}
+
 #clan_header {
     border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
