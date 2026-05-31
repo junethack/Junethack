@@ -78,6 +78,10 @@
         %form#create_clan_form.row.g-2.align-items-end{method: "POST", action: "/clan"}
           .col-auto
             %label.form-label{for: "clanname"} Clan name
-            %input#clanname.form-control{name: "clanname", type: "text", placeholder: "clan name"}
+            %input#clanname.form-control{name: "clanname", type: "text", placeholder: "clan name", class: ('is-invalid' unless @clan_errors.empty?)}
           .col-auto
             %input.btn.btn-primary{type: "submit", value: "Create clan"}
+          - unless @clan_errors.empty?
+            .col-12
+              .invalid-feedback.d-block
+                = @clan_errors.join(', ')

@@ -94,7 +94,7 @@ describe 'Clan routes' do
         post '/clan', { clanname: 'invalid-clan!' }, { 'rack.session' => { user_id: regular_user.id } }
         expect(last_response.status).to eq(302)
         expect(Clan.find_by(name: 'invalid-clan!')).to be_nil
-        expect(last_request.env['rack.session']['errors']).to eq(
+        expect(last_request.env['rack.session']['clan_errors']).to eq(
           ['Clan name may only contain a-z, A-Z, -, _, . and 0-9'])
       end
 
@@ -110,7 +110,7 @@ describe 'Clan routes' do
 
         post '/clan', { clanname: 'duplicateclan' }, { 'rack.session' => { user_id: regular_user.id } }
         expect(last_response.status).to eq(302)
-        expect(last_request.env['rack.session']['errors']).to eq(['Clan name already exists'])
+        expect(last_request.env['rack.session']['clan_errors']).to eq(['Clan name already exists'])
       end
     end
   end

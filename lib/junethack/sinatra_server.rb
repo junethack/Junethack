@@ -57,12 +57,11 @@ before do
   @tournament_identifier_regexp = /junethack(2011)? #{Regexp.quote @user.login}/ if @user
   @messages = session["messages"] || []
   @errors = session["errors"] || []
+  @clan_errors = session["clan_errors"] || []
 
-  #puts "got #{@messages.length} messages"
-  #puts "and #{@errors.length} errors"
-  #puts "#{@errors.inspect}"
   session["messages"] = []
   session["errors"] = []
+  session["clan_errors"] = []
 end
 
 after do
@@ -359,7 +358,7 @@ post "/clan" do
   clan = Clan.create(:name => params[:clanname], :admin => [@user.id, 1])
 
   if !clan.errors.empty?
-    session['errors'] = clan&.errors&.map(&:message)
+    session['clan_errors'] = clan&.errors&.map(&:message)
     redirect "/home"
     return
   end
