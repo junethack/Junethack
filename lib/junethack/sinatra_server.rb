@@ -357,6 +357,7 @@ post "/clan" do
     session['errors'] << "There was an error creating the clan"
     redirect "/home" and return
   end
+
   if clan
     @user.clan = clan
     @user.save
