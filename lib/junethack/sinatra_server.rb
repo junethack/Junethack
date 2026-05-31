@@ -353,9 +353,11 @@ end
 post "/clan" do
   begin
     clan = Clan.create(:name => params[:clanname], :admin => [@user.id, 1])
-  rescue
+    raise clan.errors.first.message unless clan.errors.empty?
+  rescue => e
     session['errors'] << "There was an error creating the clan"
-    redirect "/home" and return
+    redirect "/home"
+    return
   end
 
   if clan
@@ -363,7 +365,7 @@ post "/clan" do
     @user.save
     session['messages'] << "Successfully created clan #{params[:clanname]}"
     Event.new(:text => "New clan #{clan.name} created!", :url => "#{base_url}/clan/#{clan.name}").save
-    redirect "/clan/" + CGI.escape(clan.name) and return
+    redirect "/clan/" + CGI.escape(clan.name)
   else
     session['errors'] << "Could not create clan"
   end

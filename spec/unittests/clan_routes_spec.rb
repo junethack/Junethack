@@ -89,22 +89,26 @@ describe 'Clan routes' do
 
     context 'creation logic' do
       it 'rejects clan names with invalid characters' do
-        expect {
-          Clan.create!(name: 'invalid-clan!', admin: [regular_user.id, 1])
-        }.to raise_error(ActiveRecord::RecordInvalid)
+        post '/clan', { clanname: 'invalid-clan!' }, { 'rack.session' => { user_id: regular_user.id } }
+        expect(last_response.status).to eq(302)
+        expect(Clan.find_by(name: 'invalid-clan!')).to be_nil
+        expect(last_request.env['rack.session']['errors'].first).to eq('There was an error creating the clan')
       end
 
       it 'allows clan names with dots and underscores' do
-        test_clan = Clan.new(name: 'clan.name_123', admin: [regular_user.id, 1])
-        expect(test_clan.save).to eq(true)
+        post '/clan', { clanname: 'clan.name_123' }, { 'rack.session' => { user_id: regular_user.id } }
+        expect(last_response.status).to eq(302)
+        expect(last_response.location).to include('/clan/clan.name_123')
+        expect(last_request.env['rack.session']['messages'].first).to eq('Successfully created clan clan.name_123')
       end
 
       it 'handles duplicate clan names' do
         Clan.create!(name: 'duplicateclan', admin: [admin_user.id, 1])
 
-        expect {
-          Clan.create!(name: 'duplicateclan', admin: [regular_user.id, 1])
-        }.to raise_error(StandardError)
+        post '/clan', { clanname: 'duplicateclan' }, { 'rack.session' => { user_id: regular_user.id } }
+        expect(last_response.status).to eq(302)
+        expect(last_response.location).to include('/home')
+        expect(last_request.env['rack.session']['errors'].first).to eq('There was an error creating the clan')
       end
     end
   end
