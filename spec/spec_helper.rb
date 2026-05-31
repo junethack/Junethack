@@ -25,9 +25,11 @@ require './lib/junethack'
 ENV['RACK_ENV'] = 'test'
 require 'database'
 
-# Load schema into in-memory test database
-require 'load_structure_sql'
-load_structure_sql(ActiveRecord::Base.connection)
+# Load schema into test database - skip if tables already exist
+if ActiveRecord::Base.connection.tables.empty?
+  require 'load_structure_sql'
+  load_structure_sql(ActiveRecord::Base.connection)
+end
 
 def clean_database
   ClanScoreEntry.destroy_all
