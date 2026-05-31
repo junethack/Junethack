@@ -351,11 +351,15 @@ post '/clan_banner/:name' do
 end
 
 post "/clan" do
-  begin
-    clan = Clan.create(:name => params[:clanname], :admin => [@user.id, 1])
-    raise clan.errors.first.message unless clan.errors.empty?
-  rescue => e
-    session['errors'] << "There was an error creating the clan"
+  if @user.nil?
+    session['errors'] << "You must be logged in to create a clan"
+    redirect "/" and return
+  end
+
+  clan = Clan.create(:name => params[:clanname], :admin => [@user.id, 1])
+
+  if !clan.errors.empty?
+    session['errors'] = clan&.errors&.map(&:message)
     redirect "/home"
     return
   end

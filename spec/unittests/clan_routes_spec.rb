@@ -84,6 +84,8 @@ describe 'Clan routes' do
       it 'requires authentication' do
         post '/clan', { clanname: 'unauthclan' }
         expect(last_response.status).to eq(302)
+        expect(last_response.location).to include('/')
+        expect(last_request.env['rack.session']['errors'].first).to eq('You must be logged in to create a clan')
       end
     end
 
@@ -92,14 +94,15 @@ describe 'Clan routes' do
         post '/clan', { clanname: 'invalid-clan!' }, { 'rack.session' => { user_id: regular_user.id } }
         expect(last_response.status).to eq(302)
         expect(Clan.find_by(name: 'invalid-clan!')).to be_nil
-        expect(last_request.env['rack.session']['errors'].first).to eq('There was an error creating the clan')
+        expect(last_request.env['rack.session']['errors']).to eq(
+          ['Clan name may only contain a-z, A-Z, -, _, . and 0-9'])
       end
 
       it 'allows clan names with dots and underscores' do
         post '/clan', { clanname: 'clan.name_123' }, { 'rack.session' => { user_id: regular_user.id } }
         expect(last_response.status).to eq(302)
         expect(last_response.location).to include('/clan/clan.name_123')
-        expect(last_request.env['rack.session']['messages'].first).to eq('Successfully created clan clan.name_123')
+        expect(last_request.env['rack.session']['messages']).to eq(['Successfully created clan clan.name_123'])
       end
 
       it 'handles duplicate clan names' do
@@ -107,8 +110,7 @@ describe 'Clan routes' do
 
         post '/clan', { clanname: 'duplicateclan' }, { 'rack.session' => { user_id: regular_user.id } }
         expect(last_response.status).to eq(302)
-        expect(last_response.location).to include('/home')
-        expect(last_request.env['rack.session']['errors'].first).to eq('There was an error creating the clan')
+        expect(last_request.env['rack.session']['errors']).to eq(['Clan name already exists'])
       end
     end
   end
@@ -345,6 +347,7 @@ describe 'Clan routes' do
     it 'clan creation requires authentication' do
       post '/clan', { clanname: 'test' }
       expect(last_response.status).to eq(302)
+      expect(last_response.location).to include('/')
     end
 
     it 'leaving clan requires authentication' do

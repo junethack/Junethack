@@ -8,7 +8,10 @@ class Clan < ActiveRecord::Base
 
   has_many :users, foreign_key: :clan_name, primary_key: :name
 
-  validates :name, format: { with: /\A[a-zA-Z0-9_.]+\z/, message: "Clan name may only contain a-z, A-Z, . and 0-9" }
+  validates :name, format: {
+    with: /\A[a-zA-Z0-9_.-]+\z/, message: "Clan name may only contain a-z, A-Z, -, _, . and 0-9"
+  }
+  validates :name, uniqueness: { message: "Clan name already exists" }
 
   def get_invitation_response invitation
     if index = self.invitations.index{|i| i['token'] == invitation['token'] and i['account'] == invitation['account']}
