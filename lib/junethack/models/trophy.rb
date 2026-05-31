@@ -493,7 +493,9 @@ def Trophy.check_trophies_for_variant variant_description
         [:tiefling_ascension, "Better to serve in heaven (Ascended a tiefling)", "dnh_tiefling_asc.png", 5],	
         [:aasimar_ascension, "I'm so blessed...	(Ascended an aasimar)", "dnh_aasimar_asc.png", 5],	
         [:silverman_ascension, "Flourish in distant lands	(Ascended a silverman)", "dnh_silverman_asc.png", 5],
-        [:silverknight_ascension, "Your friends might need glasses (Ascended a silver knight)",	"dnh_silverknight_asc.png", "5"]	
+        [:silverknight_ascension, "Your friends might need glasses (Ascended a silver knight)",	"dnh_silverknight_asc.png", "5"],
+        [:dnethack_one_hellish_seal, "Relics of a bygone era (Opened one type of hellish seal)", "dnh_1_hell.png", 4],
+        [:dnethack_all_hellish_seal, "There are a lot of these.... (Opened all three types of hellish seal (across all games played))",	"dnh_3_hell.png", "4"]
       ]
 
       achievements.each {|achievement|
