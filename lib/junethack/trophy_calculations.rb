@@ -482,15 +482,20 @@ def update_scores(game)
     }
   end
 
-  if game.ascended && [crecellehack].include?(game.version) then
-    generic_achievements(game, (game.conduct_x||'').split(','))
+  if [crecellehack].include?(game.version) then
+    achieved = ['sokoban', 'dyer'] & (game.conduct_x||'').split(',')
+    generic_achievements(game, achieved)
 
-    Scoreentry.find_or_create_by(user_id: game.user_id,
-                                  variant: game.version,
-                                  trophy: :ascended_kobold) if game.race == 'Kobold'
-    Scoreentry.find_or_create_by(user_id: game.user_id,
-                                  variant: game.version,
-                                  trophy: :ascended_grappler) if game.role == 'Grp'
+    if game.ascended then
+      generic_achievements(game, (game.conduct_x||'').split(','))
+
+      Scoreentry.find_or_create_by(user_id: game.user_id,
+                                    variant: game.version,
+                                    trophy: :ascended_kobold) if game.race == 'Kobold'
+      Scoreentry.find_or_create_by(user_id: game.user_id,
+                                    variant: game.version,
+                                    trophy: :ascended_grappler) if game.role == 'Grp'
+    end
   end
 
   if game.ascended && [evilhack].include?(game.version) then
