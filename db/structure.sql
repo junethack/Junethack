@@ -137,6 +137,7 @@ CREATE TABLE public.games (
     dumplog character varying(255),
     dumplog64 character varying(255),
     edit character varying(255),
+    editstart character varying,
     elbereths integer DEFAULT '-1'::integer,
     endtime integer,
     endtime_utc integer,
@@ -202,6 +203,7 @@ CREATE TABLE public.games (
     user_seed character varying(255),
     variant character varying(255),
     version character varying(255) NOT NULL,
+    versionstart character varying,
     versionstring character varying(255),
     while character varying(255),
     wish_cnt integer DEFAULT '-1'::integer,
@@ -270,6 +272,7 @@ CREATE TABLE public.junk_games (
     dumplog character varying(255),
     dumplog64 character varying(255),
     edit character varying(255),
+    editstart character varying,
     elbereths integer DEFAULT '-1'::integer,
     endtime integer,
     endtime_utc integer,
@@ -335,6 +338,7 @@ CREATE TABLE public.junk_games (
     user_seed character varying(255),
     variant character varying(255),
     version character varying(255),
+    versionstart character varying,
     versionstring character varying(255),
     while character varying(255),
     wish_cnt integer DEFAULT '-1'::integer,
@@ -456,6 +460,7 @@ CREATE TABLE public.start_scummed_games (
     dumplog character varying(255),
     dumplog64 character varying(255),
     edit character varying(255),
+    editstart character varying,
     elbereths integer DEFAULT '-1'::integer,
     endtime integer,
     endtime_utc integer,
@@ -521,6 +526,7 @@ CREATE TABLE public.start_scummed_games (
     user_seed character varying(255),
     variant character varying(255),
     version character varying(255),
+    versionstart character varying,
     versionstring character varying(255),
     while character varying(255),
     wish_cnt integer DEFAULT '-1'::integer,
@@ -644,4 +650,5 @@ SET search_path TO "$user", public;
 INSERT INTO "schema_migrations" (version) VALUES
  ('20260101000000')
 ,('20260529215216')
+,('20260602142707')
 ;
