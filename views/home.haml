@@ -3,7 +3,7 @@
     .card-body
       %h2 Manage your accounts
       - server_accounts = (Server.all - @user.servers)
-      - server_accounts.reject! {|server| server.url =~ /https:\/\/[ae]u.hardfought.org\/nethack/ }
+      - server_accounts.reject! { _1.name.include?('hdf_') && _1.name != 'hdf_nao' }
       - server_accounts = server_accounts.map {|server| [server.id, server.hostname] }.uniq {|_,server| server}
       - if server_accounts.size > 0
         .alert.alert-info
