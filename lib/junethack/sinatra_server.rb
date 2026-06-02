@@ -195,7 +195,11 @@ post "/add_server_account" do
     if verified
       session['messages'] << 'Account verified and added.'
     else
-      session['errors'] << 'Could not find "# %s" in your config file on %s!' % [h(@tournament_identifier), h(server.display_name)]
+      session['errors'] << 'Could not find "# %s" in your config file (%s) on %s!' % [
+        h(@tournament_identifier),
+        h(server.config_file(params[:user])),
+        h(server.display_name)
+      ]
       redirect "/home" and return
     end
 

@@ -6,13 +6,18 @@ class Server < ActiveRecord::Base
     has_many :users, through: :accounts
 
     def verify_user(user, regexp)
-        URI::open(configfileurl.gsub("random_user_initial", CGI::escape(user[0]))
-                               .gsub("random_user", CGI::escape(user))) do |f|
-            f.each do |line|
-              return true if line.strip.match regexp
-            end
+      URI::open(config_file(user)) do |f|
+        f.each do |line|
+          return true if line.strip.match regexp
         end
-        return false;
+      end
+
+      return false;
+    end
+
+    def config_file(user)
+      configfileurl.gsub("random_user_initial", CGI::escape(user[0]))
+                   .gsub("random_user", CGI::escape(user))
     end
 
     def display_name
