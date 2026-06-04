@@ -25,7 +25,18 @@ class Server < ActiveRecord::Base
     end
 
     def hostname
-      @host ||= URI(url).host
+      return @host if @host
+
+      case xlogurl
+      when /www.hardfought.org/
+        @host = 'us.hardfought.org'
+      when /eu.hardfought.org/
+        @host = 'eu.hardfought.org'
+      when /au.hardfought.org/
+        @host = 'au.hardfought.org'
+      else
+        @host ||= URI(url).host
+      end
     end
 
     def dumplog_link(game)
