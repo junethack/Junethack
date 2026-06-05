@@ -221,6 +221,9 @@ class Game < ActiveRecord::Base
       _version = 'nh4' if version == '4.3.0'
       _version = 'slashem' if version == '0.0.8'
 
+      # temporary
+      _version = '5.0'   if version == '3.7.0'
+
       # if the variant hasn't been recognized yet, derive it from the server's name
       if _version.nil?
         _version = server.name.split('_')[1]

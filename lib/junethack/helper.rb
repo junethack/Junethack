@@ -84,6 +84,10 @@ def helper_get_variant_for(description)
     return '3.6' if description.downcase == '3.6.3'
     return '3.6' if description.downcase == '3.6.6'
     return '3.6' if description.downcase == '3.6.7'
+    # temporary
+    return '5.0' if description.downcase == '3.7'
+    return '5.0' if description.downcase == '3.7.0'
+
     return '3.7' if description.downcase == '3.7'
     return '3.7' if description.downcase == '3.7.0'
     return '5.0' if description.downcase == '5.0.0'
