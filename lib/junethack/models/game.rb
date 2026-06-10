@@ -113,6 +113,23 @@ $xnethack_achievements = [
   [2, :ascended_permadeaf,    'ascended being permanently deaf',          'x-conduct-permadeaf.png'],
 ]
 
+# EvilHack conduct achievements, matched by name against the conductX xlogfile field
+# (bit positions in the conduct field changed between versions, names are stable)
+# [row, trophy, text, icon, conductX name]
+$evilhack_conduct_achievements = [
+  [2, :ascended_petless,        'ascended without having a pet',            'x-conduct-petless.png',      'never_had_a_pet'],
+  [2, :ascended_artifactless,   'ascended without touching an artifact',    'x-conduct-artifactless.png', 'never_touched_an_artifact'],
+  [2, :ascended_permablind,     'ascended while permanently blind',         'ascended_permablind.png',    'blindfolded'],
+  [2, :ascended_nudist,         'ascended without wearing armor',           'ascended_nudist.png',        'nudist'],
+  [2, :ascended_permahallu,     'ascended while hallucinating permanently', 'x-conduct-permahallu.png',   'hallucinating'],
+  [2, :ascended_permadeaf,      'ascended being permanently deaf',          'x-conduct-permadeaf.png',    'deaf'],
+  [2, :never_died,              'ascended without dying',                   'never_died.png',             'never_died'],
+  [2, :never_abused_alignment,  'never abused alignment',                   'never_abused_alignment.png', 'never_abused_alignment'],
+  [2, :never_forged_an_artifact, 'ascended without forging an artifact',    'never_forged_an_artifact.png', 'never_forged_an_artifact'],
+  [2, :never_acquired_magic_resistance, 'ascended without acquiring magic resistance', 'never_acquired_magic_resistance.png', 'never_acquired_magic_resistance'],
+  [2, :never_acquired_reflection, 'ascended without acquiring reflection',  'never_acquired_reflection.png', 'never_acquired_reflection'],
+]
+
 $splicehack_achievements = [
   "", #[2, :defeated_the_yellow_king, 'defeated the yellow king',                 's-defeated-yellow-king.png'],
   "", # defeated demogorgon
@@ -316,8 +333,12 @@ class Game < ActiveRecord::Base
     end
 
     def ascended_without_elbereth?
-      return true if ascended && conductX&.split(",")&.include?("elberethless")
-      (ascended && (Integer(conduct) & 0x01000 > 0)) || (ascended && elbereths == 0)
+      return false unless ascended
+      # EvilHack: conductX is authoritative; its conduct bit 0x01000
+      # means "never had a pet" there
+      return conductX.to_s.split(",").include?("elberethless") if version == 'evh'
+      return true if conductX&.split(",")&.include?("elberethless")
+      (Integer(conduct) & 0x01000 > 0) || elbereths == 0
     end
 
     def ascended_without_unfairly_scaring_monsters?

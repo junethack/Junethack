@@ -91,3 +91,12 @@ visited_lawful_high_altar_on_astral_plane magenta <
 visited_neutral_high_altar_on_astral_plane magenta ∧
 visited_chaotic_high_altar_on_astral_plane magenta >
 visited_all_high_altars_on_astral_plane magenta Ω
+entered_hidden_dungeon gray >
+got_crowned yellow ♔
+quest_completed lgreen ✓
+ascended_permablind gray ●
+ascended_nudist brown @
+never_died white †
+never_forged_an_artifact lred )
+never_acquired_magic_resistance lmagenta [
+never_acquired_reflection lcyan [

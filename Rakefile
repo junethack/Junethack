@@ -113,6 +113,16 @@ namespace :update do
         update_scores(Game.find(game['id']))
       }
     end
+
+    desc "recalculate EvilHack trophies (run after the 2026 trophy reseed migration)"
+    task :rescore_evilhack do
+      i = 0
+      Game.where(version: 'evh').where.not(user_id: nil).order(:endtime).each { |game|
+        i += 1
+        puts "#{i} #{game.id} #{game.name}"
+        update_scores(game)
+      }
+    end
 end
 
 namespace :db do

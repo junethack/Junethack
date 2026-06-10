@@ -196,9 +196,19 @@ def Trophy.check_trophies_for_variant variant_description
       achievements << [:defeated_pelias,             'defeated Pelias, the Barbarian quest leader', nil, 8]
       achievements << [:defeated_shaman_karnov,      'defeated Shaman Karnov, the Caveman quest leader', nil, 8]
       achievements << [:defeated_robert_the_lifer,   'defeated Robert the Lifer, the Convict quest leader', nil, 8]
+      if variant == evilhack
+        achievements << [:defeated_elanee,           'defeated Elanee, the Druid quest leader', nil, 8]
+      end
       achievements << [:defeated_hippocrates,        'defeated Hippocrates, the Healer quest leader', nil, 8]
+      if variant == evilhack
+        achievements << [:defeated_archbishop_of_moloch, 'defeated the Archbishop of Moloch, the Infidel quest leader', nil, 8]
+      end
       achievements << [:defeated_king_arthur,        'defeated King Arthur, the Knight quest leader', nil, 8]
-      achievements << [:defeated_grand_master,       'defeated Grand Master, the Monk quest leader', nil, 8]
+      if variant == evilhack
+        achievements << [:defeated_master_po,        'defeated Master Po, the Monk quest leader', nil, 8]
+      else
+        achievements << [:defeated_grand_master,     'defeated Grand Master, the Monk quest leader', nil, 8]
+      end
       achievements << [:defeated_arch_priest,        'defeated the Arch Priest, the Priest quest leader', nil, 8]
       achievements << [:defeated_orion,              'defeated Orion, the Ranger quest leader', nil, 8]
       achievements << [:defeated_master_of_thieves,  'defeated the Master of Thieves, the Rogue quest leader and Tourist quest nemesis', nil, 8]
@@ -220,7 +230,13 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:defeated_annam,            'defeated Annam, the Caveman quest nemesis', "eh_defeated_annam.png", 9]
       end
       achievements << [:defeated_warden_arianna,     'defeated Warden Arianna, the Convict quest nemesis', nil, 9]
+      if variant == evilhack
+        achievements << [:defeated_baba_yaga,        'defeated Baba Yaga, the Druid quest nemesis', nil, 9]
+      end
       achievements << [:defeated_cyclops,            'defeated Cyclops, the Healer quest nemesis', nil, 9]
+      if variant == evilhack
+        achievements << [:defeated_paladin,          'defeated the Paladin, the Infidel quest nemesis', nil, 9]
+      end
       achievements << [:defeated_ixoth,              'defeated Ixoth, the Knight quest nemesis', nil, 9]
       achievements << [:defeated_master_kaen,        'defeated Master Kaen, the Monk quest nemesis', nil, 9]
       achievements << [:defeated_nalzok,             'defeated Nalzok, the Priest quest nemesis', nil, 9]
@@ -243,6 +259,11 @@ def Trophy.check_trophies_for_variant variant_description
         achievements << [:defeated_black_horse, 'defeated the Black Horse', nil, 10]
         achievements << [:defeated_saint_michael, "defeated Saint Michael", "defeated_saint_michael.png", 10]
         achievements << [:defeated_gollum,        "defeated Gollum", "defeated_gollum.png", 10]
+        achievements << [:defeated_talgath,       "defeated Tal'Gath", nil, 10]
+        achievements << [:defeated_charon,        'defeated Charon', nil, 10]
+        achievements << [:defeated_merlin,        'defeated Merlin', nil, 10]
+        achievements << [:defeated_morgan_le_fay, 'defeated Morgan le Fay', nil, 10]
+        achievements << [:defeated_kathryn_the_enchantress, 'defeated Kathryn the Enchantress', nil, 10]
         achievements << [:defeated_croesus,     'Assault on Fort Knox (defeated Croesus)', 'm-croesus.png', 6]
         achievements << [:mini_croesus,         "Mini-Croesus (finish a game with at least 25,000 gold pieces)", "m-mini-croesus.png", 6]
         achievements << [:croesus_buddy,        "Croesus' buddy (finish a game with at least 100,000 gold pieces)", "croesus_buddy.png", 6]
@@ -359,13 +380,17 @@ def Trophy.check_trophies_for_variant variant_description
 
     if variant == evilhack then
       achievements = []
-      achievements << [:entered_purgatory, "entered Purgatory", 2]
-      achievements << [:consulted_the_oracle, "consulted the Oracle", 2]
-      achievements << [:never_abused_alignment, "never abused alignment", 2]
+      achievements << [:entered_purgatory, "entered Purgatory", nil, 2]
+      achievements << [:consulted_the_oracle, "consulted the Oracle", nil, 2]
+      achievements << [:entered_wiztower, "entered the Wizard's Tower", "entered_wizards_tower.png", 2]
+      achievements << [:entered_hidden_dungeon, "entered the Hidden Dungeon", nil, 2]
+      achievements << [:got_crowned, "got crowned", nil, 2]
+      achievements << [:entered_quest_portal_level, "entered the quest portal level", nil, 2]
+      achievements << [:quest_completed, "completed the quest", nil, 2]
 
       achievements.each { |achievement|
-        icon = "#{achievement[0].to_s}.png"
-        Trophy.create variant: variant, trophy: achievement[0], text: achievement[1], icon: icon, row: achievement[2]
+        icon = achievement[2] || "#{achievement[0].to_s}.png"
+        Trophy.create(variant:, trophy: achievement[0], text: achievement[1], icon:, row: achievement[3])
       }
     end
 
@@ -490,8 +515,8 @@ def Trophy.check_trophies_for_variant variant_description
         [:undead_hunter_quest, "Don't think too hard about all of this (Completed undead hunter quest)", "dnh_uh_qst.png", 6],
         [:kensei_quest, "Virtue, and no evil (Completed kensei quest)",	"dnh_kensei_quest.png", 6],
         [:centauroid_ascension, "Who needs boots, anyway?	(Ascended a centauroid)", "dnh_centaroid_asc.png", 5],
-        [:tiefling_ascension, "Better to serve in heaven (Ascended a tiefling)", "dnh_tiefling_asc.png", 5],	
-        [:aasimar_ascension, "I'm so blessed...	(Ascended an aasimar)", "dnh_aasimar_asc.png", 5],	
+        [:tiefling_ascension, "Better to serve in heaven (Ascended a tiefling)", "dnh_tiefling_asc.png", 5],
+        [:aasimar_ascension, "I'm so blessed...	(Ascended an aasimar)", "dnh_aasimar_asc.png", 5],
         [:silverman_ascension, "Flourish in distant lands	(Ascended a silverman)", "dnh_silverman_asc.png", 5],
         [:silverknight_ascension, "Your friends might need glasses (Ascended a silver knight)",	"dnh_silverknight_asc.png", "5"],
         [:dnethack_one_hellish_seal, "Relics of a bygone era (Opened one type of hellish seal)", "dnh_1_hell.png", 4],
@@ -530,9 +555,15 @@ def Trophy.check_trophies_for_variant variant_description
 
     end
 
-    if [xnethack, evilhack].include? variant then
+    if [xnethack].include? variant then
       $xnethack_achievements.reject(&:empty?).each {|trophy|
-        Trophy.create variant: variant, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0]
+        Trophy.create(variant:, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0])
+      }
+    end
+
+    if [evilhack].include? variant then
+      $evilhack_conduct_achievements.each {|trophy|
+        Trophy.create(variant:, trophy: trophy[1], text: trophy[2], icon: trophy[3], row: trophy[0])
       }
     end
 

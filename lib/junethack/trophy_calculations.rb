@@ -499,24 +499,20 @@ def update_scores(game)
   end
 
   if game.ascended && [evilhack].include?(game.version) then
-    achievements = game.conduct.hex if game.conduct
-    if achievements and achievements > 0 then
-      for i in 0..$xnethack_achievements.size-1 do
-        next if $xnethack_achievements[i].empty?
-        if achievements & 2**(i+12) > 0 then
-          entry = Scoreentry.find_by(user_id: game.user_id,
-                                   variant: game.version,
-                                   trophy: $xnethack_achievements[i][1])
-          if not entry then
-            Scoreentry.create(user_id: game.user_id,
-                              variant: game.version,
-                              value: "1",
-                              endtime: game.endtime,
-                              trophy: $xnethack_achievements[i][1])
-          end
-        end
+    conducts = game.conduct_x&.split(",") || []
+    $evilhack_conduct_achievements.each { |_row, trophy, _text, _icon, conduct|
+      next unless conducts.include?(conduct)
+      entry = Scoreentry.find_by(user_id: game.user_id,
+                                 variant: game.version,
+                                 trophy:)
+      if not entry then
+        Scoreentry.create(user_id: game.user_id,
+                          variant: game.version,
+                          value: "1",
+                          endtime: game.endtime,
+                          trophy:)
       end
-    end
+    }
   end
 
   if [splicehack].include?(game.version) then
@@ -894,8 +890,15 @@ def defeated_all_quest_leaders?(game)
   ]
 
   unnethack = helper_get_variant_for 'unnethack'
+  evilhack = helper_get_variant_for 'evilhack'
   if game.version == unnethack
     leaders << :defeated_robert_the_lifer
+  elsif game.version == evilhack
+    # EvilHack renamed the Monk quest leader and has Convict, Infidel and Druid quests
+    leaders[leaders.index(:defeated_grand_master)] = :defeated_master_po
+    leaders << :defeated_robert_the_lifer
+    leaders << :defeated_archbishop_of_moloch
+    leaders << :defeated_elanee
   end
   Scoreentry.where(user_id: game.user_id,
                    variant: game.version,
@@ -923,7 +926,13 @@ def defeated_all_quest_nemeses?(game)
     nemeses << :defeated_warden_arianna
     nemeses << :defeated_schliemann
   elsif game.version == evilhack
+    # EvilHack's Caveman nemesis is Annam (no Chromatic Dragon there)
+    # and it has Convict, Infidel and Druid quests
+    nemeses[nemeses.index(:defeated_tiamat)] = :defeated_annam
     nemeses << :defeated_minion_of_huhetotl
+    nemeses << :defeated_warden_arianna
+    nemeses << :defeated_paladin
+    nemeses << :defeated_baba_yaga
   end
   Scoreentry.where(user_id: game.user_id,
                    variant: game.version,

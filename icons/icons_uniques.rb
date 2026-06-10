@@ -167,3 +167,13 @@ h,  white,     White Horse,               ,  , white
 h,  lgray,     Pale Horse,                ,  , lgray
 h,  gray,      Black Horse,               ,  ,  gray
 h,  red,       Red Horse,                 ,  , red
+@,  lgreen,    Elanee,              leader,  Dru, white
+@,  red,       Archbishop of Moloch, leader, Inf, white
+@,  gray,      Master Po,           leader,  Mon, white
+@,  magenta,   Baba Yaga,           nemesis, Dru, white, dark
+@,  yellow,    Paladin,             nemesis, Inf, white, dark
+e,  lmagenta,  TalGath,                   ,
+@,  white,     Charon,                    ,
+@,  magenta,   Merlin,                    ,
+@,  magenta,   Morgan le Fay,             ,
+@,  yellow,    Kathryn the Enchantress,   ,
