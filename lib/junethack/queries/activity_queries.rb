@@ -102,6 +102,15 @@ class ActivityQueries
         .where(ascended: true).count
   end
 
+  def self.ascensions_by_player(users: nil, clans: nil, mode: "include")
+    filtered_scope(users:, clans:, mode:)
+        .where(ascended: true)
+        .joins(:user)
+        .group("users.login")
+        .order("count_all DESC, lower(login) ASC")
+        .count
+  end
+
   def self.new_users_by_day
     User.group("date(created_at)")
         .pluck("date(created_at), count(1)")

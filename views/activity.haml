@@ -105,3 +105,44 @@
             %td.table_date= "Total"
             %td.table_number= ActivityQueries.total_users
         - graph.write("new_users_per_day") unless filtered
+
+  - cache_fragment("ascensions_summary_variant_#{Game.max_ascended_endtime}#{active_filters_suffix}") do
+    - @ascensions_by_variant = ActivityQueries.ascensions_by_variant(**filter_kw)
+    .card-body.border-top
+      %h2 Total Ascensions per Variant
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %thead
+            %tr
+              %th Variant
+              %th Ascensions
+          %tbody
+            - @ascensions_by_variant.sort_by { |k, v| [-v, k.downcase] }.each do |v, count|
+              - next unless count > 0
+              %tr
+                %td= "<a class='hidden_link' href='/ascensions/#{v}'>#{$variants_mapping[v]}</a>"
+                %td.table_number= count
+          %tfoot
+            %tr
+              %td.table_date Total
+              %td.table_number= ActivityQueries.total_ascensions(**filter_kw)
+
+  - cache_fragment("ascensions_summary_player_#{Game.max_ascended_endtime}#{active_filters_suffix}") do
+    - @ascensions_by_player = ActivityQueries.ascensions_by_player(**filter_kw)
+    .card-body.border-top
+      %h2 Total Ascensions per Player
+      .table-responsive
+        %table.table.table-sm.table-junethack{style: "width: auto"}
+          %thead
+            %tr
+              %th Player
+              %th Ascensions
+          %tbody
+            - @ascensions_by_player.each do |login, count|
+              %tr
+                %td= "<a class='hidden_link' href='/user/#{login}'>#{h login}</a>"
+                %td.table_number= count
+          %tfoot
+            %tr
+              %td.table_date Total
+              %td.table_number= ActivityQueries.total_ascensions(**filter_kw)
