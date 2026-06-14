@@ -1,0 +1,32 @@
+.filter-bar
+  .filter-bar-controls
+    .filter-bar-row
+      %label.filter-bar-label{for: "filter-autocomplete"}
+        %i.fa-solid.fa-filter
+      .filter-autocomplete-wrapper
+        %input#filter-autocomplete.form-control.form-control-sm{type: "text", placeholder: "User or clan name...", autocomplete: "off"}
+        #filter-suggestions.dropdown-menu.w-100
+      - mode = @mode || "include"
+      .btn-group.btn-group-sm.filter-mode-group
+        %input#filter-mode-include.btn-check{type: "radio", name: "filter_mode", value: "include", checked: (mode == "include")}
+        %label.btn.btn-outline-success{for: "filter-mode-include"} +
+        %input#filter-mode-exclude.btn-check{type: "radio", name: "filter_mode", value: "exclude", checked: (mode == "exclude")}
+        %label.btn.btn-outline-danger{for: "filter-mode-exclude"} -
+
+  - users = @users || []
+  - clans = @clans || []
+  - has_filters = (users + clans).any?
+  - if has_filters
+    - badge_class = mode == "include" ? "success" : "danger"
+    .active-filters
+      - users.each do |name|
+        %span.badge.rounded-pill{ class: "bg-#{badge_class}-subtle text-#{badge_class}-emphasis" }
+          %i.fa-solid.fa-user.me-1
+          = name
+          %a.filter-remove.ms-1{href: remove_url(remove_user: name)} &times;
+      - clans.each do |name|
+        %span.badge.rounded-pill{ class: "bg-#{badge_class}-subtle text-#{badge_class}-emphasis" }
+          %i.fa-solid.fa-users.me-1
+          = name
+          %a.filter-remove.ms-1{href: remove_url(remove_clan: name)} &times;
+      %a.btn.btn-sm.btn-outline-secondary{href: "/activity"} Clear all

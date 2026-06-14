@@ -575,8 +575,30 @@ get %r{/ascensions/?(\d{4}-\d{2}-\d{2})?/?([-0-9a-zNH.]+)?} do |date, variant|
   haml :last_games_played
 end
 
+get "/autocomplete" do
+  content_type :json
+
+  q = params[:q]&.strip&.downcase
+  return [].to_json unless q && q.length >= 1
+
+  sanitized = ActiveRecord::Base.sanitize_sql_like(q)
+  users = User.where("LOWER(login) LIKE ?", "#{sanitized}%").limit(10).pluck(:login)
+  clans = Clan.where("LOWER(name) LIKE ?", "#{sanitized}%").limit(10).pluck(:name)
+
+  results = []
+  users.each { |u| results << { type: "user", name: u } }
+  clans.each { |c| results << { type: "clan", name: c } }
+
+  results.to_json
+end
+
 get "/activity" do
   caching_check_last_played_game
+
+  @users = parse_csv_param(params[:users])
+  @clans = parse_csv_param(params[:clans])
+  @mode = params[:mode] || "include"
+  @mode = "include" unless %w[include exclude].include?(@mode)
 
   haml :activity
 end
@@ -640,5 +662,10 @@ helpers do
   # https://stackoverflow.com/questions/2950234/get-absolute-base-url-in-sinatra
   def base_url
     @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
+  end
+
+  def parse_csv_param(value)
+    return nil if value.nil? || value.strip.empty?
+    value.split(",").map(&:strip).reject(&:empty?)
   end
 end

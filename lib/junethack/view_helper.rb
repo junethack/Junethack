@@ -1,14 +1,21 @@
 module ViewHelper
-  def variant_day_table(title, query_type, url_prefix, hide_zero, border_top)
-    data_by_day = ActivityQueries.send("#{query_type}_by_variant_and_day")
-    data_total = ActivityQueries.send("#{query_type}_by_variant")
-    haml :_variant_day_table, locals: {
-      title:,
-      data_by_day:,
-      data_total:,
-      url_prefix:,
-      hide_zero:,
-      border_top:
-    }
+  def active_filters_suffix
+    return "" unless @users&.any? || @clans&.any?
+    parts = []
+    parts << "u=#{@users.sort.join(',')}" if @users&.any?
+    parts << "c=#{@clans.sort.join(',')}" if @clans&.any?
+    parts << "m=#{@mode}"
+    "_#{parts.join('_')}"
+  end
+
+  def remove_url(remove_user: nil, remove_clan: nil)
+    users = (@users || []) - [remove_user].compact
+    clans = (@clans || []) - [remove_clan].compact
+    return "/activity" unless users.any? || clans.any?
+    params = []
+    params << "users=#{users.join(',')}" if users.any?
+    params << "clans=#{clans.join(',')}" if clans.any?
+    params << "mode=#{@mode}"
+    "/activity?#{params.join('&')}"
   end
 end

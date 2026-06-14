@@ -1,21 +1,28 @@
-%script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"}
+%script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"}
 %script{:type => "text/javascript", :src => "/graph/highcharts.js"}
 %script{:type => "text/javascript", :src => "/graph/graph_ascensions.js"}
 %script{:type => "text/javascript", :src => "/graph/graph_finished_games_per_day.js"}
 %script{:type => "text/javascript", :src => "/graph/graph_new_users_per_day.js"}
+%script{:type => "text/javascript", :src => "/filter_autocomplete.js"}
+
+- filter_kw = { users: @users, clans: @clans, mode: @mode || "include" }
 
 .card.junethack-card
-  - cache_fragment("games_variants_#{Game.max_endtime}") do
-    = variant_day_table("Finished Games per Day and Variant", :finished_games, "/games", false, false)
+  = haml :_filter_bar
 
-  - cache_fragment("games_players_#{Game.max_endtime}") do
-    = variant_day_table("Unique Players per Day and Variant", :unique_players, "/games", false, true)
+  - cache_fragment("games_variants_#{Game.max_endtime}#{active_filters_suffix}") do
+    = haml :_variant_day_table, locals: { title: "Finished Games per Day and Variant", data_by_day: ActivityQueries.finished_games_by_variant_and_day(**filter_kw), data_total: ActivityQueries.finished_games_by_variant(**filter_kw), url_prefix: "/games", hide_zero: false, border_top: false }
 
-  - cache_fragment("games_variants_ascended_#{Game.max_endtime}") do
-    = variant_day_table("Ascensions per Day and Variant", :ascensions, "/ascensions", true, true)
+  - cache_fragment("games_players_#{Game.max_endtime}#{active_filters_suffix}") do
+    = haml :_variant_day_table, locals: { title: "Unique Players per Day and Variant", data_by_day: ActivityQueries.unique_players_by_variant_and_day(**filter_kw), data_total: ActivityQueries.unique_players_by_variant(**filter_kw), url_prefix: "/games", hide_zero: false, border_top: true }
 
-  - cache_fragment("games_#{Game.max_endtime}") do
-    - @finished_games_per_day = ActivityQueries.finished_games_per_day
+  - cache_fragment("games_variants_ascended_#{Game.max_endtime}#{active_filters_suffix}") do
+    = haml :_variant_day_table, locals: { title: "Ascensions per Day and Variant", data_by_day: ActivityQueries.ascensions_by_variant_and_day(**filter_kw), data_total: ActivityQueries.ascensions_by_variant(**filter_kw), url_prefix: "/ascensions", hide_zero: true, border_top: true }
+
+  - filtered = active_filters_suffix != ""
+
+  - cache_fragment("games_#{Game.max_endtime}#{active_filters_suffix}") do
+    - @finished_games_per_day = ActivityQueries.finished_games_per_day(**filter_kw)
     .card-body.border-top
       %h2 Finished Games per Day
       .table-responsive
@@ -23,22 +30,25 @@
           %tr
             %th Date (UTC)
             %th
-          - graph = Graph.new
+            - unless filtered
+              %th
+          - unless filtered
+            - graph = Graph.new
           - @finished_games_per_day.each_with_index do |game, index|
-            - graph.add_data_point(game.datum, game.count)
+            - graph.add_data_point(game.datum, game.count) unless filtered
             %tr
               %td.table_date= h game.datum
               %td.table_number= game.count
-              - if index == 0
+              - if index == 0 && !filtered
                 %td.chart{:rowspan => @finished_games_per_day.size}
                   %div{:id => "chart_finished_games_per_day"}
           %tr
             %td.table_date= "Total"
-            %td.table_number= ActivityQueries.total_finished_games
-        - graph.write("finished_games_per_day")
+            %td.table_number= ActivityQueries.total_finished_games(**filter_kw)
+        - graph.write("finished_games_per_day") unless filtered
 
-  - cache_fragment("ascensions_#{Game.max_ascended_endtime}") do
-    - @ascensions_per_day = ActivityQueries.ascensions_per_day_with_zeros
+  - cache_fragment("ascensions_#{Game.max_ascended_endtime}#{active_filters_suffix}") do
+    - @ascensions_per_day = ActivityQueries.ascensions_per_day_with_zeros(**filter_kw)
     .card-body.border-top
       %h2 Ascensions per Day
       .table-responsive
@@ -46,21 +56,25 @@
           %tr
             %th Date (UTC)
             %th
-          - graph = Graph.new
+            - unless filtered
+              %th
+          - unless filtered
+            - graph = Graph.new
           - @ascensions_per_day.each_with_index do |game, index|
-            - graph.add_data_point(game.datum, game.count)
+            - if !filtered
+              - graph.add_data_point(game.datum, game.count || 0)
             %tr
               %td.table_date= h game.datum
               %td.table_number= game.count ? game.count : 0
-              - if index == 0
+              - if index == 0 && !filtered
                 %td.chart{:rowspan => @ascensions_per_day.size}
                   %div{:id => "chart_ascensions"}
           %tr
             %td.table_date= "Total"
-            %td.table_number= ActivityQueries.total_ascensions
-        - graph.write("activity")
+            %td.table_number= ActivityQueries.total_ascensions(**filter_kw)
+        - graph.write("activity") unless filtered
 
-  - cache_fragment("users_#{User.max_created_at}") do
+  - cache_fragment("users_#{User.max_created_at}#{active_filters_suffix}") do
     - @new_users_per_day = ActivityQueries.new_users_by_day
     - @days = []
     - if $tournament_signupstarttime
@@ -74,17 +88,20 @@
           %tr
             %th Date (UTC)
             %th
-          - graph = Graph.new
+            - unless filtered
+              %th
+          - unless filtered
+            - graph = Graph.new
           - @days.each_with_index do |day, index|
             - game = @new_users_per_day.select{|g| g.datum == day}.first || Point.new(day, 0)
-            - graph.add_data_point(game.datum, game.count)
+            - graph.add_data_point(game.datum, game.count) unless filtered
             %tr
               %td.table_date= h game.datum
               %td.table_number= game.count ? game.count : 0
-              - if index == 0
+              - if index == 0 && !filtered
                 %td.chart{:rowspan => @days.size}
                   %div{:id => "chart_new_users_per_day"}
           %tr
             %td.table_date= "Total"
             %td.table_number= ActivityQueries.total_users
-        - graph.write("new_users_per_day")
+        - graph.write("new_users_per_day") unless filtered
