@@ -5,7 +5,7 @@
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1"}/
     %meta{:name => "format-detection", :content => "telephone=no"}/
     %link{href: "/vendor/bootstrap/bootstrap.min.css", rel: "stylesheet"}/
-    %link{href: "/style-custom.css", rel: "stylesheet"}/
+    %link{href: "/style.css", rel: "stylesheet"}/
     - games_count = Game.where('user_id > 0').count
     - if $tournament_signupstarttime.nil? || Time.now.to_i < $tournament_signupstarttime
       %title= 'Junethack 2026'

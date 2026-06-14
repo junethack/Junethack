@@ -49,7 +49,11 @@ h3 {
   margin: 0;
   line-height: 1.5em;
 }
-h1, h2, h3 {
+h4 {
+  font-size: 100%;
+  margin: 0.5rem 0 0 0;
+}
+h1, h2, h3, h4 {
   font-weight: bold;
 }
 
@@ -223,6 +227,7 @@ table.compact,
     border: 0;
     padding-left: 1em;
 }
+.table-junethack th.table_number,
 .table-junethack td.table_number
 {
     text-align: right;
@@ -259,7 +264,9 @@ table.compact,
     padding-right: 0;
     padding-left: 0;
 }
-
+.table-junethack.trophies {
+  margin-top: 0;
+}
 
 /* Card styling for content wrappers */
 .card.junethack-card {
@@ -672,6 +679,20 @@ footer.junethack-footer {
 .btn-junethack-red:hover {
   color: #fff;
   background-color: #c22;
+}
+
+/* user page */
+.clan-invitation  {
+  tr {
+    td:last-child {
+      text-align: right;
+    }
+    .btn {
+      width: 15%;
+      margin-top: 0.2rem;
+      margin-bottom: 0.2rem;
+    }
+  }
 }
 
 /* Section dividers */
