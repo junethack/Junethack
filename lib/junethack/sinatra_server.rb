@@ -17,6 +17,7 @@ require 'tournament_times'
 require 'sanitize'
 
 require 'graph'
+require 'view_helper'
 
 require 'ext/numeric'
 
@@ -626,6 +627,7 @@ end
 helpers do
   include Rack::Utils
   alias_method :h, :escape_html
+  include ViewHelper
 
   # overwrite cache_fragment
   # it doesn't honor the setting of :environment

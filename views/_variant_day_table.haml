@@ -1,0 +1,29 @@
+.card-body{ class: ('border-top' if border_top) }
+  %h2= title
+  .table-responsive
+    %table.table.table-sm.table-junethack{style: "width: auto"}
+      %thead
+        %tr.rotated
+          %th
+            %div Date (UTC)
+          - $variant_order.each do |v|
+            %th
+              %div= $variants_mapping[v]
+      %tbody
+        - today = Time.now.to_i
+        - $tournament_starttime.step($tournament_endtime, 86400).each do |datum|
+          - if today > datum && datum < $tournament_endtime
+            %tr
+              - formatted_date = h Time.at(datum).getutc.strftime("%Y-%m-%d")
+              %td.table_date= "<a class='hidden_link' href='#{url_prefix}/#{formatted_date}'>#{formatted_date}</a>"
+              - $variant_order.each do |v|
+                - count = data_by_day[[v, formatted_date]] || 0
+                - count = '' if hide_zero && count == 0
+                %td.table_number= "<a class='hidden_link' href='#{url_prefix}/#{formatted_date}/#{v}'>#{count}</a>"
+      %tfoot
+        %tr
+          %td.table_date= "Total"
+          - $variant_order.each do |v|
+            - count = data_total[v] || 0
+            - count = '' if hide_zero && count == 0
+            %td.table_number= "<a class='hidden_link' href='#{url_prefix}/#{v}'>#{count}</a>"
