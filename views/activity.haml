@@ -24,7 +24,7 @@
   - cache_fragment("games_#{Game.max_endtime}#{active_filters_suffix}") do
     - @finished_games_per_day = ActivityQueries.finished_games_per_day(**filter_kw)
     .card-body.border-top
-      %h2 Finished Games per Day
+      =h2("Finished Games per Day", :finished_games_per_day)
       .table-responsive
         %table.table.table-sm.table-junethack{style: "width: auto"}
           %tr
@@ -50,7 +50,7 @@
   - cache_fragment("ascensions_#{Game.max_ascended_endtime}#{active_filters_suffix}") do
     - @ascensions_per_day = ActivityQueries.ascensions_per_day_with_zeros(**filter_kw)
     .card-body.border-top
-      %h2 Ascensions per Day
+      =h2("Ascensions per Day", :ascensions_per_day)
       .table-responsive
         %table.table.table-sm.table-junethack{style: "width: auto"}
           %tr
@@ -64,7 +64,7 @@
             - if !filtered
               - graph.add_data_point(game.datum, game.count || 0)
             %tr
-              %td.table_date= h game.datum
+              %td.table_date= "<a class='hidden_link' href='/ascensions/#{h game.datum}'>#{h game.datum}</a>"
               %td.table_number= game.count ? game.count : 0
               - if index == 0 && !filtered
                 %td.chart{:rowspan => @ascensions_per_day.size}
@@ -82,7 +82,7 @@
       - endtime = Time.at([$tournament_endtime, Time.now.to_i].min).to_date
       - @days = (signupstarttime..endtime)
     .card-body.border-top
-      %h2 New Players per Day
+      =h2("New Players per Day", :new_players_per_day)
       .table-responsive
         %table.table.table-sm.table-junethack{style: "width: auto"}
           %tr
@@ -109,7 +109,7 @@
   - cache_fragment("ascensions_summary_variant_#{Game.max_ascended_endtime}#{active_filters_suffix}") do
     - @ascensions_by_variant = ActivityQueries.ascensions_by_variant(**filter_kw)
     .card-body.border-top
-      %h2 Total Ascensions per Variant
+      =h2("Total Ascensions per Variant", :total_ascensions_per_variant)
       .table-responsive
         %table.table.table-sm.table-junethack{style: "width: auto"}
           %thead
@@ -130,7 +130,7 @@
   - cache_fragment("ascensions_summary_player_#{Game.max_ascended_endtime}#{active_filters_suffix}") do
     - @ascensions_by_player = ActivityQueries.ascensions_by_player(**filter_kw)
     .card-body.border-top
-      %h2 Total Ascensions per Player
+      =h2("Total Ascensions per Player", :total_ascensions_per_player)
       .table-responsive
         %table.table.table-sm.table-junethack{style: "width: auto"}
           %thead

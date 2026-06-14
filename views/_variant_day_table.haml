@@ -1,5 +1,5 @@
 .card-body{ class: ('border-top' if border_top) }
-  %h2= title
+  =h2(title, title.downcase)
   .table-responsive
     %table.table.table-sm.table-junethack{style: "width: auto"}
       %thead
