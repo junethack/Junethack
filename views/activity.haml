@@ -1,5 +1,5 @@
 %script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"}
-%script{:type => "text/javascript", :src => "/graph/highcharts.js"}
+%script{:type => "text/javascript", :src => "/graph/echarts.min.js"}
 %script{:type => "text/javascript", :src => "/graph/graph_ascensions.js"}
 %script{:type => "text/javascript", :src => "/graph/graph_finished_games_per_day.js"}
 %script{:type => "text/javascript", :src => "/graph/graph_new_users_per_day.js"}
@@ -99,7 +99,7 @@
               %td.table_date= h game.datum
               %td.table_number= game.count ? game.count : 0
               - if index == 0 && !filtered
-                %td.chart{:rowspan => @days.size}
+                %td.chart{rowspan: @days.count}
                   %div{:id => "chart_new_users_per_day"}
           %tr
             %td.table_date= "Total"

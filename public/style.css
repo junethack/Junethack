@@ -221,12 +221,24 @@ table.compact,
     background-color: #9f9f9f;
     color: #000;
 }
+.table-junethack tr:hover td.chart
+{
+    background-color: #ccc;
+}
 
 .table-junethack td.chart
 {
-    background-color: inherit;
+    background-color: red;
     border: 0;
     padding-left: 1em;
+    position: relative;
+    width: 60vw;
+}
+.table-junethack td.chart > div {
+  position: absolute;
+  inset: 0;
+  width: 60vw;
+  height: 100%;
 }
 .table-junethack th.table_number,
 .table-junethack td.table_number
@@ -279,7 +291,6 @@ table.compact,
   margin-top: 1.5em;
   padding-top: 1px;
   padding-bottom: 30px;
-  position: relative;
 }
 
 /* Title text */
@@ -685,9 +696,7 @@ footer.junethack-footer {
 
 /* Filter bar */
 .filter-bar {
-  position: absolute;
-  top: 12px;
-  right: 16px;
+  margin: 6px 0 8px auto;
   z-index: 10;
   background: rgba(238, 238, 238, 0.95);
   border: 1px solid #bbb;
@@ -695,6 +704,7 @@ footer.junethack-footer {
   padding: 6px 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   max-width: 480px;
+  width: fit-content;
 }
 
 .filter-bar-controls {
