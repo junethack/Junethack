@@ -11,10 +11,10 @@
   = haml :_filter_bar
 
   - cache_fragment("games_variants_#{Game.max_endtime}#{active_filters_suffix}") do
-    = haml :_variant_day_table, locals: { title: "Finished Games per Day and Variant", data_by_day: ActivityQueries.finished_games_by_variant_and_day(**filter_kw), data_total: ActivityQueries.finished_games_by_variant(**filter_kw), url_prefix: "/games", hide_zero: false, border_top: false }
+    = haml :_variant_day_table, locals: { title: "Finished Games per Day and Variant", data_by_day: ActivityQueries.finished_games_by_variant_and_day(**filter_kw), data_total: ActivityQueries.finished_games_by_variant(**filter_kw), url_prefix: "/games", hide_zero: true, border_top: false }
 
   - cache_fragment("games_players_#{Game.max_endtime}#{active_filters_suffix}") do
-    = haml :_variant_day_table, locals: { title: "Unique Players per Day and Variant", data_by_day: ActivityQueries.unique_players_by_variant_and_day(**filter_kw), data_total: ActivityQueries.unique_players_by_variant(**filter_kw), url_prefix: "/games", hide_zero: false, border_top: true }
+    = haml :_variant_day_table, locals: { title: "Unique Players per Day and Variant", data_by_day: ActivityQueries.unique_players_by_variant_and_day(**filter_kw), data_total: ActivityQueries.unique_players_by_variant(**filter_kw), url_prefix: "/games", hide_zero: true, border_top: true }
 
   - cache_fragment("games_variants_ascended_#{Game.max_endtime}#{active_filters_suffix}") do
     = haml :_variant_day_table, locals: { title: "Ascensions per Day and Variant", data_by_day: ActivityQueries.ascensions_by_variant_and_day(**filter_kw), data_total: ActivityQueries.ascensions_by_variant(**filter_kw), url_prefix: "/ascensions", hide_zero: true, border_top: true }
