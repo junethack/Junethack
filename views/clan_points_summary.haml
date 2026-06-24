@@ -21,3 +21,13 @@
             #{h entry.points}
           %td.table_number
             #{h entry.rank}
+    %tfoot
+      %tr
+        %td
+          Total
+        %td.table_number
+        %td.table_number
+          #{h ClanScoreEntry.where(clan_name: @clan.name).where.not(trophy: 'clan_winner').sum(:points)}
+        %td.table_number
+          - winner = ClanScoreEntry.find_by(clan_name: @clan.name, trophy: 'clan_winner')
+          = winner&.rank
