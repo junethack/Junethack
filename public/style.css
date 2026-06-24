@@ -71,6 +71,13 @@ a:hover {
 a.imagelink:hover {
   text-decoration: none;
 }
+
+/* buttons */
+.btn:hover {
+  text-decoration: none;
+  filter: drop-shadow(0px 0px 1px black)
+}
+
 /* let links cover the whole widht of their cell */
 table a {
   display: inline-block;
@@ -401,11 +408,6 @@ th.competition_placing {
   }
 }
 
-#clan_header {
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 20px;
-}
-
 #clan_header > div,
 #clan_header > h1 {
     margin-bottom: 0;
@@ -421,18 +423,9 @@ th.competition_placing {
 }
 /* the group of right hand things */
 #clan_header > div {
-    border-left: 1px solid #ccc;
-    float: right;
-    padding: 0 20px;
-    text-align: center;
-}
-/* links only - no spans here please */
-#clan_header > div a {
-    display: block;
-}
-#clan_header > div a:hover {
-    background-color: #dadada;
-    text-decoration: none;
+  float: right;
+  padding: 0 20px;
+  text-align: center;
 }
 
 #clan_banner {
