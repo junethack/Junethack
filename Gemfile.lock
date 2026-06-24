@@ -42,7 +42,7 @@ GEM
     coderay (1.1.3)
     composite_primary_keys (14.0.10)
       activerecord (~> 7.0.2)
-    concurrent-ruby (1.3.6)
+    concurrent-ruby (1.3.7)
     crass (1.0.6)
     csv (3.3.5)
     date (3.5.1)
@@ -233,7 +233,7 @@ CHECKSUMS
   ci_reporter (2.1.0) sha256=8ab6c378e3ea6af4f99790523ef52049405399156992fc5f51284b59b5728a61
   coderay (1.1.3) sha256=dc530018a4684512f8f38143cd2a096c9f02a1fc2459edcfe534787a7fc77d4b
   composite_primary_keys (14.0.10) sha256=ac1636c6bea2be9bfd70d4550c87feaeb36cc18a6532a748183cbbb7cf208907
-  concurrent-ruby (1.3.6) sha256=6b56837e1e7e5292f9864f34b69c5a2cbc75c0cf5338f1ce9903d10fa762d5ab
+  concurrent-ruby (1.3.7) sha256=4412caec3a5ea2e5fdc52076724c071a81f2c0593d83b2ac8cbb8ca63b3151b0
   crass (1.0.6) sha256=dc516022a56e7b3b156099abc81b6d2b08ea1ed12676ac7a5657617f012bd45d
   csv (3.3.5) sha256=6e5134ac3383ef728b7f02725d9872934f523cb40b961479f69cf3afa6c8e73f
   date (3.5.1) sha256=750d06384d7b9c15d562c76291407d89e368dda4d4fff957eb94962d325a0dc0
