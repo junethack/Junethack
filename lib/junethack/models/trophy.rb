@@ -551,8 +551,6 @@ def Trophy.check_trophies_for_variant variant_description
       Trophy.create variant: variant, trophy: :completed_ran_quest, text: "completed the revised Ranger quest", icon: "completed_ran_quest.png", row: 4
       Trophy.create variant: variant, trophy: :completed_val_quest, text: "completed the revised Valkyrie quest", icon: "completed_val_quest.png", row: 4
 
-      Trophy.create variant: variant, trophy: :ascended_without_unfairly_scaring_monsters, text: "ascended without scaring any monsters", icon: "m-elbereth.png", row: 4
-
     end
 
     if [xnethack].include? variant then

@@ -106,7 +106,7 @@ $slex_extended_achievements = [
 $xnethack_achievements = [
   [2, :ascended_petless,      'ascended without having a pet',            'x-conduct-petless.png'],
   [2, :ascended_artifactless, 'ascended without touching an artifact',    'x-conduct-artifactless.png'],
-  "", # never unfairly scared
+  [2, :ascended_without_unfairly_scaring_monsters, 'ascended without scaring any monsters', 'm-elbereth.png'],
   "", # permablind
   "", # nudist
   [2, :ascended_permahallu,   'ascended while hallucinating permanently', 'x-conduct-permahallu.png'],
