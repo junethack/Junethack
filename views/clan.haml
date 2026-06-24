@@ -65,6 +65,8 @@
           - else
             %img.trophyicon{:src => "/icons/" + trophy.light_icon}
 
+  = haml :_clan_score_chart
+
   - max_endtime_clan_game = Game.where(user_id: @clan.users.map(&:id)).maximum(:endtime)
   - members_count = User.where(clan_name: @clan.name).size
 

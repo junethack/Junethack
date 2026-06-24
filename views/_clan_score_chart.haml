@@ -1,0 +1,65 @@
+- if @clan_score_history.any?
+  - max_x_axis_rank = 11
+  %script{:type => "text/javascript", :src => "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"}
+  %script{:type => "text/javascript", :src => "/graph/echarts.min.js"}
+  .card-body.border-top
+    =h2 'Clan Points and Rank over Time'
+    #chart_clan_score_history{:style => "width: 100%; height: 500px"}
+  :javascript
+    $(document).ready(function() {
+      var chartDom = document.getElementById('chart_clan_score_history');
+      if (!chartDom) return;
+      var chart = echarts.init(chartDom, null, { renderer: 'svg' });
+      var pointsData = #{@clan_score_history_points};
+      var rankData   = #{@clan_score_history_rank};
+      chart.setOption({
+        backgroundColor: '#ccc',
+        tooltip: { trigger: 'axis' },
+        legend: { data: ['Points', 'Rank'], top: 30 },
+        xAxis: {
+          type: 'time', nameLocation: 'middle', axisLabel: { formatter: '{yyyy}-{MM}-{dd}' },
+          splitLine: { lineStyle: { color: '#eee', type: 'dashed' } }
+        },
+        yAxis: [
+          {
+            type: 'value', name: 'Points', position: 'left', nameLocation: 'middle',
+            splitLine: { lineStyle: { color: '#eee', type: 'dashed' } },
+            splitArea: { show: true, areaStyle: { color: ['#bbb'] } }
+          },
+          {
+            type: 'value', name: 'Rank', position: 'right', inverse: true, min: 1,
+            nameLocation: 'middle',
+            max: #{max_x_axis_rank},
+            interval: 1,
+            splitLine: { lineStyle: { color: '#eee', type: 'dashed' } },
+            splitArea: { show: true, areaStyle: { color: ['#bbb'] } }
+          }
+        ],
+        series: [
+          {
+            name: 'Points', type: 'line', step: 'end', yAxisIndex: 0,
+            data: pointsData,
+            symbol: 'circle', symbolSize: 10,
+            lineStyle: { color: '#27ae60', width: 2, type: 'dashed' },
+            itemStyle: { color: '#2ecc71' },
+            markPoint: { data: [{ type: 'max', name: 'Max' }] }
+          },
+          {
+            name: 'Rank', type: 'line', step: 'end', yAxisIndex: 1,
+            data: rankData,
+            symbol: 'diamond', symbolSize: 10,
+            lineStyle: { color: '#2980b9', width: 2, type: 'dashed' },
+            itemStyle: { color: '#3498db' },
+            markPoint: {
+              symbol: 'pin', symbolSize: 40,
+              data: [
+                { type: 'min', name: 'Best' },
+                { type: 'max', name: 'Worst' }
+              ]
+            }
+          }
+        ],
+        dataZoom: [{ type: 'slider', start: 0, end: 100 }],
+        animation: false
+      });
+    });

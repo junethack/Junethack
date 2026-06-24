@@ -319,6 +319,9 @@ get "/clan/:name" do
   if @clan
     puts "Invitations: #{@clan.invitations.inspect}"
     @admin = @clan.get_admin
+    @clan_score_history = ClanScoreHistory.where(clan_name: @clan.name, trophy: 'clan_winner').order(created_at: :asc)
+    @clan_score_history_points = @clan_score_history.map{|h| [h.created_at.to_i * 1000, h.points.round(1)]}.to_json
+    @clan_score_history_rank   = @clan_score_history.map{|h| [h.created_at.to_i * 1000, h.rank]}.to_json
     haml :clan
   else
     session['errors'] << "Could not find clan with id #{params[:name].inspect}"
