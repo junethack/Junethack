@@ -1,11 +1,16 @@
-- tournament_games = Game.where('user_id IS NOT NULL')
+- tournament_games = filtered_tournament_games
 - tournament_games_count = tournament_games.count
 - all_games = Game.all
 - all_games_count = all_games.count
+
+%script{:type => "text/javascript", :src => "/filter_autocomplete.js"}
+
 .card.junethack-card
+  = haml :_filter_bar
+
   .card-body
     %h2
-      Some boring post tournament statistics
+      = "Some boring post tournament statistics#{filter_title_suffix}"
 
   .card-body
     =h3 "Players"
@@ -14,21 +19,21 @@
       %br
       = "#{User.joins(:accounts).distinct.count.html_formatted} linked their account with the public servers,"
       %br
-      = "and #{Game.distinct.pluck(:user_id).compact.count.html_formatted} actually played at least one game."
+      = "and #{tournament_games.distinct.pluck(:user_id).compact.count.html_formatted} actually played at least one game."
 
   .card-body.border-top
     =h3 "Games"
     %div
-      = "#{tournament_games.count.html_formatted} games were played on #{Server.distinct.pluck(:url).count.html_formatted} public servers during the tournament by registered users,"
+      = "#{tournament_games.count.html_formatted} games were played #{filter_active? ? 'by the selected users' : "on #{Server.distinct.pluck(:url).count.html_formatted} public servers during the tournament by registered users"},"
       %br
-      = "#{Game.count.html_formatted} were played by all players including those not taking part in the tournament."
+      = "#{all_games.count.html_formatted} were played by all players including those not taking part in the tournament."
       %br
-      = "Junethack games accounted for #{'%.1f%%' % (100.0*tournament_games_count/all_games_count)} of all games played during the tournament period."
+      = "#{filter_active? ? 'These' : 'Junethack games'} accounted for #{'%.1f%%' % (100.0*tournament_games_count/all_games_count)} of all games played during the tournament period."
 
   .card-body.border-top
     =h3 "Ascensions"
     %div
-      - games_ascended = Game.where("user_id IS NOT NULL AND ascended = true")
+      - games_ascended = tournament_games.where(ascended: true)
       = "#{games_ascended.collect {|g| g.user_id}.uniq.count.html_formatted} different players ascended a total of #{games_ascended.count.html_formatted} games."
     .no-more-tables
       %table.table.table-sm.table-junethack{style: "width: auto"}
@@ -38,7 +43,7 @@
             %th
             %th
         %tbody
-          - sql = "SELECT count(1) AS count, version FROM games WHERE user_id IS NOT NULL AND ascended = true GROUP BY version ORDER BY 1 DESC"
+          - sql = "SELECT count(1) AS count, version FROM games WHERE user_id IS NOT NULL AND ascended = true #{filter_sql_clause} GROUP BY version ORDER BY 1 DESC"
           - games_ascended_by_variant = sql_select(sql)
           - games_ascended_by_variant.each do |variant|
             %tr
@@ -58,8 +63,9 @@
 
   .card-body.border-top
     =h3 "Start scummed games"
+    - scummed_tournament = filtered_start_scummed_games
     %div
-      = "#{StartScummedGame.where('user_id IS NOT NULL').count.html_formatted} games were start scummed by Junethack players,"
+      = "#{scummed_tournament.count.html_formatted} games were start scummed by #{filter_active? ? 'the selected players' : 'Junethack players'},"
       %br
       = "#{StartScummedGame.count.html_formatted} games were start scummed in total."
     .no-more-tables
@@ -70,9 +76,9 @@
             %th
             %th
         %tbody
-          - sql = 'SELECT count(1) AS count, (SELECT login FROM users where id = user_id) AS username, user_id FROM start_scummed_games WHERE user_id IS NOT NULL GROUP BY user_id ORDER BY 1 DESC LIMIT 10'
+          - sql = "SELECT count(1) AS count, (SELECT login FROM users where id = user_id) AS username, user_id FROM start_scummed_games WHERE user_id IS NOT NULL #{filter_sql_clause} GROUP BY user_id ORDER BY 1 DESC LIMIT 10"
           - start_scummed_games = sql_select(sql)
-          - start_scummed_games_count = StartScummedGame.where('user_id IS NOT NULL').count
+          - start_scummed_games_count = scummed_tournament.count
           - top10_count = start_scummed_games.map(&:count).inject(0) { |sum,i| sum += i }
           - start_scummed_games.each do |game|
             %tr
@@ -103,10 +109,10 @@
             %th Kills
             %th
         %tbody
-          - medusa_kills = Game.where(killed_medusa: 1).where("user_id IS NOT NULL")
+          - medusa_kills = tournament_games.where(killed_medusa: 1)
           - medusa_kills_count = medusa_kills.count
           = "Medusa was killed in #{medusa_kills_count.html_formatted} games."
-          - sql = 'SELECT count(1) AS count,role,race FROM games WHERE killed_medusa >= 1 AND user_id IS NOT NULL GROUP BY role,race ORDER BY 1 DESC LIMIT 10'
+          - sql = "SELECT count(1) AS count,role,race FROM games WHERE killed_medusa >= 1 AND user_id IS NOT NULL #{filter_sql_clause} GROUP BY role,race ORDER BY 1 DESC LIMIT 10"
           - medusa_kills_combinations = sql_select(sql)
           - top10_kills = medusa_kills_combinations.map(&:count).inject(0) {|sum,i| sum+=i}
           - percentage = '%.1f%%' % (100.0*top10_kills/medusa_kills.count)
@@ -120,7 +126,7 @@
                 = kill.count.html_formatted
               %td.table_number
                 = "(#{'%.1f%%' % (100.0*kill.count/medusa_kills_count)})"
-      = "The #{medusa_kills_combinations.count.html_formatted} most used role/race combinations account for #{percentage} of all Medusa kills."
+      = "The #{medusa_kills_combinations.count.html_formatted} most used role/race combinations account for #{percentage} of #{filter_active? ? 'these' : 'all'} Medusa kills."
 
   .card-body.border-top
     =h3 "Tournament games by variant"
@@ -132,7 +138,7 @@
             %th
             %th
         %tbody
-          - sql = "SELECT count(1) AS count, version FROM games WHERE user_id IS NOT NULL GROUP BY version ORDER BY 1 DESC"
+          - sql = "SELECT count(1) AS count, version FROM games WHERE user_id IS NOT NULL #{filter_sql_clause} GROUP BY version ORDER BY 1 DESC"
           - games_by_variant = sql_select(sql)
           - games_by_variant.each do |variant|
             %tr
@@ -160,7 +166,7 @@
             %th
             %th
         %tbody
-          - sql = "SELECT count(1) AS count, url FROM games LEFT JOIN servers ON servers.id = games.server_id WHERE user_id IS NOT NULL GROUP BY url ORDER BY 1 DESC"
+          - sql = "SELECT count(1) AS count, url FROM games LEFT JOIN servers ON servers.id = games.server_id WHERE user_id IS NOT NULL #{filter_sql_clause} GROUP BY url ORDER BY 1 DESC"
           - games_by_server = sql_select(sql)
           - games_by_server.each do |server|
             %tr

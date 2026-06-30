@@ -633,6 +633,11 @@ end
 get "/post_tournament_statistics" do
   caching_check_last_played_game
 
+  @users = parse_csv_param(params[:users])
+  @clans = parse_csv_param(params[:clans])
+  @mode = params[:mode] || "include"
+  @mode = "include" unless %w[include exclude].include?(@mode)
+
   haml :post_tournament_statistics
 end
 

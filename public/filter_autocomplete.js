@@ -1,4 +1,4 @@
-// Autocomplete filter bar for the /activity page.
+// Autocomplete filter bar.
 // Allows filtering by users and clans with include/exclude mode.
 $(function() {
   var $input = $('#filter-autocomplete');
@@ -30,7 +30,7 @@ $(function() {
     if (filters.users.length || filters.clans.length) {
       params.push('mode=' + filters.mode);
     }
-    return '/activity' + (params.length ? '?' + params.join('&') : '');
+    return window.location.pathname + (params.length ? '?' + params.join('&') : '');
   }
 
   function switchMode() {
