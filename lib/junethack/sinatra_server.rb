@@ -615,6 +615,17 @@ end
 get "/scoreboard" do
   caching_check_last_played_game
 
+  clan_histories = ClanScoreHistory.where(trophy: 'clan_winner').order(created_at: :asc)
+  @clan_bump_data_all = clan_histories
+    .group_by(&:clan_name)
+    .map do |clan_name, histories|
+      {
+        name: clan_name,
+        data: histories.map { |h| [h.created_at.to_i * 1000, h.rank] },
+        points_data: histories.map { |h| [h.created_at.to_i * 1000, h.points.round(1)] }
+      }
+    end.to_json
+
   haml :scoreboard
 end
 

@@ -1,0 +1,89 @@
+- unless @clan_bump_data_all.nil? || @clan_bump_data_all == "[]"
+  %script{:type => "text/javascript", :src => "/graph/echarts.min.js"}
+  .card-body.border-top
+    %h3 Heatmap (Tage × Clans)
+    #chart_heatmap{:style => "width: 100%; height: 600px"}
+  :javascript
+    $(document).ready(function() {
+      var chartDom = document.getElementById('chart_heatmap');
+      if (!chartDom) return;
+      var chart = echarts.init(chartDom, null, { renderer: 'svg' });
+      var bumpData = #{@clan_bump_data_all};
+      bumpData.sort(function(a, b) {
+        var ra = a.data[a.data.length - 1][1];
+        var rb = b.data[b.data.length - 1][1];
+        return rb - ra;
+      });
+      var clanNames = bumpData.map(function(s) { return s.name; });
+      var allTimestamps = [];
+      var maxRank = 1;
+      bumpData.forEach(function(s) {
+        s.data.forEach(function(d) {
+          allTimestamps.push(d[0]);
+          if (d[1] > maxRank) maxRank = d[1];
+        });
+      });
+      allTimestamps.sort(function(a, b) { return a - b; });
+      var dayMs = 86400000;
+      var dayBuckets = [];
+      for (var t = allTimestamps[0]; t <= allTimestamps[allTimestamps.length - 1]; t += dayMs) {
+        dayBuckets.push(t);
+      }
+      var xLabels = dayBuckets.map(function(d) {
+        var date = new Date(d);
+        return (date.getMonth()+1) + '/' + date.getDate();
+      });
+      var interval = Math.max(1, Math.floor(dayBuckets.length / 15));
+      var heatData = [];
+      dayBuckets.forEach(function(day, xi) {
+        bumpData.forEach(function(s, yi) {
+          if (day < s.data[0][0]) return;
+          var rank = s.data[0][1];
+          for (var i = s.data.length - 1; i >= 1; i--) {
+            if (s.data[i][0] <= day) { rank = s.data[i][1]; break; }
+          }
+          heatData.push([xi, yi, rank]);
+        });
+      });
+      chart.setOption({
+        backgroundColor: '#ccc',
+        aria: { enabled: true, decal: { show: true } },
+        tooltip: {
+          formatter: function(p) {
+            return xLabels[p.data[0]] + '<br/>' + clanNames[p.data[1]] + '<br/>Rang ' + p.data[2];
+          }
+        },
+        grid: { left: 140, right: 40, top: 30, bottom: 60 },
+        xAxis: {
+          type: 'category', data: xLabels,
+          axisLabel: { interval: interval, rotate: 45, fontSize: 9 },
+          splitLine: { show: false }
+        },
+        yAxis: {
+          type: 'category', data: clanNames,
+          axisLabel: { fontSize: 12 },
+          splitLine: { show: false }
+        },
+        visualMap: {
+          min: 1, max: maxRank, calculable: true,
+          orient: 'horizontal', left: 'center', bottom: 0,
+          inRange: { color: ['#27ae60', '#f1c40f', '#e74c3c'] }
+        },
+        series: [{
+          type: 'heatmap', data: heatData,
+          itemStyle: {
+            borderWidth: 1, borderColor: '#ddd',
+            decal: {
+              symbol: 'diamond',
+              symbolSize: 0.6,
+              color: 'rgba(255,255,255,0.12)',
+              dashArrayX: [4, 2],
+              dashArrayY: [4, 2]
+            }
+          },
+          label: { show: true, fontSize: 9 },
+          emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.5)' } }
+        }],
+        animation: false
+      });
+    });
