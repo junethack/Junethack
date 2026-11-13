@@ -18,8 +18,8 @@ RUN bundle install
 COPY . .
 
 # Expose the application port
-EXPOSE 9292
+EXPOSE 4567
 
 # Define the command to start the application, including migrations
 # This CMD instruction now clearly separates migration and server startup.
-CMD ["bash", "-c", "export RACK_ENV=production && echo \"Running database migrations...\" && bundle exec rake db:migrate && echo \"Database migrations complete. Starting server...\" && exec bundle exec rackup -p 9292 -s thin"]
+CMD ["bash", "-c", "export RACK_ENV=production && echo \"Running database migrations...\" && bundle exec rake db:migrate && echo \"Database migrations complete. Starting server...\" && exec bundle exec rackup -s thin"]
