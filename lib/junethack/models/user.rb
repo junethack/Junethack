@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
     has_many :servers, through: :accounts
     belongs_to :clan, foreign_key: :clan_name, primary_key: :name, optional: true
 
-    serialize :invitations, JSON
+    serialize :invitations, coder: JSON
 
     before_save :default_invitations
 

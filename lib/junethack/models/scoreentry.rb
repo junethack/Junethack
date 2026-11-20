@@ -1,13 +1,13 @@
 # variant-specific user trophies
 class Scoreentry < ActiveRecord::Base
-    self.primary_keys = :user_id, :variant, :trophy
+    # Composite primary key (variant, trophy, user_id) is read from the database schema.
 
     belongs_to :user
 end
 
 # cross-variant user trophies
 class Individualtrophy < ActiveRecord::Base
-    self.primary_keys = :user_id, :trophy
+    # Composite primary key (trophy, user_id) is read from the database schema.
 
     belongs_to :user
 
@@ -42,7 +42,7 @@ end
 
 # competition clan trophies
 class ClanScoreEntry < ActiveRecord::Base
-    self.primary_keys = :clan_name, :trophy
+    # Composite primary key (trophy, clan_name) is read from the database schema.
 
     belongs_to :clan, foreign_key: :clan_name, primary_key: :name
 end
@@ -54,7 +54,7 @@ end
 
 # variant-specific competition user trophies
 class CompetitionScoreEntry < ActiveRecord::Base
-    self.primary_keys = :user_id, :trophy, :variant
+    # Composite primary key (trophy, variant, user_id) is read from the database schema.
 
     belongs_to :user
 end

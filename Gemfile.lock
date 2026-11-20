@@ -15,34 +15,34 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.10)
-      activesupport (= 7.0.10)
-    activerecord (7.0.10)
-      activemodel (= 7.0.10)
-      activesupport (= 7.0.10)
-    activesupport (7.0.10)
+    activemodel (8.1.4.1)
+      activesupport (= 8.1.4.1)
+    activerecord (8.1.4.1)
+      activemodel (= 8.1.4.1)
+      activesupport (= 8.1.4.1)
+      timeout (>= 0.4.0)
+    activesupport (8.1.4.1)
       base64
-      benchmark (>= 0.3)
       bigdecimal
-      concurrent-ruby (~> 1.0, >= 1.0.2)
+      concurrent-ruby (~> 1.0, >= 1.3.1)
+      connection_pool (>= 2.2.5)
       drb
       i18n (>= 1.6, < 2)
+      json
       logger (>= 1.4.2)
       minitest (>= 5.1)
-      mutex_m
       securerandom (>= 0.3)
-      tzinfo (~> 2.0)
+      tzinfo (~> 2.0, >= 2.0.5)
+      uri (>= 0.13.1)
     base64 (0.3.0)
-    benchmark (0.5.0)
     bigdecimal (4.1.3)
     builder (3.3.0)
     ci_reporter (2.1.0)
       builder (>= 2.1.2)
       rexml
     coderay (1.1.3)
-    composite_primary_keys (14.0.10)
-      activerecord (~> 7.0.2)
     concurrent-ruby (1.3.8)
+    connection_pool (3.0.3)
     crass (1.0.8)
     csv (3.3.7)
     diff-lcs (1.6.2)
@@ -74,7 +74,6 @@ GEM
       drb (~> 2.0)
       prism (>= 1.5, < 3)
     mustermann (3.1.1)
-    mutex_m (0.3.0)
     nio4r (2.7.5)
     nokogiri (1.19.7-aarch64-linux-gnu)
       racc (~> 1.4)
@@ -180,9 +179,11 @@ GEM
     temple (0.10.7)
     thor (1.5.0)
     tilt (2.9.0)
+    timeout (0.6.1)
     tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uri (1.1.2)
 
 PLATFORMS
   aarch64-linux
@@ -192,13 +193,13 @@ PLATFORMS
   arm-linux-musl
   arm64-darwin
   x86_64-darwin
+  x86_64-linux
   x86_64-linux-gnu
   x86_64-linux-musl
 
 DEPENDENCIES
   activerecord
   ci_reporter
-  composite_primary_keys (>= 14.0.0)
   csv
   eventmachine!
   fastercsv
@@ -224,17 +225,16 @@ DEPENDENCIES
   sync
 
 CHECKSUMS
-  activemodel (7.0.10) sha256=e2e1e0a4664b69606363e9f6f59afadeab6fa8843c5fb73cd037bb72a40fa498
-  activerecord (7.0.10) sha256=63bc193d4c6944d85f53255362b67269d246a51bd664e09b1aa2cecfe5288c9a
-  activesupport (7.0.10) sha256=01487b0774045918b36893af4f012986db8375f6c5850c0ffc75b940ede72305
+  activemodel (8.1.4.1) sha256=063caf105372fbc98b2d789e4be23de63ac5c043f7d9330f04e2caddb7012805
+  activerecord (8.1.4.1) sha256=bd65599ca0b5d210937f835d42c7aff69d271741c75aab022730be6cbce67e87
+  activesupport (8.1.4.1) sha256=16ac4f341ca65c85a1fcdb8ac73f68891aae9e3c4a6f9c3a27daed8b00017ed7
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
-  benchmark (0.5.0) sha256=465df122341aedcb81a2a24b4d3bd19b6c67c1530713fd533f3ff034e419236c
   bigdecimal (4.1.3) sha256=61ebe1e5e559bdc3cc6f2c0ee7f427321fc838f59611c294356eb04d6e21cf66
   builder (3.3.0) sha256=497918d2f9dca528fdca4b88d84e4ef4387256d984b8154e9d5d3fe5a9c8835f
   ci_reporter (2.1.0) sha256=8ab6c378e3ea6af4f99790523ef52049405399156992fc5f51284b59b5728a61
   coderay (1.1.3) sha256=dc530018a4684512f8f38143cd2a096c9f02a1fc2459edcfe534787a7fc77d4b
-  composite_primary_keys (14.0.10) sha256=ac1636c6bea2be9bfd70d4550c87feaeb36cc18a6532a748183cbbb7cf208907
   concurrent-ruby (1.3.8) sha256=b2f1be836e968ccc78ccfce277ea79c72a88633f22306782c16ff23fb415d1e1
+  connection_pool (3.0.3) sha256=e0f8ee3ee0039396753e06e8a2dde0ef028e40f7df29e97f57da7577c489cb5e
   crass (1.0.8) sha256=7a0145c7a2c59f8e7923b3a69ce819c444823a00a5127d805298fea13be24efe
   csv (3.3.7) sha256=15a3f16f6628da8664d455eb634e7f22031bcf53044923caf56975109e71b9f8
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
@@ -253,7 +253,6 @@ CHECKSUMS
   method_source (1.1.0) sha256=181301c9c45b731b4769bc81e8860e72f9161ad7d66dd99103c9ab84f560f5c5
   minitest (6.1.0) sha256=ff373595aa8888631e8a5463986a76b3845346ae6d7fa46e139c1633d418076e
   mustermann (3.1.1) sha256=4c6170c7234d5499c345562ba7c7dfe73e1754286dcc1abb053064d66a127198
-  mutex_m (0.3.0) sha256=cfcb04ac16b69c4813777022fdceda24e9f798e48092a2b817eb4c0a782b0751
   nio4r (2.7.5) sha256=6c90168e48fb5f8e768419c93abb94ba2b892a1d0602cb06eef16d8b7df1dca1
   nokogiri (1.19.7-aarch64-linux-gnu) sha256=8f5e15d299602456406e1f03a9f3456cceb33a0722811e818d2ee2214eb4c84a
   nokogiri (1.19.7-aarch64-linux-musl) sha256=efe0c3602e6e54521bc21c681930ce5568e2d11203de17400710b2b3ca2e4cb4
@@ -312,8 +311,10 @@ CHECKSUMS
   temple (0.10.7) sha256=369fe560adb6534674ce232899c2232df614bcb29c5359b05efedff7a57ed9c0
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
   tilt (2.9.0) sha256=da5735d0280bba96e9a91041bb14aee435ccad5c17b0fa519249ae543d9aa3a5
+  timeout (0.6.1) sha256=78f57368a7e7bbadec56971f78a3f5ecbcfb59b7fcbb0a3ed6ddc08a5094accb
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
+  uri (1.1.2) sha256=89292e98eabbef6248b0a0ed5e7e398e152f83f17560023a6d94a7f492b169fb
 
 BUNDLED WITH
   4.0.20

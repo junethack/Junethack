@@ -3,8 +3,8 @@ require 'digest/md5'
 class Clan < ActiveRecord::Base
   self.primary_key = :name
 
-  serialize :admin, JSON
-  serialize :invitations, JSON
+  serialize :admin, coder: JSON
+  serialize :invitations, coder: JSON
 
   has_many :users, foreign_key: :clan_name, primary_key: :name
 

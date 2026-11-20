@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-    self.primary_keys = :user_id, :server_id
+    # Composite primary key (user_id, server_id) is read from the database schema.
 
     belongs_to :user
     belongs_to :server

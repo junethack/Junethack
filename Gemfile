@@ -3,7 +3,6 @@ source "https://rubygems.org"
 gem 'activerecord'
 gem 'sinatra-activerecord'
 gem 'pg'
-gem 'composite_primary_keys', '>= 14.0.0'
 
 gem "json"
 gem "haml"
@@ -35,5 +34,4 @@ group :development, :test do
   gem 'pry'
   gem 'irb'
   gem "sync"
-  #gem 'pry-stack_explorer'
 end
