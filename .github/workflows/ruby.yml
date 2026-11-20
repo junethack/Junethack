@@ -21,7 +21,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_HOST: localhost
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -30,7 +30,9 @@ jobs:
 
     steps:
     - name: Setup system dependencies
-      run: sudo apt-get install -y libpq-dev postgresql-server-dev-16
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libpq-dev
 
     # https://github.com/actions/checkout
     - uses: actions/checkout@v6
