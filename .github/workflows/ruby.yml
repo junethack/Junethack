@@ -9,9 +9,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     services:
       postgres:
@@ -42,6 +47,7 @@ jobs:
     # use ruby/setup-ruby@v1. See https://github.com/ruby/setup-ruby
       uses: ruby/setup-ruby@v1
       with:
+        ruby-version: .ruby-version
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
     - name: Run tests
